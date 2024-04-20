@@ -295,14 +295,15 @@
     };
     root.hashedPasswordFile = config.age.secrets.rootPassword.path;
   };
-
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
+  
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/etc/nixos";
   };
-   networking.firewall = { 
+   
+  networking.firewall = { 
     enable = true;
     allowedTCPPortRanges = [ 
       { from = 1714; to = 1764; } # KDE Connect
