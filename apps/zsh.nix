@@ -33,6 +33,8 @@
       l = "eza -la";
       rm = "trash-put";
       sgit = "sudo -E git";
+      se = "sudo -E";
+      slazygit = "sudo -E lazygit";
 # nixos specific command
       update-old = "sudo nixos-rebuild switch --flake /etc/nixos --use-remote-sudo";
       update = "nh os switch /etc/nixos";
