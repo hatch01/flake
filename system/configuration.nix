@@ -295,7 +295,8 @@
     };
     root.hashedPasswordFile = config.age.secrets.rootPassword.path;
   };
-  
+ 
+  nix.optimise.automatic = true;
   programs.nh = {
     enable = true;
     clean.enable = true;
