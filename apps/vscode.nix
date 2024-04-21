@@ -1,5 +1,8 @@
-{config, pkgs, ...}:
 {
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     nil
   ];
@@ -33,7 +36,7 @@
       # donjayamanne.python-environment-manager
       ms-python.python
       ms-python.vscode-pylance
-      
+
       #flutter
       dart-code.flutter
       dart-code.dart-code
@@ -60,7 +63,7 @@
       "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
       "workbench.colorTheme" = "Catppuccin Mocha";
       "errorLens.messageBackgroundMode" = "message";
-      "dart.checkForSdkUpdates" =  false;
+      "dart.checkForSdkUpdates" = false;
       "cmake.showOptionsMovedNotification" = false;
       "rust-analyzer.inlayHints.typeHints.enable" = false;
       "git.openRepositoryInParentFolders" = true;
@@ -71,13 +74,13 @@
     keybindings = [
       {
         key = "ctrl+c";
-	command = "workbench.action.terminal.copySelection";
-	when = "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused";
+        command = "workbench.action.terminal.copySelection";
+        when = "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused";
       }
       {
-      	key = "ctrl+v";
-	command = "workbench.action.terminal.paste";
-	when = "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported";
+        key = "ctrl+v";
+        command = "workbench.action.terminal.paste";
+        when = "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported";
       }
     ];
   };

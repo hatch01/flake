@@ -7,4 +7,3 @@ in {
   "rootPassword.age".publicKeys = all;
   "githubToken.age".publicKeys = all;
 }
-

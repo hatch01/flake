@@ -1,12 +1,14 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # Enable dconf (System Management Tool)
   programs.dconf.enable = true;
   programs.virt-manager.enable = true;
 
   # Add user to libvirtd group
-  users.users.eymeric.extraGroups = [ "libvirtd" ];
+  users.users.eymeric.extraGroups = ["libvirtd"];
 
   # Install necessary packages
   environment.systemPackages = with pkgs; [
@@ -24,21 +26,23 @@
 
   # Manage the virtualisation services
   virtualisation = {
-/*    virtualbox = {
+    /*
+      virtualbox = {
       host = {
         enable = true;
-        enableExtensionPack = true;                                           
+        enableExtensionPack = true;
       };
-    };*/
+    };
+    */
     libvirtd = {
-        enable = true;
-        qemu = {
-          ovmf.enable = true;
-          swtpm.enable = true;
-          ovmf.packages = [ pkgs.OVMFFull.fd ];
-          runAsRoot = false;
-        };
-      };                   
+      enable = true;
+      qemu = {
+        ovmf.enable = true;
+        swtpm.enable = true;
+        ovmf.packages = [pkgs.OVMFFull.fd];
+        runAsRoot = false;
+      };
+    };
     spiceUSBRedirection.enable = true;
   };
   services.spice-vdagentd.enable = true;

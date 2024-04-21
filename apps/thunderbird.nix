@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.thunderbird = {
     enable = true;
     profiles.default_thunderbird = {
@@ -17,10 +19,10 @@
     address = "eymericdechelette@gmail.com";
     flavor = "gmail.com";
     userName = "eymericdechelette@gmail.com";
-    
+
     thunderbird = {
       enable = true;
-      profiles = [ "default_thunderbird" ];
+      profiles = ["default_thunderbird"];
       settings = id: {
         "mail.smtpserver.smtp_${id}.authMode" = 10;
         "mail.server.server_${id}.authMethod" = 10;
@@ -40,7 +42,7 @@
     smtp.tls.enable = true;
     thunderbird = {
       enable = true;
-      profiles = [ "default_thunderbird" ];
+      profiles = ["default_thunderbird"];
       settings = id: {
         "mail.smtpserver.smtp_${id}.authMode" = 10;
         "mail.server.server_${id}.authMethod" = 10;
@@ -61,7 +63,7 @@
     primary = true;
     thunderbird = {
       enable = true;
-      profiles = [ "default_thunderbird" ];
+      profiles = ["default_thunderbird"];
     };
   };
 
@@ -73,7 +75,7 @@
     userName = "hatchlechien@gmail.com";
     thunderbird = {
       enable = true;
-      profiles = [ "default_thunderbird" ];
+      profiles = ["default_thunderbird"];
       settings = id: {
         "mail.smtpserver.smtp_${id}.authMode" = 10;
         "mail.server.server_${id}.authMethod" = 10;
@@ -95,8 +97,7 @@
 
     thunderbird = {
       enable = true;
-      profiles = [ "default_thunderbird" ];
+      profiles = ["default_thunderbird"];
     };
   };
 }
-
