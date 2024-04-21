@@ -6,4 +6,5 @@ in {
   "userPassword.age".publicKeys = all;
   "rootPassword.age".publicKeys = all;
   "githubToken.age".publicKeys = all;
+  "wifi.age".publicKeys = all;
 }
