@@ -77,27 +77,12 @@
         nixosConfigurations = {
           nixos-eymeric = let
             system = "x86_64-linux";
-            pkgs-unstable = import nixpkgs-unstable {
-              inherit system;
-              config = {
-                cudaSupport = true;
-                allowUnfree = true;
-              };
-            };
-            pkgs = import nixpkgs {
-              inherit system;
-              config = {
-                cudaSupport = true;
-                allowUnfree = true;
-              };
-              overlays = [((import overlays/overlay.nix) pkgs-unstable)];
-            };
           in
             nixpkgs.lib.nixosSystem {
               specialArgs = {
-                inherit inputs agenix;
+                inherit inputs agenix nixpkgs-unstable;
               };
-              inherit system pkgs;
+              inherit system;
               modules = [
                 ./system/configuration.nix
                 ./cachix.nix
