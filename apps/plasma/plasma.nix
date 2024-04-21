@@ -119,6 +119,13 @@
         "text/markdown".value = "org.kde.ghostwriter.desktop;";
       };
       "plasmaparc"."General"."AudioFeedback".value = false;
+
+      #power management
+      "powerdevilrc" = {
+        "AC/Performance"."PowerProfile".value = "performance";
+        "Battery/Performance"."PowerProfile".value = "balanced";
+        "LowBattery/Performance"."PowerProfile".value = "power-saver";
+      };
     };
   };
 
