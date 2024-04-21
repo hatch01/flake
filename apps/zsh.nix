@@ -7,6 +7,7 @@
     zsh-nix-shell
     w3m
     ripgrep
+    ripgrep-all
     zoxide
     eza
     procs
