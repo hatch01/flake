@@ -71,7 +71,6 @@
       onCalendar = "weekly"; # Default value
     };
     packages = [
-      "com.github.liferooter.textpieces"
       "it.fabiodistasio.AntaresSQL"
     ];
   };
@@ -137,7 +136,7 @@
     syncthing
     syncthingtray
     nextcloud-client
-    #textpieces
+    textpieces
     tor-browser
     kdePackages.yakuake
     zap
