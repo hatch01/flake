@@ -87,7 +87,7 @@
                 ./system/configuration.nix
                 ./cachix.nix
                 ./wifi.nix
-                ./vm.nix
+                ./apps/vm.nix
                 home-manager.nixosModules.home-manager
                 {
                   home-manager.useGlobalPkgs = true;
