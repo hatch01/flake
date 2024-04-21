@@ -95,7 +95,7 @@
 	new_commit=$(sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
 	if [ "$current_commit" != "$new_commit" ]
 	then
-  	  sudo nixos-rebuild switch --flake /etc/nixos
+	  update
 	  if [ $? -eq 0 ]
   	  then
     	    echo ok
