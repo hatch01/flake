@@ -167,7 +167,6 @@
     xournalpp
     git-crypt
     delta
-    skrooge
     blender
     skypeforlinux
     floorp
