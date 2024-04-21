@@ -26,7 +26,7 @@
       inputs.agenix.inputs.darwin.follows = "";
     };
 
-# home-manager, used for managing user configuration
+    # home-manager, used for managing user configuration
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,8 +60,7 @@
     nixosConfigurations = {
       nixos-eymeric = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs agenix; }; # pretty hacky to pass agenix and inputs to configuration.nix
-        inherit system;
-	inherit pkgs;
+        inherit system pkgs;
 	modules = with inputs; [
 	  ./system/configuration.nix
 	  ./cachix.nix
@@ -78,5 +77,41 @@
 	];
       };
     };
+
+    # Auto formatters. This also adds a flake check to ensure that the (stollen from Joseph LaFreniere's Dotfiles config)
+        # source tree was auto formatted.
+        treefmt.config = {
+          projectRootFile = ".git/config";
+          package = pkgs.treefmt;
+          flakeCheck = false; # use pre-commit's check instead
+          programs = {
+            alejandra.enable = true; # nix
+            shellcheck.enable = true;
+            shfmt = {
+              enable = true;
+              indent_size = null;
+            };
+            prettier.enable = true;
+          };
+        };
+
+        pre-commit = {
+          check.enable = true;
+          settings.hooks = {
+            editorconfig-checker = {
+              enable = true;
+              excludes = [
+                ".*\\.age"
+              ];
+            };
+            ripsecrets = {
+              enable = true;
+            };
+            treefmt.enable = true;
+            typos = {
+              enable = true;
+            };
+          };
+        };
   };
 }
