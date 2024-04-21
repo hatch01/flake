@@ -86,6 +86,7 @@
               modules = [
                 ./system/configuration.nix
                 ./cachix.nix
+		./vm.nix
                 home-manager.nixosModules.home-manager
                 {
                   home-manager.useGlobalPkgs = true;
