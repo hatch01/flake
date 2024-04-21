@@ -168,7 +168,7 @@
     git-crypt
     delta
     skrooge
-    (blender.override {cudaSupport = true;})
+    blender
     skypeforlinux
     floorp
     fh
