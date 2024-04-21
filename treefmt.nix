@@ -3,7 +3,7 @@
   # Used to find the project root
   projectRootFile = "flake.nix";
   #projectRootFile = ".git/config";
-  #package = pkgs.treefmt;
+  package = pkgs.treefmt;
   #flakeCheck = false; # use pre-commit's check instead
   programs = {
     alejandra.enable = true; # nix
