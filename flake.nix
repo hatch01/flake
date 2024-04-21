@@ -51,17 +51,31 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = {flake-parts, ...} @ inputs:
+  outputs = {
+    flake-parts,
+    nixpkgs,
+    systems,
+    nixpkgs-unstable,
+    home-manager,
+    flatpaks,
+    plasma-manager,
+    nur,
+    lanzaboote,
+    agenix,
+    treefmt-nix,
+    pre-commit-hooks-nix,
+    ...
+  } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
-      imports = with inputs; [
+      imports = [
         pre-commit-hooks-nix.flakeModule
         treefmt-nix.flakeModule
       ];
 
       flake = {
         nixosConfigurations = {
-          nixos-eymeric = with inputs; let
+          nixos-eymeric = let
             system = "x86_64-linux";
             pkgs-unstable = import nixpkgs-unstable {
               inherit system;
