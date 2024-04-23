@@ -6,6 +6,7 @@
   pkgs,
   lib,
   inputs,
+  nixpkgs,
   nixpkgs-unstable,
   agenix,
   ...
@@ -71,6 +72,7 @@
   specialisation = {
     # stollen here https://discourse.nixos.org/t/using-a-low-power-specialisation-for-laptops/22513
     disable-GPU.configuration = {
+      environment.etc."specialisation".text = "disable-GPU";
       boot.extraModprobeConfig = ''
         blacklist nouveau
         options nouveau modeset=0
