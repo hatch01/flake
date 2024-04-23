@@ -37,6 +37,18 @@
   networking.hostName = "nixos-eymeric"; # Define your hostname.
 
   programs.ccache.enable = true;
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+  hardware.sane.enable = true; # enables support for SANE scanners
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+  hardware.sane.extraBackends = [pkgs.epkowa pkgs.utsushi];
+  nixpkgs.config.packageOverrides = pkgs: {
+    xsaneGimp = pkgs.xsane.override {gimpSupport = true;};
+  };
 
   boot.lanzaboote = {
     enable = true;
@@ -179,9 +191,6 @@
 
   # Configure console keymap
   console.keyMap = "fr";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # Enable sound with pipewire.
   sound.enable = true;
