@@ -36,9 +36,6 @@
     openFirewall = true;
   };
   hardware.sane.extraBackends = [pkgs.epkowa pkgs.utsushi];
-  nixpkgs.config.packageOverrides = pkgs: {
-    xsaneGimp = pkgs.xsane.override {gimpSupport = true;};
-  };
 
   boot.lanzaboote = {
     enable = true;
