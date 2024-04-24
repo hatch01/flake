@@ -184,6 +184,7 @@
     config.nur.repos.milahu.vdhcoapp
     beeper
     nixpkgs-fmt
+    pdfarranger
   ];
 
   programs.home-manager.enable = true;
