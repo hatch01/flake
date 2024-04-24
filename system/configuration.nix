@@ -6,8 +6,6 @@
   pkgs,
   lib,
   inputs,
-  nixpkgs,
-  nixpkgs-unstable,
   agenix,
   ...
 }: {
@@ -15,15 +13,6 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
-
-  nixpkgs = {
-    config = {
-      cudaSupport = true;
-      allowUnfree = true;
-    };
-    overlays = [((import ../overlays/overlay.nix) nixpkgs-unstable)];
-  };
-
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.extraOptions = ''
     !include ${config.age.secrets.githubToken.path}
