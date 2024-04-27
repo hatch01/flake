@@ -18,7 +18,7 @@
   boot.extraModulePackages = [];
   zramSwap.enable = true;
 
-  fileSystems."/" = {
+/*  fileSystems."/" = {
     device = "/dev/disk/by-uuid/676db686-de21-4a7c-b17f-28601e577f63";
     fsType = "btrfs";
   };
@@ -42,7 +42,7 @@
       device = "/dev/mapper/system-swap";
     }
   ];
-
+*/
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction

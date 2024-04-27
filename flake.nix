@@ -23,7 +23,11 @@
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";
 
-      # Optional but recommended to limit the size of your system closure.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -61,6 +65,7 @@
     plasma-manager,
     nur,
     lanzaboote,
+    disko,
     agenix,
     treefmt-nix,
     pre-commit-hooks-nix,
@@ -114,6 +119,8 @@
                 }
                 lanzaboote.nixosModules.lanzaboote
                 agenix.nixosModules.default
+                disko.nixosModules.disko
+                ./disk.nix
               ];
             };
         };
