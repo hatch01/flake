@@ -106,7 +106,6 @@
     jetbrains.rust-rover
     jetbrains.phpstorm
     #android-studio
-    jetbrains-toolbox
     keepassxc
     sqlitebrowser
     ungoogled-chromium
