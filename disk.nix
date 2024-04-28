@@ -42,22 +42,22 @@
         type = "lvm_vg";
         lvs = {
           root = {
-            size = "10G";
+            size = "50G";
             content = {
               type = "btrfs";
-              mountpoint="/";
+              extraArgs = [ "-f" ];
               subvolumes = {
                 "/root" = {
-                   mountpoint = "/";
-                   mountOptions = [ "compress=zstd" "noatime" ];
+                  mountpoint = "/";
+                  mountOptions = [ "compress=zstd" "noatime" ];
                 };
                 "/nix" = {
-                   mountpoint = "/";
-                   mountOptions = [ "compress=zstd" "noatime" ];
+                  mountpoint = "/nix";
+                  mountOptions = [ "compress=zstd" "noatime" ];
                 };
                 "/var" = {
-                   mountpoint = "/";
-                   mountOptions = [ "compress=zstd" "noatime" "nodatacow" ];
+                  mountpoint = "/var";
+                  mountOptions = [ "compress=zstd" "noatime" "nodatacow" ];
                 };
 
               };
@@ -72,12 +72,12 @@
             };
           };
           swap = {
-              size = "1G";
-              content = {
-                type = "swap";
-                randomEncryption = true;
-              };
+            size = "16G";
+            content = {
+              type = "swap";
+              randomEncryption = true;
             };
+          };
         };
       };
     };
