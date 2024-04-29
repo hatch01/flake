@@ -18,6 +18,7 @@
   home.stateVersion = "23.11"; # Please read the comment before changing.
   imports = [
     apps/zsh.nix
+    apps/keepassxc.nix
     apps/plasma/plasma.nix
     apps/neovim.nix
     apps/onedrive/onedrive.nix

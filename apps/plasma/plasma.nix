@@ -108,12 +108,6 @@
       "kwinrc"."org.kde.kdecoration2"."BorderSizeAuto".value = false;
       "kwinrc"."org.kde.kdecoration2"."BorderSize".value = "Tiny";
 
-      # keepassxc
-      "keepassxc/keepassxc.ini"."SSHAgent"."Enabled".value = true;
-      "keepassxc/keepassxc.ini"."FdoSecrets"."Enabled".value = true;
-      "keepassxc/keepassxc.ini"."General"."HideWindowOnCopy".value = true;
-      "kwalletrc"."org.freedesktop.secrets"."apiEnabled".value = false;
-
       #mime apps WARNING DONT FORGET ; IN THE STRING
       "mimeapps.list"."Added Associations" = {
         "text/markdown".value = "org.kde.ghostwriter.desktop;";
