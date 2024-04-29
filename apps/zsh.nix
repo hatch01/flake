@@ -19,6 +19,7 @@
     fd
     grex
     detox
+    xcp
   ];
   programs.zsh = {
     enable = true;
