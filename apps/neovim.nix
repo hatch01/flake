@@ -6,9 +6,9 @@
   home.file.".config/nvim" = {
     source = pkgs.fetchFromGitHub {
       owner = "NvChad";
-      repo = "NvChad";
-      rev = "ff99797242f37dbc118baad3d31aa125e08da90f"; #hash of the v2.0 because it does not work using the tag
-      hash = "sha256-sy0qSRTjKA87A9z2Qnp/ruMIINbY4C7KBWoPfMDM2rY=";
+      repo = "starter";
+      rev = "aad624221adc6ed4e14337b3b3f2b74136696b53";
+      hash = "sha256-2HNqPdnIVkX+d5OxjsRbL3SoY8l5Ey7/Y274Pi5uZW4=";
     };
     recursive = true;
   };
@@ -19,8 +19,8 @@
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    plugins = with pkgs; [
-      vimPlugins.vim-startify
+    plugins = with pkgs.vimPlugins; [
+      lazy-nvim
     ];
     extraConfig = ''
       set shiftwidth=2
