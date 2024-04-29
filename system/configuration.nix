@@ -226,6 +226,7 @@
     tealdeer
     sbctl
     just
+    clang
     killall
     pv
     nmap
