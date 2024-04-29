@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/nvme1n1";
+        device = "/dev/choucroute";
         content = {
           type = "gpt";
           partitions = {
@@ -42,7 +42,7 @@
         type = "lvm_vg";
         lvs = {
           root = {
-            size = "50G";
+            size = "400G";
             content = {
               type = "btrfs";
               extraArgs = [ "-f" ];
@@ -64,7 +64,7 @@
             };
           };
           home = {
-            size = "1G";
+            size = "400G";
             content = {
               type = "filesystem";
               format = "btrfs";
