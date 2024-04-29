@@ -104,6 +104,8 @@
               };
               inherit system pkgs;
               modules = [
+                disko.nixosModules.disko
+                ./disk.nix { _module.args.disks = [ "/dev/nvme0n1" ]; }
                 ./system/configuration.nix
                 ./cachix.nix
                 ./wifi.nix
@@ -119,8 +121,6 @@
                 }
                 lanzaboote.nixosModules.lanzaboote
                 agenix.nixosModules.default
-                disko.nixosModules.disko
-                ./disk.nix
               ];
             };
         };
