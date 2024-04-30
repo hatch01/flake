@@ -52,7 +52,13 @@ cd nixos
 
 maybe edit the disk name in flake .nix
 
-You also may need to create encryption key for secure boot mais bon j'ai pas tout compris encore donc au pire on dégage lanzaboot et on verra plus tard
+You need to generate keys for secure boot:
+
+```console
+sudo sbctl create-keys
+```
+
+then install
 
 ```console
 nixos-install --flake .#nixos-eymeric
