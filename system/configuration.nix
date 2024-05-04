@@ -12,8 +12,10 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # ../apps/vfio.nix
     ../apps/gaming.nix
   ];
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.extraOptions = ''
     !include ${config.age.secrets.githubToken.path}
@@ -24,6 +26,8 @@
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.supportedFilesystems = ["ntfs"];
   boot.kernelModules = ["v4l2loopback"];
+  boot.kernelParams = ["amd_iommu=on"];
+  system.nixos.tags = ["tulipe"];
   boot.extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
   networking.hostName = "nixos-eymeric"; # Define your hostname.
 
@@ -57,8 +61,14 @@
 
   powerManagement.enable = true;
   specialisation = {
+    #     "VFIO".configuration = {
+    #   system.nixos.tags = [ "with-vfio" ];
+    #   vfio.enable = true;
+    # };
+
     # stollen here https://discourse.nixos.org/t/using-a-low-power-specialisation-for-laptops/22513
     disable-GPU.configuration = {
+      system.nixos.tags = ["disable-GPU"];
       environment.etc."specialisation".text = "disable-GPU";
       boot.extraModprobeConfig = ''
         blacklist nouveau
@@ -124,7 +134,7 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   # maybe needed for cuda
   systemd.services.nvidia-control-devices = {
@@ -217,8 +227,6 @@
   };
   hardware.nvidia-container-toolkit.enable = true;
 
-  # Allow unfree packages
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -249,6 +257,8 @@
     nvd
     agenix.packages.${system}.default
     age
+    openssl
+    appimage-run
   ];
   services.udev.packages = [pkgs.openrgb];
   services.onedrive.enable = true;
