@@ -17,6 +17,7 @@
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.max-jobs = 10;
   nix.extraOptions = ''
     !include ${config.age.secrets.githubToken.path}
   '';
