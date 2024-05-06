@@ -16,8 +16,11 @@
     ../apps/gaming.nix
   ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.max-jobs = 10;
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    max-jobs = 2; # how many derivation built at the same time
+    cores = 5; # how many cores attributed to one build
+  };
   nix.extraOptions = ''
     !include ${config.age.secrets.githubToken.path}
   '';
