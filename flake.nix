@@ -167,6 +167,10 @@
             treefmt.enable = true;
             typos = {
               enable = true;
+              excludes = [
+                ".*\\.(?!nix$)[^.]*$" # Exclude all files except nix files
+                "wifi.nix" # Exclude wifi.nix because it contains wifi names
+              ];
             };
           };
         };
