@@ -61,71 +61,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = {
-    flake-parts,
-    nixpkgs,
-    systems,
-    nixpkgs-unstable,
-    home-manager,
-    flatpaks,
-    plasma-manager,
-    nur,
-    lanzaboote,
-    disko,
-    agenix,
-    treefmt-nix,
-    pre-commit-hooks-nix,
-    ...
-  } @ inputs:
+  outputs = {flake-parts, ...} @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
       imports = [
-        pre-commit-hooks-nix.flakeModule
-        treefmt-nix.flakeModule
+        inputs.pre-commit-hooks-nix.flakeModule
+        inputs.treefmt-nix.flakeModule
+        ./default.nix
       ];
-
-      flake = {
-        nixosConfigurations = {
-          nixos-eymeric = let
-            system = "x86_64-linux";
-
-            pkgs = import nixpkgs {
-              inherit system;
-              config = {
-                cudaSupport = true;
-                allowUnfree = true;
-              };
-              overlays = [((import ./overlays) nixpkgs-unstable)];
-            };
-          in
-            nixpkgs.lib.nixosSystem {
-              specialArgs = {
-                inherit inputs agenix;
-              };
-              inherit system pkgs;
-              modules = [
-                disko.nixosModules.disko
-                ./disk.nix
-                {_module.args.disks = ["/dev/nvme0n1"];}
-                ./system/configuration.nix
-                ./cachix.nix
-                ./wifi.nix
-                ./apps/vm.nix
-                home-manager.nixosModules.home-manager
-                {
-                  home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                  home-manager.extraSpecialArgs = {
-                    inherit inputs;
-                  };
-                  home-manager.users.eymeric = import ./home.nix;
-                }
-                lanzaboote.nixosModules.lanzaboote
-                agenix.nixosModules.default
-              ];
-            };
-        };
-      };
 
       perSystem = {
         config,

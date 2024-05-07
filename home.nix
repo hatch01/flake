@@ -1,37 +1,20 @@
 {
   config,
   pkgs,
+  stateVersion,
+  username,
   inputs,
   ...
 }: {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "eymeric";
-  home.homeDirectory = "/home/eymeric";
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  home = {
+    username = username;
+    homeDirectory = "/home/${username}";
+    stateVersion = stateVersion;
+  };
+
   imports = [
-    apps/zsh.nix
-    apps/keepassxc.nix
-    apps/plasma/plasma.nix
-    apps/neovim.nix
-    apps/onedrive/onedrive.nix
-    apps/ghostwriter.nix
-    apps/thunderbird.nix
-    apps/vscode.nix
-    apps/vesktop/vesktop.nix
-    #apps/espanso.nix
-    apps/konsole.nix
-    apps/homebank.nix
     inputs.flatpaks.homeManagerModules.nix-flatpak
     inputs.plasma-manager.homeManagerModules.plasma-manager
-    inputs.nur.nixosModules.nur
   ];
 
   programs.git = {
@@ -186,6 +169,4 @@
     nixpkgs-fmt
     pdfarranger
   ];
-
-  programs.home-manager.enable = true;
 }
