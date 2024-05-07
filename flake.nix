@@ -82,20 +82,14 @@
         nixosConfigurations = {
           nixos-eymeric = let
             system = "x86_64-linux";
-            pkgs-unstable = import nixpkgs-unstable {
-              inherit system;
-              config = {
-                cudaSupport = true;
-                allowUnfree = true;
-              };
-            };
+
             pkgs = import nixpkgs {
               inherit system;
               config = {
                 cudaSupport = true;
                 allowUnfree = true;
               };
-              overlays = [((import overlays/overlay.nix) pkgs-unstable)];
+              overlays = [((import ./overlays) nixpkgs-unstable)];
             };
           in
             nixpkgs.lib.nixosSystem {
@@ -105,7 +99,8 @@
               inherit system pkgs;
               modules = [
                 disko.nixosModules.disko
-                ./disk.nix { _module.args.disks = [ "/dev/nvme0n1" ]; }
+                ./disk.nix
+                {_module.args.disks = ["/dev/nvme0n1"];}
                 ./system/configuration.nix
                 ./cachix.nix
                 ./wifi.nix
