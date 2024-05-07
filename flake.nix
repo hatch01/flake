@@ -155,12 +155,6 @@
         pre-commit = {
           check.enable = true;
           settings.hooks = {
-            editorconfig-checker = {
-              enable = true;
-              excludes = [
-                ".*\\.age"
-              ];
-            };
             ripsecrets = {
               enable = true;
             };
