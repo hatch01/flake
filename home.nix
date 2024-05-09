@@ -184,6 +184,7 @@
       beeper
       nixpkgs-fmt
       pdfarranger
+      gnome.gnome-disk-utility
     ];
   };
 }
