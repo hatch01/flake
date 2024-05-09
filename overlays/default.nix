@@ -5,8 +5,6 @@
       config = prev.config;
     };
     unstablePackages = [
-      "electrum"
-      "gimp"
     ];
   in
     builtins.listToAttrs (map (x: {
