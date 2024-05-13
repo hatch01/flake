@@ -170,7 +170,6 @@
     openrgb-plugin-hardwaresync
     docker-compose
     podman-compose
-    cachix
     cudatoolkit
     nix-index
     nh

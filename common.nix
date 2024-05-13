@@ -21,7 +21,6 @@ in {
           username
           ;
       })
-    ./cachix.nix
     ./wifi.nix
     ./apps/vm.nix
   ];
