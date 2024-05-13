@@ -21,6 +21,7 @@
       grex
       detox
       xcp
+      silicon
     ];
     programs.zsh = {
       enable = true;
