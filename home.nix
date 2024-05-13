@@ -127,7 +127,7 @@
       nasc
       obs-studio
       onlyoffice-bin
-      libreoffice-qt
+      libreoffice-fresh
       hunspell
       hunspellDicts.fr-any
       steam
