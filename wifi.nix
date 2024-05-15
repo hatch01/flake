@@ -84,10 +84,11 @@ in {
           key-mgmt = "wpa-eap";
         };
         "802-1x" = {
-          eap = "pwd";
+          eap = "peap";
           identity = "$eduroam_user";
           password-flags = "1";
           password = "$eduroam_password";
+          phase2-auth = "mschapv2";
         };
         inherit ipv4 ipv6;
       };
