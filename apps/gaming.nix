@@ -20,5 +20,6 @@
     bottles
     mangohud
     protonup
+    prismlauncher
   ];
 }

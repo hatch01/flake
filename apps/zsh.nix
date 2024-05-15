@@ -22,6 +22,7 @@
       detox
       xcp
       silicon
+      ouch
     ];
     programs.zsh = {
       enable = true;
