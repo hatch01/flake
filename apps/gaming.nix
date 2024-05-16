@@ -21,5 +21,6 @@
     mangohud
     protonup
     prismlauncher
+    ludusavi
   ];
 }
