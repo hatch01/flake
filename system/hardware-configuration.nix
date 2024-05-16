@@ -23,10 +23,10 @@
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
   specialisation = {
-    #     "VFIO".configuration = {
-    #   system.nixos.tags = [ "with-vfio" ];
-    #   vfio.enable = true;
-    # };
+    "VFIO".configuration = {
+      system.nixos.tags = ["with-vfio"];
+      vfio.enable = true;
+    };
 
     # stollen here https://discourse.nixos.org/t/using-a-low-power-specialisation-for-laptops/22513
     disable-GPU.configuration = {
