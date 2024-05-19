@@ -22,6 +22,8 @@ in
           "vfio_pci"
           "vfio"
           "vfio_iommu_type1"
+          # don't know why those modules are not available like in astrid tutorial
+          # but it seems to work without them
           #"vfio_virqfd"
 
           #"nvidia"
