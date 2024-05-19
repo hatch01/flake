@@ -66,6 +66,9 @@
       '';
       initExtra = ''
            export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
+           ccd() {
+             cd $1 && clear
+           }
            cp_song() {
                rsync -var $1 $2
              }
@@ -78,10 +81,10 @@
                cut -d "/" -f1 | awk '{print $0"\""}'
            }
            nix-quick(){
-        nix flake new --template github:the-nix-way/dev-templates#$1 $2
+             nix flake new --template github:the-nix-way/dev-templates#$1 $2
            }
            flake-parts(){
-        nix flake init -t github:hercules-ci/flake-parts
+             nix flake init -t github:hercules-ci/flake-parts
            }
            upgrade(){
         current_commit=$(sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
