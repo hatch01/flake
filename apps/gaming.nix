@@ -22,5 +22,9 @@
     protonup
     prismlauncher
     ludusavi
+    rustdesk
+    protontricks
+    wine
+    parsec-bin
   ];
 }

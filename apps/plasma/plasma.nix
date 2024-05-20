@@ -1,8 +1,33 @@
 {
-  config,
   pkgs,
+  username,
   ...
 }: {
+  services = {
+    displayManager = {
+      defaultSession = "plasma";
+      autoLogin = {
+        enable = true;
+        user = username;
+      };
+    };
+    xserver = {
+      enable = true;
+      xkb = {
+        layout = "fr";
+        variant = "";
+      };
+      displayManager = {
+        lightdm.enable = true;
+      };
+    };
+    desktopManager.plasma6.enable = true;
+  };
+
+  environment.plasma6.excludePackages = with pkgs.libsForQt5; [
+    elisa
+  ];
+
   hm = {
     programs.plasma = {
       enable = true;

@@ -72,7 +72,7 @@
       imports = [
         inputs.pre-commit-hooks-nix.flakeModule
         inputs.treefmt-nix.flakeModule
-        ./default.nix
+        ./systems
       ];
 
       perSystem = {

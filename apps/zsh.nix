@@ -3,27 +3,28 @@
   pkgs,
   ...
 }: {
+  environment.systemPackages = with pkgs; [
+    zsh-nix-shell
+    w3m
+    ripgrep
+    ripgrep-all
+    zoxide
+    eza
+    procs
+    tokei
+    bandwhich
+    dust
+    sd
+    hyperfine
+    fd
+    grex
+    detox
+    xcp
+    silicon
+    ouch
+  ];
+
   hm = {
-    home.packages = with pkgs; [
-      zsh-nix-shell
-      w3m
-      ripgrep
-      ripgrep-all
-      zoxide
-      eza
-      procs
-      tokei
-      bandwhich
-      dust
-      sd
-      hyperfine
-      fd
-      grex
-      detox
-      xcp
-      silicon
-      ouch
-    ];
     programs.zsh = {
       enable = true;
       autosuggestion.enable = true;

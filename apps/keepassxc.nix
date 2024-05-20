@@ -3,6 +3,10 @@
   pkgs,
   ...
 }: {
+  environment.systemPackages = with pkgs; [
+    keepassxc
+  ];
+
   hm = {
     programs.plasma = {
       configFile = {

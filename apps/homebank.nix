@@ -3,11 +3,11 @@
   pkgs,
   ...
 }: {
-  hm = {
-    home.packages = with pkgs; [
-      homebank
-    ];
+  environment.systemPackages = with pkgs; [
+    homebank
+  ];
 
+  hm = {
     programs.plasma = {
       configFile = {
         "homebank/preferences" = {

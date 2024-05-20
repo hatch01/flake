@@ -4,10 +4,10 @@
   lib,
   ...
 }: {
+  environment.systemPackages = with pkgs; [kdePackages.konsole];
+
   hm = {
     programs.plasma = {
-      enable = true;
-
       configFile = {
         "konsolerc" = {
           "Desktop Entry"."DefaultProfile".value = "dark.profile";

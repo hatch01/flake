@@ -3,10 +3,9 @@
   pkgs,
   ...
 }: {
+  environment.systemPackages = with pkgs; [nil];
+
   hm = {
-    home.packages = with pkgs; [
-      nil
-    ];
     home.sessionVariables.NIXOS_OZONE_WL = "1";
     programs.vscode = {
       enable = true;

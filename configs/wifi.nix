@@ -12,7 +12,7 @@ in {
   age = {
     identityPaths = ["/etc/age/key"];
     secrets = {
-      wifi.file = secrets/wifi.age;
+      wifi.file = ../secrets/wifi.age;
     };
   };
   #networks
