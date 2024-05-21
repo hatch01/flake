@@ -37,32 +37,32 @@ in {
         autosuggestion.enable = true;
         enableCompletion = true;
         shellAliases = {
-          du = "dust";
-          cp = "cp -rvi";
-          mv = "mv -vi";
-          cd = "z";
-          sman = "tldr";
-          cat = "bat";
-          ls = "eza";
-          ll = "eza -l";
-          l = "eza -la";
-          rm = "trash-put";
-          sgit = "sudo -E git";
-          se = "sudo -E";
-          slazygit = "sudo -E lazygit";
+          du = lib.getExe pkgs.dust;
+          cp = "${lib.getBin pkgs.coreutils}/bin/cp -rvi";
+          mv = "${lib.getBin pkgs.coreutils}/bin/mv -vi";
+          cd = "z"; # not using direct path because it is provided by zoxide
+          sman = lib.getExe pkgs.tldr;
+          cat = lib.getExe pkgs.bat;
+          ls = lib.getExe pkgs.eza;
+          ll = "${lib.getExe pkgs.eza} -l";
+          l = "${lib.getExe pkgs.eza} -la";
+          rm = "${lib.getBin pkgs.trash-cli}/bin/trash-put";
+          sgit = "${lib.getExe pkgs.sudo} -E ${lib.getExe pkgs.git}";
+          se = "${lib.getExe pkgs.sudo} -E";
+          slazygit = "${lib.getExe pkgs.sudo} -E ${lib.getExe pkgs.lazygit}";
           # nixos specific command
-          update-old = "sudo nixos-rebuild switch --flake /etc/nixos --use-remote-sudo";
-          update = "nh os switch /etc/nixos";
-          nix-history = "nix profile history --profile /nix/var/nix/profiles/system";
+          update-old = "${lib.getExe pkgs.sudo} ${lib.getExe pkgs.nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
+          update = "${lib.getExe pkgs.nh} os switch /etc/nixos";
+          nix-history = "${lib.getExe pkgs.nix} profile history --profile /nix/var/nix/profiles/system";
           yay = "upgrade";
           bro = "upgrade";
-          search = "nh search";
-          clean = "nh clean all";
-          stress = "for i in $(seq $(getconf _NPROCESSORS_ONLN)); do yes > /dev/null & done";
-          bkill = "fzf-kill";
-          gitnix = "git add . && git commit --amend --no-edit && git push --force";
-          ps = "procs";
-          webcam = "scrcpy --v4l2-sink=/dev/video0 --rotation=0";
+          search = "${lib.getExe pkgs.nh} search";
+          clean = "${lib.getExe pkgs.nh} clean all";
+          stress = "for i in $(${lib.getBin pkgs.coreutils}/bin/seq $(${lib.getExe pkgs.getconf} _NPROCESSORS_ONLN)); do ${lib.getBin pkgs.coreutils}/bin/yes > /dev/null & done";
+          bkill = "fzf-kill"; # not using direct path because it is provided by fzf-zsh-plugin
+          gitnix = "${lib.getExe pkgs.git} add . && ${lib.getExe pkgs.git} commit --amend --no-edit && ${lib.getExe pkgs.git} push --force";
+          ps = "${lib.getExe pkgs.procs}";
+          webcam = lib.mkIf config.dev.androidtools.enable "${lib.getExe pkgs.scrcpy} --v4l2-sink=/dev/video0 --rotation=0";
         };
         initExtraFirst = ''
           # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -75,32 +75,29 @@ in {
         initExtra = ''
              export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
              ccd() {
-               cd $1 && clear
+               cd $1 && ${lib.getBin pkgs.ncurses}/bin/clear
              }
              cp_song() {
-                 rsync -var $1 $2
+                 ${lib.getExe pkgs.rsync} -var $1 $2
                }
-             rmarkdown() {
-               markdown2-3.6 $1 | w3m -T text/html
-             }
              flatpak_backup(){
-               flatpak list --app --show-details | \
-                 awk '{print "flatpak install --assumeyes --user \""$2"\" \""$1}' | \
-                 cut -d "/" -f1 | awk '{print $0"\""}'
+               ${lib.getExe pkgs.flatpak} list --app --show-details | \
+                 ${lib.getExe pkgs.gawk} '{print "${lib.getExe pkgs.flatpak} install --assumeyes --user \""$2"\" \""$1}' | \
+                 ${lib.getBin pkgs.coreutils}/bin/cut -d "/" -f1 | ${lib.getExe pkgs.gawk} '{print $0"\""}'
              }
              nix-quick(){
-               nix flake new --template github:the-nix-way/dev-templates#$1 $2
+               ${lib.getExe pkgs.nix} flake new --template github:the-nix-way/dev-templates#$1 $2
              }
              flake-parts(){
-               nix flake init -t github:hercules-ci/flake-parts
+               ${lib.getExe pkgs.nix} flake init -t github:hercules-ci/flake-parts
              }
              upgrade(){
-          current_commit=$(sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
+          current_commit=$(${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
           if [[ $1 == "--full" ]]
           then
-            sudo nix flake update /etc/nixos --commit-lock-file
+            ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.nix} flake update /etc/nixos --commit-lock-file
           else
-            sudo nix flake lock \
+            ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.nix} flake lock \
               --update-input nixpkgs \
               --update-input lanzaboote \
               --update-input home-manager \
@@ -110,23 +107,23 @@ in {
               --commit-lock-file \
               /etc/nixos
           fi
-          new_commit=$(sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
+          new_commit=$(${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
           if [ "$current_commit" != "$new_commit" ]
           then
-            nh os switch /etc/nixos
+            ${lib.getExe pkgs.nh} os switch /etc/nixos
             if [ $? -eq 0 ]
            	  then
              	    echo ok
            	  else
              	    echo error
-             	      oldStash=$(sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
-             	      sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash push --all -m "Stash changes before update"
-             	      sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos reset --hard HEAD~
-             	      newStash=$(sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
+             	      oldStash=$(${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
+             	      ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash push --all -m "Stash changes before update"
+             	      ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos reset --hard HEAD~
+             	      newStash=$(${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
              	      if [ "$oldStash" != "$newStash" ]
              	      then
-                 	sudo git --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash pop
-              	      fi
+                 	    ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash pop
+              	    fi
              	  fi
           else
            	  echo nothing to update
@@ -135,7 +132,7 @@ in {
              # enable fzf
              [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
              #enable zoxide
-             eval "$(zoxide init zsh)"
+             eval "$(${lib.getExe pkgs.zoxide} init zsh)"
         '';
 
         zplug = {
