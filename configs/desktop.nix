@@ -36,6 +36,7 @@
   multimedia.editing.enable = true;
   neovim.enable = true;
   thunderbird.enable = true;
+  ollama.enable = true;
 
   gaming.enable = true;
   # remotePlay.enable = false # enabled by default if gaming.enable is true

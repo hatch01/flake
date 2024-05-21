@@ -24,7 +24,6 @@ in {
         geogebra6
 
         zap # cybersecurity website test
-        (ollama.override {acceleration = "cuda";})
 
         #math
         nasc

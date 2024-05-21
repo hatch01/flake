@@ -17,6 +17,8 @@
     )
   ];
 
+  ollama.cudaEnabled = true;
+
   nixpkgs.config.cudaSupport = true;
   environment.systemPackages = with pkgs; [
     cudatoolkit

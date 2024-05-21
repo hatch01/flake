@@ -20,5 +20,6 @@
     ./tools.nix
     ./vm.nix
     ./zsh.nix
+    ./ollama.nix
   ];
 }
