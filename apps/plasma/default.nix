@@ -40,11 +40,21 @@ in {
     hm = {
       programs.plasma = {
         enable = true;
+        workspace = {
+          clickItemTo = "open";
+          lookAndFeel = "Catppuccin-Latte-Blue";
+          cursorTheme = "Catppuccin-Mocha-Dark-Cursors";
+          iconTheme = "breeze";
+        };
+
+        fonts = {
+          general = {
+            family = "JetBrainsMono Nerd Font";
+            pointSize = 11;
+          };
+        };
 
         shortcuts = {
-          ksmserver = {
-            "Lock Session" = "Meta+L";
-          };
           kwin = {
             "Switch One Desktop Down" = "Meta+Shift+Down";
             "Switch One Desktop Up" = "Meta+Shift+Up";
@@ -87,9 +97,6 @@ in {
           "yakuake"."toggle-window-state" = "Meta+Return";
         };
         configFile = {
-          "gtk-3.0/settings.ini"."Settings"."gtk-cursor-theme-name".value = "Catppuccin-Mocha-Blue-Cursors";
-          "gtk-4.0/settings.ini"."Settings"."gtk-cursor-theme-name".value = "Catppuccin-Mocha-Blue-Cursors";
-
           "kcminputrc"."Libinput.1739.52861.SYNA32B9:00 06CB:CE7D Touchpad"."NaturalScroll".value = true;
           "kcminputrc"."Libinput.1739.52861.SYNA32B9:00 06CB:CE7D Touchpad"."TapToClick".value = true;
           "kcminputrc"."Keyboard"."NumLock".value = 0;
@@ -99,19 +106,10 @@ in {
               "immutability".value = 1;
               "plugin".value = "day-night-switcher";
             };
-            "Containments/3/Applets/30/Configuration/General" = {
-              "colorA".value = "CatppuccinLatteBlue";
-              "colorB".value = "CatppuccinMochaBlue";
-            };
             "Containments/37/Applets/62" = {
               "immutability".value = 1;
               "plugin".value = "day-night-switcher";
             };
-            "Containments/3/Applets/62/Configuration/General" = {
-              "colorA".value = "CatppuccinLatteBlue";
-              "colorB".value = "CatppuccinMochaBlue";
-            };
-
             "Containments/2/Applets/31/Configuration/General" = {
               "customButtonImage".value = "nix-snowflake";
               "favoritesPortedToKAstats".value = true;
@@ -119,15 +117,6 @@ in {
               "useCustomButtonImage".value = true;
             };
             "Containments/2/Applets/5/Configuration/General"."groupedTaskVisualization".value = 2;
-          };
-
-          "plasma-org.kde.plasma.desktop-appletsrc"."Containments/1/Wallpaper/org.kde.potd/General" = {
-            "FillMode".value = 2;
-            "Provider".value = "bing";
-          };
-          "plasma-org.kde.plasma.desktop-appletsrc"."Containments/34/Wallpaper/org.kde.potd/General" = {
-            "FillMode".value = 2;
-            "Provider".value = "bing";
           };
 
           # desktop configs
