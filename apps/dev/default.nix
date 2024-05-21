@@ -20,7 +20,7 @@ in {
       []
       ++ optionals config.dev.androidtools.enable
       [
-        android-studio
+        android-tools
         scrcpy
       ]
       ++ optionals config.dev.enable [
