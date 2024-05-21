@@ -27,6 +27,8 @@ in {
     };
     remotePlay.enable = mkDefault gaming.enable;
     gamemode.enable = mkDefault gaming.enable;
+    winetools.enable = mkDefault gaming.enable;
+    minecraft.enable = mkDefault gaming.enable;
 
     programs = {
       gamemode.enable = gamemode.enable;
