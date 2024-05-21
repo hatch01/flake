@@ -80,11 +80,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    openrgb-with-all-plugins
-    openrgb-plugin-effects
-    openrgb-plugin-hardwaresync
-  ];
+  services.hardware.openrgb.enable = true;
   services.udev.packages = [pkgs.openrgb];
   services.onedrive.enable = true;
 }

@@ -10,10 +10,14 @@
   imports = [
     (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" username])
     ./wifi.nix
-    ../apps/vm.nix
-    ../apps/git.nix
-    ../apps/nix-related.nix
+    ../apps
   ];
+
+  container.enable = true;
+  nix-related.enable = true;
+  gitConfig.enable = true;
+  zshConfig.enable = true;
+  # basic-tools.enable = true; # unneeded because it is set to true by default
 
   nixpkgs = {
     config = {

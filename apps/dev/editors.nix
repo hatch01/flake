@@ -1,16 +1,32 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) mkEnableOption optionals;
+in {
   imports = [
     ./vscode.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    jetbrains.idea-ultimate
-    jetbrains.pycharm-professional
-    jetbrains.clion
-    jetbrains.rust-rover
-    jetbrains.phpstorm
-    #android-studio
-    neovide
-    kate
-  ];
+  options = {
+    jetbrains.enable = mkEnableOption "jetbrains";
+  };
+
+  config = {
+    environment.systemPackages = with pkgs;
+      [
+        neovide
+        kate
+      ]
+      ++ optionals config.jetbrains.enable [
+        jetbrains.idea-ultimate
+        jetbrains.pycharm-professional
+        jetbrains.clion
+        jetbrains.rust-rover
+        jetbrains.phpstorm
+        #android-studio
+      ];
+  };
 }

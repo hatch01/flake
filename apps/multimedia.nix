@@ -1,23 +1,38 @@
 {
   pkgs,
   config,
+  lib,
   ...
-}: {
-  environment.systemPackages = with pkgs; [
-    # editing
-    gimp
-    blender
-    imagemagick
-    kdePackages.kdenlive
-    kdePackages.kcolorchooser
-    obs-studio
-    inkscape-with-extensions
+}: let
+  inherit (lib) optionals mkEnableOption mkIf mkDefault;
+in {
+  options = {
+    multimedia.enable = mkEnableOption "Enable multimedia reading packages";
+    multimedia.editing.enable = mkEnableOption "Enable multimedia editing packages";
+  };
 
-    # reading
-    ffmpeg-full
-    vlc
-    spotify
-    yt-dlp
-    config.nur.repos.milahu.vdhcoapp
-  ];
+  config = with config; {
+    # if we have editing tools, it is likely we also want to read multimedia
+    multimedia.enable = mkIf multimedia.editing.enable true;
+    environment.systemPackages = with pkgs;
+      []
+      ++ optionals multimedia.enable [
+        # reading
+        ffmpeg-full
+        vlc
+        spotify
+        yt-dlp
+        config.nur.repos.milahu.vdhcoapp
+      ]
+      ++ optionals multimedia.editing.enable [
+        # editing
+        gimp
+        blender
+        imagemagick
+        kdePackages.kdenlive
+        kdePackages.kcolorchooser
+        obs-studio
+        inkscape-with-extensions
+      ];
+  };
 }

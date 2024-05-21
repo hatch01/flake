@@ -1,18 +1,27 @@
 {
   config,
   pkgs,
+  lib,
   ...
-}: {
-  environment.systemPackages = with pkgs; [
-    homebank
-  ];
+}: let
+  inherit (lib) optionals mkEnableOption mkDefault mkIf;
+in {
+  options = {
+    homebank.enable = mkEnableOption "homebank";
+  };
 
-  hm = {
-    programs.plasma = {
-      configFile = {
-        "homebank/preferences" = {
-          "Exchange" = {
-            "DateFmt".value = 1;
+  config = mkIf config.homebank.enable {
+    environment.systemPackages = with pkgs; [
+      homebank
+    ];
+
+    hm = {
+      programs.plasma = {
+        configFile = {
+          "homebank/preferences" = {
+            "Exchange" = {
+              "DateFmt".value = 1;
+            };
           };
         };
       };

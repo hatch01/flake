@@ -1,19 +1,34 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    krename
-    localsend
-    minder
-    kshutdown
-    textpieces
-    kdePackages.filelight
-    electrum
-    geogebra6
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkDefault mkIf;
+in {
+  options = {
+    basic-tools.enable = mkEnableOption "basic-tools";
+  };
 
-    zap # cybersecurity website test
-    (ollama.override {acceleration = "cuda";})
+  config = {
+    basic-tools.enable = mkDefault true;
+    environment.systemPackages = with pkgs;
+      mkIf config.basic-tools.enable [
+        krename
+        localsend
+        minder
+        kshutdown
+        textpieces
+        kdePackages.filelight
+        electrum
+        geogebra6
 
-    #math
-    nasc
-    kalker
-  ];
+        zap # cybersecurity website test
+        (ollama.override {acceleration = "cuda";})
+
+        #math
+        nasc
+        kalker
+      ];
+  };
 }

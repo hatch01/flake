@@ -3,25 +3,52 @@
   pkgs,
   ...
 }: {
-  home-manager.sharedModules = with inputs; [plasma-manager.homeManagerModules.plasma-manager];
+  # apps enabling
+  plasma.enable = true;
 
-  imports = [
-    ../apps/plasma/plasma.nix
-    ../apps/zsh.nix
-    ../apps/keepassxc.nix
-    ../apps/neovim.nix
-    ../apps/cloud-storage
-    ../apps/thunderbird.nix
-    ../apps/social
-    #../apps/espanso.nix
-    ../apps/konsole.nix
-    ../apps/homebank.nix
-    ../apps/multimedia.nix
-    ../apps/kde-connect.nix
-    ../apps/dev
-    ../apps/tools.nix
-    ../apps/office
-  ];
+  # dev
+  dev.enable = true;
+  dev.androidtools.enable = true;
+  jetbrains.enable = true;
+  vscode.enable = true;
+
+  # office
+  libreoffice.enable = true;
+  onlyoffice.enable = true;
+  ghostwriter.enable = true;
+  cloud-storage.enable = true;
+
+  # keepass
+  keepassxc.enable = true;
+  keepassxc.autostart = true;
+
+  social.enable = true;
+  #vesktop.enable = false; default to the same value as social.enable
+
+  espanso.enable = false;
+  homebank.enable = true;
+  container.distrobox.enable = true;
+  vm.enable = true;
+  kdeconnect.enable = true;
+  konsole.enable = true;
+
+  multimedia.enable = true;
+  multimedia.editing.enable = true;
+  neovim.enable = true;
+  thunderbird.enable = true;
+
+  gaming.enable = true;
+  # remotePlay.enable = false # enabled by default if gaming.enable is true
+  # steam = {
+  #   enable = false # enabled by default if gaming.enable is true
+  #   gamescopeSession.enable = false # enabled by default if steam.enable is true
+  #   protonup.enable = false # enabled by default if steam.enable is true
+  # };
+  # gamemode.enable = false # enabled by default if gaming.enable is true
+  # minecraft.enable = false # enabled by default if gaming.enable is true
+  # winetools.enable = false # enabled by default if gaming.enable is true
+
+  home-manager.sharedModules = with inputs; [plasma-manager.homeManagerModules.plasma-manager];
 
   services.flatpak = {
     enable = true;

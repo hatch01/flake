@@ -1,30 +1,55 @@
-{pkgs, ...}: {
-  programs = {
-    gamemode.enable = true;
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) optionals mkEnableOption mkDefault mkIf;
+in {
+  options = {
+    gaming.enable = mkEnableOption "Enable Gaming";
+    remotePlay.enable = mkEnableOption "Enable Steam Remote Play";
     steam = {
-      enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      package = pkgs.steam.override {
-        extraLibraries = pkgs: [pkgs.openssl pkgs.nghttp2 pkgs.libidn2 pkgs.rtmpdump pkgs.libpsl pkgs.curl pkgs.krb5 pkgs.keyutils];
-      };
-      gamescopeSession.enable = true;
+      enable = mkEnableOption "Enable Steam";
+      gamescopeSession.enable = mkEnableOption "Enable GameScope session";
+      protonup.enable = mkEnableOption "Enable ProtonUp";
     };
+    gamemode.enable = mkEnableOption "Enable GameMode";
+    minecraft.enable = mkEnableOption "Enable Minecraft";
+    winetools.enable = mkEnableOption "Enable Wine Tools";
   };
 
-  environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-  };
+  config = with config; {
+    steam = {
+      enable = mkDefault gaming.enable;
+      gamescopeSession.enable = mkDefault steam.enable;
+      protonup.enable = mkDefault steam.enable;
+    };
+    remotePlay.enable = mkDefault gaming.enable;
+    gamemode.enable = mkDefault gaming.enable;
 
-  environment.systemPackages = with pkgs; [
-    # gaming
-    bottles
-    mangohud
-    protonup
-    prismlauncher
-    ludusavi
-    rustdesk
-    protontricks
-    wine
-    parsec-bin
-  ];
+    programs = {
+      gamemode.enable = gamemode.enable;
+      steam = {
+        enable = steam.enable;
+        remotePlay.openFirewall = remotePlay.enable; # Open ports in the firewall for Steam Remote Play
+        gamescopeSession.enable = steam.gamescopeSession.enable;
+      };
+    };
+
+    environment.sessionVariables = mkIf steam.protonup.enable {
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+    };
+
+    environment.systemPackages = with pkgs;
+    with config;
+      [
+        mangohud
+      ]
+      ++ optionals steam.protonup.enable [protonup protontricks]
+      ++ optionals minecraft.enable [prismlauncher]
+      ++ optionals steam.enable [ludusavi] # a backup tool for Steam games
+      ++ optionals remotePlay.enable [rustdesk parsec-bin]
+      ++ optionals winetools.enable [bottles wine];
+  };
 }
