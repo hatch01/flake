@@ -2,13 +2,9 @@
 {
   lib,
   config,
+  gpuIDs,
   ...
 }: let
-  # RTX 3060
-  gpuIDs = [
-    "10de:25a5" # Graphics
-    "10de:2291" # Audio
-  ];
   inherit (lib) mkEnableOption mkIf;
 in {
   options.vfio.enable =

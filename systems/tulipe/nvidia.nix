@@ -1,8 +1,22 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: {
+  imports = [
+    (
+      import ../../apps/vfio.nix {
+        # RTX 3060
+        gpuIDs = [
+          "10de:25a5" # Graphics
+          "10de:2291" # Audio
+        ];
+        inherit config lib;
+      }
+    )
+  ];
+
   nixpkgs.config.cudaSupport = true;
   environment.systemPackages = with pkgs; [
     cudatoolkit

@@ -18,7 +18,6 @@
     ./nix-related.nix
     ./thunderbird.nix
     ./tools.nix
-    ./vfio.nix
     ./vm.nix
     ./zsh.nix
   ];
