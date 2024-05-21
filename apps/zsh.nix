@@ -47,11 +47,11 @@ in {
           ll = "${lib.getExe pkgs.eza} -l";
           l = "${lib.getExe pkgs.eza} -la";
           rm = "${lib.getBin pkgs.trash-cli}/bin/trash-put";
-          sgit = "${lib.getExe pkgs.sudo} -E ${lib.getExe pkgs.git}";
-          se = "${lib.getExe pkgs.sudo} -E";
-          slazygit = "${lib.getExe pkgs.sudo} -E ${lib.getExe pkgs.lazygit}";
+          sgit = " -E ${lib.getExe pkgs.git}";
+          se = " -E";
+          slazygit = " -E ${lib.getExe pkgs.lazygit}";
           # nixos specific command
-          update-old = "${lib.getExe pkgs.sudo} ${lib.getExe pkgs.nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
+          update-old = " ${lib.getExe pkgs.nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
           update = "${lib.getExe pkgs.nh} os switch /etc/nixos";
           nix-history = "${lib.getExe pkgs.nix} profile history --profile /nix/var/nix/profiles/system";
           yay = "upgrade";
@@ -92,12 +92,12 @@ in {
                ${lib.getExe pkgs.nix} flake init -t github:hercules-ci/flake-parts
              }
              upgrade(){
-          current_commit=$(${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
+          current_commit=$( ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
           if [[ $1 == "--full" ]]
           then
-            ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.nix} flake update /etc/nixos --commit-lock-file
+             ${lib.getExe pkgs.nix} flake update /etc/nixos --commit-lock-file
           else
-            ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.nix} flake lock \
+             ${lib.getExe pkgs.nix} flake lock \
               --update-input nixpkgs \
               --update-input lanzaboote \
               --update-input home-manager \
@@ -107,7 +107,7 @@ in {
               --commit-lock-file \
               /etc/nixos
           fi
-          new_commit=$(${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
+          new_commit=$( ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
           if [ "$current_commit" != "$new_commit" ]
           then
             ${lib.getExe pkgs.nh} os switch /etc/nixos
@@ -116,13 +116,13 @@ in {
              	    echo ok
            	  else
              	    echo error
-             	      oldStash=$(${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
-             	      ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash push --all -m "Stash changes before update"
-             	      ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos reset --hard HEAD~
-             	      newStash=$(${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
+             	      oldStash=$( ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
+             	       ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash push --all -m "Stash changes before update"
+             	       ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos reset --hard HEAD~
+             	      newStash=$( ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
              	      if [ "$oldStash" != "$newStash" ]
              	      then
-                 	    ${lib.getExe pkgs.sudo} ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash pop
+                 	     ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash pop
               	    fi
              	  fi
           else
