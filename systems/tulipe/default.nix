@@ -76,9 +76,11 @@
     waydroid.enable = true;
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  services.hardware.openrgb.enable = true;
+  services.hardware.openrgb = {
+    enable = true;
+    package = pkgs.openrgb-with-all-plugins;
+  };
+
   services.udev.packages = [pkgs.openrgb];
   services.onedrive.enable = true;
 }
