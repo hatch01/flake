@@ -76,6 +76,10 @@
     waydroid.enable = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    openrgb-plugin-hardwaresync
+  ];
+
   services.hardware.openrgb = {
     enable = true;
     package = pkgs.openrgb-with-all-plugins;
