@@ -50,7 +50,7 @@ in {
         fonts = {
           general = {
             family = "JetBrainsMono Nerd Font";
-            pointSize = 11;
+            pointSize = 10;
           };
         };
 
