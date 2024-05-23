@@ -38,15 +38,15 @@ in {
         enableCompletion = true;
         shellAliases = {
           du = lib.getExe pkgs.dust;
-          cp = "${lib.getBin pkgs.coreutils}/bin/cp -rvi";
-          mv = "${lib.getBin pkgs.coreutils}/bin/mv -vi";
+          cp = "${lib.getExe' pkgs.coreutils "cp"} -rvi";
+          mv = "${lib.getExe' pkgs.coreutils "mv"} -vi";
           cd = "z"; # not using direct path because it is provided by zoxide
           sman = lib.getExe pkgs.tldr;
           cat = lib.getExe pkgs.bat;
           ls = lib.getExe pkgs.eza;
           ll = "${lib.getExe pkgs.eza} -l";
           l = "${lib.getExe pkgs.eza} -la";
-          rm = "${lib.getBin pkgs.trash-cli}/bin/trash-put";
+          rm = "${lib.getExe' pkgs.trash-cli "trash-put"}";
           sgit = " -E ${lib.getExe pkgs.git}";
           se = " -E";
           slazygit = " -E ${lib.getExe pkgs.lazygit}";
@@ -58,7 +58,7 @@ in {
           bro = "upgrade";
           search = "${lib.getExe pkgs.nh} search";
           clean = "${lib.getExe pkgs.nh} clean all";
-          stress = "for i in $(${lib.getBin pkgs.coreutils}/bin/seq $(${lib.getExe pkgs.getconf} _NPROCESSORS_ONLN)); do ${lib.getBin pkgs.coreutils}/bin/yes > /dev/null & done";
+          stress = "for i in $(${lib.getExe' pkgs.coreutils "seq"} $(${lib.getExe pkgs.getconf} _NPROCESSORS_ONLN)); do ${lib.getExe' pkgs.coreutils "yes"} > /dev/null & done";
           bkill = "fzf-kill"; # not using direct path because it is provided by fzf-zsh-plugin
           gitnix = "${lib.getExe pkgs.git} add . && ${lib.getExe pkgs.git} commit --amend --no-edit && ${lib.getExe pkgs.git} push --force";
           ps = "${lib.getExe pkgs.procs}";
@@ -75,7 +75,7 @@ in {
         initExtra = ''
              export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
              ccd() {
-               cd $1 && ${lib.getBin pkgs.ncurses}/bin/clear
+               cd $1 && ${lib.getExe' pkgs.ncurses "clear"}
              }
              cp_song() {
                  ${lib.getExe pkgs.rsync} -var $1 $2
@@ -83,7 +83,7 @@ in {
              flatpak_backup(){
                ${lib.getExe pkgs.flatpak} list --app --show-details | \
                  ${lib.getExe pkgs.gawk} '{print "${lib.getExe pkgs.flatpak} install --assumeyes --user \""$2"\" \""$1}' | \
-                 ${lib.getBin pkgs.coreutils}/bin/cut -d "/" -f1 | ${lib.getExe pkgs.gawk} '{print $0"\""}'
+                 ${lib.getExe' pkgs.coreutils "cut"} -d "/" -f1 | ${lib.getExe pkgs.gawk} '{print $0"\""}'
              }
              nix-quick(){
                ${lib.getExe pkgs.nix} flake new --template github:the-nix-way/dev-templates#$1 $2
