@@ -12,15 +12,15 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1713686661,
-        "narHash": "sha256-Ox4iftYIcTi/LYQUAOU+o6vw/7R1OaTjlKF5MEmoKUw=",
-        "owner": "uku3lig",
+        "lastModified": 1716454049,
+        "narHash": "sha256-eJExcGt3hvswpyc6Bk3f7X+CXitaW7vdC6rNd99/Hfo=",
+        "owner": "hatch01",
         "repo": "agenix",
-        "rev": "29690fa7b5a72a2242193e42c77a679296c60d89",
+        "rev": "09e9966d4bc557afa3b8f67984545ff7826b2bea",
         "type": "github"
       },
       "original": {
-        "owner": "uku3lig",
+        "owner": "hatch01",
         "repo": "agenix",
         "type": "github"
       }
