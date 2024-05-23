@@ -81,8 +81,8 @@ in {
                  ${lib.getExe pkgs.rsync} -var $1 $2
                }
              flatpak_backup(){
-               ${lib.getExe pkgs.flatpak} list --app --show-details | \
-                 ${lib.getExe pkgs.gawk} '{print "${lib.getExe pkgs.flatpak} install --assumeyes --user \""$2"\" \""$1}' | \
+               ${lib.getExe' pkgs.flatpak "flatpak"} list --app --show-details | \
+                 ${lib.getExe pkgs.gawk} '{print "${lib.getExe' pkgs.flatpak "flatpak"} install --assumeyes --user \""$2"\" \""$1}' | \
                  ${lib.getExe' pkgs.coreutils "cut"} -d "/" -f1 | ${lib.getExe pkgs.gawk} '{print $0"\""}'
              }
              nix-quick(){
