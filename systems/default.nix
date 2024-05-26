@@ -33,7 +33,7 @@
     disko.nixosModules.disko
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
-    nur.nixosModules.nur
+    #nur.nixosModules.nur
   ];
 
   desktop = with inputs;

@@ -29,7 +29,7 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
-    nur.url = "github:nix-community/NUR";
+    #nur.url = "github:nix-community/NUR";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";

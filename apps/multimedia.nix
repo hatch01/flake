@@ -22,7 +22,7 @@ in {
         vlc
         spotify
         yt-dlp
-        config.nur.repos.milahu.vdhcoapp
+        vdhcoapp
       ]
       ++ optionals multimedia.editing.enable [
         # editing
