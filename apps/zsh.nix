@@ -38,7 +38,7 @@ in {
         enableCompletion = true;
         shellAliases = {
           du = lib.getExe pkgs.dust;
-          cp = "${lib.getExe' pkgs.coreutils "cp"} -rvi";
+          cp = "${lib.getExe pkgs.xcp} -rvi";
           mv = "${lib.getExe' pkgs.coreutils "mv"} -vi";
           cd = "z"; # not using direct path because it is provided by zoxide
           sman = lib.getExe pkgs.tldr;
