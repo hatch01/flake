@@ -28,7 +28,6 @@ in {
         minikube
         httpy-cli
         jq
-        openjdk19
       ];
   };
 }
