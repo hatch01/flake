@@ -52,6 +52,7 @@ in {
             settings = id: {
               "mail.smtpserver.smtp_${id}.authMode" = 10;
               "mail.server.server_${id}.authMethod" = 10;
+              "mail.identity.id_${id}.reply_on_top" = 1;
             };
           };
         };
@@ -72,6 +73,7 @@ in {
             settings = id: {
               "mail.smtpserver.smtp_${id}.authMode" = 10;
               "mail.server.server_${id}.authMethod" = 10;
+              "mail.identity.id_${id}.reply_on_top" = 1;
             };
           };
         };
@@ -90,6 +92,9 @@ in {
           thunderbird = {
             enable = true;
             profiles = ["${thunderbird_profile}"];
+            settings = id: {
+              "mail.identity.id_${id}.reply_on_top" = 1;
+            };
           };
         };
 
@@ -105,6 +110,7 @@ in {
             settings = id: {
               "mail.smtpserver.smtp_${id}.authMode" = 10;
               "mail.server.server_${id}.authMethod" = 10;
+              "mail.identity.id_${id}.reply_on_top" = 1;
             };
           };
         };
@@ -124,6 +130,9 @@ in {
           thunderbird = {
             enable = true;
             profiles = ["${thunderbird_profile}"];
+            settings = id: {
+              "mail.identity.id_${id}.reply_on_top" = 1;
+            };
           };
         };
       };
