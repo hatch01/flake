@@ -174,6 +174,7 @@
       iotop # io monitoring
       iftop # network monitoring
       nixpkgs-fmt
+      alejandra
 
       # python is useful
       virtualenv
