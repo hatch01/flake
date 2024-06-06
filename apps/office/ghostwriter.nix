@@ -12,16 +12,15 @@ in {
   };
 
   config = mkIf config.ghostwriter.enable {
-    hm = {
-      home.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
         ghostwriter
         pandoc
         nodejs
         texlive.combined.scheme-full
         mermaid-cli
         mermaid-filter
-      ];
-
+    ];
+    hm = {
       programs.zsh.initExtra = ''
         md2pdf(){
           md2 pdf $@

@@ -6,9 +6,9 @@
 }: let
   inherit (lib) mkIf;
 in {
-  hm = mkIf config.cloud-storage.enable {
-    home.packages = with pkgs; [onedrive];
-    home.file.".config/onedrive/config" = {
+  config = mkIf config.cloud-storage.enable {
+    environment.systemPackages = with pkgs; [onedrive];
+    hm.home.file.".config/onedrive/config" = {
       source = ./config;
       force = true;
     };
