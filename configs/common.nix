@@ -90,6 +90,7 @@
           "libnvjitlink"
           "libcusparse"
           "libnpp"
+          "libXNVCtrl"
           "blender" #only because of cuda
       ];
     };
