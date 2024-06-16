@@ -13,6 +13,7 @@ in {
     thunderbird.account.eymericdechelette_gmail.enable = mkEnableOption "Enable Eymeric Déchelette Gmail account";
     thunderbird.account.hatchlechien_yahoo.enable = mkEnableOption "Enable Hatchlechien Yahoo account";
     thunderbird.account.eymericdechelette_free.enable = mkEnableOption "Enable Eymeric Déchelette Free account";
+    thunderbird.account.eymericmonitoring_free.enable = mkEnableOption "Enable Eymeric Monitoring Free account";
     thunderbird.account.hatchlechien_gmail.enable = mkEnableOption "Enable Hatchlechien Gmail account";
     thunderbird.account.univ_email.enable = mkEnableOption "Enable University email account";
   };
@@ -23,6 +24,7 @@ in {
       eymericdechelette_gmail.enable = mkDefault true;
       hatchlechien_yahoo.enable = mkDefault true;
       eymericdechelette_free.enable = mkDefault true;
+      eymericmonitoring_free.enable = mkDefault true;
       hatchlechien_gmail.enable = mkDefault true;
       univ_email.enable = mkDefault true;
     };
@@ -89,6 +91,25 @@ in {
           smtp.port = 465;
           smtp.tls.enable = true;
           primary = true;
+          thunderbird = {
+            enable = true;
+            profiles = ["${thunderbird_profile}"];
+            settings = id: {
+              "mail.identity.id_${id}.reply_on_top" = 1;
+            };
+          };
+        };
+        
+        eymericmonitoring_free = mkIf thunderbird.account.eymericmonitoring_free.enable {
+          realName = "Eymeric Déchelette";
+          address = "eymeric.monitoring@free.fr";
+          userName = "eymeric.monitoring";
+          imap.host = "imap.free.fr";
+          imap.port = 993;
+          imap.tls.enable = true;
+          smtp.host = "smtp.free.fr";
+          smtp.port = 465;
+          smtp.tls.enable = true;
           thunderbird = {
             enable = true;
             profiles = ["${thunderbird_profile}"];
