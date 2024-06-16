@@ -22,6 +22,7 @@
   nixpkgs.config.cudaSupport = true;
   environment.systemPackages = with pkgs; [
     cudatoolkit
+    nvtop
   ];
 
   services.xserver.videoDrivers = ["nvidia"];
