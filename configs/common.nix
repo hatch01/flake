@@ -51,6 +51,7 @@
           "iscan-gt-x820-bundle"
           "iscan-gt-x750-bundle"
           "iscan-gt-x770-bundle"
+          "iscan-gt-s600-bundle"
 
           #gaming
           "steam"
