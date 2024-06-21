@@ -73,7 +73,6 @@
   hardware.opengl = {
     enable = true;
     extraPackages = [pkgs.mesa.drivers];
-    driSupport = true;
     driSupport32Bit = true;
   };
   # Load nvidia driver for Xorg and Wayland
