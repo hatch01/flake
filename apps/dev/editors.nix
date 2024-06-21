@@ -18,6 +18,7 @@ in {
     environment.systemPackages = with pkgs;
       [
         neovide
+        zed-editor
         kate
       ]
       ++ optionals config.jetbrains.enable [
