@@ -175,7 +175,7 @@
       btop # replacement of htop/nmon
       iotop # io monitoring
       iftop # network monitoring
-      nixpkgs-fmt
+      nixfmt-rfc-style
       alejandra
 
       # python is useful
