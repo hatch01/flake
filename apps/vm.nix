@@ -32,16 +32,17 @@ in {
       quickgui
     ];
 
+    users.extraGroups.vboxusers.members = [ "eymeric" ];
+
     # Manage the virtualisation services
     virtualisation = {
-      /*
         virtualbox = {
         host = {
           enable = true;
-          enableExtensionPack = true;
+#          enableExtensionPack = true;
         };
       };
-      */
+      
       libvirtd = {
         enable = true;
         qemu = {
