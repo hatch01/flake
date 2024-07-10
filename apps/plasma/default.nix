@@ -43,7 +43,7 @@ in {
         workspace = {
           clickItemTo = "open";
           lookAndFeel = "Catppuccin-Latte-Blue";
-          cursorTheme = "Catppuccin-Mocha-Dark-Cursors";
+          cursor.theme = "Catppuccin-Mocha-Dark-Cursors";
           iconTheme = "breeze";
         };
 

@@ -22,7 +22,7 @@
   nixpkgs.config.cudaSupport = true;
   environment.systemPackages = with pkgs; [
     cudatoolkit
-    nvtop
+    nvtopPackages.full
   ];
 
   services.xserver.videoDrivers = ["nvidia"];
@@ -68,12 +68,12 @@
     wantedBy = ["multi-user.target"];
     serviceConfig.ExecStart = "${pkgs.linuxPackages.nvidia_x11.bin}/bin/nvidia-smi";
   };
-
-  # Enable OpenGL
-  hardware.opengl = {
+ 
+  # openGL
+  hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = [pkgs.mesa.drivers];
-    driSupport32Bit = true;
   };
   # Load nvidia driver for Xorg and Wayland
   hardware.nvidia = {

@@ -66,13 +66,13 @@
   fonts.packages = with pkgs; [
     (nerdfonts.override {fonts = ["Hack" "JetBrainsMono"];})
   ];
-
+ 
   environment = {
     systemPackages = with pkgs; [
       (catppuccin-kde.override {flavour = ["mocha" "latte"];})
       catppuccin-cursors.mochaDark
       partition-manager
-      gnome.gnome-disk-utility
+      gnome-disk-utility
       libsForQt5.kpmcore
       glxinfo
       appimage-run
