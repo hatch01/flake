@@ -51,7 +51,7 @@ in {
           se = "sudo -E";
           slazygit = "sudo -E ${lib.getExe pkgs.lazygit}";
           # nixos specific command
-          update-old = " $sudo {lib.getExe pkgs.nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
+          update-old = "sudo ${lib.getExe pkgs.nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
           update = "${lib.getExe pkgs.nh} os switch /etc/nixos";
           nix-history = "${lib.getExe pkgs.nix} profile history --profile /nix/var/nix/profiles/system";
           yay = "upgrade";
