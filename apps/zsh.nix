@@ -29,6 +29,7 @@ in {
       xcp
       silicon
       ouch
+      nix-tree
     ];
 
     hm = {
