@@ -66,7 +66,7 @@
   fonts.packages = with pkgs; [
     (nerdfonts.override {fonts = ["Hack" "JetBrainsMono"];})
   ];
- 
+
   environment = {
     systemPackages = with pkgs; [
       (catppuccin-kde.override {flavour = ["mocha" "latte"];})

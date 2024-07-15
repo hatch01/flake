@@ -13,12 +13,12 @@ in {
 
   config = mkIf config.ghostwriter.enable {
     environment.systemPackages = with pkgs; [
-        ghostwriter
-        pandoc
-        nodejs
-        texlive.combined.scheme-full
-        mermaid-cli
-        mermaid-filter
+      ghostwriter
+      pandoc
+      nodejs
+      texlive.combined.scheme-full
+      mermaid-cli
+      mermaid-filter
     ];
     hm = {
       programs.zsh.initExtra = ''

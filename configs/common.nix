@@ -93,7 +93,7 @@
           "libnpp"
           "libXNVCtrl"
           "blender" #only because of cuda
-      ];
+        ];
     };
     overlays = [((import ../overlays) inputs.nixpkgs-unstable)];
   };

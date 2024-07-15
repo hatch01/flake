@@ -99,7 +99,7 @@ in {
             };
           };
         };
-        
+
         eymericmonitoring_free = mkIf thunderbird.account.eymericmonitoring_free.enable {
           realName = "Eymeric Déchelette";
           address = "eymeric.monitoring@free.fr";
