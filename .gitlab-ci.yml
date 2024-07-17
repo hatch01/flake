@@ -4,14 +4,10 @@ stages:
 
 eval:
   stage: eval
-  image: ubuntu:latest
-  script:
-    - apt-get update && apt-get install -y curl
-    - curl -L https://nixos.org/nix/install | sh
-    - . /root/.nix-profile/etc/profile.d/nix.sh
+  script: 
     - nix-env -iA nixpkgs.jq
-    - names=$(nix eval --json .#nixosConfigurations --apply 'builtins.attrNames')
-    - json=$(echo "$names" | nix run --inputs-from . nixpkgs#jq -- '{include: map({name: .})}')
+    - names=$(nix --extra-experimental-features "nix-command flakes" eval --json .#nixosConfigurations --apply 'builtins.attrNames')
+    - "json=$(echo \"$names\" | nix --extra-experimental-features \"nix-command flakes\" run --inputs-from . nixpkgs#jq -- '{include: map({name: .})}')"
     - echo "$json" > matrix.json
   artifacts:
     paths:
@@ -19,27 +15,15 @@ eval:
 
 build:
   stage: build
-  image: ubuntu:latest
   script:
-    - apt-get update && apt-get install -y curl
-    - curl -L https://nixos.org/nix/install | sh
-    - . /root/.nix-profile/etc/profile.d/nix.sh
-    - nix-env -iA cachix
-    - cachix use uku3lig-flake
-    - nix build -L --fallback .#nixosConfigurations.${CONFIG_NAME}.config.system.build.toplevel
+    - nix-env -iA nixpkgs.jq 
+    - configs=$(cat matrix.json | jq -r '.include[].name')
+    - for config in $configs; do
+        nix build --extra-experimental-features "nix-command flakes" --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.${config}.config.system.build.toplevel;
+      done
   needs:
-    - eval
-  parallel:
-    matrix:
-      - CONFIG_NAME: ["name1", "name2", "name3"] # Update these values based on your configuration names
+    - job: eval
+      artifacts: true
   only:
     - branches
-  variables:
-    CACHIX_AUTH_TOKEN: $CACHIX_AUTH_TOKEN
 
-before_script:
-  - apt-get update && apt-get install -y curl
-  - curl -L https://nixos.org/nix/install | sh
-  - . /root/.nix-profile/etc/profile.d/nix.sh
-  - nix-env -iA nixpkgs.jq cachix
-  - cachix authtoken $CACHIX_AUTH_TOKEN
