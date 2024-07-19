@@ -3,7 +3,7 @@
 
   nixConfig = {
     experimental-features = ["nix-command" "flakes"];
-    extra-substituters = [
+    extra-trusted-substituters = [
       "https://cache.garnix.io"
       "https://nix-community.cachix.org"
       "https://cuda-maintainers.cachix.org"
