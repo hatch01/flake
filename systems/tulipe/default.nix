@@ -58,9 +58,6 @@
   # Configure console keymap
   console.keyMap = "fr";
 
-  # Enable sound with pipewire.
-  sound.enable = true;
-
   security.rtkit.enable = true;
   security.tpm2.enable = true;
   services.pipewire = {
