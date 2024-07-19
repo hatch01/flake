@@ -8,12 +8,16 @@
       "https://nix-community.cachix.org"
       "https://cuda-maintainers.cachix.org"
       "https://hatch01.cachix.org"
+      "https://numtide.cachix.org"
+      "https://nixpkgs-unfree.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
       "hatch01.cachix.org-1:MiLD2xTBHcs0zIYozmA//rR+/svETz0AXzDFmI2Wjso="
+      "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
+      "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
     ];
   };
 
