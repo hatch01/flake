@@ -24,6 +24,7 @@ in {
         beeper
         zapzap
         skypeforlinux
+        element-desktop
       ];
   };
 }
