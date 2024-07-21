@@ -50,7 +50,6 @@
       url = "github:hatch01/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-      inputs.agenix.inputs.darwin.follows = "";
     };
 
     # home-manager, used for managing user configuration
