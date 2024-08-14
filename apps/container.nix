@@ -27,7 +27,6 @@ in {
       docker = {
         enable = true;
         storageDriver = "btrfs";
-        enableNvidia = true;
         rootless = {
           enable = true;
           setSocketVariable = true;
