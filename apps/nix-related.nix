@@ -16,8 +16,5 @@ in {
       clean.extraArgs = "--keep-since 4d --keep 3";
       flake = "/etc/nixos";
     };
-    environment.systemPackages = with pkgs; [
-      fh
-    ];
   };
 }
