@@ -40,7 +40,7 @@ in {
 
     hm.home = mkIf config.container.distrobox.enable {
       file.".distroboxrc".text = ''
-      container_additional_volumes="/nix/store:/nix/store:ro /etc/static/profiles/per-user:/etc/profiles/per-user:ro" 
+        container_additional_volumes="/nix/store:/nix/store:ro /etc/static/profiles/per-user:/etc/profiles/per-user:ro"
       '';
     };
   };

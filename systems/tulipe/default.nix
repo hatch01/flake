@@ -25,7 +25,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.supportedFilesystems = ["ntfs"];
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
   boot.kernelModules = ["v4l2loopback"];
   boot.kernelParams = ["amd_iommu=on"];
   system.nixos.tags = ["tulipe"];
