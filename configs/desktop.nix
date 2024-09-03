@@ -82,6 +82,7 @@
       floorp
       sqlitebrowser
       kdePackages.yakuake
+      kdePackages.ktorrent
       wl-clipboard
     ];
   };
