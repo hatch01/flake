@@ -31,6 +31,7 @@ in {
               "ColorScheme".value = "BlackOnWhite";
               "Font".value = "JetBrainsMono Nerd Font,9,-1,5,50,0,0,0,0,0";
               "TabColor".value = "27,30,32,0";
+              "UseFontBrailleChararacters".value = false;
             };
 
             "Cursor Options"."CursorShape".value = 1;
@@ -49,6 +50,7 @@ in {
               "ColorScheme".value = "Breeze";
               "Font".value = "JetBrainsMono Nerd Font,9,-1,5,50,0,0,0,0,0";
               "TabColor".value = "27,30,32,0";
+              "UseFontBrailleChararacters".value = false;
             };
 
             "Cursor Options"."CursorShape".value = 1;
