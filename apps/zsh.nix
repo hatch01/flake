@@ -87,7 +87,7 @@ in {
                  ${lib.getExe' pkgs.coreutils "cut"} -d "/" -f1 | ${lib.getExe pkgs.gawk} '{print $0"\""}'
              }
              nix-quick(){
-               ${lib.getExe pkgs.nix} flake new --template github:the-nix-way/dev-templates#$1 $2
+               ${lib.getExe pkgs.nix} flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
              }
              flake-parts(){
                ${lib.getExe pkgs.nix} flake init -t github:hercules-ci/flake-parts
