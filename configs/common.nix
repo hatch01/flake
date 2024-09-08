@@ -217,7 +217,7 @@
     "${username}" = {
       isNormalUser = true;
       shell = pkgs.zsh;
-      extraGroups = ["networkmanager" "vboxusers" "video" "input" "docker"];
+      extraGroups = ["networkmanager" "vboxusers" "video" "input" "docker" "dialout"];
       hashedPasswordFile = config.age.secrets.userPassword.path;
     };
     root.hashedPasswordFile = config.age.secrets.rootPassword.path;
