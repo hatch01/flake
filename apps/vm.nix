@@ -30,6 +30,7 @@ in {
       virglrenderer
       quickemu
       quickgui
+      gnome-boxes
     ];
 
     users.extraGroups.vboxusers.members = ["eymeric"];
