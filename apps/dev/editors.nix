@@ -27,6 +27,7 @@ in {
         jetbrains.clion
         jetbrains.rust-rover
         jetbrains.phpstorm
+        jetbrains.datagrip
         #android-studio
       ];
   };

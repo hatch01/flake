@@ -36,6 +36,7 @@
           "clion"
           "rust-rover"
           "phpstorm"
+          "datagrip"
 
           # scanner
           "iscan"
