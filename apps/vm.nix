@@ -29,8 +29,8 @@ in {
       win-spice
       virglrenderer
       quickemu
-      quickgui
       gnome-boxes
+      #quickgui
     ];
 
     users.extraGroups.vboxusers.members = ["eymeric"];
