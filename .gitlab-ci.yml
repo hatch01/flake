@@ -1,32 +1,6 @@
 stages:
-  - flake-update
   - eval
   - build
-
-variables:
-  GIT_USER_NAME: "CI Bot"
-  GIT_USER_EMAIL: "ci-bot@example.com"
-
-before_script:
-  # Configure git
-  - git config --global user.name "$GIT_USER_NAME"
-  - git config --global user.email "$GIT_USER_EMAIL"
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-  - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-
-flake-update:
-  stage: flake-update
-  script:
-    - nix flake update . --commit-lock-file
-    - git push origin $CI_COMMIT_REF_NAME  # Push the changes to the branch
-  only:
-    - schedules  # Only run this on scheduled pipelines
-  tags:
-    - nightly
 
 eval:
   stage: eval

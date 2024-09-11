@@ -11,7 +11,7 @@
       "https://hatch01.cachix.org"
       "https://numtide.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
-      "https://cache.onyx.ovh"
+#      "https://cache.onyx.ovh"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
