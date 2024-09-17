@@ -144,6 +144,7 @@ in {
             "Battery/Performance"."PowerProfile".value = "balanced";
             "LowBattery/Performance"."PowerProfile".value = "power-saver";
           };
+          "kglobalshortcutsrc"."services/org.kde.konsole.desktop"."_launch".value = "Meta+Return";
         };
       };
 
