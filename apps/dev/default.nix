@@ -28,6 +28,7 @@ in {
         minikube
         httpy-cli
         jq
+        httptoolkit
       ];
   };
 }
