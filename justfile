@@ -1,17 +1,11 @@
-############################################################################
-#
-#  Nix commands related to the local machine
-#
-############################################################################
-
-deploy message="":
-	NIXOS_LABEL={{message}} nixos-rebuild switch --flake . --use-remote-sudo
+rebuild:
+	nixos-rebuild switch --flake . --use-remote-sudo
 
 debug:
 	nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
 
 update:
-	nix flake update
+	nix flake update --commit-lock-file
 
 history:
 	nix profile history --profile /nix/var/nix/profiles/system
@@ -22,3 +16,12 @@ gc:
 
 	# garbage collect all unused nix store entries
 	sudo nix store gc --debug
+
+format machine:
+	sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko systems/{{machine}}/disk.nix
+
+mount machine:
+	sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode mount systems/{{machine}}/disk.nix
+
+install machine:
+	sudo nixos-install --flake .#{{machine}}
