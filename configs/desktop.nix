@@ -14,7 +14,7 @@
 
   # office
   libreoffice.enable = true;
-  onlyoffice.enable = true;
+  onlyofficeDesktopEditor.enable = true;
   ghostwriter.enable = true;
   cloud-storage.enable = true;
 

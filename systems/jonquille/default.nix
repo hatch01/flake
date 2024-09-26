@@ -8,7 +8,6 @@
   inputs,
   sshPublicKey,
   mkSecrets,
-  hostName,
   ...
 }: {
   imports = [
@@ -81,7 +80,7 @@
 
   # Enable networking
   networking = {
-    domain = hostName;
+    domain = config.networking.hostName;
     networkmanager.enable = true;
     hostId = "271e1c23";
     # hosts = {
@@ -145,8 +144,6 @@
       PasswordAuthentication = false;
     };
   };
-
-  system.stateVersion = "24.05"; # Did you read the comment?
 
   nix.optimise.automatic = true;
   nix.optimise.dates = ["03:45"]; # Optional; allows customizing optimisation schedule

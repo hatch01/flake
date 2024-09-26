@@ -21,5 +21,19 @@
     ./vm.nix
     ./zsh.nix
     ./ollama.nix
+    ./postgres.nix
+    ./gitlab
+    ./homepage.nix
+    ./nextcloud.nix
+    ./authelia.nix
+    ./nginx
+    ./netdata.nix
+    ./nixCache.nix
+    ./adguard.nix
+    ./fail2ban.nix
+    ./ddclient.nix
+    ./matrix
+    ./homeassistant
+    ./watchtower.nix
   ];
 }

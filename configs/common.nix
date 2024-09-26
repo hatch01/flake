@@ -11,6 +11,7 @@
     (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" username])
     ./wifi.nix
     ../apps
+    ../modules
   ];
 
   container.enable = true;
@@ -103,8 +104,8 @@
     identityPaths = ["/etc/age/key"];
 
     secrets = {
-      rootPassword.file = ../secrets/rootPassword.age; # todo change to root password different for each devices
-      userPassword.file = ../secrets/userPassword.age;
+      rootPassword.file = ../secrets/tulipe/rootPassword.age; # todo change to root password different for each devices
+      userPassword.file = ../secrets/tulipe/userPassword.age;
       githubToken.file = ../secrets/githubToken.age;
     };
   };

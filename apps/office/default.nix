@@ -12,7 +12,7 @@ in {
 
   options = {
     libreoffice.enable = mkEnableOption "libreoffice";
-    onlyoffice.enable = mkEnableOption "onlyoffice";
+    onlyofficeDesktopEditor.enable = mkEnableOption "onlyoffice desktop editor";
   };
 
   config = {
@@ -26,7 +26,7 @@ in {
         hunspell
         hunspellDicts.fr-any
       ]
-      ++ optionals config.onlyoffice.enable [
+      ++ optionals config.onlyofficeDesktopEditor.enable [
         onlyoffice-bin
       ];
   };

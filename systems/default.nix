@@ -3,10 +3,10 @@
   ...
 }: let
   username = "eymeric";
-  stateVersion = "23.11";
+  stateVersion = "24.05";
   sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs eymericdechelette@gmail.com";
 
-  secretsPath = ./secrets;
+  secretsPath = ../secrets;
   mkSecrets = builtins.mapAttrs (name: value: value // {file = "${secretsPath}/${name}.age";});
   mkSecret = name: other: mkSecrets {${name} = other;};
 
@@ -19,7 +19,7 @@
           ++ [
             ./${name}
             ./${name}/hardware-configuration.nix
-            {networking.hostName = value.hostName or name;}
+            {networking.hostName = name;}
           ];
         specialArgs =
           {inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret;}
@@ -49,6 +49,7 @@
     disko.nixosModules.disko
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
+    impermanence.nixosModules.impermanence # maybe optimize this because it is not used in all systems
     #nur.nixosModules.nur
   ];
 
@@ -83,7 +84,6 @@ in {
       specialArgs = {
         inherit inputs;
       };
-      # Add more systems here as needed
     };
   } // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
 }
