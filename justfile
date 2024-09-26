@@ -25,3 +25,4 @@ mount machine:
 
 install machine:
 	sudo nixos-install --flake .#{{machine}}
+
