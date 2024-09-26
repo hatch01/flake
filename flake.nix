@@ -11,7 +11,7 @@
       "https://hatch01.cachix.org"
       "https://numtide.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
-#      "https://cache.onyx.ovh"
+      # "https://cache.onyx.ovh"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -132,7 +132,7 @@
           };
         };
         devShells.default = pkgs.mkShell {
-          # Inherit all of the pre-commit hooks.  
+          # Inherit all of the pre-commit hooks.
           inputsFrom = [config.pre-commit.devShell];
           buildInputs = with pkgs; [pkgs.deploy-rs just alejandra];
         };
