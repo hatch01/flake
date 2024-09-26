@@ -128,8 +128,9 @@
           };
         };
         devShells.default = pkgs.mkShell {
-          # Inherit all of the pre-commit hooks.
+          # Inherit all of the pre-commit hooks.  
           inputsFrom = [config.pre-commit.devShell];
+          buildInputs = with pkgs; [pkgs.deploy-rs just alejandra];
         };
       };
     };
