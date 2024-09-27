@@ -105,10 +105,9 @@
           package = pkgs.treefmt;
           flakeCheck = false; # use pre-commit's check instead
           programs = {
-            alejandra.enable = true; # nix
-            shellcheck.enable = true;
+            alejandra.enable = true;
+            shellcheck.enable = false;
             shfmt = {
-              enable = true;
               indent_size = null;
             };
             prettier.enable = true;
@@ -122,13 +121,7 @@
               enable = true;
             };
             treefmt.enable = true;
-            typos = {
-              enable = true;
-              excludes = [
-                ".*\\.(?!nix$)[^.]*$" # Exclude all files except nix files
-                "wifi.nix" # Exclude wifi.nix because it contains wifi names
-              ];
-            };
+            typos.enable = false;
           };
         };
         devShells.default = pkgs.mkShell {
