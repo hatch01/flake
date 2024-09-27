@@ -96,8 +96,16 @@
           "libnpp"
           "libXNVCtrl"
           "blender" #only because of cuda
+
+          # server
+          "corefonts"
         ];
+
+      permittedInsecurePackages = [
+        "olm-3.2.16"
+      ];
     };
+
     overlays = [((import ../overlays) inputs.nixpkgs-unstable)];
   };
 
