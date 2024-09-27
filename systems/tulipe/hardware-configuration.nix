@@ -28,8 +28,8 @@
   powerManagement.enable = true;
 
   fileSystems."/run/media/eymeric/stockage" = {
-    device = "/dev/disk/by-uuid/77A4BDCC49F1A80B";
-    fsType = "ntfs";
+    device = "/dev/disk/by-uuid/9fee6e54-fb71-41b7-b8a1-965e1834e8d2";
+    fsType = "xfs";
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
