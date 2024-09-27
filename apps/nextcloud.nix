@@ -37,8 +37,8 @@ in {
         group = config.users.users.nextcloud.name;
       };
       onlyofficeDocumentServerKey = optionalAttrs config.onlyofficeDocumentServer.enable {
-        owner = config.users.users.onlyofficeDocumentServer.name;
-        group = config.users.users.onlyofficeDocumentServer.name;
+        owner = config.users.users.onlyoffice.name;
+        group = config.users.users.onlyoffice.name;
       };
     };
 

@@ -33,7 +33,7 @@ in {
         config.netdata.hostName
         config.nixCache.hostName
         config.homeassistant.hostName
-        config.onlyoffice.hostName
+        config.onlyofficeDocumentServer.hostName
       ];
     };
   };
