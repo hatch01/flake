@@ -11,7 +11,7 @@ in {
       enable = mkEnableOption "Enable homepage";
       hostName = mkOption {
         type = types.str;
-        default = config.networking.hostName;
+        default = config.hostName;
         description = "The hostname of the homepage";
       };
       port = mkOption {

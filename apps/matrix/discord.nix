@@ -22,11 +22,11 @@ in {
           displayname_template = "{{ or .GlobalName .Username .ID }} (Discord)";
           permissions = {
             "*" = "relay";
-            "${config.networking.hostName}" = "user";
-            "@root:${config.networking.hostName}" = "admin";
+            "${config.hostName}" = "user";
+            "@root:${config.hostName}" = "admin";
           };
           login_shared_secret_map = {
-            "${config.networking.hostName}" = "as_token:$SHARED_AS_TOKEN";
+            "${config.hostName}" = "as_token:$SHARED_AS_TOKEN";
           };
         };
         homeserver = {

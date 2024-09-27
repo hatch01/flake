@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   ...
 }: let
   username = "eymeric";
@@ -19,11 +20,18 @@
           ++ [
             ./${name}
             ./${name}/hardware-configuration.nix
-            {networking.hostName = name;}
+            {
+              options.hostName = lib.mkOption {
+                type = lib.types.str;
+                default = toString (value.hostName or name);
+              };
+              config = {networking.hostName = name;};
+            }
           ];
         specialArgs =
           {inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret;}
-          // (value.specialArgs or {});
+          // (value.specialArgs or {})
+          // {hostName = value.hostName or name;};
       })
     systems;
     deploy.nodes =
@@ -61,29 +69,31 @@
     ]
     ++ nixos;
 in {
-  flake = mkSystem {
-    tulipe = {
-      system = "x86_64-linux";
-      modules = desktop;
-      specialArgs = {
-        inherit inputs;
+  flake =
+    mkSystem {
+      tulipe = {
+        system = "x86_64-linux";
+        modules = desktop;
+        specialArgs = {
+          inherit inputs;
+        };
       };
-    };
-    jonquille = {
-      system = "x86_64-linux";
-      modules = nixos;
-      hostName = "onyx.ovh";
-      specialArgs = {
-        inherit inputs;
-      };
-    };
-    lavande = {
-      system = "arm64-linux";
-      modules = nixos;
-      hostName = "onyx.ovh";
-      specialArgs = {
-        inherit inputs;
-      };
-    };
-  } // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
+      # jonquille = {
+      #   system = "x86_64-linux";
+      #   modules = nixos;
+      #   hostName = "home.onyx.ovh";
+      #   specialArgs = {
+      #     inherit inputs;
+      #   };
+      # };
+      # lavande = {
+      #   system = "arm64-linux";
+      #   modules = nixos;
+      #   hostName = "onyx.ovh";
+      #   specialArgs = {
+      #     inherit inputs;
+      #   };
+      # };
+    }
+    // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
 }

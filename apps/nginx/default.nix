@@ -44,12 +44,12 @@ in {
       virtualHosts = let
         cfg = {
           forceSSL = true;
-          useACMEHost = config.networking.hostName;
+          useACMEHost = config.hostName;
           enableACME = true;
           extraConfig = "proxy_cache cache;\n";
         };
       in {
-        "${config.networking.hostName}" = let
+        "${config.hostName}" = let
           baseUrl = "https://${config.matrix.hostName}";
           clientConfig = {
             "m.homeserver".base_url = baseUrl;

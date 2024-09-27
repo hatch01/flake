@@ -12,7 +12,7 @@ in {
       enable = mkEnableOption "Nextcloud";
       hostName = mkOption {
         type = types.str;
-        default = "nextcloud.${config.networking.hostName}";
+        default = "nextcloud.${config.hostName}";
       };
       port = mkOption {
         type = types.int;
@@ -22,7 +22,7 @@ in {
     onlyofficeDocumentServer.enable = mkEnableOption "OnlyOffice document server";
     onlyofficeDocumentServer.hostName = mkOption {
       type = types.str;
-      default = "onlyoffice.${config.networking.hostName}";
+      default = "onlyoffice.${config.hostName}";
     };
   };
 

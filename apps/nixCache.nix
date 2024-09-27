@@ -11,7 +11,7 @@ in {
       enable = mkEnableOption "enable nixCache";
       hostName = mkOption {
         type = types.str;
-        default = "cache.${config.networking.hostName}";
+        default = "cache.${config.hostName}";
         description = "The hostname of the nixCache instance";
       };
       port = mkOption {

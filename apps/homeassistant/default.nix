@@ -14,7 +14,7 @@ in {
       enable = mkEnableOption "Home Assistant";
       hostName = mkOption {
         type = types.str;
-        default = "home.${config.networking.hostName}";
+        default = "home.${config.hostName}";
       };
       port = mkOption {
         type = types.int;

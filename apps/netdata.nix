@@ -10,7 +10,7 @@ in {
       enable = mkEnableOption "enable Netdata";
       hostName = mkOption {
         type = types.str;
-        default = "netdata.${config.networking.hostName}";
+        default = "netdata.${config.hostName}";
         description = "The hostname of the Netdata instance";
       };
       port = mkOption {

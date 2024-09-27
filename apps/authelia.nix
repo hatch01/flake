@@ -31,7 +31,7 @@ in {
       enable = mkEnableOption "enable Authelia";
       hostName = mkOption {
         type = types.str;
-        default = "authelia.${config.networking.hostName}";
+        default = "authelia.${config.hostName}";
         description = "The hostname of the Authelia instance";
       };
       port = mkOption {
@@ -189,12 +189,12 @@ in {
                   # be careful with the order of the rules it is important
                   # https://www.authelia.com/configuration/security/access-control/#rule-matching
                   {
-                    domain_regex = ".*\.${config.networking.hostName}";
+                    domain_regex = ".*\.${config.hostName}";
                     policy = "bypass";
                     networks = ["internal"];
                   }
                   {
-                    domain_regex = ".*\.${config.networking.hostName}";
+                    domain_regex = ".*\.${config.hostName}";
                     policy = "one_factor";
                     networks = ["local"];
                     subject = [
@@ -202,7 +202,7 @@ in {
                     ];
                   }
                   {
-                    domain_regex = ".*\.${config.networking.hostName}";
+                    domain_regex = ".*\.${config.hostName}";
                     policy = "two_factor";
                     subject = [
                       ["group:admin"]
@@ -226,9 +226,9 @@ in {
             session = {
               cookies = [
                 {
-                  domain = config.networking.hostName;
+                  domain = config.hostName;
                   authelia_url = "https://${config.authelia.hostName}";
-                  default_redirection_url = "https://${config.networking.hostName}";
+                  default_redirection_url = "https://${config.hostName}";
                 }
               ];
             };

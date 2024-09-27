@@ -10,7 +10,7 @@ in {
       enable = mkEnableOption "enable Adguard";
       hostName = mkOption {
         type = types.str;
-        default = "adguard.${config.networking.hostName}";
+        default = "adguard.${config.hostName}";
         description = "The hostname of the Adguard instance";
       };
       port = mkOption {

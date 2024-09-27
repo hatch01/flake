@@ -11,13 +11,13 @@ in {
       enable = mkEnableOption "enable Gitlab";
       hostName = mkOption {
         type = types.str;
-        default = "gitlab.${config.networking.hostName}";
+        default = "gitlab.${config.hostName}";
         description = "The hostname of the Gitlab instance";
       };
     };
   };
 
-  imports =  [
+  imports = [
     ./runner.nix
     # (import ./runner.nix {inherit mkSecret config lib;})
   ];

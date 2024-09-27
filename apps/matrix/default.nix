@@ -22,7 +22,7 @@ in {
       enableElement = mkEnableOption "enable matrix element";
       hostName = mkOption {
         type = types.str;
-        default = "matrix.${config.networking.hostName}";
+        default = "matrix.${config.hostName}";
         description = "The hostname of the matrix instance";
       };
       port = mkOption {
@@ -116,26 +116,24 @@ in {
           client_id = "synapse";
           client_auth_method = "client_secret_basic";
           client_secret_path = config.age.secrets.matrix_oidc.path;
-          
         };
       };
 
-  #     experimental_features:
-  # msc3861:
-  #   enabled: true
-  #   issuer: https://auth.sspaeth.de/
-  #   # Synapse will call `{issuer}/.well-known/openid-configuration` to get the OIDC configuration
+      #     experimental_features:
+      # msc3861:
+      #   enabled: true
+      #   issuer: https://auth.sspaeth.de/
+      #   # Synapse will call `{issuer}/.well-known/openid-configuration` to get the OIDC configuration
 
-  #   # Matches the `client_id` in the auth service config
-  #   client_id: 00000000000000000SYNAPSE00
-  #   # Matches the `client_auth_method` in the auth service config
-  #   client_auth_method: client_secret_basic
-  #   # Matches the `client_secret` in the auth service config
-  #   client_secret: 1234CLIENTSECRETHERE56789
+      #   # Matches the `client_id` in the auth service config
+      #   client_id: 00000000000000000SYNAPSE00
+      #   # Matches the `client_auth_method` in the auth service config
+      #   client_auth_method: client_secret_basic
+      #   # Matches the `client_secret` in the auth service config
+      #   client_secret: 1234CLIENTSECRETHERE56789
 
-  #   # Matches the `matrix.secret` in the auth service config
-  #   admin_token: 0x97531ADMINTOKENHERE13579
-
+      #   # Matches the `matrix.secret` in the auth service config
+      #   admin_token: 0x97531ADMINTOKENHERE13579
 
       settings.oidc_providers = [
         {
