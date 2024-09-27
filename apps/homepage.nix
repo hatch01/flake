@@ -156,7 +156,7 @@ in {
           {
             openmeteo = {
               label = "Lyon";
-              latitute = 45.7779057;
+              latitude = 45.7779057;
               longitude = 4.8817357;
               timezone = "Europe/Paris";
               units = "metric";

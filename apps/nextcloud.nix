@@ -150,7 +150,7 @@ in {
             oidc_login_update_avatar = false;
             oidc_login_code_challenge_method = "S256";
           };
-        # secret file currectly only used to provide:
+        # secret file currently only used to provide:
         # - oidc_login_client_secret for authelia
         # - mail_smtppassword for mail
         secretFile = mkIf config.authelia.enable config.age.secrets.nextcloudSecretFile.path;
