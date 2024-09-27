@@ -8,8 +8,6 @@
   sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs eymericdechelette@gmail.com";
 
   secretsPath = ../secrets;
-  mkSecrets = builtins.mapAttrs (name: value: value // {file = "${secretsPath}/${name}.age";});
-  mkSecret = name: other: mkSecrets {${name} = other;};
 
   mkSystem = systems: {
     nixosConfigurations = builtins.mapAttrs (name: value:
@@ -28,7 +26,19 @@
               config = {networking.hostName = name;};
             }
           ];
-        specialArgs =
+        specialArgs = let
+          secretsLocalPath = "${secretsPath}/${
+            if value.root or false
+            then ""
+            else "${name}/"
+          }";
+          mkSecrets = builtins.mapAttrs (secretName: value:
+            lib.removeAttrs value ["root"]
+            // {
+              file = "${secretsLocalPath}/${secretName}.age";
+            });
+          mkSecret = secretName: other: mkSecrets {${secretName} = other;};
+        in
           {inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret;}
           // (value.specialArgs or {})
           // {hostName = value.hostName or name;};

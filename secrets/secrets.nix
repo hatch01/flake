@@ -1,39 +1,86 @@
 let
-  eymeric = "age1aq7l5msnq4leddht4sr3sm56v9qu408r94txwyutvz690tlxmdjss9lm94";
+  keys = rec {
+    tulipe = ["age1aq7l5msnq4leddht4sr3sm56v9qu408r94txwyutvz690tlxmdjss9lm94"];
+    lavande = ["age17w7zsvgvdfr7tdkz9uwy2jhmjlt2273ktu6wtt976782nen0sfkql94ez6"];
+    jonquille = ["age1ags68rkarp5ewj8dqzq74l48v8q7zdzesed3vp498e352grl3dzsqq3mww"];
+    server = jonquille ++ lavande;
+    desktop = tulipe;
+    all = desktop ++ server;
+  };
 
-  all = [eymeric];
-in {
-  "tulipe/userPassword.age".publicKeys = all;
-  "tulipe/rootPassword.age".publicKeys = all;
-  "githubToken.age".publicKeys = all;
-  "wifi.age".publicKeys = all;
+  secrets =
+    defineSecrets "" [
+      "githubToken"
+    ]
+    // defineSecrets "desktop" [
+      "wifi"
+    ]
+    // defineSecrets "server" [
+      "smtpPassword"
+    ]
+    // defineSecrets "tulipe" [
+      "userPassword"
+      "rootPassword"
+    ]
+    // defineSecrets "jonquille" [
+      "rootPassword"
+    ]
+    // defineSecrets "lavande" [
+      "rootPassword"
 
-  "jonquille/userPassword.age".publicKeys = all;
-  "jonquille/rootPassword.age".publicKeys = all;
-  "jonquille/nextcloudAdmin.age".publicKeys = all;
-  "jonquille/nextcloudSecretFile.age".publicKeys = all;
-  "jonquille/onlyofficeDocumentServerKey.age".publicKeys = all;
-  "jonquille/homepage.age".publicKeys = all;
-  "jonquille/selfSignedCert.age".publicKeys = all;
-  "jonquille/selfSignedCertKey.age".publicKeys = all;
-  "jonquille/smtpPassword.age".publicKeys = all;
-  "jonquille/matrix_oidc.age".publicKeys = all;
-  "jonquille/matrix_shared_secret.age".publicKeys = all;
-  "jonquille/matrix_sliding_sync.age".publicKeys = all;
-  "jonquille/cache-priv-key.pem.age".publicKeys = all;
-  "jonquille/dyndns.age".publicKeys = all;
+      # Nextcloud
+      "nextcloudAdmin"
+      "nextcloudSecretFile"
+      "onlyofficeDocumentServerKey"
 
-  "jonquille/gitlab/databasePasswordFile.age".publicKeys = all;
-  "jonquille/gitlab/initialRootPasswordFile.age".publicKeys = all;
-  "jonquille/gitlab/secretFile.age".publicKeys = all;
-  "jonquille/gitlab/otpFile.age".publicKeys = all;
-  "jonquille/gitlab/dbFile.age".publicKeys = all;
-  "jonquille/gitlab/jwsFile.age".publicKeys = all;
-  "jonquille/gitlab/openIdKey.age".publicKeys = all;
-  "jonquille/gitlab/runnerRegistrationConfigFile.age".publicKeys = all;
+      # Homepage
+      "homepage"
 
-  "jonquille/authelia/storageKey.age".publicKeys = all;
-  "jonquille/authelia/jwtKey.age".publicKeys = all;
-  "jonquille/authelia/authBackend.age".publicKeys = all;
-  "jonquille/authelia/oAuth2PrivateKey.age".publicKeys = all;
-}
+      # Matrix
+      "matrix_oidc"
+      "matrix_shared_secret"
+      "matrix_sliding_sync"
+
+      # cache
+      "cache-priv-key.pem"
+
+      # dynDNS
+      "dyndns"
+
+      # Gitlab
+      "gitlab/databasePasswordFile"
+      "gitlab/initialRootPasswordFile"
+      "gitlab/secretFile"
+      "gitlab/otpFile"
+      "gitlab/dbFile"
+      "gitlab/jwsFile"
+      "gitlab/openIdKey"
+      "gitlab/runnerRegistrationConfigFile"
+
+      # Authelia
+      "authelia/storageKey"
+      "authelia/jwtKey"
+      "authelia/authBackend"
+      "authelia/oAuth2PrivateKey"
+    ];
+
+  defineSecrets = name: secrets:
+    builtins.listToAttrs (map (secret: {
+        name = "${
+          if name != ""
+          then "${name}/"
+          else ""
+        }${secret}.age";
+        value = {
+          publicKeys =
+            keys
+            .${
+              if name != ""
+              then name
+              else "all"
+            };
+        };
+      })
+      secrets);
+in
+  secrets

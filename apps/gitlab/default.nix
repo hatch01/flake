@@ -62,7 +62,7 @@ in {
         address = "smtp.free.fr";
         port = 587;
         username = "eymeric.monitoring";
-        passwordFile = config.age.secrets.smtpPassword.path;
+        passwordFile = config.age.secrets."server/smtpPassword".path;
       };
 
       # registry = {

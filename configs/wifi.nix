@@ -1,6 +1,6 @@
 {
   config,
-  lib,
+  mkSecret,
   ...
 }: let
   ipv4 = {method = "auto";};
@@ -11,13 +11,13 @@
 in {
   age = {
     identityPaths = ["/etc/age/key"];
-    secrets = {
-      wifi.file = ../secrets/wifi.age;
-    };
+    # secrets = mkSecrets {
+    #   "desktop/wifi" = {root = true;};
+    # };
+    secrets = mkSecret "desktop/wifi" {root = true;};
   };
   #networks
   networking.networkmanager.ensureProfiles = {
-    environmentFiles = ["${config.age.secrets.wifi.path}"];
     profiles = {
       HHCuisine = {
         connection = {
@@ -25,6 +25,7 @@ in {
           uuid = "4da44d32-bd84-4e91-9f7b-649567c0bced";
           type = "wifi";
           permissions = "";
+    environmentFiles = ["${config.age.secrets."desktop/wifi".path}"];
         };
         wifi = {
           mode = "infrastructure";

@@ -71,7 +71,7 @@ in {
       environment = {
         # needed to set the secrets using agenix see: https://www.authelia.com/configuration/methods/files/#file-filters
         X_AUTHELIA_CONFIG_FILTERS = "template";
-        AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets.smtpPassword.path;
+        AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets."server/smtpPassword".path;
       };
     };
 
@@ -159,7 +159,7 @@ in {
               disable_startup_check = false;
               smtp = {
                 # using 587 port which is unencrypted I know but did not manage to make it working with 465
-                # however this is very unprobable that someone will sniff the network
+                # however this is very not probable that someone will sniff the network
                 address = "smtp://smtp.free.fr:587";
                 timeout = "60s";
                 username = "eymeric.monitoring";

@@ -5,6 +5,7 @@
   username,
   stateVersion,
   inputs,
+  mkSecrets,
   ...
 }: {
   imports = [
@@ -103,11 +104,17 @@
   age = {
     identityPaths = ["/etc/age/key"];
 
-    secrets = {
-      rootPassword.file = ../secrets/tulipe/rootPassword.age; # todo change to root password different for each devices
-      userPassword.file = ../secrets/tulipe/userPassword.age;
-      githubToken.file = ../secrets/githubToken.age;
+    secrets = mkSecrets {
+      rootPassword = {};
+      userPassword = {};
+      githubToken = {root = true;};
     };
+
+    # {
+    #   rootPassword.file = ../secrets/tulipe/rootPassword.age; # todo change to root password different for each devices
+    #   userPassword.file = ../secrets/tulipe/userPassword.age;
+    #   githubToken.file = ../secrets/githubToken.age;
+    # };
   };
 
   programs.direnv = {

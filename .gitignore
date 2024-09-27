@@ -3,4 +3,4 @@
 /direnv/
 /result
 .direnv
-
+secrets/*.key
