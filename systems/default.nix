@@ -53,8 +53,6 @@
             user = value.user or "root";
             sshUser = value.sshUser or "root";
             remoteBuild = value.remoteBuild or true; # think on it if it is a great option
-            # autoRollback = false;
-            # magicRollback = false;
             path = inputs.deploy-rs.lib.${value.system}.activate.nixos inputs.self.nixosConfigurations.${name};
           };
         }
@@ -88,22 +86,22 @@ in {
           inherit inputs;
         };
       };
-      # jonquille = {
-      #   system = "x86_64-linux";
-      #   modules = nixos;
-      #   hostName = "home.onyx.ovh";
-      #   specialArgs = {
-      #     inherit inputs;
-      #   };
-      # };
-      # lavande = {
-      #   system = "arm64-linux";
-      #   modules = nixos;
-      #   hostName = "onyx.ovh";
-      #   specialArgs = {
-      #     inherit inputs;
-      #   };
-      # };
+      jonquille = {
+        system = "x86_64-linux";
+        modules = nixos;
+        hostName = "home.onyx.ovh";
+        specialArgs = {
+          inherit inputs;
+        };
+      };
+      lavande = {
+        system = "aarch64-linux";
+        modules = nixos;
+        hostName = "144.24.206.134";
+        specialArgs = {
+          inherit inputs;
+        };
+      };
     }
     // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
 }

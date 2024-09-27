@@ -12,19 +12,18 @@
     ./impermanence.nix
   ];
 
-  nextcloud.enable = false;
-  onlyofficeDocumentServer.enable = false;
+  nextcloud.enable = true;
+  onlyofficeDocumentServer.enable = true;
   homepage.enable = true;
   authelia.enable = true;
-  gitlab.enable = false;
+  gitlab.enable = true;
   netdata.enable = true;
-  nixCache.enable = false;
-  adguard.enable = false;
+  nixCache.enable = true;
+  adguard.enable = true;
   fail2ban.enable = true;
-  matrix.enable = false;
-  matrix.enableElement = false;
+  matrix.enable = true;
+  matrix.enableElement = true;
   ddclient.enable = false;
-  homeassistant.enable = true;
   watchtower.enable = true;
 
   adguard.hostName = "dns.${config.hostName}";
@@ -45,6 +44,7 @@
     secrets = mkSecrets {
       "userPassword" = {};
       "rootPassword" = {};
+      "githubToken" = {root = true;};
       "server/smtpPassword" = {
         group = "smtp";
         mode = "440";
