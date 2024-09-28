@@ -10,7 +10,6 @@
 }: {
   imports = [
     (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" username])
-    ./wifi.nix
     ../apps
     ../modules
   ];
@@ -110,19 +109,11 @@
   };
 
   age = {
-    identityPaths = ["/etc/age/key"];
-
     secrets = mkSecrets {
       rootPassword = {};
       userPassword = {};
       githubToken = {root = true;};
     };
-
-    # {
-    #   rootPassword.file = ../secrets/tulipe/rootPassword.age; # todo change to root password different for each devices
-    #   userPassword.file = ../secrets/tulipe/userPassword.age;
-    #   githubToken.file = ../secrets/githubToken.age;
-    # };
   };
 
   programs.direnv = {

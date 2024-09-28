@@ -87,4 +87,8 @@
 
   services.udev.packages = [pkgs.openrgb];
   services.onedrive.enable = true;
+
+  age = {
+    identityPaths = ["/etc/age/key"];
+  };
 }

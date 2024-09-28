@@ -3,6 +3,10 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ./wifi.nix
+  ];
+
   # apps enabling
   plasma.enable = true;
 
