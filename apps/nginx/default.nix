@@ -8,17 +8,6 @@
   inherit (lib) mkIf;
 in {
   config = {
-    age.secrets = let
-      cfg = {
-        owner = "nginx";
-        group = "nginx";
-      };
-    in
-      mkSecrets {
-        selfSignedCert = cfg;
-        selfSignedCertKey = cfg;
-      };
-
     security.acme = {
       acceptTerms = true;
       defaults = {
