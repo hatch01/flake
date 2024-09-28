@@ -27,21 +27,24 @@
             }
           ];
         specialArgs = let
-          secretsLocalPath = "${secretsPath}/${
-            if value.root or false
-            then ""
-            else "${name}/"
-          }";
-          mkSecrets = builtins.mapAttrs (secretName: value:
-            lib.removeAttrs value ["root"]
+          mkSecrets = builtins.mapAttrs (secretName: secretValue: let
+            secretsLocalPath = "${secretsPath}/${
+              if (secretValue.root or false)
+              then ""
+              else "${name}/"
+            }";
+          in
+            lib.removeAttrs secretValue ["root"]
             // {
-              file = "${secretsLocalPath}/${secretName}.age";
+              file = "${secretsLocalPath}${secretName}.age";
             });
           mkSecret = secretName: other: mkSecrets {${secretName} = other;};
         in
-          {inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret;}
-          // (value.specialArgs or {})
-          // {hostName = value.hostName or name;};
+          {
+            inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret;
+            hostName = value.hostName or name;
+          }
+          // (value.specialArgs or {});
       })
     systems;
     deploy.nodes =
