@@ -162,12 +162,6 @@
   nix.optimise.automatic = true;
   nix.optimise.dates = ["03:45"]; # Optional; allows customizing optimisation schedule
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
-
   nix.extraOptions = ''
     !include ${config.age.secrets.githubToken.path}
   '';
