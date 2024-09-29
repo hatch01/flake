@@ -5,8 +5,6 @@
   config,
   pkgs,
   lib,
-  inputs,
-  agenix,
   ...
 }: {
   imports = [

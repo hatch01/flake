@@ -1,9 +1,10 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkDefault mkIf;
+  inherit (lib) mkEnableOption mkIf;
 in {
   options = {
     satoship.enable = mkEnableOption "Enable satohip";

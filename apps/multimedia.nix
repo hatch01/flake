@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (lib) optionals mkEnableOption mkIf mkDefault;
+  inherit (lib) optionals mkEnableOption mkIf;
 in {
   options = {
     multimedia.enable = mkEnableOption "Enable multimedia reading packages";

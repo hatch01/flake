@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  mkSecrets,
   pkgs,
   ...
 }: let

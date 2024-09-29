@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (lib) optionals mkEnableOption mkDefault mkIf;
+  inherit (lib) mkEnableOption mkIf;
 in {
   options = {
     homebank.enable = mkEnableOption "homebank";
