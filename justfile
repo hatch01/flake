@@ -26,3 +26,5 @@ mount machine:
 install machine:
 	sudo nixos-install --flake .#{{machine}}
 
+analyze:
+	find -name "*.nix" | xargs -I{} nil diagnostics {}
