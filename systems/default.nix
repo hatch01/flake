@@ -85,6 +85,7 @@ in {
       tulipe = {
         system = "x86_64-linux";
         modules = desktop;
+        hostName = "127.0.0.1";
         specialArgs = {
           inherit inputs;
         };
@@ -100,7 +101,7 @@ in {
       lavande = {
         system = "aarch64-linux";
         modules = nixos;
-        hostName = "144.24.206.134";
+        hostName = "onyx.ovh";
         specialArgs = {
           inherit inputs;
         };
