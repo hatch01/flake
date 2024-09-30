@@ -19,7 +19,7 @@ in {
   config = mkIf config.zigbee2mqtt.enable {
     services.zigbee2mqtt = {
       enable = true;
-      dataDir = "/storage/homeassistant/zigbee2mqtt";
+      dataDir = "/persistent/homeassistant/zigbee2mqtt";
       settings = {
         homeassistant = true;
         permit_join = true;
@@ -63,7 +63,7 @@ in {
 
     services.mosquitto = {
       enable = true;
-      dataDir = "/storage/homeassistant/mosquitto";
+      dataDir = "/persistent/homeassistant/mosquitto";
     };
   };
 }
