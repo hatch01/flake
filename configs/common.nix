@@ -111,7 +111,6 @@
   age = {
     secrets = mkSecrets {
       rootPassword = {};
-      userPassword = {};
       githubToken = {root = true;};
     };
   };
@@ -222,13 +221,8 @@
   programs.ssh.startAgent = true;
 
   users.users = {
-    "${username}" = {
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      extraGroups = ["networkmanager" "vboxusers" "video" "input" "docker" "dialout"];
-      hashedPasswordFile = config.age.secrets.userPassword.path;
-    };
     root.hashedPasswordFile = config.age.secrets.rootPassword.path;
+    ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
   };
 
   nix.optimise.automatic = true;

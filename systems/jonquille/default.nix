@@ -43,7 +43,6 @@
     identityPaths = ["/persistent/key"];
 
     secrets = mkSecrets {
-      "userPassword" = {};
       "rootPassword" = {};
       "server/smtpPassword" = {
         group = "smtp";

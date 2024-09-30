@@ -5,6 +5,8 @@
   config,
   pkgs,
   lib,
+  username,
+  mkSecret,
   ...
 }: {
   imports = [
@@ -14,8 +16,22 @@
 
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
+    trusted-users = [username];
     max-jobs = 2; # how many derivation built at the same time
     cores = 5; # how many cores attributed to one build
+  };
+
+  age = {
+    secrets = mkSecret "userPassword" {};
+  };
+
+  users.users = {
+    "${username}" = {
+      isNormalUser = true;
+      shell = pkgs.zsh;
+      extraGroups = ["networkmanager" "vboxusers" "video" "input" "docker" "dialout"];
+      hashedPasswordFile = config.age.secrets.userPassword.path;
+    };
   };
 
   # Bootloader.

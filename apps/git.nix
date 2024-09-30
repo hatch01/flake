@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  username,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -21,7 +22,7 @@ in {
       programs = {
         git = {
           enable = true;
-          userName = "eymeric";
+          userName = username;
           userEmail = "eymericdechelette@gmail.com";
           signing.key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs";
           signing.signByDefault = true;

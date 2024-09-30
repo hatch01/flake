@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  username,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -16,7 +17,7 @@ in {
     programs.virt-manager.enable = true;
 
     # Add user to libvirtd group
-    users.users.eymeric.extraGroups = ["libvirtd"];
+    users.users.${username}.extraGroups = ["libvirtd"];
 
     # Install necessary packages
     environment.systemPackages = with pkgs; [
