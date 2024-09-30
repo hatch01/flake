@@ -6,6 +6,7 @@
   username = "eymeric";
   stateVersion = "24.05";
   sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs eymericdechelette@gmail.com";
+  base_domain_name = "onyx.ovh";
 
   secretsPath = ../secrets;
 
@@ -41,7 +42,7 @@
           mkSecret = secretName: other: mkSecrets {${secretName} = other;};
         in
           {
-            inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret;
+            inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret base_domain_name;
             hostName = value.hostName or name;
           }
           // (value.specialArgs or {});
@@ -50,7 +51,7 @@
     deploy.nodes =
       builtins.mapAttrs (
         name: value: {
-          hostname = value.hostName or name;
+          hostname = value.sshAddress or value.hostName or name;
           profiles.system = {
             #look at how not to use ssh root login but pass via sudo
             user = value.user or "root";
@@ -93,6 +94,7 @@ in {
       jonquille = {
         system = "x86_64-linux";
         modules = nixos;
+        sshAddress = "192.168.1.200";
         hostName = "home.onyx.ovh";
         specialArgs = {
           inherit inputs;
