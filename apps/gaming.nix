@@ -17,6 +17,7 @@ in {
     gamemode.enable = mkEnableOption "Enable GameMode";
     minecraft.enable = mkEnableOption "Enable Minecraft";
     winetools.enable = mkEnableOption "Enable Wine Tools";
+    heroic.enable = mkEnableOption "Enable Heroic";
   };
 
   config = with config; {
@@ -29,6 +30,7 @@ in {
     gamemode.enable = mkDefault gaming.enable;
     winetools.enable = mkDefault gaming.enable;
     minecraft.enable = mkDefault gaming.enable;
+    heroic.enable = mkDefault gaming.enable;
 
     programs = {
       gamemode.enable = gamemode.enable;
@@ -52,6 +54,7 @@ in {
       ++ optionals minecraft.enable [prismlauncher]
       ++ optionals steam.enable [ludusavi] # a backup tool for Steam games
       ++ optionals remotePlay.enable [rustdesk parsec-bin]
-      ++ optionals winetools.enable [bottles wine];
+      ++ optionals winetools.enable [bottles wine]
+      ++ optionals heroic.enable [heroic];
   };
 }

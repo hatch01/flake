@@ -52,6 +52,7 @@
   # gamemode.enable = false # enabled by default if gaming.enable is true
   # minecraft.enable = false # enabled by default if gaming.enable is true
   # winetools.enable = false # enabled by default if gaming.enable is true
+  # heroic.enable = false # enabled by default if gaming.enable is true
 
   home-manager.sharedModules = with inputs; [plasma-manager.homeManagerModules.plasma-manager];
 

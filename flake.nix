@@ -71,11 +71,11 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
 
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    pre-commit-hooks-nix = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # treefmt-nix.url = "github:numtide/treefmt-nix";
+    # pre-commit-hooks-nix = {
+    #   url = "github:cachix/pre-commit-hooks.nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     deploy-rs.url = "github:serokell/deploy-rs";
 
@@ -85,8 +85,8 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
       imports = [
-        inputs.pre-commit-hooks-nix.flakeModule
-        inputs.treefmt-nix.flakeModule
+        # inputs.pre-commit-hooks-nix.flakeModule
+        # inputs.treefmt-nix.flakeModule
         ./systems
       ];
 
@@ -98,35 +98,35 @@
         system,
         ...
       }: {
-        # Auto formatters. This also adds a flake check to ensure that the
-        # source tree was auto formatted.
-        treefmt.config = {
-          projectRootFile = ".git/config";
-          package = pkgs.treefmt;
-          flakeCheck = false; # use pre-commit's check instead
-          programs = {
-            alejandra.enable = true;
-            shellcheck.enable = false;
-            shfmt = {
-              indent_size = null;
-            };
-            prettier.enable = true;
-          };
-        };
+        # # Auto formatters. This also adds a flake check to ensure that the
+        # # source tree was auto formatted.
+        # treefmt.config = {
+        #   projectRootFile = ".git/config";
+        #   package = pkgs.treefmt;
+        #   flakeCheck = false; # use pre-commit's check instead
+        #   programs = {
+        #     alejandra.enable = true;
+        #     shellcheck.enable = false;
+        #     shfmt = {
+        #       indent_size = null;
+        #     };
+        #     prettier.enable = true;
+        #   };
+        # };
 
-        pre-commit = {
-          check.enable = true;
-          settings.hooks = {
-            ripsecrets = {
-              enable = true;
-            };
-            treefmt.enable = true;
-            typos.enable = false;
-          };
-        };
+        # pre-commit = {
+        #   check.enable = true;
+        #   settings.hooks = {
+        #     ripsecrets = {
+        #       enable = true;
+        #     };
+        #     treefmt.enable = true;
+        #     typos.enable = false;
+        #   };
+        # };
         devShells.default = pkgs.mkShell {
           # Inherit all of the pre-commit hooks.
-          inputsFrom = [config.pre-commit.devShell];
+          # inputsFrom = [config.pre-commit.devShell];
           buildInputs = with pkgs; [pkgs.deploy-rs just alejandra];
         };
       };

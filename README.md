@@ -61,5 +61,5 @@ sudo sbctl create-keys
 then install
 
 ```console
-nixos-install --flake .#nixos-eymeric
+nixos-install --flake .#tulipe
 ```
