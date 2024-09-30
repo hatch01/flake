@@ -11,7 +11,6 @@ in {
   };
 
   config = {
-    basic-tools.enable = mkDefault true;
     environment.systemPackages = with pkgs;
       mkIf config.basic-tools.enable [
         krename
