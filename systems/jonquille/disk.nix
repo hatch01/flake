@@ -1,8 +1,6 @@
 {
   disko.devices = let
     rootDisk = "/dev/sda";
-    dataDisk1 = "/dev/sdb";
-    dataDisk2 = "/dev/sdc";
   in {
     disk = {
       main = {
@@ -50,49 +48,6 @@
             };
           };
         };
-      };
-      data1 = {
-        type = "disk";
-        device = dataDisk1;
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "storage";
-              };
-            };
-          };
-        };
-      };
-      data2 = {
-        type = "disk";
-        device = dataDisk2;
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "storage";
-              };
-            };
-          };
-        };
-      };
-    };
-    zpool = {
-      storage = {
-        type = "zpool";
-        mode = "mirror";
-        # rootFsOptions = {
-        # compression = "zstd";
-        # "com.sun:auto-snapshot" = "false";
-        # };
-        mountpoint = "/storage";
       };
     };
   };

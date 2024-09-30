@@ -6,29 +6,24 @@
   inputs,
   sshPublicKey,
   mkSecrets,
+  base_domain_name,
   ...
 }: {
   imports = [
     ./impermanence.nix
   ];
 
-  nextcloud.enable = false;
-  onlyofficeDocumentServer.enable = false;
-  homepage.enable = true;
-  authelia.enable = true;
-  gitlab.enable = false;
   netdata.enable = true;
-  nixCache.enable = false;
-  adguard.enable = false;
   fail2ban.enable = true;
-  matrix.enable = false;
-  matrix.enableElement = false;
   ddclient.enable = false;
   homeassistant.enable = true;
   watchtower.enable = true;
+  nginx.enable = true;
+  nginx.acme.enable = true;
 
-  adguard.hostName = "dns.${config.hostName}";
-  gitlab.hostName = "forge.${config.hostName}";
+  netdata.hostName = "netdata2.${base_domain_name}";
+  homeassistant.hostName = "${config.hostName}";
+  authelia.hostName = "authelia.${base_domain_name}";
 
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;
@@ -69,12 +64,6 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # zfs
-  boot.supportedFilesystems = ["zfs"];
-  boot.zfs.forceImportRoot = false;
-  systemd.services.zfs-mount.enable = false;
-  boot.zfs.devNodes = "/dev/disk/by-partuuid"; # TODO only needed in VMs
 
   # Enable common container config files in /etc/containers
   virtualisation.containers.enable = true;

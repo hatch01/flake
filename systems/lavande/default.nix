@@ -16,7 +16,7 @@
   onlyofficeDocumentServer.enable = true;
   homepage.enable = true;
   authelia.enable = true;
-  gitlab.enable = true;
+  gitlab.enable = false;
   netdata.enable = true;
   nixCache.enable = true;
   adguard.enable = true;
@@ -25,6 +25,8 @@
   matrix.enableElement = true;
   ddclient.enable = false;
   watchtower.enable = true;
+  nginx.enable = true;
+  nginx.acme.enable = true;
 
   adguard.hostName = "dns.${config.hostName}";
   gitlab.hostName = "forge.${config.hostName}";
@@ -42,7 +44,6 @@
     identityPaths = ["/persistent/key"];
 
     secrets = mkSecrets {
-      "userPassword" = {};
       "rootPassword" = {};
       "githubToken" = {root = true;};
       "server/smtpPassword" = {
@@ -70,12 +71,6 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # zfs
-  boot.supportedFilesystems = ["zfs"];
-  boot.zfs.forceImportRoot = false;
-  systemd.services.zfs-mount.enable = false;
-  boot.zfs.devNodes = "/dev/disk/by-partuuid"; # TODO only needed in VMs
 
   # Enable common container config files in /etc/containers
   virtualisation.containers.enable = true;
