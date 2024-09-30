@@ -151,6 +151,7 @@ in {
               };
             };
           };
+
         ${config.nixCache.hostName} = mkIf config.nixCache.enable {
           inherit (cfg) forceSSL extraConfig enableACME;
           locations."/".proxyPass = "http://[::1]:${toString config.nixCache.port}";

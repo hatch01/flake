@@ -47,14 +47,12 @@ in {
 
     environment.systemPackages = with pkgs;
     with config;
-      [
-        mangohud
-      ]
+      [mangohud]
       ++ optionals steam.protonup.enable [protonup protontricks]
       ++ optionals minecraft.enable [prismlauncher]
       ++ optionals steam.enable [ludusavi] # a backup tool for Steam games
       ++ optionals remotePlay.enable [rustdesk parsec-bin]
       ++ optionals winetools.enable [bottles wine]
-      ++ optionals heroic.enable [heroic];
+      ++ optionals heroic.enable [pkgs.heroic];
   };
 }
