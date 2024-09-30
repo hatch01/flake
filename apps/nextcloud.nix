@@ -26,7 +26,7 @@ in {
     };
   };
 
-  config = {
+  config = mkIf config.nextcloud.enable {
     age.secrets = mkSecrets {
       nextcloudAdmin = optionalAttrs config.nextcloud.enable {
         owner = config.users.users.nextcloud.name;
@@ -43,7 +43,7 @@ in {
     };
 
     services = {
-      nextcloud = mkIf config.nextcloud.enable {
+      nextcloud = {
         hostName = config.nextcloud.hostName;
         enable = true;
         # package = pkgs.nextcloud29;
