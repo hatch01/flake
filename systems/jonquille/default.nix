@@ -38,7 +38,6 @@
     identityPaths = ["/persistent/key"];
 
     secrets = mkSecrets {
-      "rootPassword" = {};
       "server/smtpPassword" = {
         group = "smtp";
         mode = "440";
@@ -127,14 +126,6 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     mutableUsers = false;
-    users = {
-      root = {
-        openssh.authorizedKeys.keys = [
-          sshPublicKey
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCt8P+j17S6BHXZSWODBf9dOXuuj5bIdAaMyiyPv4YeU3SXlKpjczZIu4Rw15CUigDEGI8becAFfTRWrqF+/eoh//YId0uwrPDsThjNFbIFQdEp9C9FrM1tX8iB1sd37opPi/hu+WhDwS629tcmPvrzJ63VrXk0XEclS1U4f4Hu5k3kR98SYA/qm0cXf1Ioa85znPrQN6qWjQAzVyVRP2G4sK1koGM29a35t852L1zfoRojpJmW89maMekLMQrXjy9ZxThvW5rDpWDQljat6Bwq5DEEPTL+/8hwajRPiuRrNsFrS7xkCjKFkzxSHWkBjokTlpZUf9a0kAo5KTNiRwRUubTmO1x0602dUhPB0ZsbTOo+KHm8yFfSE0FtVefi4tfA3VBdnh9I7ooM3wIIPCYR9Pf7tQMHBaNQsTya+CqVCJeNeteVrPY/VdcckWg0QV+NLMyc2mEFooExD98VOsH6hUR4bQxi7GXJ0FARvWvhcNnSd80k7T/EPpDLJS+EGKE= flashonfire@Guillaume-Arch"
-        ];
-      };
-    };
     groups.smtp = {};
   };
 

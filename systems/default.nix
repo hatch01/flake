@@ -94,7 +94,6 @@ in {
       jonquille = {
         system = "x86_64-linux";
         modules = nixos;
-        sshAddress = "192.168.1.200";
         hostName = "home.onyx.ovh";
         specialArgs = {
           inherit inputs;
