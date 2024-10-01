@@ -56,6 +56,15 @@ in {
           add_header Access-Control-Allow-Origin *;
           return 200 '${builtins.toJSON data}';
         '';
+        autheliaProxy = {
+          proxyPass = "${
+            if config.authelia.enable
+            then "http://[::1]:${toString config.authelia.port}"
+            else "https://${toString config.authelia.hostName}"
+          }/api/authz/auth-request";
+          recommendedProxySettings = false;
+          extraConfig = builtins.readFile ./auth-location.conf;
+        };
       in
         {}
         // {
@@ -68,11 +77,9 @@ in {
                   (builtins.readFile ./auth-authrequest.conf)
                 ];
               };
+
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = {
-                proxyPass = "http://${config.authelia.hostName}/api/authz/auth-request";
-                extraConfig = builtins.readFile ./auth-location.conf;
-              };
+              "/internal/authelia/authz" = autheliaProxy;
 
               "= /.well-known/matrix/server".extraConfig = mkIf config.matrix.enable (mkWellKnown serverConfig);
               "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
@@ -90,10 +97,7 @@ in {
                 ];
               };
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = {
-                proxyPass = "http://${config.authelia.hostName}/api/authz/auth-request";
-                extraConfig = builtins.readFile ./auth-location.conf;
-              };
+              "/internal/authelia/authz" = autheliaProxy;
             };
           };
         }
@@ -108,10 +112,7 @@ in {
                 ];
               };
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = {
-                proxyPass = "http://${config.authelia.hostName}/api/authz/auth-request";
-                extraConfig = builtins.readFile ./auth-location.conf;
-              };
+              "/internal/authelia/authz" = autheliaProxy;
             };
           };
         }
@@ -186,7 +187,7 @@ in {
           ${config.authelia.hostName} = mkIf config.authelia.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations = let
-              authUrl = "http://${config.authelia.hostName}";
+              authUrl = "http://[::1]:${toString config.authelia.port}";
             in {
               "/".proxyPass = authUrl;
               "/api/verify".proxyPass = authUrl;
