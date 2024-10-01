@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  hostName,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -33,6 +34,7 @@ in {
         };
         homeserver = {
           address = "http://localhost:${toString config.matrix.port}";
+          domain = hostName;
         };
         appservice = {
           database = {

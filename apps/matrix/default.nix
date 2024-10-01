@@ -4,16 +4,17 @@
   pkgs,
   mkSecret,
   mkSecrets,
+  hostName,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
   puppetFile = "/var/lib/matrix-synapse/puppet.yaml";
 in {
   imports = [
-    (import ./signal.nix {inherit config lib;})
-    (import ./discord.nix {inherit config lib;})
-    (import ./whatsapp.nix {inherit config lib;})
-    (import ./sliding-sync.nix {inherit config lib mkSecret;})
+    ./signal.nix
+    ./discord.nix
+    ./whatsapp.nix
+    ./sliding-sync.nix
   ];
 
   options = {
