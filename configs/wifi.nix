@@ -20,7 +20,7 @@ in {
     environmentFiles = ["${config.age.secrets."desktop/wifi".path}"];
     profiles = let
       mkWifi = name: args: {
-        name = {
+        ${name} = {
           connection = {
             id = name;
             # uuid = "4da44d32-bd84-4e91-9f7b-649567c0bced";
