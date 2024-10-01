@@ -6,6 +6,7 @@
   stateVersion,
   inputs,
   mkSecrets,
+  sshPublicKey,
   ...
 }: {
   imports = [
@@ -221,7 +222,10 @@
   programs.ssh.startAgent = true;
 
   users.users = {
-    root.hashedPasswordFile = config.age.secrets.rootPassword.path;
+    root = {
+      hashedPasswordFile = config.age.secrets.rootPassword.path;
+      openssh.authorizedKeys.keys = [sshPublicKey];
+    };
     ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
   };
 
