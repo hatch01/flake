@@ -23,6 +23,7 @@ in {
       enable = true;
       settings = {
         bridge = {
+          displayname_template = "{{if .FullName}}{{.FullName}}{{else if .BusinessName}}{{.BusinessName}}{{else if .PushName}}{{.PushName}}{{else}}{{.JID}}{{end}} (WA)";
           permissions = {
             "*" = "relay";
             "${config.hostName}" = "user";

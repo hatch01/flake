@@ -22,7 +22,6 @@
   fail2ban.enable = true;
   matrix.enable = true;
   matrix.enableElement = true;
-  ddclient.enable = false;
   watchtower.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
