@@ -19,7 +19,6 @@ in {
 
   imports = [
     ./runner.nix
-    # (import ./runner.nix {inherit mkSecret config lib;})
   ];
 
   config = mkIf config.gitlab.enable {
@@ -91,7 +90,7 @@ in {
               args = {
                 name = "openid_connect";
                 strategy_class = "OmniAuth::Strategies::OpenIDConnect";
-                issuer = "https://authelia.onyx.ovh";
+                issuer = "https://${config.gitlab.hostName}";
                 discovery = true;
                 scope = ["openid" "profile" "email" "groups"];
                 client_auth_method = "basic";
