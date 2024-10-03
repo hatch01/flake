@@ -68,8 +68,18 @@
   # Enable networking
   networking = {
     networkmanager.enable = true;
-    nameservers = ["1.1.1.1"];
+    nameservers = ["127.0.0.1" "::1"];
+    networkmanager.dns = "none";
   };
+
+  services.dnsproxy = {
+    enable = true;
+    settings = {
+      upstream = ["https://dns.onyx.ovh/dns-query"];
+      bootstrap = ["9.9.9.9"];
+    };
+  };
+
   # Configure console keymap
   console.keyMap = "fr";
 
