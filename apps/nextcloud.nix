@@ -46,7 +46,7 @@ in {
       nextcloud = {
         hostName = config.nextcloud.hostName;
         enable = true;
-        # package = pkgs.nextcloud29;
+        package = pkgs.nextcloud30;
         autoUpdateApps.enable = true;
         https = true;
         configureRedis = true;
@@ -69,9 +69,11 @@ in {
               mail
               cospend
               end_to_end_encryption
-              forms
+              # forms
+              
               groupfolders
-              maps
+              # maps
+              
               music
               notes
               previewgenerator
