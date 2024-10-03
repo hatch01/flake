@@ -106,7 +106,7 @@ in {
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/" = {
-                proxyPass = "http://[::1]:${toString config.adguard.port}";
+                proxyPass = "https://[::1]:${toString config.adguard.port}";
                 extraConfig = lib.strings.concatStringsSep "\n" [
                   (builtins.readFile ./auth-authrequest.conf)
                 ];

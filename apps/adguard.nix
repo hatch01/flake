@@ -15,19 +15,23 @@ in {
       };
       port = mkOption {
         type = types.int;
-        default = 3000;
+        default = 3001;
         description = "The port on which Adguard will listen";
       };
     };
   };
 
   config = mkIf config.adguard.enable {
+    users.users.adguardhome = {
+      group = "nginx"; # needed to read the certificates
+      isSystemUser = true;
+    };
+    systemd.services.adguardhome.serviceConfig = {
+      User = "adguardhome";
+    };
     services.adguardhome = {
       enable = true;
       settings = {
-        http = {
-          address = "0.0.0.0:${toString config.adguard.port}";
-        };
         dns = {
           upstream_dns = [
             "9.9.9.9" #dns.quad9.net
@@ -41,6 +45,11 @@ in {
           force_https = true;
           port_dns_over_tls = 853;
           port_dns_over_quic = 853;
+          port_https = config.adguard.port;
+          allow_unencrypted_doh = true;
+          server_name = config.adguard.hostName;
+          certificate_path = "/var/lib/acme/${config.adguard.hostName}/fullchain.pem";
+          private_key_path = "/var/lib/acme/${config.adguard.hostName}/key.pem";
         };
         filtering = {
           protection_enabled = true;
@@ -69,6 +78,9 @@ in {
           }) [
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
+            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt" # uBlock₀ filters – Badware risk
+            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt" # AdGuard DNS filter
+            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_59.txt" # AdGuard DNS Popup Hosts filter
           ];
       };
     };
