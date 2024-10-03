@@ -10,9 +10,6 @@
   };
 in {
   age = {
-    # secrets = mkSecrets {
-    #   "desktop/wifi" = {root = true;};
-    # };
     secrets = mkSecret "desktop/wifi" {root = true;};
   };
   #networks
@@ -36,7 +33,7 @@ in {
             psk =
               if (args.password or "") != ""
               then args.password
-              else "$${name}_password";
+              else "\$${name}_password";
           };
           inherit ipv4 ipv6;
         };
