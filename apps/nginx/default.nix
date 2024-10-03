@@ -111,6 +111,8 @@ in {
                   (builtins.readFile ./auth-authrequest.conf)
                 ];
               };
+              # dns-query does not need any authentication
+              "/dns-query".proxyPass = "https://[::1]:${toString config.adguard.port}";
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
             };
