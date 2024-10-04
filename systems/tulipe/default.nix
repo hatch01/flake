@@ -76,6 +76,7 @@
     enable = true;
     settings = {
       upstream = ["https://dns.onyx.ovh/dns-query"];
+      listen-addrs = ["127.0.0.1"];
       # We don't need any bootstrap DNS server because we are setting the ip directly in the hosts section
       # bootstrap = ["9.9.9.9"];
     };
