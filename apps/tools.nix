@@ -20,13 +20,14 @@ in {
         textpieces
         kdePackages.filelight
         electrum
-        geogebra6
 
         zap # cybersecurity website test
 
         #math
         nasc
         kalker
+        geogebra6
+        octaveFull
       ];
   };
 }
