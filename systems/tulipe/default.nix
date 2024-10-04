@@ -76,8 +76,12 @@
     enable = true;
     settings = {
       upstream = ["https://dns.onyx.ovh/dns-query"];
-      bootstrap = ["9.9.9.9"];
+      # We don't need any bootstrap DNS server because we are setting the ip directly in the hosts section
+      # bootstrap = ["9.9.9.9"];
     };
+  };
+  networking.hosts = {
+    "144.24.206.134" = ["dns.onyx.ovh"];
   };
 
   # Configure console keymap
