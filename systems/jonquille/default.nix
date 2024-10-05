@@ -4,7 +4,6 @@
 {
   config,
   inputs,
-  sshPublicKey,
   mkSecrets,
   base_domain_name,
   ...

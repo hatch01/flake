@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkDefault mkIf;
+  inherit (lib) mkEnableOption mkIf;
 in {
   options = {
     basic-tools.enable = mkEnableOption "basic-tools";
