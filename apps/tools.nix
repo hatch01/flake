@@ -21,7 +21,6 @@ in {
         kdePackages.filelight
         (kdePackages.skanpage.override
           {tesseractLanguages = ["eng" "fra"];})
-        tesseract
 
         zap # cybersecurity website test
 
