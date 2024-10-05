@@ -5,7 +5,6 @@
       config = prev.config;
     };
     unstablePackages = [
-      "mautrix-signal"
     ];
   in
     builtins.listToAttrs (map (x: {
