@@ -19,7 +19,9 @@ in {
         kshutdown
         textpieces
         kdePackages.filelight
-        electrum
+        (kdePackages.skanpage.override
+          {tesseractLanguages = ["eng" "fra"];})
+        tesseract
 
         zap # cybersecurity website test
 
