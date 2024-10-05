@@ -29,6 +29,7 @@ in {
         kalker
         geogebra6
         octaveFull
+        sparrow
       ];
   };
 }
