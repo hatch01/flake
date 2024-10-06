@@ -35,5 +35,6 @@
     ./matrix
     ./homeassistant
     ./watchtower.nix
+    ./bitcoin.nix
   ];
 }

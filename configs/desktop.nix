@@ -55,6 +55,7 @@
   # heroic.enable = false # enabled by default if gaming.enable is true
 
   basic-tools.enable = true;
+  bitcoinClient.enable = true;
 
   home-manager.sharedModules = with inputs; [plasma-manager.homeManagerModules.plasma-manager];
 
