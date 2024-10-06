@@ -10,25 +10,24 @@ in {
     basic-tools.enable = mkEnableOption "basic-tools";
   };
 
-  config = {
-    environment.systemPackages = with pkgs;
-      mkIf config.basic-tools.enable [
-        krename
-        localsend
-        minder
-        kshutdown
-        textpieces
-        kdePackages.filelight
-        (kdePackages.skanpage.override
-          {tesseractLanguages = ["eng" "fra"];})
+  config = mkIf config.basic-tools.enable {
+    environment.systemPackages = with pkgs; [
+      krename
+      localsend
+      minder
+      kshutdown
+      textpieces
+      kdePackages.filelight
+      (kdePackages.skanpage.override
+        {tesseractLanguages = ["eng" "fra"];})
 
-        zap # cybersecurity website test
+      zap # cybersecurity website test
 
-        #math
-        nasc
-        kalker
-        geogebra6
-        octaveFull
-      ];
+      #math
+      nasc
+      kalker
+      geogebra6
+      octaveFull
+    ];
   };
 }
