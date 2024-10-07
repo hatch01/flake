@@ -73,6 +73,12 @@
     #nur.nixosModules.nur
   ];
 
+  server = with inputs;
+    [
+      ../configs/server.nix
+    ]
+    ++ nixos;
+
   desktop = with inputs;
     [
       ../configs/desktop.nix
@@ -93,7 +99,7 @@ in {
       };
       jonquille = {
         system = "x86_64-linux";
-        modules = nixos;
+        modules = server;
         hostName = "home.onyx.ovh";
         specialArgs = {
           inherit inputs;
@@ -101,7 +107,7 @@ in {
       };
       lavande = {
         system = "aarch64-linux";
-        modules = nixos;
+        modules = server;
         hostName = "onyx.ovh";
         specialArgs = {
           inherit inputs;
