@@ -31,6 +31,7 @@ in {
     };
     services.adguardhome = {
       enable = true;
+      host = "[::1]";
       settings = {
         dns = {
           upstream_dns = [
@@ -84,6 +85,6 @@ in {
           ];
       };
     };
-    networking.firewall.allowedTCPPorts = [53 853];
+    networking.firewall.allowedTCPPorts = [853];
   };
 }
