@@ -89,6 +89,7 @@
       tor-browser
       floorp
       sqlitebrowser
+      antares
       kdePackages.yakuake
       kdePackages.ktorrent
       wl-clipboard
