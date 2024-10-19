@@ -56,6 +56,7 @@
 
   basic-tools.enable = true;
   bitcoinClient.enable = true;
+  office.enable = true;
 
   home-manager.sharedModules = with inputs; [plasma-manager.homeManagerModules.plasma-manager];
 

@@ -13,10 +13,13 @@ in {
   options = {
     libreoffice.enable = mkEnableOption "libreoffice";
     onlyofficeDesktopEditor.enable = mkEnableOption "onlyoffice desktop editor";
+    office.enable = mkEnableOption "office";
   };
 
   config = {
     environment.systemPackages = with pkgs;
+      []
+      ++ optionals config.office.enable
       [
         pdfarranger
         rnote
