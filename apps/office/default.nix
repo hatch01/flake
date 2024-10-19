@@ -23,6 +23,7 @@ in {
       [
         pdfarranger
         rnote
+        anytype
       ]
       ++ optionals config.libreoffice.enable [
         libreoffice-fresh
