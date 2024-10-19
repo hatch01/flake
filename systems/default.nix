@@ -75,6 +75,7 @@
 
   server = with inputs;
     [
+      vscode-server.nixosModules.default
       ../configs/server.nix
     ]
     ++ nixos;

@@ -78,8 +78,8 @@
     # };
 
     deploy-rs.url = "github:serokell/deploy-rs";
-
     impermanence.url = "github:nix-community/impermanence";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
   outputs = {flake-parts, ...} @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
