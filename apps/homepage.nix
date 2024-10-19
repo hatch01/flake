@@ -136,6 +136,14 @@ in {
                   };
                 };
               }
+              {
+                "Cockpit" = {
+                  icon = "cockpit.png";
+                  description = "cockpit c'est vraiment cool";
+                  href = "https://${config.cockpit.hostName}";
+                  siteMonitor = "https://${config.cockpit.hostName}";
+                };
+              }
             ];
           }
         ];

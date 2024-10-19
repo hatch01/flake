@@ -36,5 +36,6 @@
     ./homeassistant
     ./watchtower.nix
     ./bitcoin.nix
+    ./cockpit.nix
   ];
 }

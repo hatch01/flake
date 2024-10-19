@@ -102,6 +102,26 @@ in {
           };
         }
         // {
+          ${config.cockpit.hostName} = mkIf config.cockpit.enable {
+            inherit (cfg) forceSSL enableACME;
+            locations = {
+              "/" = {
+                proxyPass = "http://[::1]:${toString config.cockpit.port}";
+                extraConfig = ''
+                  # Required for web sockets to work
+                  proxy_http_version 1.1;
+                  proxy_buffering off;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "upgrade";
+
+                  # Pass ETag header from Cockpit to clients.
+                  # See: https://github.com/cockpit-project/cockpit/issues/5239
+                  gzip off;'';
+              };
+            };
+          };
+        }
+        // {
           ${config.adguard.hostName} = mkIf config.adguard.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {

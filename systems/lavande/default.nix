@@ -20,6 +20,7 @@
   nixCache.enable = true;
   adguard.enable = true;
   fail2ban.enable = true;
+  cockpit.enable = true;
   matrix.enable = true;
   matrix.enableElement = true;
   watchtower.enable = true;
