@@ -120,17 +120,24 @@ in {
           };
 
           # desktop configs
-          "kwinrc"."Windows"."RollOverDesktops".value = true;
-          "kwinrc"."Desktops" = {
-            "Number".value = 10;
-            "Rows".value = 2;
+          "kwinrc" = {
+            "Windows"."RollOverDesktops".value = true;
+            "Desktops" = {
+              "Number".value = 10;
+              "Rows".value = 2;
+            };
+            "Effect-slide" = {
+              "HorizontalGap".value = 0;
+              "VerticalGap".value = 0;
+            };
+
+            "org.kde.kdecoration2"."BorderSizeAuto".value = false;
+            "org.kde.kdecoration2"."BorderSize".value = "Tiny";
+            "NightColor" = {
+              "Active".value = true;
+              "NightTemperature".value = 3400;
+            };
           };
-          "kwinrc"."Effect-slide" = {
-            "HorizontalGap".value = 0;
-            "VerticalGap".value = 0;
-          };
-          "kwinrc"."org.kde.kdecoration2"."BorderSizeAuto".value = false;
-          "kwinrc"."org.kde.kdecoration2"."BorderSize".value = "Tiny";
 
           #mime apps WARNING DONT FORGET ; IN THE STRING
           "mimeapps.list"."Added Associations" = {
