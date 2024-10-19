@@ -6,6 +6,7 @@
   inputs,
   mkSecrets,
   base_domain_name,
+  hostName,
   ...
 }: {
   imports = [
@@ -19,8 +20,10 @@
   watchtower.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
+  cockpit.enable = true;
 
-  netdata.hostName = "netdata2.${base_domain_name}";
+  cockpit.hostName = "cockpit.${hostName}";
+  netdata.hostName = "netdata.${hostName}";
   homeassistant.hostName = "${config.hostName}";
   authelia.hostName = "authelia.${base_domain_name}";
 
