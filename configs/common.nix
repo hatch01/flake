@@ -59,6 +59,7 @@
           #gaming
           "steam"
           "steam-run"
+          "steam-unwrapped"
           "steam-original"
           "libsciter"
           "parsec-bin"
@@ -99,6 +100,8 @@
 
           # server
           "corefonts"
+
+          "anytype"
         ];
 
       permittedInsecurePackages = [
