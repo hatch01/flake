@@ -189,6 +189,7 @@
       iftop # network monitoring
       nixfmt-rfc-style
       alejandra
+      sqlite
 
       # python is useful
       virtualenv
