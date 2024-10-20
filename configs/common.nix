@@ -228,7 +228,11 @@
   users.users = {
     root = {
       hashedPasswordFile = config.age.secrets.rootPassword.path;
-      openssh.authorizedKeys.keys = [sshPublicKey];
+      openssh.authorizedKeys.keys = [
+        sshPublicKey
+        # cockpit ssh key
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9I2P7023LWFFyN1lq5LHyTqJQo3J0XeorEnHj2JTUqVTCTdrnXydM8RZ72ronFNreU/vw3ytZVepch0WQiDHcL5KOvebESg4YzK4+DgIyyEiiNXvUK3wHBg9E10NNMhg7h+INXoeM2OVHRXfUvsZOC0tx14LskYKZE691iNL2RXoC1DJ5lpg6f1F/Y5vvubXqWW2aOTykHHsKeHZIR5KJbszE2UJnGYa3CvLy1lQiLWYqg5MRxkrT3T34AKrlH+oFPETxO3WG//HA2/9OncJTZsqlpNSpjq3EvWcfseBn8ow1D6zSn9/mD6PhCJraakivqJPmYSJYRB8S1DxloqIu41MgsAbY75C+Y3Slg5BNB9V+L21rQ9975PYhS0jxGKwHrlUdui+GPQDRrGwgCzELVbeRAS2OG7I6ytT2voTSYO+XImwgk2FpoYFUOPwqFq7juzfVNJJUjYBmpxNhT+NZZPEOXmM2ddWVS8k5Q4swegSgD9Us9blvIVnjn4X7OpU= eymeric@tulipe"
+      ];
     };
     ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
   };
