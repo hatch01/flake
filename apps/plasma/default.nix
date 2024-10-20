@@ -156,6 +156,48 @@ in {
             "Battery/Performance"."PowerProfile".value = "balanced";
             "LowBattery/Performance"."PowerProfile".value = "power-saver";
           };
+
+          "koirc" = {
+            General = {
+              current.value = "Light";
+              latitude.value = 45.778;
+              longitude.value = 4.885;
+              notify.value = 2;
+              schedule.value = 2;
+              schedule-type.value = "sun";
+              start-hidden.value = 2;
+            };
+            "ColorScheme" = {
+              dark.value = "/var/run/current-system/sw/share/color-schemes/CatppuccinMochaBlue.colors";
+              enabled.value = true;
+              light.value = "/var/run/current-system/sw/share/color-schemes/CatppuccinLatteBlue.colors";
+            };
+            "GTKTheme" = {
+              dark.value = "Breeze-Dark";
+              enabled.value = true;
+              light.value = "Breeze";
+            };
+            "IconTheme" = {
+              dark.value = "catppuccin-mocha-dark-cursors";
+              enabled.value = true;
+              light.value = "catppuccin-mocha-dark-cursors";
+            };
+            "KvantumStyle" = {
+              dark.value = "";
+              enabled.value = false;
+              light.value = "";
+            };
+            "PlasmaStyle" = {
+              dark.value = "breeze-dark";
+              enabled.value = false;
+              light.value = "breeze-dark";
+            };
+            "Wallpaper" = {
+              dark.value = "";
+              enabled.value = false;
+              light.value = "";
+            };
+          };
         };
       };
 
