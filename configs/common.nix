@@ -231,7 +231,7 @@
       openssh.authorizedKeys.keys = [
         sshPublicKey
         # cockpit ssh key
-        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9I2P7023LWFFyN1lq5LHyTqJQo3J0XeorEnHj2JTUqVTCTdrnXydM8RZ72ronFNreU/vw3ytZVepch0WQiDHcL5KOvebESg4YzK4+DgIyyEiiNXvUK3wHBg9E10NNMhg7h+INXoeM2OVHRXfUvsZOC0tx14LskYKZE691iNL2RXoC1DJ5lpg6f1F/Y5vvubXqWW2aOTykHHsKeHZIR5KJbszE2UJnGYa3CvLy1lQiLWYqg5MRxkrT3T34AKrlH+oFPETxO3WG//HA2/9OncJTZsqlpNSpjq3EvWcfseBn8ow1D6zSn9/mD6PhCJraakivqJPmYSJYRB8S1DxloqIu41MgsAbY75C+Y3Slg5BNB9V+L21rQ9975PYhS0jxGKwHrlUdui+GPQDRrGwgCzELVbeRAS2OG7I6ytT2voTSYO+XImwgk2FpoYFUOPwqFq7juzfVNJJUjYBmpxNhT+NZZPEOXmM2ddWVS8k5Q4swegSgD9Us9blvIVnjn4X7OpU= eymeric@tulipe"
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtuHS/3ghJs43cxnzHoQ0csZiJl957OBPVF6QmQEgANWNwIU3TSCyvrOUkGzZ7PoICWRH30OAk1TROOGNBTV9nQocCjyipg758F1FQxu6ovyQIA+5FQtRAIZf12f2jf/zRTTr63U9d7ummKyvmyGkysPL8ti3SpBVTvfbYzz2HRFeVKodksX8fMZo3dJNd6DbiBUEdTFe7YrDBc7jEfnWmcJ2rhPJ8BEkUBWKlyCxaVmOOq5Lnj+z8vqQrfLKZebmF5O5K2+Bnk6gPc20U7xtxAbXBrvbJh9MPImqF9w8LVllIsFSZi6sgPne+uocFmAobpMSF1GCGBViWv6C3g4sWyyohQUi5sZfPxFcBEOoJ5dpdsKcN5UXIJuEFIDVcWJ3xvJOM8mBcj96KEm5lk9HcVohZpFYXWrEwjZ1x8jZTGnjuINHX0HdF04nF2KTK3NxIM5tt4U9ZeeI5SW2WN09BeYba7QAnma+RXkuEjXn/JbCwi7eXUQ/fFgA/D/dRMeM= eymeric@tulipe"
       ];
     };
     ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
