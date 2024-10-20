@@ -3,6 +3,7 @@
   username,
   lib,
   config,
+  inputs,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -35,6 +36,10 @@ in {
 
     environment.plasma6.excludePackages = with pkgs.libsForQt5; [
       elisa
+    ];
+
+    environment.systemPackages = [
+      inputs.camasca.packages.${pkgs.system}.koi
     ];
 
     hm = {
