@@ -19,6 +19,7 @@ in {
       texlive.combined.scheme-full
       mermaid-cli
       mermaid-filter
+      librsvg
     ];
     hm = {
       programs.zsh.initExtra = ''
