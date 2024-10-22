@@ -56,20 +56,20 @@ in {
               then
                   echo "Converting $i to $pdfFile"
                   cd $path
-                  pandoc ${pandocCommand} $i -o $pdfFile
+                  MERMAID_FILTER_FORMAT=pdf MERMAID_FILTER_BACKGROUND=transparent pandoc ${pandocCommand} $i -o $pdfFile
               fi
               if [[ ( -f $htmlFile && $(stat -c %Y $htmlFile) -lt $(stat -c %Y $i) ) ||  ( ! -e $htmlFile ) ]]
               then
                   echo "Converting $i to $htmlFile"
                   cd $path
-                  pandoc ${pandocCommand} $i -o $htmlFile
+                  MERMAID_FILTER_FORMAT=svg MERMAID_FILTER_BACKGROUND=transparent pandoc ${pandocCommand} $i -o $htmlFile
               fi
 
               if [[ ( -f $markdownFile && $(stat -c %Y $markdownFile) -lt $(stat -c %Y $i) ) ||  ( ! -e $markdownFile ) ]]
               then
                   echo "Converting $i to $markdownFile"
                   cd $path
-                  pandoc ${builtins.replaceStrings ["--template eisvogel" ""] ["" ""] pandocCommand} $i -o $markdownFile
+                  MERMAID_FILTER_FORMAT=svg MERMAID_FILTER_BACKGROUND=transparent pandoc ${builtins.replaceStrings ["--template eisvogel" ""] ["" ""] pandocCommand} $i -o $markdownFile
               fi
           done
         '';
