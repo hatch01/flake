@@ -71,6 +71,10 @@ in {
           "cmake.showOptionsMovedNotification" = false;
           "rust-analyzer.inlayHints.typeHints.enable" = false;
           "git.openRepositoryInParentFolders" = true;
+          "editor.cursorSmoothCaretAnimation" = "on";
+          "editor.smoothScrolling" = true;
+          "workbench.list.smoothScrolling" = true;
+          "terminal.integrated.smoothScrolling" = true;
 
           # fix for segfault on hyprland
           "window.titleBarStyle" = "custom";
