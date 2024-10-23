@@ -10,8 +10,6 @@ in {
     vscode.enable = mkEnableOption "vscode";
   };
   config = {
-    environment.systemPackages = with pkgs; mkIf config.vscode.enable [nil];
-
     hm = mkIf config.vscode.enable {
       home.sessionVariables.NIXOS_OZONE_WL = "1";
       programs.vscode = {
@@ -65,8 +63,6 @@ in {
           "editor.formatOnSave" = true;
           "editor.inlineSuggest.enabled" = true;
           "files.autoSave" = "afterDelay";
-          "nix.enableLanguageServer" = true;
-          "nix.serverPath" = "nil";
           "rust-analyzer.check.command" = "clippy";
           "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
           "workbench.colorTheme" = "Catppuccin Mocha";
@@ -78,6 +74,16 @@ in {
 
           # fix for segfault on hyprland
           "window.titleBarStyle" = "custom";
+
+          #nix setup
+          "nix.serverPath" = "nixd";
+          "nix.enableLanguageServer" = true;
+          "nixpkgs" = {
+            "expr" = "import <nixpkgs> { }";
+          };
+          "formatting" = {
+            "command" = ["alejandra"]; # or nixfmt or nixpkgs-fmt
+          };
         };
         keybindings = [
           {

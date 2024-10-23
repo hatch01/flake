@@ -155,6 +155,8 @@
     backupFileExtension = "backup";
   };
 
+  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+
   environment = {
     systemPackages = with pkgs; let
       inherit (pkgs.stdenv.hostPlatform) system;
@@ -189,6 +191,7 @@
       iftop # network monitoring
       nixfmt-rfc-style
       alejandra
+      nixd
       sqlite
 
       # python is useful
