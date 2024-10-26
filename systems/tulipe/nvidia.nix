@@ -60,6 +60,7 @@
       boot.blacklistedKernelModules = ["nouveau" "nvidia" "nvidia_drm" "nvidia_modeset"];
 
       services.xserver.videoDrivers = lib.mkForce ["amdgpu"];
+      hardware.nvidia-container-toolkit.enable = lib.mkForce false;
     };
   };
 
