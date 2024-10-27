@@ -176,14 +176,6 @@ in {
                 "/_matrix".proxyPass = "http://[::1]:${toString config.matrix.port}";
                 # Forward requests for e.g. SSO and password-resets.
                 "/_synapse/client".proxyPass = "http://[::1]:${toString config.matrix.port}";
-
-                "~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = mkIf config.matrix.sliding-sync.enable {
-                  proxyPass = "http://[::1]:${toString config.matrix.sliding-sync.port}";
-                };
-
-                "~ ^(\/_matrix|\/_synapse\/client)" = mkIf config.matrix.sliding-sync.enable {
-                  proxyPass = "http://[::1]:${toString config.matrix.port}";
-                };
               };
             };
         }
