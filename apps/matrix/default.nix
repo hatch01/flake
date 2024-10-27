@@ -12,7 +12,7 @@ in {
     ./signal.nix
     ./discord.nix
     ./whatsapp.nix
-    ./sliding-sync.nix
+    ./mas.nix
   ];
 
   options = {
@@ -35,7 +35,7 @@ in {
     matrix.signal.enable = true;
     matrix.whatsapp.enable = true;
     matrix.discord.enable = true;
-    matrix.sliding-sync.enable = true;
+    matrix.mas.enable = true;
 
     age.secrets = mkSecrets {
       "matrix_oidc" = {
