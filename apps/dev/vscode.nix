@@ -91,15 +91,9 @@ in {
                 nixpkgs.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").inputs.nixpkgs";
                 nixpkgs-unstable.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").inputs.nixpkgs-unstable";
                 nixpkgs-stable.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").inputs.nixpkgs-stable";
-                "nixos" = {
-                  "expr" = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.tulipe.options";
-                };
-                "nixos2" = {
-                  "expr" = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.jonquille.options";
-                };
-                "nixos3" = {
-                  "expr" = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.lavande.options";
-                };
+                tulipe.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.tulipe.options";
+                jonquille.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.jonquille.options";
+                lavande.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.lavande.options";
               };
             };
           };
