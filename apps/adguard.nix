@@ -82,6 +82,9 @@ in {
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt" # uBlock₀ filters – Badware risk
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt" # AdGuard DNS filter
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_59.txt" # AdGuard DNS Popup Hosts filter
+            "https://big.oisd.nl"
+            "https://hblock.molinero.dev/hosts"
+            "https://hblock.molinero.dev/hosts_adblock.txt"
           ];
       };
     };
