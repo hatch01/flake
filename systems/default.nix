@@ -49,6 +49,7 @@
           {
             inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret base_domain_name;
             hostName = value.hostName or name;
+            stable = value.stable or false;
           }
           // (value.specialArgs or {});
       })
