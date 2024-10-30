@@ -11,8 +11,13 @@
   secretsPath = ../secrets;
 
   mkSystem = systems: {
-    nixosConfigurations = builtins.mapAttrs (name: value:
-      inputs.nixpkgs.lib.nixosSystem {
+    nixosConfigurations = builtins.mapAttrs (name: value: let
+      nixpkgs =
+        if value.stable or false
+        then inputs.nixpkgs-stable
+        else inputs.nixpkgs;
+    in
+      nixpkgs.lib.nixosSystem {
         system = value.system;
         modules =
           value.modules
