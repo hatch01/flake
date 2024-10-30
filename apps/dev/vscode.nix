@@ -89,6 +89,8 @@ in {
               };
               "options" = {
                 nixpkgs.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").inputs.nixpkgs";
+                nixpkgs-unstable.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").inputs.nixpkgs-unstable";
+                nixpkgs-stable.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").inputs.nixpkgs-stable";
                 "nixos" = {
                   "expr" = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.tulipe.options";
                 };
