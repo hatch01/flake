@@ -82,6 +82,25 @@ in {
           #nix setup
           "nix.serverPath" = "nixd";
           "nix.enableLanguageServer" = true;
+          "nix.serverSettings" = {
+            "nixd" = {
+              "formatting" = {
+                "command" = ["alejandra"]; # // or nixfmt or nixpkgs-fmt
+              };
+              "options" = {
+                nixpkgs.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").inputs.nixpkgs";
+                "nixos" = {
+                  "expr" = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.tulipe.options";
+                };
+                "nixos2" = {
+                  "expr" = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.jonquille.options";
+                };
+                "nixos3" = {
+                  "expr" = "(builtins.getFlake \"/home/eymeric/tmp/flake\").nixosConfigurations.lavande.options";
+                };
+              };
+            };
+          };
           "nixpkgs" = {
             "expr" = "import <nixpkgs> { }";
           };
