@@ -13,19 +13,26 @@
     ./impermanence.nix
   ];
 
+  nextcloud.enable = true;
+  onlyofficeDocumentServer.enable = true;
+  homepage.enable = true;
+  authelia.enable = true;
+  gitlab.enable = true;
   netdata.enable = true;
+  nixCache.enable = true;
+  adguard.enable = true;
   fail2ban.enable = true;
+  cockpit.enable = true;
+  matrix.enable = true;
+  matrix.enableElement = true;
+  watchtower.enable = true;
   ddclient.enable = false;
   homeassistant.enable = true;
-  watchtower.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
-  cockpit.enable = true;
 
-  cockpit.hostName = "cockpit.${hostName}";
-  netdata.hostName = "netdata.${hostName}";
-  homeassistant.hostName = "${config.hostName}";
-  authelia.hostName = "authelia.${base_domain_name}";
+  adguard.hostName = "dns.${config.hostName}";
+  gitlab.hostName = "forge.${config.hostName}";
 
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;
@@ -58,6 +65,8 @@
   boot.supportedFilesystems = ["zfs"];
   boot.zfs.forceImportRoot = false;
   systemd.services.zfs-mount.enable = false;
+
+  services.postgresql.dataDir = "/storage/postgresql/${config.services.postgresql.package.psqlSchema}";
 
   # Enable common container config files in /etc/containers
   virtualisation.containers.enable = true;

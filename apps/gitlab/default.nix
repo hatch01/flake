@@ -46,7 +46,7 @@ in {
       host = config.gitlab.hostName;
       https = true;
       port = 443;
-      statePath = "/persistent/gitlab";
+      statePath = "/storage/gitlab";
       databasePasswordFile = config.age.secrets."gitlab/databasePasswordFile".path;
       initialRootPasswordFile = config.age.secrets."gitlab/initialRootPasswordFile".path;
       secrets = {

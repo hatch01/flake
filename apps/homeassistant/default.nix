@@ -26,7 +26,7 @@ in {
   config = mkIf config.homeassistant.enable {
     zigbee2mqtt.enable = true;
     virtualisation.oci-containers.containers.homeassistant = {
-      volumes = ["/persistent/homeassistant/:/config"];
+      volumes = ["/storage/homeassistant/:/config"];
       environment.TZ = "Europe/Paris";
       image = "ghcr.io/home-assistant/home-assistant:stable";
       extraOptions = [

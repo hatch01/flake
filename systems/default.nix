@@ -107,7 +107,7 @@ in {
       jonquille = {
         system = "x86_64-linux";
         modules = server;
-        hostName = "home.onyx.ovh";
+        hostName = "onyx.ovh";
         specialArgs = {
           inherit inputs;
         };
