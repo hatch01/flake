@@ -25,9 +25,6 @@ let
     ]
     // defineSecrets "jonquille" [
       "rootPassword"
-    ]
-    // defineSecrets "lavande" [
-      "rootPassword"
 
       # Nextcloud
       "nextcloudAdmin"
@@ -41,6 +38,7 @@ let
       "matrix_oidc"
       "matrix_shared_secret"
       "matrix_sliding_sync"
+      "mas_config"
 
       # cache
       "cache-priv-key.pem"
@@ -63,6 +61,9 @@ let
       "authelia/jwtKey"
       "authelia/authBackend"
       "authelia/oAuth2PrivateKey"
+    ]
+    // defineSecrets "lavande" [
+      "rootPassword"
     ];
 
   defineSecrets = name: secrets:
