@@ -7,7 +7,7 @@
   inherit (lib) mkEnableOption mkIf;
 in {
   imports = [
-    ./onedrive
+    # ./onedrive
   ];
 
   options = {
