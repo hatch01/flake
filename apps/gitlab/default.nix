@@ -90,7 +90,7 @@ in {
               args = {
                 name = "openid_connect";
                 strategy_class = "OmniAuth::Strategies::OpenIDConnect";
-                issuer = "https://${config.gitlab.hostName}";
+                issuer = "https://${config.authelia.hostName}";
                 discovery = true;
                 scope = ["openid" "profile" "email" "groups"];
                 client_auth_method = "basic";
