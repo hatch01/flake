@@ -37,6 +37,7 @@
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;
   boot.loader.timeout = 1;
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
