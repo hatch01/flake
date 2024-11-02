@@ -14,11 +14,6 @@
     optionals config."${appName}".enable [
       {
         domain = config."${appName}".hostName;
-        policy = "one_factor";
-        networks = ["local"];
-      }
-      {
-        domain = config."${appName}".hostName;
         policy =
           if two_factor
           then "two_factor"
@@ -176,10 +171,6 @@ in {
               default_policy = "deny";
               networks = [
                 {
-                  name = "local";
-                  networks = ["192.168.0.0/16"];
-                }
-                {
                   name = "internal";
                   networks = ["127.0.0.1/32"];
                 }
@@ -195,14 +186,6 @@ in {
                   }
                   {
                     domain_regex = ".*\.${config.hostName}";
-                    policy = "one_factor";
-                    networks = ["local"];
-                    subject = [
-                      ["group:admin"]
-                    ];
-                  }
-                  {
-                    domain_regex = ".*\.${config.hostName}";
                     policy = "two_factor";
                     subject = [
                       ["group:admin"]
@@ -212,6 +195,10 @@ in {
                 ++ mkUserRule {
                   appName = "homepage";
                   two_factor = false;
+                }
+                ++ mkUserRule {
+                  appName = "librespeed";
+                  two_factor = true;
                 };
             };
 
