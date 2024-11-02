@@ -38,7 +38,7 @@ in {
         socat TCP4-LISTEN:${builtins.toString config.gitlab.configUpdater.port},reuseaddr,fork SYSTEM:${
           lib.getExe (pkgs.writeShellScriptBin "route-hander" ''
             read request
-            path=$(echo "$request" | awk '{print $2}')
+            path=$(echo "$request" | awk '{print $2}' | cut -d'?' -f1)
 
             case "$path" in
               /update)
