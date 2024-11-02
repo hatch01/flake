@@ -27,20 +27,23 @@ in {
   };
 
   config = {
-    age.secrets = mkSecrets {
-      nextcloudAdmin = optionalAttrs config.nextcloud.enable {
-        owner = config.users.users.nextcloud.name;
-        group = config.users.users.nextcloud.name;
-      };
-      nextcloudSecretFile = optionalAttrs config.nextcloud.enable {
-        owner = config.users.users.nextcloud.name;
-        group = config.users.users.nextcloud.name;
-      };
-      onlyofficeDocumentServerKey = optionalAttrs config.onlyofficeDocumentServer.enable {
-        owner = config.users.users.onlyoffice.name;
-        group = config.users.users.onlyoffice.name;
-      };
-    };
+    age.secrets =
+      optionalAttrs config.nextcloud.enable (mkSecrets {
+        nextcloudAdmin = {
+          owner = config.users.users.nextcloud.name;
+          group = config.users.users.nextcloud.name;
+        };
+        nextcloudSecretFile = {
+          owner = config.users.users.nextcloud.name;
+          group = config.users.users.nextcloud.name;
+        };
+      })
+      // optionalAttrs config.onlyofficeDocumentServer.enable (mkSecrets {
+        onlyofficeDocumentServerKey = {
+          owner = config.users.users.onlyoffice.name;
+          group = config.users.users.onlyoffice.name;
+        };
+      });
 
     services = {
       nextcloud = mkIf config.nextcloud.enable {
@@ -77,7 +80,6 @@ in {
               music
               notes
               previewgenerator
-              spreed
               deck
               cookbook
               ;
