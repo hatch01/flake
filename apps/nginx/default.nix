@@ -41,16 +41,13 @@ in {
           enableACME = config.nginx.acme.enable;
           extraConfig = "proxy_cache cache;\n";
         };
-        baseUrl = "https://${config.matrix.hostName}";
-        clientConfig = {
-          "m.homeserver".base_url = baseUrl;
-          "org.matrix.msc3575.proxy" = {
-            url = baseUrl;
-            issuer = "https://${config.authelia.hostName}/";
-            account = "https://${config.authelia.hostName}/account/";
+        clientConfig = mkIf config.matrix.enable {
+          "m.homeserver".base_url = "https://${config.matrix.hostName}";
+          "org.matrix.msc2965.authentication" = {
+            "issuer" = "https://${config.hostName}/";
+            "account" = "https://${config.authelia.hostName}/account";
           };
         };
-        serverConfig."m.server" = "${config.matrix.hostName}:443";
         mkWellKnown = data: ''
           default_type application/json;
           add_header Access-Control-Allow-Origin *;
@@ -81,8 +78,17 @@ in {
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
 
-              "= /.well-known/matrix/server".extraConfig = mkIf config.matrix.enable (mkWellKnown serverConfig);
+              "= /.well-known/matrix/server".extraConfig = mkIf config.matrix.enable (mkWellKnown {"m.server" = "${config.matrix.hostName}:443";});
               "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
+              "= /.well-known/openid-configuration".extraConfig = mkIf config.matrix.enable (
+                mkWellKnown {
+                  "issuer" = "https://${config.hostName}/";
+                  "authorization_endpoint" = autheliaProxy.proxyPass;
+                  "token_endpoint" = "https=//auth.example.com/oauth2/token";
+                  "jwks_uri" = "https=//auth.example.com/oauth2/keys.json";
+                  "registration_endpoint" = "https=//auth.example.com/oauth2/registration";
+                }
+              );
             };
           };
         }
@@ -160,28 +166,25 @@ in {
           };
         }
         // {
-          ${config.matrix.hostName} = let
-            clientConfig."m.homeserver".base_url = "https://${config.matrix.hostName}";
-          in
-            mkIf config.matrix.enable {
-              inherit (cfg) forceSSL extraConfig enableACME;
-              serverAliases = [config.matrix.hostName];
-              root = mkIf config.matrix.enableElement (pkgs.element-web.override {
-                conf = {
-                  default_server_config = clientConfig; # see `clientConfig` from the snippet above.
-                };
-              });
-              locations = {
-                "/".extraConfig = mkIf (! config.matrix.enableElement) ''
-                  return 404;
-                '';
-                # Forward all Matrix API calls to the synapse Matrix homeserver. A trailing slash
-                # *must not* be used here.
-                "/_matrix".proxyPass = "http://[::1]:${toString config.matrix.port}";
-                # Forward requests for e.g. SSO and password-resets.
-                "/_synapse/client".proxyPass = "http://[::1]:${toString config.matrix.port}";
+          ${config.matrix.hostName} = mkIf config.matrix.enable {
+            inherit (cfg) forceSSL extraConfig enableACME;
+            serverAliases = [config.matrix.hostName];
+            root = mkIf config.matrix.enableElement (pkgs.element-web.override {
+              conf = {
+                default_server_config = clientConfig; # see `clientConfig` from the snippet above.
               };
+            });
+            locations = {
+              "/".extraConfig = mkIf (! config.matrix.enableElement) ''
+                return 404;
+              '';
+              # Forward all Matrix API calls to the synapse Matrix homeserver. A trailing slash
+              # *must not* be used here.
+              "/_matrix".proxyPass = "http://[::1]:${toString config.matrix.port}";
+              # Forward requests for e.g. SSO and password-resets.
+              "/_synapse/client".proxyPass = "http://[::1]:${toString config.matrix.port}";
             };
+          };
         }
         // {
           ${config.nixCache.hostName} = mkIf config.nixCache.enable {
