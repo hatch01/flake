@@ -5,7 +5,7 @@ debug:
 	nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
 
 update:
-	nix flake update --commit-lock-file
+	nix flake update --commit-lock-file --accept-flake-config
 
 history:
 	nix profile history --profile /nix/var/nix/profiles/system
