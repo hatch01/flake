@@ -30,7 +30,9 @@
   homeassistant.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
+  librespeed.enable = true;
 
+  librespeed.hostName = "speedtest.${config.hostName}";
   adguard.hostName = "dns.${config.hostName}";
   gitlab.hostName = "forge.${config.hostName}";
 

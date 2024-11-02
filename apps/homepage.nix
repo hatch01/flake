@@ -82,6 +82,14 @@ in {
                 };
               }
               {
+                "speedtest" = {
+                  icon = "librespeed.png";
+                  description = "Librespeed c'est vraiment cool";
+                  href = "https://${config.librespeed.hostName}/";
+                  siteMonitor = "https://${config.librespeed.hostName}/";
+                };
+              }
+              {
                 "Matrix" = {
                   icon = "element.png";
                   description = "Matrix c'est vraiment cool";

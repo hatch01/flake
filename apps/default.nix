@@ -37,5 +37,6 @@
     ./watchtower.nix
     ./bitcoin.nix
     ./cockpit.nix
+    ./librespeed.nix
   ];
 }
