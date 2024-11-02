@@ -130,7 +130,7 @@ in {
                   siteMonitor = "https://${config.adguard.hostName}";
                   widget = {
                     type = "adguard";
-                    url = "http://localhost:${toString config.adguard.port}";
+                    url = "https://${config.adguard.hostName}";
                     username = "admin"; # unused creds
                     password = "password";
                   };
