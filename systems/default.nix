@@ -94,32 +94,31 @@
     ]
     ++ nixos;
 in {
-  flake =
-    mkSystem {
-      tulipe = {
-        system = "x86_64-linux";
-        modules = desktop;
-        hostName = "127.0.0.1";
-        specialArgs = {
-          inherit inputs;
-        };
+  flake = mkSystem {
+    tulipe = {
+      system = "x86_64-linux";
+      modules = desktop;
+      hostName = "127.0.0.1";
+      specialArgs = {
+        inherit inputs;
       };
-      jonquille = {
-        system = "x86_64-linux";
-        modules = server;
-        hostName = "onyx.ovh";
-        specialArgs = {
-          inherit inputs;
-        };
+    };
+    jonquille = {
+      system = "x86_64-linux";
+      modules = server;
+      hostName = "onyx.ovh";
+      specialArgs = {
+        inherit inputs;
       };
-      lavande = {
-        system = "aarch64-linux";
-        modules = server;
-        hostName = "onyx.ovh";
-        specialArgs = {
-          inherit inputs;
-        };
+    };
+    lavande = {
+      system = "aarch64-linux";
+      modules = server;
+      hostName = "onyx.ovh";
+      specialArgs = {
+        inherit inputs;
       };
-    }
-    // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
+    };
+  };
+  # // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
 }
