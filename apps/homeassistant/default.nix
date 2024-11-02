@@ -31,6 +31,7 @@ in {
       image = "ghcr.io/home-assistant/home-assistant:stable";
       extraOptions = [
         "--network=host"
+        "--add-host=host.docker.internal:host-gateway"
       ];
     };
   };

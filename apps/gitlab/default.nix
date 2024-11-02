@@ -19,9 +19,12 @@ in {
 
   imports = [
     ./runner.nix
+    ./config_updater.nix
   ];
 
   config = mkIf config.gitlab.enable {
+    gitlab.configUpdater.enable = true;
+
     age.secrets = let
       cfg = {
         owner = "gitlab";
