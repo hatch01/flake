@@ -41,9 +41,9 @@ in {
           done
         }
       '';
-      home.file."onedrive/ecole/polytech/md_to_pdf.sh" = {
+      home.file."Nextcloud/ecole/polytech/md_to_pdf.sh" = {
         text = ''
-              wd="/home/eymeric/onedrive/ecole/polytech/"
+              wd="/home/eymeric/Nextcloud/ecole/polytech/"
               find "$wd" -type f -name "*.md" -print0 | grep -z -v -E "markdown|Universe" | while IFS= read -r -d ''' i; do
               path=$(echo $i | sed -e "s/$(echo $i |rev | cut -d "/" -f1 | rev)//")
               mkdir -p $path/pdf
@@ -109,7 +109,7 @@ in {
           ExecStart = toString (
             pkgs.writeShellScript "lesson-generator-script" ''
               set -eou pipefail
-              ${pkgs.bash}/bin/bash "/home/eymeric/onedrive/ecole/polytech/md_to_pdf.sh";
+              ${pkgs.bash}/bin/bash "/home/eymeric/Nextcloud/ecole/polytech/md_to_pdf.sh";
             ''
           );
         };

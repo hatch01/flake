@@ -115,7 +115,6 @@
   };
 
   services.udev.packages = [pkgs.openrgb];
-  services.onedrive.enable = true;
 
   services.pcscd.enable = true;
 
