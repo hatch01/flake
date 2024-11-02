@@ -60,7 +60,7 @@
   # Enable common container config files in /etc/containers
   virtualisation.containers.enable = true;
   virtualisation = {
-    oci-containers.backend = "podman";
+    oci-containers.backend = "docker";
     podman = {
       enable = true;
 
