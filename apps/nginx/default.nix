@@ -45,10 +45,10 @@ in {
           if config.matrix.enable
           then {
             "m.homeserver".base_url = "https://${config.matrix.domain}";
-          "org.matrix.msc2965.authentication" = {
+            "org.matrix.msc2965.authentication" = {
               "issuer" = "https://${config.networking.domain}/";
               "account" = "https://${config.matrix.mas.domain}/account";
-          };
+            };
           }
           else {};
         mkWellKnown = data: ''
@@ -60,7 +60,7 @@ in {
           proxyPass = "${
             if config.authelia.enable
             then "http://[::1]:${toString config.authelia.port}"
-            else "https://${toString config.authelia.hostName}"
+            else "https://${toString config.authelia.domain}"
           }/api/authz/auth-request";
           recommendedProxySettings = false;
           extraConfig = builtins.readFile ./auth-location.conf;
@@ -83,15 +83,7 @@ in {
 
               "= /.well-known/matrix/server".extraConfig = mkIf config.matrix.enable (mkWellKnown {"m.server" = "${config.matrix.domain}:443";});
               "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
-              "= /.well-known/openid-configuration".extraConfig = mkIf config.matrix.enable (
-                mkWellKnown {
-                  "issuer" = "https://${config.hostName}/";
-                  "authorization_endpoint" = autheliaProxy.proxyPass;
-                  "token_endpoint" = "https=//auth.example.com/oauth2/token";
-                  "jwks_uri" = "https=//auth.example.com/oauth2/keys.json";
-                  "registration_endpoint" = "https=//auth.example.com/oauth2/registration";
-                }
-              );
+              "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
             };
           };
         }
@@ -180,11 +172,23 @@ in {
               "/".extraConfig = mkIf (! config.matrix.enableElement) ''
                 return 404;
               '';
-              # Forward all Matrix API calls to the synapse Matrix homeserver. A trailing slash
-              # *must not* be used here.
-              "/_matrix".proxyPass = "http://[::1]:${toString config.matrix.port}";
-              # Forward requests for e.g. SSO and password-resets.
-              "/_synapse/client".proxyPass = "http://[::1]:${toString config.matrix.port}";
+
+              # Forward to the auth service
+              "~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
+                priority = 100;
+                proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
+              };
+
+              "~ ^(/_matrix|/_synapse/client)".proxyPass = "http://[::1]:${toString config.matrix.port}";
+            };
+          };
+        }
+        // {
+          ${config.matrix.mas.domain} = mkIf config.matrix.mas.enable {
+            inherit (cfg) forceSSL extraConfig enableACME;
+            locations = {
+              "/".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
+              "/assets/".root = "${pkgs.matrix-authentication-service}/share/matrix-authentication-service/";
             };
           };
         }

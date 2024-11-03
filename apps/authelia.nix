@@ -272,31 +272,14 @@ in {
                     token_endpoint_auth_method = "client_secret_basic";
                   }
                 ]
-                ++ optionals config.matrix.enable [
-                  {
-                    client_name = "Synapse";
-                    client_id = "synapse";
-                    # the client secret is a random hash so don't worry about it
-                    client_secret = "$pbkdf2-sha512$310000$76fMoD2cZWbBuahpGNUyNg$w5bAvbBpTU1fXMO41FdkYXbTafvDfYnrOZxRiOwOmfXe.sCZZ9pvL6nboA8/oDSXMUsJDGd3hxpiZL7x5c/vgQ";
-                    public = false;
-                    authorization_policy = "two_factor";
-                    redirect_uris = ["https://${config.matrix.domain}/_synapse/client/oidc/callback"];
-                    scopes = [
-                      "openid"
-                      "profile"
-                      "email"
-                    ];
-                    userinfo_signed_response_alg = "none";
-                  }
-                ]
                 ++ optionals config.matrix.mas.enable [
                   {
                     client_name = "Matrix";
                     client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
                     # the client secret is a random hash so don't worry about it
-                    client_secret = "$pbkdf2-sha512$310000$V8EvuFJ7XDKaE09FPPQ7Hg$PF0mj2flh5CIXN3tKtHanTnwKYRjerWDbgVyrxIu5AMuvrLaZ.1ukwC5iooNSTXowXz7oMCtD8/Eb.wotyBJuw";
+                    client_secret = "$pbkdf2-sha512$310000$XVZ/KKrIuhfG7m/bnQXEHQ$/cHzLB6xyflth5HKJWR/Lc.//j4S/YiJ6lSaEH.rmskegD6c4zdgbni1Q.yfZrdRBg13.E8MGSyw4X1KpECv7Q";
                     public = false;
-                    authorization_policy = "one_factor";
+                    authorization_policy = "two_factor";
                     redirect_uris = ["https://${config.matrix.mas.domain}/upstream/callback/01H8PKNWKKRPCBW4YGH1RWV279"];
                     scopes = [
                       "openid"

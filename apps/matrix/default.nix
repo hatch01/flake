@@ -7,6 +7,7 @@
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
   puppetFile = "/var/lib/matrix-synapse/puppet.yaml";
+  masFile = "/var/lib/matrix-synapse/matrix-authentication-service.yaml";
 in {
   imports = [
     ./signal.nix
@@ -52,10 +53,10 @@ in {
         SystemCallFilter = lib.mkForce ["@system-service"]; # making the service less secure to be able to modify files
       };
       preStart = lib.mkBefore ''
-        test -f '${puppetFile}' && rm -f '${puppetFile}'
-        ${pkgs.envsubst}/bin/envsubst \
-            -o '${puppetFile}' \
-            -i '${
+          test -f '${puppetFile}' && rm -f '${puppetFile}'
+          ${pkgs.envsubst}/bin/envsubst \
+              -o '${puppetFile}' \
+              -i '${
           (pkgs.writeText "double-puppet.yaml" (lib.generators.toYAML {}
             {
               id = "puppet";
@@ -74,22 +75,50 @@ in {
               };
             }))
         }'
+
+        test -f '${masFile}' && rm -f '${masFile}'
+          ${pkgs.envsubst}/bin/envsubst \
+              -o '${masFile}' \
+              -i '${
+          (pkgs.writeText "matrix-authentication-service.yaml" (lib.generators.toYAML {}
+            {
+              experimental_features = {
+                msc3861 = {
+                  enabled = true;
+
+                  # Synapse will call `{issuer}/.well-known/openid-configuration` to get the OIDC configuration
+                  issuer = "https://onyx.ovh/";
+
+                  # Matches the `client_id` in the auth service config
+                  client_id = "0000000000000000000SYNAPSE";
+                  client_auth_method = "client_secret_basic";
+                  # Matches the `client_secret` in the auth service config
+                  client_secret = "$client_secret";
+
+                  # Matches the `matrix.secret` in the auth service config
+                  admin_token = "$admin_token";
+
+                  # URL to advertise to clients where users can self-manage their account
+                  account_management_url = "http=//localhost=8080/account";
+                };
+              };
+            }))
+        }'
       '';
     };
 
     services.matrix-synapse = {
       enable = true;
 
-      # plugins = with config.services.matrix-synapse.package.plugins; [
-      #   matrix-synapse-shared-secret-auth
-      # ];
+      extras = [
+        "oidc"
+      ];
 
-      settings.server_name = config.hostName;
-      # The public base URL value must match the `base_url` value set in `clientConfig` above.
-      # The default value here is based on `server_name`, so if your `server_name` is different
-      # from the value of `fqdn` above, you will likely run into some mismatched domain names
-      # in client applications.
-      settings.public_baseurl = "https://${config.matrix.hostName}";
+      settings.app_service_config_files = [puppetFile];
+      extraConfigFiles = [masFile];
+
+      settings.server_name = config.networking.domain;
+      settings.public_baseurl = "https://${config.matrix.domain}";
       settings.listeners = [
         {
           port = config.matrix.port;
@@ -103,56 +132,6 @@ in {
               compress = true;
             }
           ];
-        }
-      ];
-
-      settings.app_service_config_files = [puppetFile];
-
-      settings.experimental_features = {
-        msc3083 = {
-          enabled = true;
-          issuer = "https://${config.authelia.hostName}";
-          client_id = "synapse";
-          client_auth_method = "client_secret_basic";
-          client_secret_path = config.age.secrets.matrix_oidc.path;
-        };
-      };
-
-      #     experimental_features:
-      # msc3861:
-      #   enabled: true
-      #   issuer: https://auth.sspaeth.de/
-      #   # Synapse will call `{issuer}/.well-known/openid-configuration` to get the OIDC configuration
-
-      #   # Matches the `client_id` in the auth service config
-      #   client_id: 00000000000000000SYNAPSE00
-      #   # Matches the `client_auth_method` in the auth service config
-      #   client_auth_method: client_secret_basic
-      #   # Matches the `client_secret` in the auth service config
-      #   client_secret: 1234CLIENTSECRETHERE56789
-
-      #   # Matches the `matrix.secret` in the auth service config
-      #   admin_token: 0x97531ADMINTOKENHERE13579
-
-      settings.oidc_providers = [
-        {
-          idp_id = "authelia";
-          idp_name = "Authelia";
-          idp_icon = "mxc://authelia.com/cKlrTPsGvlpKxAYeHWJsdVHI";
-          discover = true;
-          issuer = "https://${config.authelia.domain}";
-          client_id = "synapse";
-          client_secret_path = config.age.secrets.matrix_oidc.path;
-          scopes = ["openid" "profile" "email"];
-          allow_existing_users = true;
-          user_mapping_provider = {
-            config = {
-              subject_claim = "sub";
-              localpart_template = "{{ user.preferred_username }}";
-              display_name_template = "{{ user.name }}";
-              email_template = "{{ user.email }}";
-            };
-          };
         }
       ];
     };

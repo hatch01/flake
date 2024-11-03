@@ -35,7 +35,6 @@ let
       "homepage"
 
       # Matrix
-      "matrix_oidc"
       "matrix_shared_secret"
       "matrix_sliding_sync"
       "mas_config"
