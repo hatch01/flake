@@ -25,6 +25,10 @@ in {
         type = types.str;
         default = "onlyoffice.${config.networking.domain}";
       };
+      port = mkOption {
+        type = types.int;
+        default = 8000;
+      };
     };
   };
 
@@ -42,8 +46,8 @@ in {
       })
       // optionalAttrs config.onlyofficeDocumentServer.enable (mkSecrets {
         onlyofficeDocumentServerKey = {
-          owner = config.users.users.onlyoffice.name;
-          group = config.users.users.onlyoffice.name;
+          # owner = config.users.users.onlyoffice.name;
+          # group = config.users.users.onlyoffice.name;
         };
       });
 
@@ -169,11 +173,19 @@ in {
         };
       };
 
-      onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
-        enable = true;
-        hostname = config.onlyofficeDocumentServer.domain;
-        jwtSecretFile = config.age.secrets.onlyofficeDocumentServerKey.path;
-      };
+      # onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
+      #   enable = true;
+      #   hostname = config.onlyofficeDocumentServer.domain;
+      #   jwtSecretFile = config.age.secrets.onlyofficeDocumentServerKey.path;
+      #   port = config.onlyofficeDocumentServer.port;
+      # };
+    };
+    virtualisation.oci-containers.containers.onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
+      image = "onlyoffice/documentserver:latest";
+      ports = ["${toString config.onlyofficeDocumentServer.port}:80"];
+      environmentFiles = [
+        config.age.secrets.onlyofficeDocumentServerKey.path
+      ];
     };
   };
 }
