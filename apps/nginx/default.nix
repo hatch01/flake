@@ -196,7 +196,7 @@ in {
         // {
           ${config.nixCache.domain} = mkIf config.nixCache.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
-            locations."/".proxyPass = "http://[::1]:${toString config.nixCache.port}";
+            locations."/".proxyPass = "http://127.0.0.1:${toString config.nixCache.port}";
           };
         }
         // {
