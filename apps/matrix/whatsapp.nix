@@ -31,6 +31,7 @@ in {
           login_shared_secret_map = {
             "${config.networking.domain}" = "as_token:$SHARED_AS_TOKEN";
           };
+          sync_direct_chat_list = true;
         };
         homeserver = {
           address = "http://localhost:${toString config.matrix.port}";
