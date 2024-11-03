@@ -35,6 +35,7 @@ in {
     };
     services.nix-serve = {
       enable = true;
+      bindAddress = "::";
       port = config.nixCache.port;
       secretKeyFile = config.age.secrets."cache-priv-key.pem".path;
     };
