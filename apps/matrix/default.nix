@@ -39,9 +39,6 @@ in {
     matrix.mas.enable = true;
 
     age.secrets = mkSecrets {
-      "matrix_oidc" = {
-        owner = "matrix-synapse";
-      };
       "matrix_shared_secret" = {
         owner = "matrix-synapse";
       };
