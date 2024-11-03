@@ -3,10 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   config,
-  inputs,
   mkSecrets,
-  base_domain_name,
-  hostName,
   ...
 }: {
   imports = [
@@ -32,9 +29,9 @@
   nginx.acme.enable = true;
   librespeed.enable = true;
 
-  librespeed.hostName = "speedtest.${config.hostName}";
-  adguard.hostName = "dns.${config.hostName}";
-  gitlab.hostName = "forge.${config.hostName}";
+  librespeed.domain = "speedtest.${config.networking.domain}";
+  adguard.domain = "dns.${config.networking.domain}";
+  gitlab.domain = "forge.${config.networking.domain}";
 
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;
@@ -88,19 +85,8 @@
 
   # Enable networking
   networking = {
-    domain = config.networking.hostName;
     networkmanager.enable = true;
     hostId = "271e1c23";
-    # hosts = {
-    #   "127.0.0.1" = [
-    #     "${hostName}"
-    #     "nextcloud.${hostName}"
-    #     "forge.${hostName}"
-    #     "authelia.${hostName}"
-    #     "matrix.${hostName}"
-    #     "dns.${hostName}"
-    #   ];
-    # };
   };
 
   # Set your time zone.

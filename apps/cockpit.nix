@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  hostName,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf;
@@ -13,10 +12,10 @@ in {
       default = 9090;
       description = "The port of the cockpit";
     };
-    cockpit.hostName = mkOption {
+    cockpit.domain = mkOption {
       type = lib.types.str;
-      default = "cockpit.${hostName}";
-      description = "The hostname of the cockpit";
+      default = "cockpit.${config.networking.domain}";
+      description = "The domain of the cockpit";
     };
   };
 
@@ -25,7 +24,7 @@ in {
     services.cockpit.port = config.cockpit.port;
     services.cockpit.settings = {
       "WebService" = {
-        "Origins" = "https://${config.cockpit.hostName} wss://${config.cockpit.hostName}";
+        "Origins" = "https://${config.cockpit.domain} wss://${config.cockpit.domain}";
         "ProtocolHeader" = "X-Forwarded-Proto";
       };
       #   "basic" = {

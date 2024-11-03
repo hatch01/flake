@@ -13,7 +13,7 @@
   }:
     optionals config."${appName}".enable [
       {
-        domain = config."${appName}".hostName;
+        domain = config."${appName}".domain;
         policy =
           if two_factor
           then "two_factor"
@@ -24,10 +24,10 @@ in {
   options = {
     authelia = {
       enable = mkEnableOption "enable Authelia";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "authelia.${config.hostName}";
-        description = "The hostname of the Authelia instance";
+        default = "authelia.${config.networking.domain}";
+        description = "The domain of the Authelia instance";
       };
       port = mkOption {
         type = types.int;
@@ -180,12 +180,12 @@ in {
                   # be careful with the order of the rules it is important
                   # https://www.authelia.com/configuration/security/access-control/#rule-matching
                   {
-                    domain_regex = ".*\.${config.hostName}";
+                    domain_regex = ".*\.${config.networking.domain}";
                     policy = "bypass";
                     networks = ["internal"];
                   }
                   {
-                    domain_regex = ".*\.${config.hostName}";
+                    domain_regex = ".*\.${config.networking.domain}";
                     policy = "two_factor";
                     subject = [
                       ["group:admin"]
@@ -213,9 +213,9 @@ in {
             session = {
               cookies = [
                 {
-                  domain = config.hostName;
-                  authelia_url = "https://${config.authelia.hostName}";
-                  default_redirection_url = "https://${config.hostName}";
+                  domain = config.networking.domain;
+                  authelia_url = "https://${config.authelia.domain}";
+                  default_redirection_url = "https://${config.networking.domain}";
                 }
               ];
             };
@@ -240,7 +240,7 @@ in {
                     authorization_policy = "two_factor";
                     require_pkce = true;
                     pkce_challenge_method = "S256";
-                    redirect_uris = ["https://${config.nextcloud.hostName}/apps/oidc_login/oidc"];
+                    redirect_uris = ["https://${config.nextcloud.domain}/apps/oidc_login/oidc"];
                     scopes = [
                       "openid"
                       "profile"
@@ -261,7 +261,7 @@ in {
                     authorization_policy = "two_factor";
                     require_pkce = true;
                     pkce_challenge_method = "S256";
-                    redirect_uris = ["https://${config.gitlab.hostName}/users/auth/openid_connect/callback"];
+                    redirect_uris = ["https://${config.gitlab.domain}/users/auth/openid_connect/callback"];
                     scopes = [
                       "openid"
                       "profile"
@@ -280,13 +280,32 @@ in {
                     client_secret = "$pbkdf2-sha512$310000$76fMoD2cZWbBuahpGNUyNg$w5bAvbBpTU1fXMO41FdkYXbTafvDfYnrOZxRiOwOmfXe.sCZZ9pvL6nboA8/oDSXMUsJDGd3hxpiZL7x5c/vgQ";
                     public = false;
                     authorization_policy = "two_factor";
-                    redirect_uris = ["https://${config.matrix.hostName}/_synapse/client/oidc/callback"];
+                    redirect_uris = ["https://${config.matrix.domain}/_synapse/client/oidc/callback"];
                     scopes = [
                       "openid"
                       "profile"
                       "email"
                     ];
                     userinfo_signed_response_alg = "none";
+                  }
+                ]
+                ++ optionals config.matrix.mas.enable [
+                  {
+                    client_name = "Matrix";
+                    client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
+                    # the client secret is a random hash so don't worry about it
+                    client_secret = "$pbkdf2-sha512$310000$V8EvuFJ7XDKaE09FPPQ7Hg$PF0mj2flh5CIXN3tKtHanTnwKYRjerWDbgVyrxIu5AMuvrLaZ.1ukwC5iooNSTXowXz7oMCtD8/Eb.wotyBJuw";
+                    public = false;
+                    authorization_policy = "one_factor";
+                    redirect_uris = ["https://${config.matrix.mas.domain}/upstream/callback/01H8PKNWKKRPCBW4YGH1RWV279"];
+                    scopes = [
+                      "openid"
+                      "groups"
+                      "profile"
+                      "email"
+                    ];
+                    grant_types = ["refresh_token" "authorization_code"];
+                    response_types = ["code"];
                   }
                 ];
             };

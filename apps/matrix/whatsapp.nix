@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  hostName,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -26,16 +25,16 @@ in {
           displayname_template = "{{if .FullName}}{{.FullName}}{{else if .BusinessName}}{{.BusinessName}}{{else if .PushName}}{{.PushName}}{{else}}{{.JID}}{{end}} (WA)";
           permissions = {
             "*" = "relay";
-            "${config.hostName}" = "user";
-            "@root:${config.hostName}" = "admin";
+            "${config.networking.domain}" = "user";
+            "@root:${config.networking.domain}" = "admin";
           };
           login_shared_secret_map = {
-            "${config.hostName}" = "as_token:$SHARED_AS_TOKEN";
+            "${config.networking.domain}" = "as_token:$SHARED_AS_TOKEN";
           };
         };
         homeserver = {
           address = "http://localhost:${toString config.matrix.port}";
-          domain = hostName;
+          domain = config.networking.domain;
         };
         appservice = {
           database = {

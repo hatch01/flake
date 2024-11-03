@@ -8,10 +8,10 @@ in {
   options = {
     adguard = {
       enable = mkEnableOption "enable Adguard";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "adguard.${config.hostName}";
-        description = "The hostname of the Adguard instance";
+        default = "adguard.${config.networking.domain}";
+        description = "The domain of the Adguard instance";
       };
       port = mkOption {
         type = types.int;
@@ -48,9 +48,9 @@ in {
           port_dns_over_quic = 853;
           port_https = config.adguard.port;
           allow_unencrypted_doh = true;
-          server_name = config.adguard.hostName;
-          certificate_path = "/var/lib/acme/${config.adguard.hostName}/fullchain.pem";
-          private_key_path = "/var/lib/acme/${config.adguard.hostName}/key.pem";
+          server_name = config.adguard.domain;
+          certificate_path = "/var/lib/acme/${config.adguard.domain}/fullchain.pem";
+          private_key_path = "/var/lib/acme/${config.adguard.domain}/key.pem";
         };
         filtering = {
           protection_enabled = true;

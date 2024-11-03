@@ -8,10 +8,10 @@ in {
   options = {
     netdata = {
       enable = mkEnableOption "enable Netdata";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "netdata.${config.hostName}";
-        description = "The hostname of the Netdata instance";
+        default = "netdata.${config.networking.domain}";
+        description = "The domain of the Netdata instance";
       };
       port = mkOption {
         type = types.int;

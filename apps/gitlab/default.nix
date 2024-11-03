@@ -9,10 +9,10 @@ in {
   options = {
     gitlab = {
       enable = mkEnableOption "enable Gitlab";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "gitlab.${config.hostName}";
-        description = "The hostname of the Gitlab instance";
+        default = "gitlab.${config.networking.domain}";
+        description = "The domain of the Gitlab instance";
       };
     };
   };
@@ -46,7 +46,7 @@ in {
 
     services.gitlab = {
       enable = true;
-      host = config.gitlab.hostName;
+      host = config.gitlab.domain;
       https = true;
       port = 443;
       statePath = "/storage/gitlab";
@@ -93,7 +93,7 @@ in {
               args = {
                 name = "openid_connect";
                 strategy_class = "OmniAuth::Strategies::OpenIDConnect";
-                issuer = "https://${config.authelia.hostName}";
+                issuer = "https://${config.authelia.domain}";
                 discovery = true;
                 scope = ["openid" "profile" "email" "groups"];
                 client_auth_method = "basic";
@@ -105,7 +105,7 @@ in {
                 client_options = {
                   identifier = "gitlab";
                   secret = {_secret = "${config.age.secrets."gitlab/openIdKey".path}";};
-                  redirect_uri = "https://${config.gitlab.hostName}/users/auth/openid_connect/callback";
+                  redirect_uri = "https://${config.gitlab.domain}/users/auth/openid_connect/callback";
                 };
               };
             }

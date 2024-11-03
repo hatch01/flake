@@ -37,17 +37,20 @@ in {
       virtualHosts = let
         cfg = {
           forceSSL = config.nginx.acme.enable;
-          useACMEHost = config.hostName;
+          useACMEHost = config.networking.domain;
           enableACME = config.nginx.acme.enable;
           extraConfig = "proxy_cache cache;\n";
         };
-        clientConfig = mkIf config.matrix.enable {
-          "m.homeserver".base_url = "https://${config.matrix.hostName}";
+        clientConfig =
+          if config.matrix.enable
+          then {
+            "m.homeserver".base_url = "https://${config.matrix.domain}";
           "org.matrix.msc2965.authentication" = {
-            "issuer" = "https://${config.hostName}/";
-            "account" = "https://${config.authelia.hostName}/account";
+              "issuer" = "https://${config.networking.domain}/";
+              "account" = "https://${config.matrix.mas.domain}/account";
           };
-        };
+          }
+          else {};
         mkWellKnown = data: ''
           default_type application/json;
           add_header Access-Control-Allow-Origin *;
@@ -65,7 +68,7 @@ in {
       in
         {}
         // {
-          "${config.hostName}" = mkIf config.homepage.enable {
+          "${config.networking.domain}" = mkIf config.homepage.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/" = mkIf config.homepage.enable {
@@ -78,7 +81,7 @@ in {
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
 
-              "= /.well-known/matrix/server".extraConfig = mkIf config.matrix.enable (mkWellKnown {"m.server" = "${config.matrix.hostName}:443";});
+              "= /.well-known/matrix/server".extraConfig = mkIf config.matrix.enable (mkWellKnown {"m.server" = "${config.matrix.domain}:443";});
               "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
               "= /.well-known/openid-configuration".extraConfig = mkIf config.matrix.enable (
                 mkWellKnown {
@@ -93,7 +96,7 @@ in {
           };
         }
         // {
-          ${config.netdata.hostName} = mkIf config.netdata.enable {
+          ${config.netdata.domain} = mkIf config.netdata.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/" = {
@@ -108,7 +111,7 @@ in {
           };
         }
         // {
-          ${config.cockpit.hostName} = mkIf config.cockpit.enable {
+          ${config.cockpit.domain} = mkIf config.cockpit.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/" = {
@@ -128,7 +131,7 @@ in {
           };
         }
         // {
-          ${config.adguard.hostName} = mkIf config.adguard.enable {
+          ${config.adguard.domain} = mkIf config.adguard.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/" = {
@@ -150,25 +153,24 @@ in {
         }
         // {
           # TODO create a simplified method to define those
-          ${config.nextcloud.hostName} = mkIf config.nextcloud.enable {
+          ${config.nextcloud.domain} = mkIf config.nextcloud.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
           };
         }
         // {
-          ${config.onlyofficeDocumentServer.hostName} = mkIf config.onlyofficeDocumentServer.enable {
+          ${config.onlyofficeDocumentServer.domain} = mkIf config.onlyofficeDocumentServer.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
           };
         }
         // {
-          ${config.gitlab.hostName} = mkIf config.gitlab.enable {
+          ${config.gitlab.domain} = mkIf config.gitlab.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations."/".proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
           };
         }
         // {
-          ${config.matrix.hostName} = mkIf config.matrix.enable {
+          ${config.matrix.domain} = mkIf config.matrix.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
-            serverAliases = [config.matrix.hostName];
             root = mkIf config.matrix.enableElement (pkgs.element-web.override {
               conf = {
                 default_server_config = clientConfig; # see `clientConfig` from the snippet above.
@@ -187,13 +189,13 @@ in {
           };
         }
         // {
-          ${config.nixCache.hostName} = mkIf config.nixCache.enable {
+          ${config.nixCache.domain} = mkIf config.nixCache.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations."/".proxyPass = "http://[::1]:${toString config.nixCache.port}";
           };
         }
         // {
-          ${config.homeassistant.hostName} = mkIf config.homeassistant.enable {
+          ${config.homeassistant.domain} = mkIf config.homeassistant.enable {
             inherit (cfg) forceSSL enableACME;
             extraConfig = ''
               proxy_buffering off;
@@ -205,7 +207,7 @@ in {
           };
         }
         // {
-          ${config.authelia.hostName} = mkIf config.authelia.enable {
+          ${config.authelia.domain} = mkIf config.authelia.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations = let
               authUrl = "http://[::1]:${toString config.authelia.port}";
@@ -217,7 +219,7 @@ in {
           };
         }
         // {
-          ${config.librespeed.hostName} = mkIf config.librespeed.enable {
+          ${config.librespeed.domain} = mkIf config.librespeed.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/" = {

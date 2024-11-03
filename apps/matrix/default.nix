@@ -19,10 +19,10 @@ in {
     matrix = {
       enable = mkEnableOption "enable matrix";
       enableElement = mkEnableOption "enable matrix element";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "matrix.${config.hostName}";
-        description = "The hostname of the matrix instance";
+        default = "matrix.${config.networking.domain}";
+        description = "The domain of the matrix instance";
       };
       port = mkOption {
         type = types.int;
@@ -140,7 +140,7 @@ in {
           idp_name = "Authelia";
           idp_icon = "mxc://authelia.com/cKlrTPsGvlpKxAYeHWJsdVHI";
           discover = true;
-          issuer = "https://${config.authelia.hostName}";
+          issuer = "https://${config.authelia.domain}";
           client_id = "synapse";
           client_secret_path = config.age.secrets.matrix_oidc.path;
           scopes = ["openid" "profile" "email"];

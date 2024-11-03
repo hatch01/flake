@@ -8,10 +8,10 @@ in {
   options = {
     librespeed = {
       enable = mkEnableOption "enable librespeed";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "librespeed.${config.hostName}";
-        description = "The hostname of the librespeed instance";
+        default = "librespeed.${config.networking.domain}";
+        description = "The domain of the librespeed instance";
       };
       port = mkOption {
         type = types.int;

@@ -25,11 +25,10 @@
             ./${name}
             ./${name}/hardware-configuration.nix
             {
-              options.hostName = lib.mkOption {
-                type = lib.types.str;
-                default = toString (value.hostName or name);
+              config.networking = {
+                hostName = name;
+                domain = value.domain or name;
               };
-              config = {networking.hostName = name;};
             }
           ];
         specialArgs = let
@@ -48,7 +47,6 @@
         in
           {
             inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret base_domain_name;
-            hostName = value.hostName or name;
             stable = value.stable or false;
           }
           // (value.specialArgs or {});
@@ -57,7 +55,7 @@
     deploy.nodes =
       builtins.mapAttrs (
         name: value: {
-          hostname = value.sshAddress or value.hostName or name;
+          hostname = value.sshAddress or value.domain or name;
           profiles.system = {
             #look at how not to use ssh root login but pass via sudo
             user = value.user or "root";
@@ -98,7 +96,7 @@ in {
     tulipe = {
       system = "x86_64-linux";
       modules = desktop;
-      hostName = "127.0.0.1";
+      domain = "127.0.0.1";
       specialArgs = {
         inherit inputs;
       };
@@ -106,7 +104,7 @@ in {
     jonquille = {
       system = "x86_64-linux";
       modules = server;
-      hostName = "onyx.ovh";
+      domain = "onyx.ovh";
       specialArgs = {
         inherit inputs;
       };
@@ -114,7 +112,7 @@ in {
     lavande = {
       system = "aarch64-linux";
       modules = server;
-      hostName = "onyx.ovh";
+      domain = "onyx.ovh";
       specialArgs = {
         inherit inputs;
       };

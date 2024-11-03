@@ -10,19 +10,21 @@ in {
   options = {
     nextcloud = {
       enable = mkEnableOption "Nextcloud";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "nextcloud.${config.hostName}";
+        default = "nextcloud.${config.networking.domain}";
       };
       port = mkOption {
         type = types.int;
         default = 443;
       };
     };
-    onlyofficeDocumentServer.enable = mkEnableOption "OnlyOffice document server";
-    onlyofficeDocumentServer.hostName = mkOption {
-      type = types.str;
-      default = "onlyoffice.${config.hostName}";
+    onlyofficeDocumentServer = {
+      enable = mkEnableOption "OnlyOffice document server";
+      domain = mkOption {
+        type = types.str;
+        default = "onlyoffice.${config.networking.domain}";
+      };
     };
   };
 
@@ -47,7 +49,7 @@ in {
 
     services = {
       nextcloud = mkIf config.nextcloud.enable {
-        hostName = config.nextcloud.hostName;
+        hostName = config.nextcloud.domain;
         enable = true;
         package = pkgs.nextcloud30;
         autoUpdateApps.enable = true;
@@ -124,7 +126,7 @@ in {
 
             allow_user_to_change_display_name = false;
             lost_password_link = "disabled";
-            oidc_login_provider_url = "https://${config.authelia.hostName}";
+            oidc_login_provider_url = "https://${config.authelia.domain}";
             oidc_login_client_id = "nextcloud";
             # oidc_login_client_secret = "insecure_secret"; # set in secret file
             oidc_login_auto_redirect = false;
@@ -169,7 +171,7 @@ in {
 
       onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
         enable = true;
-        hostname = config.onlyofficeDocumentServer.hostName;
+        hostname = config.onlyofficeDocumentServer.domain;
         jwtSecretFile = config.age.secrets.onlyofficeDocumentServerKey.path;
       };
     };

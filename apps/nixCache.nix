@@ -9,10 +9,10 @@ in {
   options = {
     nixCache = {
       enable = mkEnableOption "enable nixCache";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "cache.${config.hostName}";
-        description = "The hostname of the nixCache instance";
+        default = "cache.${config.networking.domain}";
+        description = "The domain of the nixCache instance";
       };
       port = mkOption {
         type = types.int;

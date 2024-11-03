@@ -9,10 +9,10 @@ in {
   options = {
     homepage = {
       enable = mkEnableOption "Enable homepage";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = config.hostName;
-        description = "The hostname of the homepage";
+        default = config.networking.domain;
+        description = "The domain of the homepage";
       };
       port = mkOption {
         type = types.int;
@@ -63,11 +63,11 @@ in {
                 "Nextcloud" = {
                   icon = "nextcloud.png";
                   description = "Nextcloud c'est vraiment cool";
-                  href = "https://${config.nextcloud.hostName}";
-                  siteMonitor = "https://${config.nextcloud.hostName}";
+                  href = "https://${config.nextcloud.domain}";
+                  siteMonitor = "https://${config.nextcloud.domain}";
                   widget = {
                     type = "nextcloud";
-                    url = "https://${config.nextcloud.hostName}";
+                    url = "https://${config.nextcloud.domain}";
                     username = "root";
                     password = "{{HOMEPAGE_VAR_NEXTCLOUD_PASS}}";
                   };
@@ -77,24 +77,24 @@ in {
                 "Gitlab" = {
                   icon = "gitlab.png";
                   description = "Gitlab c'est vraiment cool";
-                  href = "https://${config.gitlab.hostName}/";
-                  siteMonitor = "https://${config.gitlab.hostName}/";
+                  href = "https://${config.gitlab.domain}/";
+                  siteMonitor = "https://${config.gitlab.domain}/";
                 };
               }
               {
                 "speedtest" = {
                   icon = "librespeed.png";
                   description = "Librespeed c'est vraiment cool";
-                  href = "https://${config.librespeed.hostName}/";
-                  siteMonitor = "https://${config.librespeed.hostName}/";
+                  href = "https://${config.librespeed.domain}/";
+                  siteMonitor = "https://${config.librespeed.domain}/";
                 };
               }
               {
                 "Matrix" = {
                   icon = "element.png";
                   description = "Matrix c'est vraiment cool";
-                  href = "https://${config.matrix.hostName}/";
-                  siteMonitor = "https://${config.matrix.hostName}/";
+                  href = "https://${config.matrix.domain}/";
+                  siteMonitor = "https://${config.matrix.domain}/";
                 };
               }
             ];
@@ -105,11 +105,11 @@ in {
                 "Home Assistant" = {
                   icon = "home-assistant.png";
                   description = "HomeAssistant c'est vraiment cool";
-                  href = "https://${config.homeassistant.hostName}";
-                  siteMonitor = "https://${config.homeassistant.hostName}";
+                  href = "https://${config.homeassistant.domain}";
+                  siteMonitor = "https://${config.homeassistant.domain}";
                   widget = {
                     type = "homeassistant";
-                    url = "https://${config.homeassistant.hostName}";
+                    url = "https://${config.homeassistant.domain}";
                     key = "{{HOMEPAGE_VAR_HOMEASSISTANT}}";
                   };
                 };
@@ -122,8 +122,8 @@ in {
                 "Netdata" = {
                   icon = "netdata.png";
                   description = "netdata c'est vraiment cool";
-                  href = "https://${config.netdata.hostName}";
-                  siteMonitor = "https://${config.netdata.hostName}";
+                  href = "https://${config.netdata.domain}";
+                  siteMonitor = "https://${config.netdata.domain}";
                   widget = {
                     type = "netdata";
                     url = "http://localhost:${toString config.netdata.port}";
@@ -134,11 +134,11 @@ in {
                 "Adguard" = {
                   icon = "adguard-home.png";
                   description = "Adguard c'est vraiment cool";
-                  href = "https://${config.adguard.hostName}";
-                  siteMonitor = "https://${config.adguard.hostName}";
+                  href = "https://${config.adguard.domain}";
+                  siteMonitor = "https://${config.adguard.domain}";
                   widget = {
                     type = "adguard";
-                    url = "https://${config.adguard.hostName}";
+                    url = "https://${config.adguard.domain}";
                     username = "admin"; # unused creds
                     password = "password";
                   };
@@ -148,8 +148,8 @@ in {
                 "Cockpit" = {
                   icon = "cockpit.png";
                   description = "cockpit c'est vraiment cool";
-                  href = "https://${config.cockpit.hostName}";
-                  siteMonitor = "https://${config.cockpit.hostName}";
+                  href = "https://${config.cockpit.domain}";
+                  siteMonitor = "https://${config.cockpit.domain}";
                 };
               }
             ];

@@ -12,9 +12,9 @@ in {
   options = {
     homeassistant = {
       enable = mkEnableOption "Home Assistant";
-      hostName = mkOption {
+      domain = mkOption {
         type = types.str;
-        default = "home.${config.hostName}";
+        default = "home.${config.networking.domain}";
       };
       port = mkOption {
         type = types.int;

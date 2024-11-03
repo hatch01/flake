@@ -24,16 +24,16 @@ in {
       usev4 = "web";
       ssl = false;
       domains = [
-        config.adguard.hostName
-        config.gitlab.hostName
-        config.authelia.hostName
-        config.nextcloud.hostName
-        config.matrix.hostName
-        config.homepage.hostName
-        config.netdata.hostName
-        config.nixCache.hostName
-        config.homeassistant.hostName
-        config.onlyofficeDocumentServer.hostName
+        config.adguard.domain
+        config.gitlab.domain
+        config.authelia.domain
+        config.nextcloud.domain
+        config.matrix.domain
+        config.homepage.domain
+        config.netdata.domain
+        config.nixCache.domain
+        config.homeassistant.domain
+        config.onlyofficeDocumentServer.domain
       ];
     };
   };
