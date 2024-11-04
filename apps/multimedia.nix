@@ -27,7 +27,7 @@ in {
       ++ optionals multimedia.editing.enable [
         # editing
         gimp
-        blender
+        #blender
         imagemagick
         kdePackages.kdenlive
         kdePackages.kcolorchooser
