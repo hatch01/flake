@@ -89,6 +89,11 @@ in {
               deck
               cookbook
               ;
+            keeweb = pkgs.fetchNextcloudApp {
+              license = "agpl3Plus";
+              url = "https://github.com/jhass/nextcloud-keeweb/releases/download/v0.6.20/keeweb-0.6.20.tar.gz";
+              sha256 = "sha256-+G9N67SluucmsYRJ3P8KosBqQn9D7xnA/0m8ZUvHO0c=";
+            };
           }
           // optionals config.authelia.enable {
             oidc_login = pkgs.fetchNextcloudApp {
