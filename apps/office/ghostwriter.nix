@@ -97,7 +97,7 @@ in {
       home.file.".local/share/pandoc/templates" = {
         source = builtins.fetchGit {
           url = "https://github.com/hatch01/pandoc_templates.git";
-          rev = "ddf9301217ce1f4cbba682a2a0f25099cdc97d36";
+          rev = "822a7d9d2614527e6aa875b4573c8b4690e76c68";
         };
         force = true;
       };
