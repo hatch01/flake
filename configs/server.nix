@@ -1,10 +1,6 @@
-{
-  pkgs,
-  mkSecret,
-  ...
-}: {
+{mkSecret, ...}: {
   environment = {
-    systemPackages = with pkgs; [
+    systemPackages = [
     ];
   };
 

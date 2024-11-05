@@ -111,17 +111,6 @@
 
     overlays = [
       ((import ../overlays) inputs.nixpkgs-unstable)
-      (
-        final: prev: {
-          onlyoffice-documentserver = prev.onlyoffice-documentserver.overrideAttrs rec {
-            version = "8.1.1";
-            src = prev.fetchurl {
-              url = "https://github.com/ONLYOFFICE/DocumentServer/releases/download/v${lib.concatStringsSep "." (lib.take 3 (lib.splitVersion version))}/onlyoffice-documentserver_amd64.deb";
-              sha256 = "sha256-YzGImBG/CkJqKrZwQQ/mgptasxqYgmmE2ivzbYzbz9M=";
-            };
-          };
-        }
-      )
     ];
   };
 
@@ -209,9 +198,7 @@
 
       # python is useful
       virtualenv
-      (python3.withPackages (ps:
-        with ps; [
-        ]))
+      (python3.withPackages (ps: []))
     ];
   };
 

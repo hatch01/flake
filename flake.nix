@@ -97,14 +97,7 @@
         ./systems
       ];
 
-      perSystem = {
-        config,
-        self',
-        inputs',
-        pkgs,
-        system,
-        ...
-      }: {
+      perSystem = {pkgs, ...}: {
         # # Auto formatters. This also adds a flake check to ensure that the
         # # source tree was auto formatted.
         # treefmt.config = {
