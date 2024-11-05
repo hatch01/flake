@@ -398,7 +398,7 @@
       "enabled": false
     },
     "TypingIndicator": {
-      "enabled": false
+      "enabled": true
     },
     "TypingTweaks": {
       "enabled": false
