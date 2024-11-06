@@ -132,6 +132,9 @@ in {
         }
       ];
     };
+    environment.persistence."/persistent" = {
+      directories = ["/var/lib/matrix-synapse/media_store/"];
+    };
 
     postgres.initialScripts = [
       ''

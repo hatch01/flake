@@ -74,6 +74,10 @@ in {
         ];
       };
     };
+
+    environment.persistence."/persistent" = {
+      directories = ["/var/lib/netdata" "/var/cache/netdata"];
+    };
     postgres.initialScripts = ["GRANT pg_monitor TO netdata;"];
   };
 }
