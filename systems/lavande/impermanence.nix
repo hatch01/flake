@@ -52,6 +52,7 @@ in {
           user = "acme";
           group = "nginx";
         }
+        "/var/lib/matrix-synapse"
       ]
       ++ optionals config.netdata.enable ["/var/lib/netdata" "/var/cache/netdata"];
     files = [
