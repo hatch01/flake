@@ -237,6 +237,12 @@ in {
               "/internal/authelia/authz" = autheliaProxy;
             };
           };
+        }
+        // {
+          "apolline.${config.networking.domain}" = {
+            inherit (cfg) forceSSL enableACME;
+            locations."/".proxyPass = "http://127.0.0.1:8888";
+          };
         };
     };
     networking.firewall.allowedTCPPorts = [80 443];
