@@ -4,6 +4,8 @@
 {
   config,
   mkSecrets,
+  inputs,
+  system,
   ...
 }: {
   imports = [
@@ -28,6 +30,7 @@
   nginx.enable = true;
   nginx.acme.enable = true;
   librespeed.enable = true;
+  proxmox.enable = true;
 
   librespeed.domain = "speedtest.${config.networking.domain}";
   adguard.domain = "dns.${config.networking.domain}";

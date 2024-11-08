@@ -290,6 +290,24 @@ in {
                     grant_types = ["refresh_token" "authorization_code"];
                     response_types = ["code"];
                   }
+                ]
+                ++ optionals config.proxmox.enable [
+                  {
+                    client_name = "Proxmox";
+                    client_id = "proxmox";
+                    client_secret = "$pbkdf2-sha512$310000$J7WnkUiNxNs4H0bBZFLjww$x7El9Z.s1BWkXnN0AwHehntgP.TJjfWAJfbVLmiAp8dDa2d606W2dV.tDAb4OFxAklQlsbFWErmdc/eNpcIW.w";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    require_pkce = true;
+                    pkce_challenge_method = "S256";
+                    userinfo_signed_response_alg = "none";
+                    redirect_uris = ["https://${config.proxmox.domain}"];
+                    scopes = [
+                      "openid"
+                      "profile"
+                      "email"
+                    ];
+                  }
                 ];
             };
           };

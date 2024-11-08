@@ -12,6 +12,7 @@
       "https://hatch01.cachix.org"
       "https://numtide.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
+      "https://cache.saumon.network/proxmox-nixos"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -22,6 +23,7 @@
       "hatch01.cachix.org-1:MiLD2xTBHcs0zIYozmA//rR+/svETz0AXzDFmI2Wjso="
       "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
       "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
+      "proxmox-nixos:nveXDuVVhFDRFx8Dn19f1WDEaNRJjPrF2CPD2D+m1ys="
     ];
 
     trusted-users = [
@@ -87,6 +89,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
+
+    proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
   };
   outputs = {flake-parts, ...} @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {

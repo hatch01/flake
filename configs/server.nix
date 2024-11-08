@@ -1,4 +1,8 @@
 {mkSecret, ...}: {
+  imports = [
+    ../apps/proxmox.nix
+  ];
+
   environment = {
     systemPackages = [
     ];

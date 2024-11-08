@@ -48,6 +48,7 @@
           {
             inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret base_domain_name;
             stable = value.stable or false;
+            system = value.system;
           }
           // (value.specialArgs or {});
       })
@@ -80,6 +81,7 @@
   server = with inputs;
     [
       vscode-server.nixosModules.default
+      inputs.proxmox-nixos.nixosModules.proxmox-ve
       ../configs/server.nix
     ]
     ++ nixos;
