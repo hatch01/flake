@@ -198,6 +198,8 @@ in {
               light.value = "";
             };
           };
+
+          "ksmserverrc"."General"."loginMode".value = "emptySession";
         };
       };
 
