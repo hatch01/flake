@@ -16,7 +16,14 @@
 
         # Run the update process in the background
         (
-          ssh-keyscan forge.onyx.ovh >> ~/.ssh/known_hosts
+
+          # Setup git and ssh
+          export HOME="/root"
+          echo "forge.onyx.ovh ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCxZPXngowIs04BAN/nPjjCSkSXs9yVm8qHW9pN23RegJjGb37nRTr1YQpWn3+45J6oUTuYUsbEXFuXvlOPC/lKGluHvSEwQI79z01/34UW/MaSV9Wa1zQFThLf5qO6ruf20a6kbJFrCp/58gHRbmNP2kVDOi2hdPCPoHRCPmYQdFN9J9eKlvyeOFoKW0NIi/qQW3xmGzKfRuur7ot4slSaAg9Vbqw+3eMC0Vvk8l3N9VjUhFWpVf2weSstJS+yC6lVdeQyU7D52uU/YEaOeMhhyBzH/SEA2xrIr4CUoDnqd1OV0DNzDA8Zva4dyxNqssgtvpoHVu6qMNL3K58ZOrwkA0wiPTk+gtCZKqvViISy5YNkwhUdLoCWqEx5wEGrT9smNrrp4wlALBeR0KNiCSDDu9l7NfaM/EJ3WiC7Zg31tlp0hIvUsG2bf9MweBPMhaF22GLGlubcx5fVFd3RcRUnn9tgFATcai46khBPga33dsVSWxsNbd4FXvCzc3qlTI1baOJucJR3MRjMD4DYZn+L+ITXAmyqnK2U3UEooE7hm0yJ3xwnyi4jHiZaVNbqP2xri4GAEaXDU5x83zh3Q7iEHkfEJg1nZnj2yOStIXdlXWskYCV+rtzK0EjnFcZFiEK5XTXLUgyo6nbR2yrOUIcmaeQsKW1CgaStej6pym4eMw==" >> ~/.ssh/known_hosts
+          echo "forge.onyx.ovh ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIh2XilINjx9e+QZBI1f+OUiexzzQCupRqt7DvpBDZuu" >> ~/.ssh/known_hosts
+          git config --global user.email "root@jonquille.onyx.ovh"
+          git config --global user.name "System administrator"
+
           cd /tmp/
           if [ ! -d "flake/.git" ]; then
               git clone "gitlab@forge.onyx.ovh:eymeric/flake.git" "flake"
