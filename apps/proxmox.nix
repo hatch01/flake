@@ -45,11 +45,11 @@ in {
       "/var/lib/pve-cluster"
       "/var/lib/pve-firewall"
       "/var/lib/pve-manager"
-      {
-        directory = "/etc/pve";
-        # user = "root";
-        # group = "www-data";
-      }
+      # {
+      # directory = "/etc/pve";
+      # user = "root";
+      # group = "www-data";
+      # }
     ];
   };
 }
