@@ -34,5 +34,12 @@ in {
         "--add-host=host.docker.internal:host-gateway"
       ];
     };
+
+    postgres.initialScripts = [
+      ''
+        CREATE USER homeassistant WITH PASSWORD 'homeassistant';
+        CREATE DATABASE homeassistant_db WITH OWNER homeassistant ENCODING 'utf8' TEMPLATE template0;
+      ''
+    ];
   };
 }
