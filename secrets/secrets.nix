@@ -60,6 +60,7 @@ let
       "authelia/jwtKey"
       "authelia/authBackend"
       "authelia/oAuth2PrivateKey"
+      "authelia/gitlabSecret"
     ]
     // defineSecrets "lavande" [
       "rootPassword"

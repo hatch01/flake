@@ -7,6 +7,7 @@
 in {
   imports = [
     ./zigbee2mqtt.nix
+    ./influx.nix
   ];
 
   options = {
@@ -25,6 +26,8 @@ in {
 
   config = mkIf config.homeassistant.enable {
     zigbee2mqtt.enable = true;
+    influxdb.enable = true;
+    influxdb.grafana.enable = true;
     virtualisation.oci-containers.containers.homeassistant = {
       volumes = ["/storage/homeassistant/:/config"];
       environment.TZ = "Europe/Paris";

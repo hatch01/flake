@@ -287,7 +287,7 @@ in {
                       "profile"
                       "email"
                     ];
-                    grant_types = ["refresh_token" "authorization_code"];
+                    grant_types = ["refresh_token"];
                     response_types = ["code"];
                   }
                 ]
@@ -307,6 +307,26 @@ in {
                       "profile"
                       "email"
                     ];
+                  }
+                ]
+                ++ optionals config.influxdb.grafana.enable [
+                  {
+                    client_id = "grafana";
+                    client_name = "Grafana";
+                    client_secret = "$pbkdf2-sha512$310000$qxL5kiQdjtage4ccg4zvhw$zRW7z7OS7rCDGwEWgKm5WcY.wLrJ31sONLfqIDE5fLfS9fELCna38kBCsr6g8U6CqSlhl.l6ylqYp8cLBRD/Ig";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    require_pkce = true;
+                    pkce_challenge_method = "S256";
+                    redirect_uris = ["https://${config.influxdb.grafana.domain}/login/generic_oauth"];
+                    scopes = [
+                      "openid"
+                      "profile"
+                      "groups"
+                      "email"
+                    ];
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "client_secret_basic";
                   }
                 ];
             };

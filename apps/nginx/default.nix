@@ -261,6 +261,12 @@ in {
           };
         }
         // {
+          ${config.influxdb.grafana.domain} = mkIf config.influxdb.grafana.enable {
+            inherit (cfg) forceSSL extraConfig enableACME;
+            locations."/".proxyPass = "http://[::1]:${toString config.influxdb.grafana.port}";
+          };
+        }
+        // {
           "apolline.${config.networking.domain}" = {
             inherit (cfg) forceSSL enableACME;
             locations."/".proxyPass = "http://127.0.0.1:8888";
