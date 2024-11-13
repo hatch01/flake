@@ -267,6 +267,27 @@ in {
           };
         }
         // {
+          ${config.nodered.domain} = mkIf config.nodered.enable {
+            inherit (cfg) forceSSL extraConfig enableACME;
+            locations = {
+              "/" = {
+                proxyPass = "http://127.0.0.1:${toString config.nodered.port}";
+                extraConfig = lib.strings.concatStringsSep "\n" [
+                  ''
+                    proxy_buffering off;
+                    proxy_http_version 1.1;
+                    proxy_set_header Upgrade $http_upgrade;
+                    proxy_set_header Connection "upgrade";
+                  ''
+                  (builtins.readFile ./auth-authrequest.conf)
+                ];
+              };
+              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
+              "/internal/authelia/authz" = autheliaProxy;
+            };
+          };
+        }
+        // {
           "apolline.${config.networking.domain}" = {
             inherit (cfg) forceSSL enableACME;
             locations."/".proxyPass = "http://127.0.0.1:8888";

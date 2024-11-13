@@ -8,6 +8,7 @@ in {
   imports = [
     ./zigbee2mqtt.nix
     ./influx.nix
+    ./nodered.nix
   ];
 
   options = {
@@ -28,6 +29,7 @@ in {
     zigbee2mqtt.enable = true;
     influxdb.enable = true;
     influxdb.grafana.enable = true;
+    nodered.enable = true;
     virtualisation.oci-containers.containers.homeassistant = {
       volumes = ["/storage/homeassistant/:/config"];
       environment.TZ = "Europe/Paris";

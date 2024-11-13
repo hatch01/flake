@@ -10,6 +10,7 @@
   mkUserRule = {
     appName,
     two_factor ? true,
+    groups ? [],
   }:
     optionals config."${appName}".enable [
       {
@@ -18,6 +19,8 @@
           if two_factor
           then "two_factor"
           else "one_factor";
+        subject =
+          builtins.concatLists (map (group: [["group:${group}"]]) groups);
       }
     ];
 in {
@@ -198,7 +201,10 @@ in {
                 }
                 ++ mkUserRule {
                   appName = "librespeed";
-                  two_factor = true;
+                }
+                ++ mkUserRule {
+                  appName = "nodered";
+                  groups = ["home"];
                 };
             };
 
