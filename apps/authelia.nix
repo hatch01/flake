@@ -292,9 +292,9 @@ in {
                       "groups"
                       "profile"
                       "email"
+                      "offline_access"
                     ];
                     grant_types = ["refresh_token" "authorization_code"];
-                    offline_access = true;
                     response_types = ["code"];
                   }
                 ]
