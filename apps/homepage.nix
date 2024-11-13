@@ -114,6 +114,14 @@ in {
                   };
                 };
               }
+              {
+                "Node Red" = {
+                  icon = "node-red.png";
+                  description = "Node-Red c'est vraiment cool";
+                  href = "https://${config.nodered.domain}";
+                  siteMonitor = "https://${config.nodered.domain}";
+                };
+              }
             ];
           }
           {
