@@ -293,7 +293,8 @@ in {
                       "profile"
                       "email"
                     ];
-                    grant_types = ["refresh_token"];
+                    grant_types = ["refresh_token" "authorization_code"];
+                    offline_access = true;
                     response_types = ["code"];
                   }
                 ]
