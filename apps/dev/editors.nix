@@ -15,6 +15,7 @@ in {
   };
 
   config = {
+    platformio.enable = true;
     environment.systemPackages = with pkgs;
       [
         neovide
