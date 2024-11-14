@@ -75,6 +75,7 @@ in {
           "editor.smoothScrolling" = true;
           "workbench.list.smoothScrolling" = true;
           "terminal.integrated.smoothScrolling" = true;
+          "platformio-ide.useBuiltinPIOCore" = false;
 
           # fix for segfault on hyprland
           "window.titleBarStyle" = "custom";

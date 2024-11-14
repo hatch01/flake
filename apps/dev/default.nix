@@ -8,6 +8,7 @@
 in {
   imports = [
     ./editors.nix
+    ./platformio.nix
   ];
 
   options = {
