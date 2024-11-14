@@ -46,7 +46,7 @@ in {
           };
           "0x70b3d52b600b8d61".friendly_name = "Frigo";
           "0xa4c13838417869a3".friendly_name = "temperature eymeric";
-          "0x70b3d52b600bbd25".friendly_name = "Lave linge, four";
+          "0x70b3d52b600bbd25".friendly_name = "Four";
           "0x70b3d52b600b87f6".friendly_name = "four; micro-onde; grille pain";
           "0xa4c1383010c51a37".friendly_name = "temperature Kevin";
           "0x70b3d52b600b8a69".friendly_name = "PC Kevin";
@@ -57,6 +57,11 @@ in {
           "0xa4c138ee4f964b0c".friendly_name = "Chauffe eau";
           "0xa4c13825eae893f2".friendly_name = "PC Eymeric";
           "0xa4c1380d227318c3".friendly_name = "Chauffage Eymeric";
+          "0xb40ecfd245230000".friendly_name = "Lumiere Eymeric";
+          "0x70b3d52b600a3cef".friendly_name = "Plaque de cuisson";
+          "0x70b3d52b600a4ffd".friendly_name = "Bouilloire";
+          "0x70b3d52b600a4e24".friendly_name = "Lave linge";
+          "0xb40ecfd1a9b30000".friendly_name = "Lumiere cuisine";
         };
       };
     };
