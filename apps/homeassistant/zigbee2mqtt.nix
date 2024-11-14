@@ -47,7 +47,7 @@ in {
           "0x70b3d52b600b8d61".friendly_name = "Frigo";
           "0xa4c13838417869a3".friendly_name = "temperature eymeric";
           "0x70b3d52b600bbd25".friendly_name = "Four";
-          "0x70b3d52b600b87f6".friendly_name = "four; micro-onde; grille pain";
+          "0x70b3d52b600b87f6".friendly_name = "micro-onde; grille pain";
           "0xa4c1383010c51a37".friendly_name = "temperature Kevin";
           "0x70b3d52b600b8a69".friendly_name = "PC Kevin";
           "0xa4c1387c77f5cec7".friendly_name = "temperature Salon";
