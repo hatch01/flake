@@ -105,6 +105,11 @@ in {
           "formatting" = {
             "command" = ["alejandra"]; # or nixfmt or nixpkgs-fmt
           };
+
+          # vue
+          "[vue]" = {
+            "editor.defaultFormatter" = "Vue.volar";
+          };
         };
         keybindings = [
           {
