@@ -53,6 +53,7 @@ in {
 
           #rust
           rust-lang.rust-analyzer
+          tamasfe.even-better-toml
         ];
 
         userSettings = {
