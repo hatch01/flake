@@ -122,6 +122,15 @@ in {
                   siteMonitor = "https://${config.nodered.domain}";
                 };
               }
+
+              {
+                "Grafana" = {
+                  icon = "grafana.png";
+                  description = "Grafana c'est vraiment cool";
+                  href = "https://${config.grafana.domain}";
+                  siteMonitor = "https://${config.grafana.domain}";
+                };
+              }
             ];
           }
           {
