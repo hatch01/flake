@@ -15,8 +15,8 @@ in {
       platformio
       platformio-core
       avrdude
-      python312Packages.pyserial
       arduino-ide
+      (python3.withPackages (ps: with python3Packages; [pyserial]))
     ];
     services.udev.packages = [
       pkgs.platformio-core
