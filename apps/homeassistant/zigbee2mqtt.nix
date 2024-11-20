@@ -57,6 +57,7 @@ in {
           "0xa4c138ee4f964b0c".friendly_name = "Chauffe eau";
           "0xa4c13825eae893f2".friendly_name = "PC Eymeric";
           "0xa4c1380d227318c3".friendly_name = "Chauffage Eymeric";
+          "0xa4c138ccd59d1441".friendly_name = "Chauffage Kevin";
           "0xb40ecfd245230000".friendly_name = "Lumiere Eymeric";
           "0x70b3d52b600a3cef".friendly_name = "Plaque de cuisson";
           "0x70b3d52b600a4ffd".friendly_name = "Bouilloire";
