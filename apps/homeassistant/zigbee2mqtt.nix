@@ -55,9 +55,11 @@ in {
           "0xa4c1380f61a7c337".friendly_name = "temperature Cuisine";
           "0x70b3d52b600bc013".friendly_name = "Serveur";
           "0xa4c138ee4f964b0c".friendly_name = "Chauffe eau";
-          "0xa4c13825eae893f2".friendly_name = "PC Eymeric";
+          "0x70b3d52b600a3c0f".friendly_name = "PC Eymeric";
+          "0xa4c13825eae893f2".friendly_name = "Chauffage Couloir";
           "0xa4c1380d227318c3".friendly_name = "Chauffage Eymeric";
           "0xa4c138ccd59d1441".friendly_name = "Chauffage Kevin";
+          "0xa4c1388a5d468383".friendly_name = "Chauffage Salon";
           "0xb40ecfd245230000".friendly_name = "Lumiere Eymeric";
           "0x70b3d52b600a3cef".friendly_name = "Plaque de cuisson";
           "0x70b3d52b600a4ffd".friendly_name = "Bouilloire";
