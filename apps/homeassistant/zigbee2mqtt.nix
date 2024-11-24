@@ -20,6 +20,7 @@ in {
     services.zigbee2mqtt = {
       enable = true;
       dataDir = "/storage/homeassistant/zigbee2mqtt";
+
       settings = {
         homeassistant = true;
         permit_join = true;
@@ -34,6 +35,9 @@ in {
         };
         frontend = {
           port = config.zigbee2mqtt.port;
+        };
+        advanced = {
+          log_level = "warning";
         };
         devices = {
           "0x00158d0005d263a7" = {
