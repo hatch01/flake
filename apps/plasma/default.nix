@@ -42,7 +42,10 @@ in {
       [
         inputs.camasca.packages.${pkgs.system}.koi
       ]
-      ++ (with pkgs.kdePackages; [akonadi merkuro korganizer]);
+      ++ (with pkgs.kdePackages; [
+        merkuro
+        qtlocation
+      ]);
 
     hm = {
       programs.plasma = {
