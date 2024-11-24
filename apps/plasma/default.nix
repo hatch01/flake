@@ -44,7 +44,8 @@ in {
       ]
       ++ (with pkgs.kdePackages; [
         merkuro
-        qtlocation
+        qtlocation # this is needed for merkuro
+        kdepim-addons
       ]);
 
     hm = {
