@@ -129,6 +129,33 @@ in {
               "useCustomButtonImage".value = true;
             };
             "Containments/2/Applets/5/Configuration/General"."groupedTaskVisualization".value = 2;
+            "Containments/127/Applets/145" = {
+              "immutability".value = 1;
+              "plugin".value = "org.kde.plasma.digitalclock";
+            };
+            "Containments/127/Applets/145/Configuration/Appearance" = {
+              "enabledCalendarPlugins".value = "pimevents";
+              "showSeconds".value = "Always";
+              "showWeekNumbers".value = true;
+            };
+            "Containments/78/Applets/96" = {
+              "immutability".value = 1;
+              "plugin".value = "org.kde.plasma.digitalclock";
+            };
+            "Containments/78/Applets/96/Configuration/Appearance" = {
+              "enabledCalendarPlugins".value = "pimevents";
+              "showSeconds".value = "Always";
+              "showWeekNumbers".value = true;
+            };
+            "Containments/103/Applets/121" = {
+              "immutability".value = 1;
+              "plugin".value = "org.kde.plasma.digitalclock";
+            };
+            "Containments/103/Applets/121/Configuration/Appearance" = {
+              "enabledCalendarPlugins".value = "pimevents";
+              "showSeconds".value = "Always";
+              "showWeekNumbers".value = true;
+            };
           };
 
           # desktop configs
