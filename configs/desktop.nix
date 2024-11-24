@@ -57,6 +57,7 @@
   basic-tools.enable = true;
   bitcoinClient.enable = true;
   office.enable = true;
+  ghostty.enable = true;
 
   home-manager.sharedModules = with inputs; [plasma-manager.homeManagerModules.plasma-manager];
 

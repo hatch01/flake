@@ -38,5 +38,6 @@
     ./bitcoin.nix
     ./cockpit.nix
     ./librespeed.nix
+    ./ghostty.nix
   ];
 }
