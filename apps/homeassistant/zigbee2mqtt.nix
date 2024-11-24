@@ -23,7 +23,7 @@ in {
 
       settings = {
         homeassistant = true;
-        permit_join = true;
+        permit_join = false;
         mqtt = {
           base_topic = "zigbee2mqtt";
           server = "mqtt://localhost";
