@@ -100,6 +100,7 @@ in {
             "view_zoom_in" = "Meta+Ctrl+Num++";
             "view_zoom_out" = "Meta+Ctrl+Num+-";
             "Overview" = "Meta+Tab";
+            "Grid View" = "Meta+Shift+Tab";
           };
           "yakuake"."toggle-window-state" = "Meta+Return";
         };
