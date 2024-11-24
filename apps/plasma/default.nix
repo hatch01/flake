@@ -38,9 +38,11 @@ in {
       elisa
     ];
 
-    environment.systemPackages = [
-      inputs.camasca.packages.${pkgs.system}.koi
-    ];
+    environment.systemPackages =
+      [
+        inputs.camasca.packages.${pkgs.system}.koi
+      ]
+      ++ (with pkgs.kdePackages; [akonadi merkuro korganizer]);
 
     hm = {
       programs.plasma = {
