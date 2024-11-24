@@ -8,7 +8,7 @@
 in {
   imports = [
     ./editors.nix
-    ./platformio.nix
+    ./arduino.nix
   ];
 
   options = {

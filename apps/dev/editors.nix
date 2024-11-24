@@ -15,7 +15,7 @@ in {
   };
 
   config = {
-    platformio.enable = true;
+    arduino.enable = true;
     environment.systemPackages = with pkgs;
       [
         neovide
