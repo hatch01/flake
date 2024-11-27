@@ -107,8 +107,8 @@ in {
             "Grid View" = "Meta+Shift+Tab";
           };
           "yakuake"."toggle-window-state" = "Meta+Return";
-          "services/com.mitchellh.ghostty.desktop"."open" = "Ctrl+Alt+T";
-          "services/org.kde.konsole.desktop"."_launch" = "none";
+          # "services/com.mitchellh.ghostty.desktop"."open" = "Ctrl+Alt+T";
+          "services/org.kde.konsole.desktop"."_launch" = "Ctrl+Alt+T";
         };
         configFile = {
           "kcminputrc"."Libinput.1739.52861.SYNA32B9:00 06CB:CE7D Touchpad"."NaturalScroll".value = true;
