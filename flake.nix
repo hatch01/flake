@@ -37,7 +37,7 @@
     # Official NixOS package source, using nixos-unstable branch here
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "nixpkgs/nixos-24.11";
 
     systems.url = "github:nix-systems/default";
 
@@ -49,7 +49,7 @@
     #nur.url = "github:nix-community/NUR";
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.3.0";
+      url = "github:nix-community/lanzaboote/v0.4.1";
 
       inputs.nixpkgs.follows = "nixpkgs";
     };
