@@ -45,6 +45,11 @@
   system.nixos.tags = ["tulipe"];
   boot.extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
 
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/etc/secureboot";
+  };
+
   programs.ccache.enable = true;
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -55,11 +60,6 @@
     openFirewall = true;
   };
   hardware.sane.extraBackends = [pkgs.epkowa pkgs.utsushi];
-
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/etc/secureboot";
-  };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
