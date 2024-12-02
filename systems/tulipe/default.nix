@@ -36,7 +36,6 @@
 
   # Bootloader.
   boot.kernelPackages = pkgs.linuxPackages_6_11;
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = ["ntfs"];
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
