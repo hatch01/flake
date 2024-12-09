@@ -32,12 +32,15 @@ in {
               "/etc/nixos/.git"
               "/etc/nixos"
             ];
-            merge.conflictstyle = "diff3";
+            merge.conflictstyle = "zdiff3";
             merge.tool = "vimdiff";
             gpg.format = "ssh";
             core.pager = "delta";
             interactive.diffFilter = "delta --color-only";
-            delta.navigate = true;
+            delta = {
+              navigate = true;
+              dark = true;
+            };
             diff.colorMoved = "default";
             rebase.autoStash = true;
             merge.autoStash = true;
