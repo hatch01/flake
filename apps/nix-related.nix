@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -9,6 +10,10 @@ in {
     nix-related.enable = mkEnableOption "Enable nix-related";
   };
   config = mkIf config.nix-related.enable {
+    environment.systemPackages = with pkgs; [
+      nix-forecast
+    ];
+
     programs.nh = {
       enable = true;
       clean.enable = true;
