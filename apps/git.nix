@@ -40,6 +40,7 @@ in {
             delta = {
               navigate = true;
               dark = true;
+              side-by-side = true;
             };
             diff.colorMoved = "default";
             rebase.autoStash = true;
