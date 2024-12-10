@@ -36,6 +36,7 @@ in {
 
     environment.plasma6.excludePackages = with pkgs.libsForQt5; [
       elisa
+      kwrite
     ];
 
     environment.systemPackages =
