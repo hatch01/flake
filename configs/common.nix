@@ -157,7 +157,14 @@
     backupFileExtension = "backup";
   };
 
-  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+  nix = {
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+    package = pkgs.lix;
+    optimise.automatic = true;
+    extraOptions = ''
+      !include ${config.age.secrets.githubToken.path}
+    '';
+  };
 
   environment = {
     systemPackages = with pkgs; let
@@ -239,10 +246,4 @@
     };
     ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
   };
-
-  nix.optimise.automatic = true;
-
-  nix.extraOptions = ''
-    !include ${config.age.secrets.githubToken.path}
-  '';
 }
