@@ -28,3 +28,6 @@ install machine:
 
 analyze:
 	find -name "*.nix" | xargs -I{} nil diagnostics {}
+
+forcast machine:
+  nix-forecast -c ".#nixosConfigurations.{{machine}}" -b https://cache.onyx.ovh
