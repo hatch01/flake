@@ -16,8 +16,7 @@ in {
       ripgrep
       ripgrep-all
       zoxide
-      # eza
-      lla
+      eza
       procs
       tokei
       bandwhich
@@ -45,9 +44,9 @@ in {
           cd = "z"; # not using direct path because it is provided by zoxide
           sman = lib.getExe pkgs.tldr;
           cat = lib.getExe pkgs.bat;
-          ls = lib.getExe pkgs.lla;
-          ll = "${lib.getExe pkgs.lla} -l";
-          l = "${lib.getExe pkgs.lla} -la";
+          ls = lib.getExe pkgs.eza;
+          ll = "${lib.getExe pkgs.eza} -l";
+          l = "${lib.getExe pkgs.eza} -la";
           rm = "${lib.getExe' pkgs.trash-cli "trash-put"}";
           sgit = "sudo -E ${lib.getExe pkgs.git}";
           se = "sudo -E";
