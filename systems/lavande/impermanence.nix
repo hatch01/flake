@@ -8,30 +8,34 @@ in {
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir /btrfs_tmp
     mount /dev/disk/by-partlabel/disk-main-root /btrfs_tmp
-    if [[ -e /btrfs_tmp/rootfs ]]; then
+
+    if [ -e /btrfs_tmp/rootfs ]; then
         mkdir -p /btrfs_tmp/old_roots
-        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
+        timestamp=$(date -d "@$(stat -c %Y /btrfs_tmp/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
         mv /btrfs_tmp/rootfs "/btrfs_tmp/old_roots/$timestamp"
     fi
 
     delete_subvolume_recursively() {
-        IFS=$'\n'
+        IFS="\n"
         for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-            delete_subvolume_recursively "/btrfs_tmp/$i"
+            delete_subvolume_recursively "$1/$i"
         done
         btrfs subvolume delete "$1"
     }
 
     num_subvolumes_to_keep=3
-    old_subvolumes=$(ls -dt /btrfs_tmp/old_roots/* 2>/dev/null || true)
-    if [[ $${#old_subvolumes[@]} -gt $num_subvolumes_to_keep ]]; then
-        for ((i=num_subvolumes_to_keep; i<$${#old_subvolumes[@]}; i++)); do
-            delete_subvolume_recursively "$${old_subvolumes[$i]}"
-        done
-    fi
+    old_subvolumes=$(ls -dt /btrfs_tmp/old_roots/* 2>/dev/null)
+    count=0
+    for subvolume in $old_subvolumes; do
+        count=$((count + 1))
+        if [ $count -gt $num_subvolumes_to_keep ]; then
+            delete_subvolume_recursively "$subvolume"
+        fi
+    done
 
     btrfs subvolume create /btrfs_tmp/rootfs
     umount /btrfs_tmp
+
   '';
 
   environment.persistence."/persistent" = {
