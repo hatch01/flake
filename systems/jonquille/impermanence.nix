@@ -22,9 +22,10 @@ in {
         btrfs subvolume delete "$1"
     }
 
+    num_subvolumes_to_keep=3
     old_subvolumes=($(ls -dt /btrfs_tmp/old_roots/*))
-    if [[ $${old_subvolumes[@]} -gt 1 ]]; then
-        for ((i=1; i<$${old_subvolumes[@]}; i++)); do
+    if [[ $${old_subvolumes[@]} -gt $num_subvolumes_to_keep ]]; then
+        for ((i=num_subvolumes_to_keep; i<$${old_subvolumes[@]}; i++)); do
             delete_subvolume_recursively "$${old_subvolumes[$i]}"
         done
     fi
