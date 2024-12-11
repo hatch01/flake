@@ -31,11 +31,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1733905394,
-        "narHash": "sha256-w96iCCGwvb01OTf3M7jkBC9q+EmQ/VtDdZdNfk3LKYc=",
+        "lastModified": 1733949025,
+        "narHash": "sha256-tHZCneb++u6icBcGdLFL+aQalvH7lElUcflQgkzKfSE=",
         "ref": "refs/heads/main",
-        "rev": "7fbd8d671ad4a3f364cb6964806a00148d69ee59",
-        "revCount": 27,
+        "rev": "fb3291ec0caeec1a53d2293cd7fdaee05acfed18",
+        "revCount": 28,
         "type": "git",
         "url": "ssh://git@github.com/hatch01/apolline"
       },
@@ -51,11 +51,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733702489,
-        "narHash": "sha256-Q5y0IA8vs2jJfZV9tkqTyDbckIO/o33TaCyySEY0v3E=",
+        "lastModified": 1733909261,
+        "narHash": "sha256-cTSdb7hVeUJGFSLdwTKgCCVyFgDs4bT8mvstGZGJq+M=",
         "owner": "uku3lig",
         "repo": "camasca",
-        "rev": "cf541d2e2226467292076ae233f17c26da51bf0e",
+        "rev": "62666ff3fb3966436b85ab922223a73ab66ddfdc",
         "type": "github"
       },
       "original": {
@@ -356,11 +356,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1733867032,
-        "narHash": "sha256-2ddDF3j8aI70WdWIn+Gsef4XGM2+grIlaEtHlkZmWdY=",
+        "lastModified": 1733944485,
+        "narHash": "sha256-fozSJ8Mn4JZL2V6WZRUkICEO2toufJkILLkTZ9CZ68w=",
         "ref": "refs/heads/main",
-        "rev": "59df17a699f6f13700823124cefaf91fb0c37d4f",
-        "revCount": 8196,
+        "rev": "ab60fbc096674da013e87c769f2d79a4f30944f6",
+        "revCount": 8212,
         "type": "git",
         "url": "ssh://git@github.com/ghostty-org/ghostty"
       },
