@@ -22,9 +22,12 @@ in {
         btrfs subvolume delete "$1"
     }
 
-    for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +5); do
-        delete_subvolume_recursively "$i"
-    done
+    old_subvolumes=($(ls -dt /btrfs_tmp/old_roots/*))
+    if [[ $${old_subvolumes[@]} -gt 1 ]]; then
+        for ((i=1; i<$${old_subvolumes[@]}; i++)); do
+            delete_subvolume_recursively "$${old_subvolumes[$i]}"
+        done
+    fi
 
     btrfs subvolume create /btrfs_tmp/rootfs
     umount /btrfs_tmp
