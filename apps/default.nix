@@ -39,5 +39,6 @@
     ./cockpit.nix
     ./librespeed.nix
     ./ghostty.nix
+    ./apolline.nix
   ];
 }

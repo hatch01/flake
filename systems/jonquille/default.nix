@@ -31,6 +31,7 @@
   nginx.acme.enable = true;
   librespeed.enable = true;
   proxmox.enable = true;
+  apolline.enable = true;
 
   librespeed.domain = "speedtest.${config.networking.domain}";
   adguard.domain = "dns.${config.networking.domain}";

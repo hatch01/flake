@@ -205,6 +205,10 @@ in {
                 ++ mkUserRule {
                   appName = "nodered";
                   groups = ["home"];
+                }
+                ++ mkUserRule {
+                  appName = "apolline";
+                  two_factor = false;
                 };
             };
 

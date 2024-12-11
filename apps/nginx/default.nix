@@ -239,6 +239,21 @@ in {
           };
         }
         // {
+          ${config.apolline.domain} = mkIf config.apolline.enable {
+            inherit (cfg) forceSSL enableACME;
+            locations = {
+              "/" = {
+                proxyPass = "http://[::1]:${toString config.apolline.port}";
+                extraConfig = lib.strings.concatStringsSep "\n" [
+                  (builtins.readFile ./auth-authrequest.conf)
+                ];
+              };
+              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
+              "/internal/authelia/authz" = autheliaProxy;
+            };
+          };
+        }
+        // {
           ${config.proxmox.domain} = mkIf config.proxmox.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
@@ -285,12 +300,6 @@ in {
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
             };
-          };
-        }
-        // {
-          "apolline.${config.networking.domain}" = {
-            inherit (cfg) forceSSL enableACME;
-            locations."/".proxyPass = "http://127.0.0.1:8888";
           };
         };
     };

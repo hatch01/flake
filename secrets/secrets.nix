@@ -61,6 +61,8 @@ let
       "authelia/authBackend"
       "authelia/oAuth2PrivateKey"
       "authelia/gitlabSecret"
+
+      "apolline"
     ]
     // defineSecrets "lavande" [
       "rootPassword"

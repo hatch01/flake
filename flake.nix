@@ -99,6 +99,8 @@
       inputs.nixpkgs-unstable.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
+
+    apolline.url = "git+ssh://git@github.com/hatch01/apolline";
   };
   outputs = {flake-parts, ...} @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
