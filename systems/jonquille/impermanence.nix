@@ -23,7 +23,7 @@ in {
     }
 
     num_subvolumes_to_keep=3
-    old_subvolumes=($(ls -dt /btrfs_tmp/old_roots/*))
+    old_subvolumes=$(ls -dt /btrfs_tmp/old_roots/* 2>/dev/null || true)
     if [[ $${#old_subvolumes[@]} -gt $num_subvolumes_to_keep ]]; then
         for ((i=num_subvolumes_to_keep; i<$${#old_subvolumes[@]}; i++)); do
             delete_subvolume_recursively "$${old_subvolumes[$i]}"
