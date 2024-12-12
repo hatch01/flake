@@ -90,7 +90,6 @@
       firefox
       ungoogled-chromium
       tor-browser
-      floorp
       sqlitebrowser
       antares
       kdePackages.yakuake
