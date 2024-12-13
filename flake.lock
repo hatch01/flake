@@ -31,11 +31,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1734081614,
-        "narHash": "sha256-GLnPgFD2JQ9JFTV3gnzHfT4XwEuAtuboc2rEtZlp5ZE=",
+        "lastModified": 1734105306,
+        "narHash": "sha256-0Db+EBXbr+DE92pxNNpVO2JbsQq1kyADBgPeZUwo7Qk=",
         "ref": "refs/heads/main",
-        "rev": "a75264da657e70d7b8fe398bf5b8eee0fe5f573a",
-        "revCount": 29,
+        "rev": "524e04dc0881cdc460828bcae54c1500d1cacb8e",
+        "revCount": 34,
         "type": "git",
         "url": "ssh://git@github.com/hatch01/apolline"
       },
@@ -221,11 +221,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1730504689,
-        "narHash": "sha256-hgmguH29K2fvs9szpq2r3pz2/8cJd2LPS+b4tfNFCwE=",
+        "lastModified": 1733312601,
+        "narHash": "sha256-4pDvzqnegAfRkPwO3wmwBhVi/Sye1mzps0zHWYnP88c=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "506278e768c2a08bec68eb62932193e341f55c90",
+        "rev": "205b12d8b7cd4802fbcb8e8ef6a0f1408781a4f9",
         "type": "github"
       },
       "original": {
@@ -456,8 +456,8 @@
     "nixpkgs": {
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-Dqg6si5CqIzm87sp57j5nTaeBbWhHFaVyG7V6L8k3lY=",
-        "path": "/nix/store/zq2axpgzd5kykk1v446rkffj3bxa2m2h-source",
+        "narHash": "sha256-Pj39hSoUA86ZePPF/UXiYHHM7hMIkios8TYG29kQT4g=",
+        "path": "/nix/store/rhn4fkh7hqjlqs9j6naaq623qpl62yz0-source",
         "type": "path"
       },
       "original": {
