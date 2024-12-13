@@ -31,11 +31,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1733949374,
-        "narHash": "sha256-L2ky55bJP06n/w1cqy+pOB+2/6M17txRBc0xff+z7cg=",
+        "lastModified": 1734081614,
+        "narHash": "sha256-GLnPgFD2JQ9JFTV3gnzHfT4XwEuAtuboc2rEtZlp5ZE=",
         "ref": "refs/heads/main",
-        "rev": "23d530c0d8d6d808a49850c095864d65874b9251",
-        "revCount": 28,
+        "rev": "a75264da657e70d7b8fe398bf5b8eee0fe5f573a",
+        "revCount": 29,
         "type": "git",
         "url": "ssh://git@github.com/hatch01/apolline"
       },
