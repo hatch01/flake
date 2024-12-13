@@ -21,7 +21,6 @@ in {
     environment.systemPackages = with pkgs;
       mkIf config.social.enable [
         signal-desktop
-        beeper
         zapzap
         skypeforlinux
         element-desktop
