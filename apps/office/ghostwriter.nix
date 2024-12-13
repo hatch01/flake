@@ -95,9 +95,11 @@ in {
         executable = true;
       };
       home.file.".local/share/pandoc/templates" = {
-        source = builtins.fetchGit {
-          url = "https://github.com/hatch01/pandoc_templates.git";
-          rev = "822a7d9d2614527e6aa875b4573c8b4690e76c68";
+        source = pkgs.fetchFromGitHub {
+          owner = "hatch01";
+          repo = "pandoc_templates";
+          tag = "main";
+          hash = "sha256-TFQgMTobqX+fFk6MF7lmyl9DN6rO9Vqo0pfVRj6KWcQ=";
         };
         force = true;
       };
