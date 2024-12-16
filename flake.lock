@@ -356,11 +356,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1734327066,
-        "narHash": "sha256-RCMc9HVd34I4FW9eDgAQC4hShztMgrNdSRjzbpcEvIM=",
+        "lastModified": 1734366791,
+        "narHash": "sha256-JUe+B9q/az01FqGrvvQVK3FnEzemz0maI2+dIqsvlRQ=",
         "ref": "refs/heads/main",
-        "rev": "50cee999887c1c1f9ad32caf7e705c05db3efc18",
-        "revCount": 8294,
+        "rev": "cf00d14f4d0a07a0f49dce2e29e5de6666f327a6",
+        "revCount": 8298,
         "type": "git",
         "url": "ssh://git@github.com/ghostty-org/ghostty"
       },
@@ -661,11 +661,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1734357994,
-        "narHash": "sha256-fbBkNrUApJU4LBSvS2vqJpFvuEOh1Oi5PQ9o5uAVPQs=",
+        "lastModified": 1734363688,
+        "narHash": "sha256-ICixu+RkJtWUCJHNok/810gjk7fXnKesDg8ml7I8UUo=",
         "owner": "SaumonNet",
         "repo": "proxmox-nixos",
-        "rev": "491af622e7df1274e8c704a13a8c7308fb2b005b",
+        "rev": "7b0c6df253985258bc971ac9efdcc332c08c5a68",
         "type": "github"
       },
       "original": {
