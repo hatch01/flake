@@ -113,7 +113,7 @@
     package = pkgs.openrgb-with-all-plugins;
   };
 
-  services.udev.packages = [pkgs.openrgb];
+  services.udev.packages = with pkgs; [openrgb numworks-udev-rules];
 
   services.pcscd.enable = true;
 
