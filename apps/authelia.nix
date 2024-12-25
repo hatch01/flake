@@ -261,22 +261,19 @@ in {
                     token_endpoint_auth_method = "client_secret_basic";
                   }
                 ]
-                ++ optionals config.gitlab.enable [
+                ++ optionals config.forgejo.enable [
                   {
-                    client_name = "GitLab";
-                    client_id = "gitlab";
+                    client_name = "ForgeJo";
+                    client_id = "forgejo";
                     # the client secret is a random hash so don't worry about it
-                    client_secret = "$pbkdf2-sha512$310000$rSqyDXxdbAKVa46e7tdWWg$Go0EtABXJpe9oJuJboomLc/g31Dho5QqT3Hs954WPAYLKv2GKmPlclvPZb.0tq1dLVQHBbOG66hQvFh1kpOt7g";
+                    client_secret = "$pbkdf2-sha512$310000$EZtlQ4D8vOBPYNwxDbNk.w$oD6J/PyDotGjOUjq2uLaDpdO.uAVX3LpSvQgxD.q.G9FS8JQ5CKhx3j8HPdJlV2Gt2Pmvo/P0dpsX01Cic3A/g";
                     public = false;
                     authorization_policy = "two_factor";
-                    require_pkce = true;
-                    pkce_challenge_method = "S256";
-                    redirect_uris = ["https://${config.gitlab.domain}/users/auth/openid_connect/callback"];
+                    redirect_uris = ["https://${config.forgejo.domain}/user/oauth2/authelia/callback"];
                     scopes = [
                       "openid"
-                      "profile"
-                      "groups"
                       "email"
+                      "profile"
                     ];
                     userinfo_signed_response_alg = "none";
                     token_endpoint_auth_method = "client_secret_basic";

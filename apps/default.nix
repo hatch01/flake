@@ -22,7 +22,7 @@
     ./zsh.nix
     ./ollama.nix
     ./postgres.nix
-    ./gitlab
+    # ./gitlab
     ./homepage.nix
     ./nextcloud.nix
     ./authelia.nix
@@ -40,5 +40,6 @@
     ./librespeed.nix
     ./ghostty.nix
     ./apolline.nix
+    ./forgejo.nix
   ];
 }

@@ -25,7 +25,7 @@ in {
       ssl = false;
       domains = [
         config.adguard.domain
-        config.gitlab.domain
+        config.forgejo.domain
         config.authelia.domain
         config.nextcloud.domain
         config.matrix.domain

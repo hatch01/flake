@@ -4,8 +4,6 @@
 {
   config,
   mkSecrets,
-  inputs,
-  system,
   ...
 }: {
   imports = [
@@ -16,7 +14,8 @@
   onlyofficeDocumentServer.enable = true;
   homepage.enable = true;
   authelia.enable = true;
-  gitlab.enable = true;
+  # gitlab.enable = true;
+  forgejo.enable = true;
   netdata.enable = true;
   nixCache.enable = true;
   adguard.enable = true;
@@ -35,7 +34,7 @@
 
   librespeed.domain = "speedtest.${config.networking.domain}";
   adguard.domain = "dns.${config.networking.domain}";
-  gitlab.domain = "forge.${config.networking.domain}";
+  # gitlab.domain = "forge.${config.networking.domain}";
 
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;

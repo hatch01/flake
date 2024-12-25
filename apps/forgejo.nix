@@ -1,0 +1,105 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkOption mkIf types;
+in {
+  options = {
+    forgejo = {
+      enable = mkEnableOption "enable ForgeJo";
+      domain = mkOption {
+        type = types.str;
+        default = "forge.${config.networking.domain}";
+        description = "The domain of the ForgeJo instance";
+      };
+      port = mkOption {
+        type = types.int;
+        default = 3004;
+        description = "The port to listen on";
+      };
+    };
+  };
+
+  imports = [];
+
+  config = mkIf config.forgejo.enable {
+    # mkforce to fix conflict with other services
+    services.openssh.settings.AcceptEnv = lib.mkForce "GIT_PROTOCOL LANG LC_*";
+
+    services = {
+      forgejo = {
+        enable = true;
+        package = pkgs.forgejo; # forgejo-lts by default
+
+        database = {
+          type = "postgres";
+          createDatabase = true;
+        };
+        # Enable support for Git Large File Storage
+        lfs.enable = true;
+        settings = {
+          DEFAULT.APP_NAME = "Onyx's forge";
+
+          server = {
+            DOMAIN = config.forgejo.domain;
+            # You need to specify this to remove the port from URLs in the web UI.
+            ROOT_URL = "https://${config.forgejo.domain}/";
+            HTTP_PORT = config.forgejo.port;
+            START_SSH_SERVER = false;
+            BUILTIN_SSH_SERVER_USER = "git";
+          };
+
+          oauth2 = {
+            # providers are configured in the admin panel
+            ENABLED = true;
+          };
+
+          # You can temporarily allow registration to create an admin user.
+          service.DISABLE_REGISTRATION = true;
+          # Add support for actions, based on act: https://github.com/nektos/act
+          actions = {
+            ENABLED = true;
+            DEFAULT_ACTIONS_URL = "https://github.com";
+          };
+          # Sending emails is completely optional
+          # You can send a test email from the web UI at:
+          # Profile Picture > Site Administration > Configuration >  Mailer Configuration
+          mailer = {
+            ENABLED = true;
+            SMTP_ADDR = "smtp.free.fr";
+            FROM = "noreply@${config.forgejo.domain}";
+            USER = "eymeric.monitoring";
+          };
+        };
+        secrets.mailer.PASSWD = config.age.secrets."server/smtpPassword".path;
+        stateDir = "/storage/forgejo";
+      };
+
+      # gitea-actions-runner = {
+      #   package = pkgs.forgejo-actions-runner;
+      #   instances.onyx = {
+      #     enable = true;
+      #     name = "onyx";
+      #     url = "https://${config.forgejo.domain}";
+      #     token = "slamsla";
+      #     # tokenFile = secrets.get "forgejoRunnerSecret";
+      #     labels = [
+      #       "ubuntu-latest:docker://catthehacker/ubuntu:act-latest"
+      #     ];
+
+      #     settings = {
+      #       log.level = "info";
+      #       container.network = "host";
+      #       runner = {
+      #         capacity = 4;
+      #         timeout = "2h";
+      #         insecure = false;
+      #       };
+      #     };
+      #   };
+      # };
+    };
+  };
+}

@@ -74,11 +74,11 @@ in {
                 };
               }
               {
-                "Gitlab" = {
-                  icon = "gitlab.png";
-                  description = "Gitlab c'est vraiment cool";
-                  href = "https://${config.gitlab.domain}/";
-                  siteMonitor = "https://${config.gitlab.domain}/";
+                "ForgeJo" = {
+                  icon = "forgejo.png";
+                  description = "Forgejo c'est vraiment cool";
+                  href = "https://${config.forgejo.domain}/";
+                  siteMonitor = "https://${config.forgejo.domain}/";
                 };
               }
               {

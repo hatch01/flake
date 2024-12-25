@@ -156,9 +156,15 @@ in {
           };
         }
         // {
-          ${config.gitlab.domain} = mkIf config.gitlab.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
-            locations."/".proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+          ${config.forgejo.domain} = mkIf config.forgejo.enable {
+            inherit (cfg) forceSSL enableACME;
+            extraConfig = lib.concatStringsSep "\n" [
+              cfg.extraConfig
+              ''
+                client_max_body_size 512M;
+              ''
+            ];
+            locations."/".proxyPass = "http://[::1]:${toString config.forgejo.port}";
           };
         }
         // {
