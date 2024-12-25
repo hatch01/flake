@@ -38,7 +38,10 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = ["ntfs"];
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  boot.binfmt = {
+    emulatedSystems = ["aarch64-linux"];
+    preferStaticEmulators = true;
+  };
   boot.kernelModules = ["v4l2loopback"];
   boot.kernelParams = ["amd_iommu=on"];
   system.nixos.tags = ["tulipe"];
