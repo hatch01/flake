@@ -50,7 +50,11 @@ in {
         qemu = {
           ovmf.enable = true;
           swtpm.enable = true;
-          ovmf.packages = [pkgs.OVMFFull.fd];
+          ovmf.packages = [
+            pkgs.OVMFFull.fd
+            pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd # AAVMF
+            pkgs.OVMF.fd
+          ];
           runAsRoot = false;
         };
       };
