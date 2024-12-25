@@ -52,7 +52,11 @@ in {
           swtpm.enable = true;
           ovmf.packages = [
             pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd # AAVMF
-            pkgs.OVMF.fd
+            (pkgs.OVMF.override {
+              secureBoot = true;
+              tpmSupport = true;
+            })
+            .fd
           ];
           runAsRoot = false;
         };
