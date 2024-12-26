@@ -48,7 +48,7 @@ in {
             ROOT_URL = "https://${config.forgejo.domain}/";
             HTTP_PORT = config.forgejo.port;
             START_SSH_SERVER = false;
-            BUILTIN_SSH_SERVER_USER = "git";
+            BUILTIN_SSH_SERVER_USER = "forgejo";
           };
 
           oauth2 = {
