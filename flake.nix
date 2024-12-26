@@ -95,7 +95,7 @@
     proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
 
     ghostty = {
-      url = "git+ssh://git@github.com/ghostty-org/ghostty";
+      url = "github:ghostty-org/ghostty";
       inputs.nixpkgs-unstable.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
