@@ -153,11 +153,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1735048446,
-        "narHash": "sha256-Tc35Y8H+krA6rZeOIczsaGAtobSSBPqR32AfNTeHDRc=",
+        "lastModified": 1735468753,
+        "narHash": "sha256-2dt1nOe9zf9pDkf5Kn7FUFyPRo581s0n90jxYXJ94l0=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "3a4de9fa3a78ba7b7170dda6bd8b4cdab87c0b21",
+        "rev": "84a5b93637cc16cbfcc61b6e1684d626df61eb21",
         "type": "github"
       },
       "original": {
@@ -373,11 +373,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1735443550,
-        "narHash": "sha256-0bOG0ykRTyXihwLtyFjkaxNJWcDWs0alnNpC6PzbOvo=",
+        "lastModified": 1735507844,
+        "narHash": "sha256-83Md2H01bh0CnJ60apoHLcnTRdMz5N1oz08MLIkin7Y=",
         "owner": "ghostty-org",
         "repo": "ghostty",
-        "rev": "c8950d376ab3be13fbd9a19317163075f4feddbc",
+        "rev": "5698358c2fc869e970db961f2807199ef4552823",
         "type": "github"
       },
       "original": {
@@ -678,11 +678,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1734395394,
-        "narHash": "sha256-wh2piKI2vfwQXmeSVX3ZDdxg6ChUQ1YolG4Cn4r6nuk=",
+        "lastModified": 1735469959,
+        "narHash": "sha256-knX3c5OWE1C5QRDdvup+zqlWvwCLDHiME6+i18WwKsE=",
         "owner": "SaumonNet",
         "repo": "proxmox-nixos",
-        "rev": "15187a4c4ac50d1a38c734f72dd201a7eb504a89",
+        "rev": "4ad21ba619d779b229e308b58066bafd65d5153d",
         "type": "github"
       },
       "original": {
