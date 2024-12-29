@@ -16,7 +16,7 @@ in {
       port = mkOption {
         type = types.int;
         default = 8085;
-        description = "The port on which Adguard will listen";
+        description = "The port on which librespeed will listen";
       };
     };
   };
@@ -24,7 +24,7 @@ in {
   config = mkIf config.librespeed.enable {
     virtualisation.oci-containers.containers.speedtest = {
       ports = [
-        "[::1]:${toString config.librespeed.port}:80"
+        "[::1]:${toString config.librespeed.port}:8080"
       ];
       image = "ghcr.io/librespeed/speedtest";
     };
