@@ -30,4 +30,5 @@ analyze:
 	find -name "*.nix" | xargs -I{} nil diagnostics {}
 
 forcast machine:
-  nix-forecast -c ".#nixosConfigurations.{{machine}}" -b https://cache.onyx.ovh
+  nix-forecast -c ".#nixosConfigurations.{{machine}}" -b https://cache.onyx.ovh -b https://cache.onyx.ovh -b https://cache.nixos.org -b https://cache.garnix.io -b https://nix-community.cachix.org -b https://cuda-maintainers.cachix.org -b https://hatch01.cachix.org -b https://numtide.cachix.org -b https://nixpkgs-unfree.cachix.org -b https://cache.saumon.network/proxmox-nixos -b https://ghostty.cachix.org
+
