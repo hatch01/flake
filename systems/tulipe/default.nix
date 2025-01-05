@@ -51,6 +51,7 @@
     enable = true;
     pkiBundle = "/etc/secureboot";
   };
+  services.fwupd.enable = true;
 
   programs.ccache.enable = true;
   # Enable CUPS to print documents.
