@@ -38,14 +38,12 @@ in {
       elisa
     ];
 
-    environment.systemPackages =
-      [
-        inputs.camasca.packages.${pkgs.system}.koi
-      ]
+    environment.systemPackages = [ ]
       ++ (with pkgs.kdePackages; [
         merkuro
         qtlocation # this is needed for merkuro
         kdepim-addons
+        koi
       ]);
 
     hm = {
