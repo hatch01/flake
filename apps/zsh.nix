@@ -147,6 +147,10 @@ in {
           eval "$(${lib.getExe pkgs.zoxide} init zsh)"
         '';
 
+        interactiveShellInit = ''
+          source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+        '';
+
         zplug = {
           enable = true;
           plugins = [
