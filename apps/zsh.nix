@@ -145,9 +145,7 @@ in {
           [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
           #enable zoxide
           eval "$(${lib.getExe pkgs.zoxide} init zsh)"
-        '';
-
-        interactiveShellInit = ''
+          # enable nix-index
           source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
         '';
 
