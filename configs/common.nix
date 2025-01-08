@@ -109,7 +109,8 @@
     };
 
     overlays = [
-      ((import ../overlays) inputs.nixpkgs-unstable)
+      ((import ../overlays/unstable.nix) inputs.nixpkgs-unstable)
+      ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
     ];
   };
 

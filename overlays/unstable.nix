@@ -5,6 +5,7 @@
       config = prev.config;
     };
     unstablePackages = [
+      "ceph"
     ];
   in
     builtins.listToAttrs (map (x: {
