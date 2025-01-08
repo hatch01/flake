@@ -16,6 +16,7 @@
   authelia.enable = true;
   # gitlab.enable = true;
   forgejo.enable = true;
+  configUpdater.enable = true;
   netdata.enable = true;
   nixCache.enable = true;
   adguard.enable = true;

@@ -41,5 +41,6 @@
     ./ghostty.nix
     ./apolline.nix
     ./forgejo.nix
+    ./config_updater.nix
   ];
 }
