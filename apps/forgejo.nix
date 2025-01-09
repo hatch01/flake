@@ -56,8 +56,17 @@ in {
             ENABLED = true;
           };
 
-          # You can temporarily allow registration to create an admin user.
-          service.DISABLE_REGISTRATION = true;
+          authelia = {
+            ENABLE_OPENID_SIGNIN = true;
+            ENABLE_OPENID_SIGNUP = true;
+          };
+
+          service = {
+            DISABLE_REGISTRATION = false;
+            ALLOW_ONLY_EXTERNAL_REGISTRATION = true;
+            SHOW_REGISTRATION_BUTTON = false;
+          };
+
           # Add support for actions, based on act: https://github.com/nektos/act
           actions = {
             ENABLED = true;
