@@ -15,11 +15,12 @@ in {
   config = mkIf config.fail2ban.enable {
     services.fail2ban = {
       enable = true;
-      maxretry = 5;
+      maxretry = 10;
       ignoreIP = [
         # Whitelist some subnets
         "127.0.0.1"
         "192.168.0.0/16"
+        "109.26.63.39"
       ];
       bantime = "24h"; # Ban IPs for one day on the first ban
       bantime-increment = {
@@ -34,7 +35,7 @@ in {
           port = "http,https";
           filter = "authelia";
           logpath = "/var/lib/authelia-main/authelia.log";
-          maxretry = 3;
+          maxretry = 5;
           # bantime = "1d";
           # findtime = "1d";
           # chain = "DOCKER-USER";
