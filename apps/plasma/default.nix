@@ -38,12 +38,14 @@ in {
       elisa
     ];
 
-    environment.systemPackages = [ ]
+    environment.systemPackages =
+      []
       ++ (with pkgs.kdePackages; [
         merkuro
         qtlocation # this is needed for merkuro
         kdepim-addons
         koi
+        kzones
       ]);
 
     hm = {
@@ -159,7 +161,7 @@ in {
           };
 
           # desktop configs
-          "kwinrc" = {
+          kwinrc = {
             "Windows"."RollOverDesktops".value = true;
             "Desktops" = {
               "Number".value = 10;
@@ -247,12 +249,6 @@ in {
           "ksmserverrc"."General"."loginMode".value = "emptySession";
         };
       };
-
-      # home.file.".local/share/plasma/plasmoids/day-night-switcher" = {
-      #   source = ./day-night-switcher;
-      #   recursive = true;
-      #   force = true;
-      # };
 
       # autostart some apps
       home.file.".config/autostart/" = {
