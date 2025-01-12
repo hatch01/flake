@@ -98,8 +98,8 @@ in {
         source = pkgs.fetchFromGitHub {
           owner = "hatch01";
           repo = "pandoc_templates";
-          tag = "main";
-          hash = "sha256-TFQgMTobqX+fFk6MF7lmyl9DN6rO9Vqo0pfVRj6KWcQ=";
+          rev = "main";
+          hash = "sha256-p+NIQYhTnuwqSKNd+g8GasFZj4zJbsrWGFTe7jHnPLw=";
         };
         force = true;
       };
