@@ -99,7 +99,7 @@ in {
           owner = "hatch01";
           repo = "pandoc_templates";
           rev = "main";
-          hash = "sha256-p+NIQYhTnuwqSKNd+g8GasFZj4zJbsrWGFTe7jHnPLw=";
+          hash = "sha256-+iJWbdP05GPIp5kgEeXza5dW8+fD/eSoub5P2J+AG2E=";
         };
         force = true;
       };
