@@ -176,6 +176,17 @@ in {
               "Active".value = true;
               "NightTemperature".value = 3400;
             };
+
+            Plugin = {
+              kwin4_effect_geometry_changeEnabled = true;
+              kwin4_effect_shapecornersEnabled.value = true;
+              kzonesEnabled = true;
+            };
+
+            "[Script-kzones]" = {
+              enableEdgeSnapping = true;
+              trackLayoutPerScreen = true;
+            };
           };
 
           #mime apps WARNING DONT FORGET ; IN THE STRING
