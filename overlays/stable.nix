@@ -5,7 +5,6 @@
       config = prev.config;
     };
     unstablePackages = [
-      "matrix-synapse"
     ];
   in
     builtins.listToAttrs (map (x: {
