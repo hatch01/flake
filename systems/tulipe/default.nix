@@ -33,6 +33,7 @@
       hashedPasswordFile = config.age.secrets.userPassword.path;
     };
   };
+  services.logind.lidSwitch = "ignore";
 
   # Bootloader.
   boot.kernelPackages = pkgs.linuxPackages_latest;
