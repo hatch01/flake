@@ -5,6 +5,7 @@
       config = prev.config;
     };
     unstablePackages = [
+      "nasc"
     ];
   in
     builtins.listToAttrs (map (x: {
