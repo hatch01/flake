@@ -110,6 +110,10 @@ in {
           "[vue]" = {
             "editor.defaultFormatter" = "Vue.volar";
           };
+
+          "[json]" = {
+            "editor.defaultFormatter" = "vscode.json-language-features";
+          };
         };
         keybindings = [
           {
