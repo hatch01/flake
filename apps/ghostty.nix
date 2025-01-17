@@ -21,6 +21,7 @@ in {
         theme = catppuccin-mocha
         font-family = JetBrainsMono Nerd Font
         font-size = 9
+        window-decoration = server
 
         keybind = ctrl+c=copy_to_clipboard
         keybind = ctrl+v=paste_from_clipboard
