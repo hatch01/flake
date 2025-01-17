@@ -111,14 +111,6 @@ in {
         inherit inputs;
       };
     };
-    lavande = {
-      system = "aarch64-linux";
-      modules = server;
-      domain = "onyx.ovh";
-      specialArgs = {
-        inherit inputs;
-      };
-    };
   };
   # // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
 }
