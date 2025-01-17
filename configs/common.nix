@@ -111,6 +111,19 @@
     overlays = [
       ((import ../overlays/unstable.nix) inputs.nixpkgs-unstable)
       ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
+
+      (final: prev: {
+        mautrix-signal = prev.mautrix-signal.overrideAttrs (old: rec {
+          version = "0.7.5";
+          src = pkgs.fetchFromGitHub {
+            owner = "mautrix";
+            repo = "signal";
+            rev = "v${version}";
+            hash = "sha256-iBZoVfHec9g+W7xaBAAew/aY9h/errwLdC05biFaZ78=";
+          };
+          vendorHash = "sha256-RKBewWc98+WpdpXF4QA/ULyZXDR0CKym8KdyeSMd0KA=";
+        });
+      })
     ];
   };
 
