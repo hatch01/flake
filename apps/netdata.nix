@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -51,6 +52,13 @@ in {
             "dbengine tier 2 multihost disk space MB" = 1024;
           };
         };
+        configDir = {
+          "go.d/nginx.conf" = pkgs.writeText "nginx.conf" ''
+            jobs:
+              - name: 'local'
+                url: 'http://127.0.0.1/stub_status'
+          '';
+        };
       };
 
       # enable nginx status page to get nginx stats
@@ -61,7 +69,8 @@ in {
               stub_status on;
               access_log off;
               allow 127.0.0.1;
-              deny all;'';
+              deny all;
+            '';
           };
         };
       };
