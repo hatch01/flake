@@ -30,6 +30,7 @@ in {
       silicon
       ouch
       nix-tree
+      bottom
     ];
 
     hm = {
