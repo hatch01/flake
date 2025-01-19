@@ -35,6 +35,9 @@ in {
             "update every" = 15;
             "memory mode" = "map";
           };
+          logs = {
+            level = "info";
+          };
           ml = {
             "enabled" = "yes";
           };
