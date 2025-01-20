@@ -65,9 +65,7 @@ in {
           recommendedProxySettings = false;
           extraConfig = builtins.readFile ./auth-location.conf;
         };
-      in
-        {}
-        // {
+      in {
           "${config.networking.domain}" = mkIf config.homepage.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
@@ -86,8 +84,6 @@ in {
               "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
             };
           };
-        }
-        // {
           ${config.netdata.domain} = mkIf config.netdata.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
@@ -101,8 +97,7 @@ in {
               "/internal/authelia/authz" = autheliaProxy;
             };
           };
-        }
-        // {
+
           ${config.cockpit.domain} = mkIf config.cockpit.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
@@ -121,8 +116,7 @@ in {
               };
             };
           };
-        }
-        // {
+
           ${config.adguard.domain} = mkIf config.adguard.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
@@ -142,20 +136,16 @@ in {
               "/internal/authelia/authz" = autheliaProxy;
             };
           };
-        }
-        // {
-          # TODO create a simplified method to define those
+
           ${config.nextcloud.domain} = mkIf config.nextcloud.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
           };
-        }
-        // {
+
           ${config.onlyofficeDocumentServer.domain} = mkIf config.onlyofficeDocumentServer.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations."/".proxyPass = "http://[::1]:${toString config.onlyofficeDocumentServer.port}";
           };
-        }
-        // {
+
           ${config.forgejo.domain} = mkIf config.forgejo.enable {
             inherit (cfg) forceSSL enableACME;
             extraConfig = lib.concatStringsSep "\n" [
@@ -166,8 +156,7 @@ in {
             ];
             locations."/".proxyPass = "http://[::1]:${toString config.forgejo.port}";
           };
-        }
-        // {
+
           ${config.matrix.domain} = mkIf config.matrix.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             root = mkIf config.matrix.enableElement (pkgs.element-web.override {
@@ -189,8 +178,7 @@ in {
               "~ ^(/_matrix|/_synapse/client)".proxyPass = "http://[::1]:${toString config.matrix.port}";
             };
           };
-        }
-        // {
+
           ${config.matrix.mas.domain} = mkIf config.matrix.mas.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations = {
@@ -198,14 +186,12 @@ in {
               "/assets/".root = "${pkgs.matrix-authentication-service}/share/matrix-authentication-service/";
             };
           };
-        }
-        // {
+
           ${config.nixCache.domain} = mkIf config.nixCache.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations."/".proxyPass = "http://127.0.0.1:${toString config.nixCache.port}";
           };
-        }
-        // {
+
           ${config.homeassistant.domain} = mkIf config.homeassistant.enable {
             inherit (cfg) forceSSL enableACME;
             extraConfig = ''
@@ -216,8 +202,7 @@ in {
               proxyWebsockets = true;
             };
           };
-        }
-        // {
+
           ${config.authelia.domain} = mkIf config.authelia.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations = let
@@ -228,8 +213,7 @@ in {
               "/api/authz".proxyPass = authUrl;
             };
           };
-        }
-        // {
+
           ${config.librespeed.domain} = mkIf config.librespeed.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
@@ -243,8 +227,7 @@ in {
               "/internal/authelia/authz" = autheliaProxy;
             };
           };
-        }
-        // {
+
           ${config.apolline.domain} = mkIf config.apolline.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
@@ -258,8 +241,7 @@ in {
               "/internal/authelia/authz" = autheliaProxy;
             };
           };
-        }
-        // {
+
           ${config.proxmox.domain} = mkIf config.proxmox.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
@@ -280,14 +262,12 @@ in {
               };
             };
           };
-        }
-        // {
+
           ${config.influxdb.grafana.domain} = mkIf config.influxdb.grafana.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations."/".proxyPass = "http://[::1]:${toString config.influxdb.grafana.port}";
           };
-        }
-        // {
+
           ${config.nodered.domain} = mkIf config.nodered.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations = {
