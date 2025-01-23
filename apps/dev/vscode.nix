@@ -114,6 +114,13 @@ in {
           "[json]" = {
             "editor.defaultFormatter" = "vscode.json-language-features";
           };
+
+          "github.copilot.enable" = {
+            "*" = true;
+            "markdown" = true;
+          };
+
+          "debug.allowBreakpointsEverywhere" = true;
         };
         keybindings = [
           {
