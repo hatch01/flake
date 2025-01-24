@@ -115,12 +115,17 @@ in {
             "editor.defaultFormatter" = "vscode.json-language-features";
           };
 
+          "[svelte]" = {
+            "editor.defaultFormatter" = "svelte.svelte-vscode";
+          };
+
           "github.copilot.enable" = {
             "*" = true;
             "markdown" = true;
           };
 
           "debug.allowBreakpointsEverywhere" = true;
+          "C_Cpp.debugShortcut" = true;
         };
         keybindings = [
           {
