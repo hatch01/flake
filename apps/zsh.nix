@@ -31,6 +31,7 @@ in {
       ouch
       nix-tree
       bottom
+      parallel
       pbzip2
     ];
 
