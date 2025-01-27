@@ -20,14 +20,11 @@ in {
   };
 
   config = mkIf config.nodered.enable {
-    environment.persistence."/persistent" = {
-      directories = ["/var/lib/node-red"];
-    };
-
     services.node-red = {
       enable = true;
       withNpmAndGcc = true;
       port = config.nodered.port;
+      userDir = "/storage/node-red";
     };
   };
 }
