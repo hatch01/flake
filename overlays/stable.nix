@@ -1,16 +1,16 @@
 (
-  nixpkgs-unstable: final: prev: let
-    unstable = import nixpkgs-unstable {
+  nixpkgs-stable: final: prev: let
+    stable = import nixpkgs-stable {
       system = prev.system;
       config = prev.config;
     };
-    unstablePackages = [
+    stablePackages = [
       "nasc"
     ];
   in
     builtins.listToAttrs (map (x: {
         name = x;
-        value = unstable.${x};
+        value = stable.${x};
       })
-      unstablePackages)
+      stablePackages)
 )
