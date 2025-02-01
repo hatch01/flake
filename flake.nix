@@ -94,12 +94,6 @@
 
     proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
-    };
-
     apolline.url = "git+ssh://git@github.com/hatch01/apolline";
   };
   outputs = {flake-parts, ...} @ inputs:

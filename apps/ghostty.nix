@@ -14,7 +14,7 @@ in {
   };
   config = mkIf config.ghostty.enable {
     environment.systemPackages = [
-      inputs.ghostty.packages.${pkgs.system}.default
+      pkgs.ghostty
     ];
     hm.home = {
       file.".config/ghostty/config".text = ''
