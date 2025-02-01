@@ -36,8 +36,8 @@
   inputs = {
     # Official NixOS package source, using nixos-unstable branch here
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-24.11";
+    # nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
+    # nixpkgs-stable.url = "nixpkgs/nixos-24.11";
 
     systems.url = "github:nix-systems/default";
 
