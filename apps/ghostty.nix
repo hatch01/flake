@@ -23,8 +23,8 @@ in {
         font-size = 9
         window-decoration = server
 
-        keybind = ctrl+c=copy_to_clipboard
-        keybind = ctrl+v=paste_from_clipboard
+        keybind = performable:ctrl+v=paste_from_clipboard
+        keybind = performable:ctrl+c=copy_to_clipboard
       '';
     };
   };
