@@ -20,7 +20,7 @@ in {
         configFile = {
           "homebank/preferences" = {
             "Exchange" = {
-              "DateFmt".value = 1;
+              "DateFmt".value = 2;
             };
           };
         };
