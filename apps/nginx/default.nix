@@ -26,7 +26,6 @@ in {
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
-      additionalModules = with pkgs.nginxModules; [modsecurity];
       proxyCachePath = {
         "" = {
           enable = true;
