@@ -70,7 +70,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flatpaks.url = "github:gmodena/nix-flatpak/?ref=v0.5.2";
+    flatpaks.url = "github:gmodena/nix-flatpak/?ref=v0.6.0";
 
     plasma-manager.url = "github:nix-community/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
