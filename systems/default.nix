@@ -109,7 +109,7 @@ in {
     lavande = {
       system = "aarch64-linux";
       modules = server;
-      domain = "144.24.206.134";
+      domain = "129.151.224.5";
       specialArgs = {
         inherit inputs;
       };
