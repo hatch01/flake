@@ -101,6 +101,7 @@
           "corefonts"
 
           "anytype"
+          "anytype-heart"
         ];
 
       permittedInsecurePackages = [
