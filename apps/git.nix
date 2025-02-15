@@ -24,8 +24,11 @@ in {
           enable = true;
           userName = username;
           userEmail = "eymericdechelette@gmail.com";
-          signing.key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs";
-          signing.signByDefault = true;
+          signing = {
+            key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs";
+            signByDefault = true;
+            format = "ssh";
+          };
           extraConfig = {
             pull.rebase = true;
             safe.directory = [
@@ -34,7 +37,6 @@ in {
             ];
             merge.conflictstyle = "zdiff3";
             merge.tool = "vimdiff";
-            gpg.format = "ssh";
             core.pager = "delta";
             interactive.diffFilter = "delta --color-only";
             delta = {
