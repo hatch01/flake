@@ -24,7 +24,6 @@ in {
       zap # cybersecurity website test
 
       #math
-      nasc
       kalker
       geogebra6
       octaveFull
