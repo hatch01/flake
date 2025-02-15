@@ -106,6 +106,14 @@ in {
         inherit inputs;
       };
     };
+    lavande = {
+      system = "aarch64-linux";
+      modules = server;
+      domain = "144.24.206.134";
+      specialArgs = {
+        inherit inputs;
+      };
+    };
   };
   # // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
 }
