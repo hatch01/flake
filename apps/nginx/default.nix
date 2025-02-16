@@ -97,6 +97,20 @@ in {
           };
         };
 
+        ${config.gatus.domain} = mkIf config.gatus.enable {
+          inherit (cfg) forceSSL enableACME;
+          locations = {
+            "/" = {
+              proxyPass = "http://[::1]:${toString config.gatus.port}";
+              extraConfig = lib.strings.concatStringsSep "\n" [
+                (builtins.readFile ./auth-authrequest.conf)
+              ];
+            };
+            # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
+            "/internal/authelia/authz" = autheliaProxy;
+          };
+        };
+
         ${config.cockpit.domain} = mkIf config.cockpit.enable {
           inherit (cfg) forceSSL enableACME;
           locations = {
@@ -175,6 +189,8 @@ in {
             };
 
             "~ ^(/_matrix|/_synapse/client)".proxyPass = "http://[::1]:${toString config.matrix.port}";
+
+            "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
           };
         };
 
@@ -282,6 +298,14 @@ in {
                 (builtins.readFile ./auth-authrequest.conf)
               ];
             };
+
+            "/health" = {
+              proxyPass = "http://127.0.0.1:${toString config.nodered.port}/health";
+              # extraConfig = ''
+              #   auth_request off;
+              # '';
+            };
+
             # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
             "/internal/authelia/authz" = autheliaProxy;
           };

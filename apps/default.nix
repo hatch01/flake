@@ -42,5 +42,6 @@
     ./apolline.nix
     ./forgejo.nix
     ./config_updater.nix
+    ./gatus.nix
   ];
 }
