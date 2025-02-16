@@ -95,6 +95,7 @@
       kdePackages.yakuake
       kdePackages.ktorrent
       wl-clipboard
+      helvum
     ];
   };
 }
