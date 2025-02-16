@@ -11,8 +11,6 @@
     ./disk.nix
   ];
 
-  fileSystems."/persistent".neededForBoot = true;
-
   boot.initrd.availableKernelModules = ["xhci_pci" "virtio_scsi"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = [];
