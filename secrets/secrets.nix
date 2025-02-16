@@ -17,6 +17,7 @@ let
     ]
     // defineSecrets "server" [
       "smtpPassword"
+      "smtpPasswordEnv"
       "cockpit_private_key"
     ]
     // defineSecrets "tulipe" [

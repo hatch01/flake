@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -26,9 +27,38 @@ in {
   config = mkIf config.gatus.enable {
     services.gatus = {
       enable = true;
+      environmentFile = config.age.secrets."server/smtpPasswordEnv".path;
+
       settings = {
         web.port = config.gatus.port;
+        alerting.email = {
+          from = "gatus@free.fr";
+          username = "eymeric.monitoring";
+          # password = "#0LtshV_vAe1%*tU";
+          password = "$SMTP_PASSWORD";
+          host = "smtp.free.fr";
+          port = 587;
+          to = "eymeric.monitoring@free.fr";
+          client.insecure = true;
+
+          default-alert = {
+            send-on-resolved = true;
+            failure-threshold = 5;
+            success-threshold = 5;
+          };
+        };
         endpoints = [
+          {
+            name = "authelia";
+            url = "https://${config.authelia.domain}/api/health";
+            interval = "5m";
+            conditions = [
+              "[STATUS] == 200"
+              "[BODY].status == OK"
+              "[RESPONSE_TIME] < 300"
+            ];
+            alerts = [{type = "email";}];
+          }
           {
             name = "nextcloud";
             url = "https://${config.nextcloud.domain}/status.php";
@@ -40,6 +70,7 @@ in {
               "[BODY].needsDbUpgrade == false"
               "[RESPONSE_TIME] < 300"
             ];
+            alerts = [{type = "email";}];
           }
           {
             name = "forge";
@@ -50,6 +81,7 @@ in {
               "[BODY].status == pass"
               "[RESPONSE_TIME] < 300"
             ];
+            alerts = [{type = "email";}];
           }
           {
             name = "speedtest";
@@ -59,6 +91,7 @@ in {
               "[STATUS] == 200"
               "[RESPONSE_TIME] < 300"
             ];
+            alerts = [{type = "email";}];
           }
           {
             name = "matrix synapse health";
@@ -69,6 +102,7 @@ in {
               "[BODY] == OK"
               "[RESPONSE_TIME] < 300"
             ];
+            alerts = [{type = "email";}];
           }
           {
             name = "homeassistant";
@@ -78,6 +112,7 @@ in {
               "[STATUS] == 200"
               "[RESPONSE_TIME] < 300"
             ];
+            alerts = [{type = "email";}];
           }
           {
             name = "nodered";
@@ -87,6 +122,7 @@ in {
               "[STATUS] == 200"
               "[RESPONSE_TIME] < 300"
             ];
+            alerts = [{type = "email";}];
           }
           {
             name = "adguard";
@@ -100,6 +136,7 @@ in {
               "[BODY] == 109.26.63.39"
               "[DNS_RCODE] == NOERROR"
             ];
+            alerts = [{type = "email";}];
           }
           {
             name = "grafana";
@@ -110,6 +147,7 @@ in {
               "[BODY].database == ok"
               "[RESPONSE_TIME] < 300"
             ];
+            alerts = [{type = "email";}];
           }
         ];
       };

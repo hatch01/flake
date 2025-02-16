@@ -20,6 +20,11 @@
         mode = "440";
         root = true;
       };
+      "server/smtpPasswordEnv" = {
+        group = "smtp";
+        mode = "440";
+        root = true;
+      };
     };
   };
 

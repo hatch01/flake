@@ -23,6 +23,7 @@ in {
   };
 
   config = mkIf config.netdata.enable {
+    systemd.services.netdata.after = ["nginx.service" "postgresql.service"];
     services = {
       netdata = {
         enable = true;
