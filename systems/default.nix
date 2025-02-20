@@ -26,22 +26,19 @@
               };
             }
           ];
-        specialArgs = let
-          mkSecrets = builtins.mapAttrs (secretName: secretValue: let
-            secretsLocalPath = "${secretsPath}/${
-              if (secretValue.root or false)
-              then ""
-              else "${name}/"
-            }";
-          in
-            lib.removeAttrs secretValue ["root"]
-            // {
-              file = "${secretsLocalPath}${secretName}.age";
-            });
-          mkSecret = secretName: other: mkSecrets {${secretName} = other;};
-        in
-          {
-            inherit inputs username stateVersion sshPublicKey mkSecrets mkSecret base_domain_name;
+        specialArgs =
+          rec {
+            inherit inputs username stateVersion sshPublicKey base_domain_name;
+            mkSecrets = builtins.mapAttrs (secretName: secretValue:
+              lib.removeAttrs secretValue ["root"]
+              // {
+                file = "${secretsPath}/${
+                  if (secretValue.root or false)
+                  then ""
+                  else "${name}/"
+                }${secretName}.age";
+              });
+            mkSecret = secretName: other: mkSecrets {${secretName} = other;};
             stable = value.stable or false;
             system = value.system;
           }
