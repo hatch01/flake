@@ -78,18 +78,22 @@ in {
       };
 
       home.file.".local/share/pandoc/filters/asciimathml-pandocfilter" = {
-        source = builtins.fetchGit {
-          url = "https://github.com/hatch01/asciimathml-pandocfilter.git";
+        source = pkgs.fetchFromGitHub {
+          owner = "hatch01";
+          repo = "asciimathml-pandocfilter";
           rev = "2610212edd8feeda38c8039c619d20f25622b8c6";
+          hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
         };
         force = true;
         executable = true;
         onChange = "npm install -g pandoc-filter";
       };
       home.file.".local/share/pandoc/filters/search_replace" = {
-        source = builtins.fetchGit {
-          url = "https://github.com/hatch01/search_replace_pandoc.git";
+        source = pkgs.fetchFromGitHub {
+          owner = "hatch01";
+          repo = "search_replace_pandoc";
           rev = "fd2445dd3d269afd3660aa01ec5f3a8997877ea0";
+          hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
         };
         force = true;
         executable = true;
