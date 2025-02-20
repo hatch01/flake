@@ -138,7 +138,7 @@ in {
             oidc_login_provider_url = "https://${config.authelia.domain}";
             oidc_login_client_id = "nextcloud";
             # oidc_login_client_secret = "insecure_secret"; # set in secret file
-            oidc_login_auto_redirect = false;
+            oidc_login_auto_redirect = true;
             oidc_login_end_session_redirect = false;
             oidc_login_button_text = "Log in with Authelia";
             oidc_login_hide_password_form = false;
