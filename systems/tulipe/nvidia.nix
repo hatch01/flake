@@ -28,41 +28,42 @@
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia-container-toolkit.enable = true;
+  vfio.enable = true;
 
-  specialisation = {
-    "VFIO".configuration = {
-      system.nixos.tags = ["with-vfio"];
-      vfio.enable = true;
-    };
+  # specialisation = {
+  #   "VFIO".configuration = {
+  #     system.nixos.tags = ["with-vfio"];
+  #     vfio.enable = true;
+  #   };
 
-    # stollen here https://discourse.nixos.org/t/using-a-low-power-specialisation-for-laptops/22513
-    disable-GPU.configuration = {
-      system.nixos.tags = ["disable-GPU"];
-      environment.etc."specialisation".text = "disable-GPU";
-      boot.extraModprobeConfig = ''
-        blacklist nouveau
-        options nouveau modeset=0
-      '';
+  #   # stollen here https://discourse.nixos.org/t/using-a-low-power-specialisation-for-laptops/22513
+  #   disable-GPU.configuration = {
+  #     system.nixos.tags = ["disable-GPU"];
+  #     environment.etc."specialisation".text = "disable-GPU";
+  #     boot.extraModprobeConfig = ''
+  #       blacklist nouveau
+  #       options nouveau modeset=0
+  #     '';
 
-      services.udev.extraRules = ''
-        # Remove NVIDIA USB xHCI Host Controller devices, if present
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{power/control}="auto", ATTR{remove}="1"
+  #     services.udev.extraRules = ''
+  #       # Remove NVIDIA USB xHCI Host Controller devices, if present
+  #       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{power/control}="auto", ATTR{remove}="1"
 
-        # Remove NVIDIA USB Type-C UCSI devices, if present
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{power/control}="auto", ATTR{remove}="1"
+  #       # Remove NVIDIA USB Type-C UCSI devices, if present
+  #       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{power/control}="auto", ATTR{remove}="1"
 
-        # Remove NVIDIA Audio devices, if present
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{power/control}="auto", ATTR{remove}="1"
+  #       # Remove NVIDIA Audio devices, if present
+  #       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{power/control}="auto", ATTR{remove}="1"
 
-        # Remove NVIDIA VGA/3D controller devices
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
-      '';
-      boot.blacklistedKernelModules = ["nouveau" "nvidia" "nvidia_drm" "nvidia_modeset"];
+  #       # Remove NVIDIA VGA/3D controller devices
+  #       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
+  #     '';
+  #     boot.blacklistedKernelModules = ["nouveau" "nvidia" "nvidia_drm" "nvidia_modeset"];
 
-      services.xserver.videoDrivers = lib.mkForce ["amdgpu"];
-      hardware.nvidia-container-toolkit.enable = lib.mkForce false;
-    };
-  };
+  #     services.xserver.videoDrivers = lib.mkForce ["amdgpu"];
+  #     hardware.nvidia-container-toolkit.enable = lib.mkForce false;
+  #   };
+  # };
 
   # maybe needed for cuda
   systemd.services.nvidia-control-devices = {
