@@ -33,7 +33,19 @@
           git reset --hard HEAD
           git pull
           nix flake update --commit-lock-file --accept-flake-config
-          git push
+
+          # Rebuild systems
+          names=$(nix eval --json .#nixosConfigurations --apply 'builtins.attrNames')
+          configs=$(echo "$names" | nix run --inputs-from . nixpkgs#jq -- -r '.[]')
+          for config in $configs; do
+            if nix build --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.''${config}.config.system.build.toplevel; then
+              echo "Build succeeded for ''${config}"
+              git push
+            else
+              echo "Build failed for ''${config}, cleaning up..."
+              git reset --hard HEAD~1
+            fi
+          done
         ) &  # Run in the background
         ;;
       *)
