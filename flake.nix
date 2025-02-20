@@ -50,8 +50,10 @@
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
-
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.pre-commit-hooks-nix.follows = "";
+      inputs.flake-compat.follows = "";
     };
 
     disko = {
@@ -62,6 +64,7 @@
     agenix = {
       url = "github:hatch01/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
       inputs.home-manager.follows = "home-manager";
     };
 
@@ -72,9 +75,11 @@
     };
     flatpaks.url = "github:gmodena/nix-flatpak/?ref=v0.6.0";
 
-    plasma-manager.url = "github:nix-community/plasma-manager";
-    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
-    plasma-manager.inputs.home-manager.follows = "home-manager";
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
 
     # treefmt-nix.url = "github:numtide/treefmt-nix";
     # pre-commit-hooks-nix = {
