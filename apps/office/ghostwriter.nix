@@ -82,7 +82,7 @@ in {
           owner = "hatch01";
           repo = "asciimathml-pandocfilter";
           rev = "2610212edd8feeda38c8039c619d20f25622b8c6";
-          hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+          hash = "sha256-Ub15YKim4c2Dl2uriiERpc48BGJe+Vyh/11vQ802SMA=";
         };
         force = true;
         executable = true;
@@ -93,7 +93,7 @@ in {
           owner = "hatch01";
           repo = "search_replace_pandoc";
           rev = "fd2445dd3d269afd3660aa01ec5f3a8997877ea0";
-          hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+          hash = "sha256-Ub15YKim4c2Dl2uriiERpc48BGJe+Vyh/11vQ802SMA=";
         };
         force = true;
         executable = true;
