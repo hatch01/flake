@@ -31,7 +31,7 @@
 
           cd "flake" || exit
           git reset --hard HEAD
-          git pull
+          git pull --rebase
           nix flake update --commit-lock-file --accept-flake-config
 
           # Rebuild systems
