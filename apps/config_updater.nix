@@ -40,9 +40,9 @@
           all_ok=true
           for config in $configs; do
             if nix build --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.''${config}.config.system.build.toplevel; then
-              logger "Build succeeded for ''${config}"
+              echo "Build succeeded for ''${config}" | systemd-cat -t config-updater-start
             else
-              logger "Build failed for ''${config}, cleaning up..."
+              echo "Build failed for ''${config}, cleaning up..." | systemd-cat -t config-updater-start
               all_ok=false
             fi
           done
@@ -50,7 +50,7 @@
           if [ "$all_ok" = true ]; then
             git push
           else
-            logger "Not all builds were successful, not pushing changes."
+            echo "Not all builds were successful, not pushing changes." | systemd-cat -t config-updater-start
             git reset --hard HEAD~1
           fi
         ) &  # Run in the background
@@ -88,6 +88,8 @@ in {
       wantedBy = ["multi-user.target"];
       serviceConfig = {
         Restart = "always";
+        StandardOutput = "journal+console";
+        StandardError = "journal+console";
       };
       script = ''
         socat TCP4-LISTEN:${builtins.toString config.configUpdater.port},reuseaddr,fork SYSTEM:${
