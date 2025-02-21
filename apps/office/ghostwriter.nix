@@ -82,11 +82,11 @@ in {
           owner = "hatch01";
           repo = "asciimathml-pandocfilter";
           rev = "2610212edd8feeda38c8039c619d20f25622b8c6";
-          hash = "sha256-Ub15YKim4c2Dl2uriiERpc48BGJe+Vyh/11vQ802SMA=";
+          hash = "sha256-82UbeOQGjsMq3HQ3VoOKNQBkolvGlsjsqS+yDwDG2jc=";
         };
         force = true;
         executable = true;
-        onChange = "${lib.getExe' pkgs.nodejs "npm"} install -g pandoc-filter";
+        #onChange = "${lib.getExe' pkgs.nodejs "npm"} install -g pandoc-filter";
       };
       home.file.".local/share/pandoc/filters/search_replace" = {
         source = pkgs.fetchFromGitHub {
