@@ -36,7 +36,7 @@
 
           # Rebuild systems
           names=$(nix eval --json .#nixosConfigurations --apply 'builtins.attrNames' --accept-flake-config)
-          configs=$(echo "$names" | ${lib.getExe pkgs.jq} -- -r '.[]')
+          configs=$(echo "$names" | ${lib.getExe pkgs.jq} -r '.[]')
           all_ok=true
           for config in $configs; do
             if nix build --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.''${config}.config.system.build.toplevel; then
