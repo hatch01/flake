@@ -35,7 +35,8 @@
           nix flake update --commit-lock-file --accept-flake-config
 
           # Rebuild systems
-          configs=$(nix eval --json .#nixosConfigurations --apply 'builtins.attrNames' --accept-flake-config | ${lib.getExe pkgs.jq} -r '.[]')
+          names=$(nix eval --json .#nixosConfigurations --apply 'builtins.attrNames' --accept-flake-config)
+          configs=$(echo "$names" | ${lib.getExe pkgs.jq} -- -r '.[]')
           all_ok=true
           for config in $configs; do
             if nix build --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.''${config}.config.system.build.toplevel; then
@@ -43,7 +44,6 @@
             else
               echo "Build failed for ''${config}, cleaning up..."
               all_ok=false
-              break
             fi
           done
 
