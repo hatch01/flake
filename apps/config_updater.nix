@@ -40,18 +40,18 @@
           all_ok=true
           for config in $configs; do
             if nix build --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.''${config}.config.system.build.toplevel; then
-              echo "Build succeeded for ''${config}"
+              echo "Build succeeded for ''${config}" || true
             else
-              echo "Build failed for ''${config}, cleaning up..."
+              echo "Build failed for ''${config}, cleaning up..." || true
               all_ok=false
             fi
           done
 
           if [ "$all_ok" = true ]; then
-            git push
+            git push || true
           else
-            echo "Not all builds were successful, not pushing changes."
-            git reset --hard HEAD~1
+            echo "Not all builds were successful, not pushing changes." || true
+            git reset --hard HEAD~1 || true
           fi
         ) &  # Run in the background
         ;;
