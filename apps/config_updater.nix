@@ -40,18 +40,18 @@
           all_ok=true
           for config in $configs; do
             if nix build --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.''${config}.config.system.build.toplevel; then
-              echo "Build succeeded for ''${config}" || true
+              logger "Build succeeded for ''${config}"
             else
-              echo "Build failed for ''${config}, cleaning up..." || true
+              logger "Build failed for ''${config}, cleaning up..."
               all_ok=false
             fi
           done
 
           if [ "$all_ok" = true ]; then
-            git push || true
+            git push
           else
-            echo "Not all builds were successful, not pushing changes." || true
-            git reset --hard HEAD~1 || true
+            logger "Not all builds were successful, not pushing changes."
+            git reset --hard HEAD~1
           fi
         ) &  # Run in the background
         ;;
@@ -82,6 +82,7 @@ in {
         gawk
         socat
         nix
+        util-linux
       ];
       description = "HTTP server using socat for Git update actions";
       wantedBy = ["multi-user.target"];
