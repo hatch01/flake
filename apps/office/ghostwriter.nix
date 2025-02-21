@@ -86,7 +86,7 @@ in {
         };
         force = true;
         executable = true;
-        onChange = "npm install -g pandoc-filter";
+        onChange = "${lib.getExe' pkgs.nodejs "npm"} install -g pandoc-filter";
       };
       home.file.".local/share/pandoc/filters/search_replace" = {
         source = pkgs.fetchFromGitHub {
