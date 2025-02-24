@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkEnableOption optionals;
+  inherit (lib) mkEnableOption mkIf optionals;
 in {
   imports = [
     ./vscode.nix
@@ -14,7 +14,7 @@ in {
     jetbrains.enable = mkEnableOption "jetbrains";
   };
 
-  config = {
+  config = mkIf config.dev.enable  {
     arduino.enable = true;
     environment.systemPackages = with pkgs;
       [
