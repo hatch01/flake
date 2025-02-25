@@ -14,8 +14,8 @@ in {
       home.sessionVariables.NIXOS_OZONE_WL = "1";
       programs.vscode = {
         enable = true;
-        enableUpdateCheck = false;
         profiles.default = {
+          enableUpdateCheck = false;
           extensions = with pkgs.vscode-extensions; [
             # style
             # bierner.markdown-preview-github-styles
