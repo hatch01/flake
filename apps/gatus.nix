@@ -37,6 +37,10 @@ in {
           nativeBuildInputs = [remarshal_0_17];
           value = builtins.toJSON {
             web.port = config.gatus.port;
+            storage = {
+              type = "postgres";
+              path = "postgresql:///gatus?host=/run/postgresql";
+            };
             endpoints = [
               {
                 name = "authelia";
@@ -161,5 +165,12 @@ in {
               username: eymeric.monitoring" >> "$out"
         '') {};
     };
+
+    postgres.initialScripts = [
+      ''
+               CREATE ROLE "gatus";
+        CREATE DATABASE "gatus" WITH OWNER "gatus";
+      ''
+    ];
   };
 }
