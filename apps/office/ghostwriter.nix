@@ -13,7 +13,7 @@ in {
 
   config = mkIf config.ghostwriter.enable {
     environment.systemPackages = with pkgs; [
-      ghostwriter
+      kdePackages.ghostwriter
       pandoc_3_6
       nodejs
       texlive.combined.scheme-full
