@@ -82,7 +82,7 @@
     systemPackages = with pkgs; [
       (catppuccin-kde.override {flavour = ["mocha" "latte"];})
       catppuccin-cursors.mochaDark
-      partition-manager
+      kdePackages.partitionmanager
       gnome-disk-utility
       libsForQt5.kpmcore
       glxinfo

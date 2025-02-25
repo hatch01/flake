@@ -20,7 +20,7 @@ in {
       [
         neovide
         zed-editor
-        kate
+	kdePackages.kate
       ]
       ++ optionals config.jetbrains.enable [
         jetbrains.idea-ultimate
