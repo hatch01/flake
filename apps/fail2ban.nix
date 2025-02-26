@@ -41,6 +41,17 @@ in {
           # chain = "DOCKER-USER";
           # action = "iptables-allports[name=authelia]";
         };
+        cockpit.settings = {
+          enabled = true;
+          backend = "systemd";
+          port = "http,https";
+          filter = "cockpit";
+          maxretry = 5;
+          # bantime = "1d";
+          # findtime = "1d";
+          # chain = "DOCKER-USER";
+          # action = "iptables-allports[name=authelia]";
+        };
       };
     };
 
@@ -65,6 +76,12 @@ in {
 
         ignoreregex = ^.*level"?(:|=)"?info.*
                       ^.*level"?(:|=)"?warning.*
+      '');
+      "fail2ban/filter.d/cockpit.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
+              [Definition]
+
+        failregex = pam_unix\(cockpit:auth\): authentication failure; logname=.* uid=.* euid=.* tty=.* ruser=.* rhost=<HOST>
+        journalmatch = SYSLOG_FACILITY=10 PRIORITY=5
       '');
     };
   };
