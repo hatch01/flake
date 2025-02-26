@@ -115,6 +115,7 @@ in {
           inherit (cfg) forceSSL enableACME;
           locations = {
             "/" = {
+	      recommendedProxySettings = false;
               proxyPass = "http://[::1]:${toString config.cockpit.port}";
               extraConfig = ''
                 # Required for web sockets to work
@@ -122,9 +123,8 @@ in {
                 proxy_buffering off;
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "upgrade";
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-                # Pass ETag header from Cockpit to clients.
-                # See: https://github.com/cockpit-project/cockpit/issues/5239
                 gzip off;'';
             };
           };
