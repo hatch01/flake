@@ -21,8 +21,6 @@ in {
 
     # Install necessary packages
     environment.systemPackages = with pkgs; [
-      virt-manager
-      virt-viewer
       spice
       spice-gtk
       spice-protocol
@@ -31,7 +29,6 @@ in {
       virglrenderer
       quickemu
       gnome-boxes
-      #quickgui
     ];
 
     users.extraGroups.vboxusers.members = ["eymeric"];
