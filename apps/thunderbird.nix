@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   thunderbird_profile = "default_thunderbird";
@@ -31,6 +32,7 @@ in {
     hm = {
       programs.thunderbird = {
         enable = true;
+        package = pkgs.thunderbird-latest;
         profiles."${thunderbird_profile}" = {
           isDefault = true;
         };
