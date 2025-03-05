@@ -55,7 +55,7 @@ in {
       nextcloud = mkIf config.nextcloud.enable {
         hostName = config.nextcloud.domain;
         enable = true;
-        #package = pkgs.nextcloud;
+        package = pkgs.nextcloud31;
         autoUpdateApps.enable = true;
         https = true;
         configureRedis = true;
