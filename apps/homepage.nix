@@ -143,7 +143,7 @@ in {
                   siteMonitor = "https://${config.netdata.domain}";
                   widget = {
                     type = "netdata";
-                    url = "http://localhost:${toString config.netdata.port}";
+                    url = "http://[::1]:${toString config.netdata.port}";
                   };
                 };
               }
