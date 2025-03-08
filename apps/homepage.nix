@@ -169,6 +169,17 @@ in {
                   siteMonitor = "https://${config.cockpit.domain}";
                 };
               }
+              {
+                "Gatus" = {
+                  icon = "gatus.png";
+                  description = "gatus c'est vraiment cool";
+                  href = "https://${config.gatus.domain}";
+                  widget = {
+                    type = "gatus";
+                    url = "http://[::1]:${toString config.gatus.port}";
+                  };
+                };
+              }
             ];
           }
         ];
