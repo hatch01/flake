@@ -6,7 +6,7 @@
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
 
-  interval = "5m";
+  interval = "30s";
   alerts = [{type = "email";}];
 
   mkGatusCheck = {
@@ -144,9 +144,7 @@ in {
               client:
                 insecure: true
               default-alert:
-                failure-threshold: 5
                 send-on-resolved: true
-                success-threshold: 5
               from: gatus@free.fr
               host: smtp.free.fr
               password: \"\$SMTP_PASSWORD\"
