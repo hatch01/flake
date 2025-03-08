@@ -5,6 +5,25 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
+
+  interval = "5m";
+  alerts = [{type = "email";}];
+
+  mkGatusCheck = {
+    name,
+    url,
+    conditions ? [],
+  }: {
+    inherit interval alerts;
+    name = name;
+    url = url;
+    conditions =
+      [
+        "[STATUS] == 200"
+        "[RESPONSE_TIME] < 1000"
+      ]
+      ++ conditions;
+  };
 in {
   options = {
     gatus = {
@@ -29,6 +48,7 @@ in {
       enable = true;
       environmentFile = config.age.secrets."server/smtpPasswordEnv".path;
 
+      # convert to yaml code stollen in nixpkgs repo
       configFile = pkgs.callPackage ({
         runCommand,
         remarshal_0_17,
@@ -42,106 +62,71 @@ in {
               path = "postgresql:///gatus?host=/run/postgresql";
             };
             endpoints = [
+              (mkGatusCheck
+                {
+                  name = "authelia";
+                  url = "https://${config.authelia.domain}/api/health";
+                  conditions = ["[BODY].status == OK"];
+                })
+              (mkGatusCheck
+                {
+                  name = "nextcloud";
+                  url = "https://${config.nextcloud.domain}/status.php";
+                  conditions = [
+                    "[BODY].installed == true"
+                    "[BODY].maintenance == false"
+                    "[BODY].needsDbUpgrade == false"
+                  ];
+                })
+              (mkGatusCheck
+                {
+                  name = "forge";
+                  url = "https://${config.forgejo.domain}/api/healthz";
+                  conditions = ["[BODY].status == pass"];
+                })
+              (mkGatusCheck
+                {
+                  name = "speedtest";
+                  url = "https://${config.librespeed.domain}/";
+                })
+              (mkGatusCheck
+                {
+                  name = "matrix synapse health";
+                  url = "https://${config.matrix.domain}/health";
+                  conditions = [
+                    "[BODY] == OK"
+                  ];
+                })
+              (mkGatusCheck
+                {
+                  name = "homeassistant";
+                  url = "https://${config.homeassistant.domain}/manifest.json";
+                })
+              (mkGatusCheck
+                {
+                  name = "nodered";
+                  url = "https://${config.nodered.domain}/health";
+                })
+              (mkGatusCheck
+                {
+                  name = "grafana";
+                  url = "https://${config.influxdb.grafana.domain}/api/health";
+                  conditions = [
+                    "[BODY].database == ok"
+                  ];
+                })
               {
-                name = "authelia";
-                url = "https://${config.authelia.domain}/api/health";
-                interval = "5m";
-                conditions = [
-                  "[STATUS] == 200"
-                  "[BODY].status == OK"
-                  "[RESPONSE_TIME] < 300"
-                ];
-                alerts = [{type = "email";}];
-              }
-              {
-                name = "nextcloud";
-                url = "https://${config.nextcloud.domain}/status.php";
-                interval = "5m";
-                conditions = [
-                  "[STATUS] == 200"
-                  "[BODY].installed == true"
-                  "[BODY].maintenance == false"
-                  "[BODY].needsDbUpgrade == false"
-                  "[RESPONSE_TIME] < 300"
-                ];
-                alerts = [{type = "email";}];
-              }
-              {
-                name = "forge";
-                url = "https://${config.forgejo.domain}/api/healthz";
-                interval = "5m";
-                conditions = [
-                  "[STATUS] == 200"
-                  "[BODY].status == pass"
-                  "[RESPONSE_TIME] < 300"
-                ];
-                alerts = [{type = "email";}];
-              }
-              {
-                name = "speedtest";
-                url = "https://${config.librespeed.domain}/";
-                interval = "5m";
-                conditions = [
-                  "[STATUS] == 200"
-                  "[RESPONSE_TIME] < 300"
-                ];
-                alerts = [{type = "email";}];
-              }
-              {
-                name = "matrix synapse health";
-                url = "https://${config.matrix.domain}/health";
-                interval = "5m";
-                conditions = [
-                  "[STATUS] == 200"
-                  "[BODY] == OK"
-                  "[RESPONSE_TIME] < 300"
-                ];
-                alerts = [{type = "email";}];
-              }
-              {
-                name = "homeassistant";
-                url = "https://${config.homeassistant.domain}/manifest.json";
-                interval = "5m";
-                conditions = [
-                  "[STATUS] == 200"
-                  "[RESPONSE_TIME] < 300"
-                ];
-                alerts = [{type = "email";}];
-              }
-              {
-                name = "nodered";
-                url = "https://${config.nodered.domain}/health";
-                interval = "5m";
-                conditions = [
-                  "[STATUS] == 200"
-                  "[RESPONSE_TIME] < 300"
-                ];
-                alerts = [{type = "email";}];
-              }
-              {
+                inherit interval alerts;
                 name = "adguard";
                 url = "109.26.63.39";
                 dns = {
-                  query-name = "onyx.ovh";
+                  query-name = config.networking.domain;
                   query-type = "A";
                 };
-                interval = "5m";
                 conditions = [
                   "[BODY] == 109.26.63.39"
                   "[DNS_RCODE] == NOERROR"
                 ];
-                alerts = [{type = "email";}];
-              }
-              {
-                name = "grafana";
-                url = "https://${config.influxdb.grafana.domain}/api/health";
-                interval = "5m";
-                conditions = [
-                  "[STATUS] == 200"
-                  "[BODY].database == ok"
-                  "[RESPONSE_TIME] < 300"
-                ];
-                alerts = [{type = "email";}];
               }
             ];
           };
@@ -168,7 +153,7 @@ in {
 
     postgres.initialScripts = [
       ''
-               CREATE ROLE "gatus";
+        CREATE ROLE "gatus";
         CREATE DATABASE "gatus" WITH OWNER "gatus";
       ''
     ];
