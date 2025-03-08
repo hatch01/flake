@@ -14,11 +14,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1727949216,
-        "narHash": "sha256-gpsfWDFktdTcBFvJkJDlVPUJ+O7RMOP/ThZPbD85naU=",
+        "lastModified": 1741451144,
+        "narHash": "sha256-Uxtn4tQkBcGZB0lHEZYI7yNMZ/iLQEv3Q8AGu7wAVtg=",
         "owner": "hatch01",
         "repo": "agenix",
-        "rev": "85237276ae890f10680804b624dbd157d9aea0ff",
+        "rev": "b2ee14b819e6dfa23d4e91059b53939de88795d5",
         "type": "github"
       },
       "original": {
