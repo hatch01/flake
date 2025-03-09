@@ -1,8 +1,10 @@
 rebuild:
-	nixos-rebuild switch --flake . --use-remote-sudo
+	# using impure to allow passing the env vars to nixos-rebuild
+	NIXOS_LABEL=$(echo "$(git log -1 --pretty=format:%s)---$(git diff --name-only HEAD)" | paste -sd '-' | tr "/" "_" | tr " " "_" | sed 's/[^a-zA-Z0-9:_\.-]//g') nixos-rebuild switch --flake . --impure --use-remote-sudo
 
 debug:
-	nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
+	# using impure to allow passing the env vars to nixos-rebuild
+	NIXOS_LABEL=$(echo "$(git log -1 --pretty=format:%s)---$(git diff --name-only HEAD)" | paste -sd '-' | tr "/" "_" | tr " " "_" | sed 's/[^a-zA-Z0-9:_\.-]//g') nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
 
 update:
 	nix flake update --commit-lock-file --accept-flake-config
