@@ -150,6 +150,10 @@ in {
           eval "$(${lib.getExe pkgs.zoxide} init zsh)"
           # enable nix-index
           source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+
+          # enable poetry completions
+          fpath+=~/.zfunc
+          autoload -Uz compinit && compinit
         '';
 
         zplug = {
@@ -219,6 +223,7 @@ in {
               name = "lib/key-bindings";
               tags = ["from:oh-my-zsh"];
             }
+            {name = "darvid/zsh-poetry";}
           ];
         };
 
