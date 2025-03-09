@@ -207,6 +207,7 @@
       # python is useful
       virtualenv
       poetry
+      uv
       (python3.withPackages (ps: []))
     ];
   };
