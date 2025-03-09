@@ -20,7 +20,7 @@
     conditions =
       [
         "[STATUS] == 200"
-        "[RESPONSE_TIME] < 1000"
+        "[RESPONSE_TIME] < 10000"
       ]
       ++ conditions;
   };
