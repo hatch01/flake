@@ -31,5 +31,9 @@ in {
         jq
         httptoolkit
       ];
+
+      hm.home.file.".zfunc/_poetry" = {
+        source = ./poetry_completion.zsh;
+      };
   };
 }
