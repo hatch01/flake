@@ -86,7 +86,7 @@ in {
               package_list+=("nixpkgs#$pkg")
             done
 
-            ${lib.getExe pkgs.nix} shell "''${package_list[@]}"
+            NIXPKGS_ALLOW_UNFREE=1 ${lib.getExe pkgs.nix} shell "''${package_list[@]}"
           }
 
           ccd() {
@@ -227,7 +227,6 @@ in {
               name = "lib/key-bindings";
               tags = ["from:oh-my-zsh"];
             }
-            {name = "darvid/zsh-poetry";}
           ];
         };
 
