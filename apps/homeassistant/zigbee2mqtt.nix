@@ -17,6 +17,7 @@ in {
   };
 
   config = mkIf config.zigbee2mqtt.enable {
+    systemd.services.zigbee2mqtt.serviceConfig.Restart = "always";
     services.zigbee2mqtt = {
       enable = true;
       dataDir = "/storage/homeassistant/zigbee2mqtt";
