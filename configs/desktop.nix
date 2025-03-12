@@ -61,8 +61,6 @@
 
   home-manager.sharedModules = with inputs; [plasma-manager.homeManagerModules.plasma-manager];
 
-  services.tailscale.enable = true;
-
   services.flatpak = {
     enable = true;
     update.auto = {

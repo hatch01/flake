@@ -226,6 +226,8 @@
 
   programs.zsh.enable = true;
 
+  services.tailscale.enable = true;
+
   security.sudo.extraConfig = "Defaults targetpw";
   security.sudo.extraRules = [
     {
