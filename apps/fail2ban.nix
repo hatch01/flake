@@ -55,7 +55,7 @@ in {
     };
 
     environment.etc = {
-      "fail2ban/filter.d/authelia.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
+      "fail2ban/filter.d/authelia.local".text = ''
         [Definition]
         failregex = ^.*Unsuccessful (1FA|TOTP|Duo|U2F) authentication attempt by user .*remote_ip"?(:|=)"?<HOST>"?.*$
                     ^.*user not found.*path=/api/reset-password/identity/start remote_ip"?(:|=)"?<HOST>"?.*$
@@ -63,17 +63,17 @@ in {
 
         ignoreregex = ^.*level"?(:|=)"?info.*
                       ^.*level"?(:|=)"?warning.*
-      '');
-      "fail2ban/filter.d/cockpit.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
+      '';
+      "fail2ban/filter.d/cockpit.local".text = ''
         [Definition]
         failregex = pam_unix\(cockpit:auth\): authentication failure; logname=.* uid=.* euid=.* tty=.* ruser=.* rhost=<HOST>
         journalmatch = SYSLOG_FACILITY=10 PRIORITY=5
-      '');
-      "fail2ban/filter.d/homeassistant.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
+      '';
+      "fail2ban/filter.d/homeassistant.local".text = ''
         [Definition]
         failregex = ^.*Login attempt or request with invalid authentication from <HOST>.*$
         journalmatch = _SYSTEMD_UNIT=docker-homeassistant.service
-      '');
+      '';
     };
   };
 }
