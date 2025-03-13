@@ -30,6 +30,7 @@ in {
         package = pkgs.netdata.override {withNdsudo = true;};
         extraNdsudoPackages = with pkgs; [
           fail2ban
+          smartmontools
         ];
         config = {
           global = {
@@ -61,16 +62,50 @@ in {
           };
         };
         configDir = {
-          "go.d/nginx.conf" = pkgs.writeText "nginx.conf" ''
-            jobs:
-              - name: 'local'
-                url: 'http://127.0.0.1/stub_status'
-          '';
-          "go.d/fail2ban.conf" = pkgs.writeText "fail2ban.conf" ''
-            jobs:
-              - name: 'fail2ban'
-                update_every: 5
-          '';
+          "go.d/nginx.conf" = pkgs.writeText "nginx.conf" (
+            lib.generators.toYAML {}
+            {
+              jobs = [
+                {
+                  name = "local";
+                  url = "http://127.0.0.1/stub_status";
+                }
+              ];
+            }
+          );
+          "go.d/fail2ban.conf" = pkgs.writeText "fail2ban.conf" (
+            lib.generators.toYAML {}
+            {
+              jobs = [
+                {
+                  name = "fail2ban";
+                  update_every = 5;
+                }
+              ];
+            }
+          );
+          "go.d/smartctl.conf" = pkgs.writeText "smartctl.conf" (
+            lib.generators.toYAML {}
+            {
+              jobs = [
+                {
+                  name = "smartctl";
+                  devices_poll_interval = 60;
+                }
+              ];
+            }
+          );
+          "go.d/zfspool.conf" = pkgs.writeText "zfspool.conf" (
+            lib.generators.toYAML {}
+            {
+              jobs = [
+                {
+                  name = "zfspool";
+                  binary_path = lib.getExe' pkgs.zfs "zpool";
+                }
+              ];
+            }
+          );
         };
       };
 
