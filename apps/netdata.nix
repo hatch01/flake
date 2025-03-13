@@ -23,7 +23,19 @@ in {
   };
 
   config = mkIf config.netdata.enable {
-    systemd.services.netdata.after = ["nginx.service" "postgresql.service"];
+    systemd.services.netdata = {
+      path = [pkgs.msmtp];
+      after = ["nginx.service" "postgresql.service"];
+    };
+
+    users = {
+      users.netdata = {
+        isSystemUser = true;
+        group = "netdata";
+        extraGroups = ["smtp"];
+      };
+    };
+
     services = {
       netdata = {
         enable = true;
@@ -131,6 +143,12 @@ in {
         ];
       };
     };
+
+    environment.etc."netdata/health_alarm_notify.conf".text = ''
+      EMAIL_SENDER="netdata@free.fr"
+      SEND_EMAIL="YES"
+      DEFAULT_RECIPIENT_EMAIL="eymeric.monitoring@free.fr"
+    '';
 
     programs.msmtp = {
       enable = true;
