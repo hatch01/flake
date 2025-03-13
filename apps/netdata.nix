@@ -27,6 +27,10 @@ in {
     services = {
       netdata = {
         enable = true;
+        package = pkgs.netdata.override {withNdsudo = true;};
+        extraNdsudoPackages = with pkgs; [
+          fail2ban
+        ];
         config = {
           global = {
             # uncomment to reduce memory to 32 MB
@@ -61,6 +65,11 @@ in {
             jobs:
               - name: 'local'
                 url: 'http://127.0.0.1/stub_status'
+          '';
+          "go.d/fail2ban.conf" = pkgs.writeText "fail2ban.conf" ''
+            jobs:
+              - name: 'fail2ban'
+                update_every: 5
           '';
         };
       };
