@@ -43,5 +43,6 @@
     ./forgejo.nix
     ./config_updater.nix
     ./gatus.nix
+    ./restic.nix
   ];
 }

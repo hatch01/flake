@@ -33,6 +33,7 @@
   proxmox.enable = true;
   apolline.enable = true;
   gatus.enable = true;
+  restic.enable = true;
 
   librespeed.domain = "speedtest.${config.networking.domain}";
   adguard.domain = "dns.${config.networking.domain}";

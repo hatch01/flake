@@ -19,6 +19,8 @@ let
       "smtpPassword"
       "smtpPasswordEnv"
       "cockpit_private_key"
+      "restic_key"
+      "influx_root_token"
     ]
     // defineSecrets "tulipe" [
       "userPassword"
