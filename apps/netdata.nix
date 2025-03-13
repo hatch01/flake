@@ -132,6 +132,20 @@ in {
       };
     };
 
+    programs.msmtp = {
+      enable = true;
+      accounts = {
+        default = {
+          auth = true;
+          host = "smtp.free.fr";
+          port = 587;
+          tls = true;
+          passwordeval = "cat ${config.age.secrets."server/smtpPassword".path}";
+          user = "eymeric.monitoring";
+        };
+      };
+    };
+
     environment.persistence."/persistent" = {
       directories = ["/var/lib/netdata" "/var/cache/netdata"];
     };
