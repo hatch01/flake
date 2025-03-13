@@ -36,10 +36,6 @@ in {
           filter = "authelia";
           logpath = "/var/lib/authelia-main/authelia.log";
           maxretry = 5;
-          # bantime = "1d";
-          # findtime = "1d";
-          # chain = "DOCKER-USER";
-          # action = "iptables-allports[name=authelia]";
         };
         cockpit.settings = {
           enabled = true;
@@ -47,28 +43,19 @@ in {
           port = "http,https";
           filter = "cockpit";
           maxretry = 5;
-          # bantime = "1d";
-          # findtime = "1d";
-          # chain = "DOCKER-USER";
-          # action = "iptables-allports[name=authelia]";
+        };
+        homeassistant.settings = {
+          enabled = true;
+          port = "http,https";
+          filter = "homeassistant";
+          backend = "systemd";
+          maxretry = 5;
         };
       };
     };
 
     environment.etc = {
       "fail2ban/filter.d/authelia.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
-            # Fail2Ban filter for Authelia
-
-        # Make sure that the HTTP header "X-Forwarded-For" received by Authelia's backend
-        # only contains a single IP address (the one from the end-user), and not the proxy chain
-        # (it is misleading: usually, this is the purpose of this header).
-
-        # the failregex rule counts every failed 1FA attempt (first line, wrong username or password) and failed 2FA attempt
-        # second line) as a failure.
-        # the ignoreregex rule ignores info and warning messages as all authentication failures are flagged as errors
-        # the third line catches incorrect usernames entered at the password reset form
-        # the fourth line catches attempts to spam via the password reset form or 2fa device reset form. This requires debug logging to be enabled
-
         [Definition]
         failregex = ^.*Unsuccessful (1FA|TOTP|Duo|U2F) authentication attempt by user .*remote_ip"?(:|=)"?<HOST>"?.*$
                     ^.*user not found.*path=/api/reset-password/identity/start remote_ip"?(:|=)"?<HOST>"?.*$
@@ -78,10 +65,14 @@ in {
                       ^.*level"?(:|=)"?warning.*
       '');
       "fail2ban/filter.d/cockpit.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
-              [Definition]
-
+        [Definition]
         failregex = pam_unix\(cockpit:auth\): authentication failure; logname=.* uid=.* euid=.* tty=.* ruser=.* rhost=<HOST>
         journalmatch = SYSLOG_FACILITY=10 PRIORITY=5
+      '');
+      "fail2ban/filter.d/homeassistant.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
+        [Definition]
+        failregex = ^.*Login attempt or request with invalid authentication from <HOST>.*$
+        journalmatch = _SYSTEMD_UNIT=docker-homeassistant.service
       '');
     };
   };
