@@ -50,7 +50,7 @@ in {
         '';
 
         timerConfig = {
-          OnCalendar = "02:30";
+          OnCalendar = "00:00";
         };
       };
     };
