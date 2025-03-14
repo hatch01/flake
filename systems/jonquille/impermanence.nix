@@ -51,6 +51,7 @@ in {
         user = "acme";
         group = "nginx";
       }
+      "/var/lib/tailscale"
     ];
     files = [
       "/etc/ssh/ssh_host_ed25519_key"
