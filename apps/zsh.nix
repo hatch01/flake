@@ -86,7 +86,7 @@ in {
               package_list+=("nixpkgs#$pkg")
             done
 
-            NIXPKGS_ALLOW_UNFREE=1 ${lib.getExe pkgs.nix} shell "''${package_list[@]}"
+            NIXPKGS_ALLOW_UNFREE=1 ${lib.getExe pkgs.nix} shell --impure "''${package_list[@]}"
           }
 
           ccd() {
