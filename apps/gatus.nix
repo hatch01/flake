@@ -146,7 +146,7 @@ in {
                 insecure: true
               default-alert:
                 send-on-resolved: true
-              from: gatus@free.fr
+              from: Gatus <gatus@free.fr>
               host: smtp.free.fr
               password: \"\$SMTP_PASSWORD\"
               port: 587
