@@ -25,8 +25,8 @@ in {
     services.cockpit.settings = {
       "WebService" = {
         Origins = "https://${config.cockpit.domain} wss://${config.cockpit.domain}";
-	ProtocolHeader = "X-Forwarded-Proto";
-	ForwardedForHeader = "X-Forwarded-For";
+        ProtocolHeader = "X-Forwarded-Proto";
+        ForwardedForHeader = "X-Forwarded-For";
       };
       #   "basic" = {
       #     "action" = "none";

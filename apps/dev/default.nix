@@ -32,8 +32,8 @@ in {
         httptoolkit
       ];
 
-      hm.home.file.".zfunc/_poetry" = {
-        source = ./poetry_completion.zsh;
-      };
+    hm.home.file.".zfunc/_poetry" = {
+      source = ./poetry_completion.zsh;
+    };
   };
 }

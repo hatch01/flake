@@ -25,7 +25,7 @@ in {
 
   config = mkIf config.proxmox.enable {
     systemd.services.pveproxy.environment = {
-      PROXY_REAL_IP_HEADER="X-Forwarded-For";
+      PROXY_REAL_IP_HEADER = "X-Forwarded-For";
       PROXY_REAL_IP_ALLOW_FROM = "127.0.0.1,::1";
     };
 

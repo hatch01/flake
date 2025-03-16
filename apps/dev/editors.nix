@@ -14,13 +14,13 @@ in {
     jetbrains.enable = mkEnableOption "jetbrains";
   };
 
-  config = mkIf config.dev.enable  {
+  config = mkIf config.dev.enable {
     arduino.enable = true;
     environment.systemPackages = with pkgs;
       [
         neovide
         zed-editor
-	kdePackages.kate
+        kdePackages.kate
       ]
       ++ optionals config.jetbrains.enable [
         jetbrains.idea-ultimate

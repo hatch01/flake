@@ -53,7 +53,7 @@ in {
         };
         "auth.generic_oauth" = {
           enabled = true;
-	  auto_login = true;
+          auto_login = true;
           name = "Authelia";
           icon = "signin";
           client_id = "grafana";

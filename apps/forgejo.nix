@@ -65,7 +65,7 @@ in {
             DISABLE_REGISTRATION = false;
             ALLOW_ONLY_EXTERNAL_REGISTRATION = true;
             SHOW_REGISTRATION_BUTTON = false;
-	    ENABLE_INTERNAL_SIGNIN = false;
+            ENABLE_INTERNAL_SIGNIN = false;
             ENABLE_BASIC_AUTHENTICATION = false;
           };
 

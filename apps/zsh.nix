@@ -157,7 +157,7 @@ in {
 
           # enable uv completions
           eval "$(${lib.getExe pkgs.uv} generate-shell-completion zsh)"
-          eval "$(${lib.getExe' pkgs.uv "uvx" } --generate-shell-completion zsh)"
+          eval "$(${lib.getExe' pkgs.uv "uvx"} --generate-shell-completion zsh)"
         '';
 
         zplug = {

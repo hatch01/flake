@@ -115,17 +115,17 @@ in {
           inherit (cfg) forceSSL enableACME;
           locations = {
             "/" = {
-	      recommendedProxySettings = false;
+              recommendedProxySettings = false;
               proxyPass = "http://[::1]:${toString config.cockpit.port}";
               extraConfig = ''
-                # Required for web sockets to work
-                proxy_http_version 1.1;
-                proxy_buffering off;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection "upgrade";
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                              # Required for web sockets to work
+                              proxy_http_version 1.1;
+                              proxy_buffering off;
+                              proxy_set_header Upgrade $http_upgrade;
+                              proxy_set_header Connection "upgrade";
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-                gzip off;'';
+                              gzip off;'';
             };
           };
         };

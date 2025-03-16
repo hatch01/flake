@@ -79,10 +79,8 @@ in {
               cospend
               end_to_end_encryption
               # forms
-              
               groupfolders
               # maps
-              
               music
               notes
               previewgenerator
