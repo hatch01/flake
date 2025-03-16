@@ -121,7 +121,7 @@ in {
                   ];
                 })
               {
-                inherit interval alerts;
+                inherit interval;
                 name = "adguard";
                 url = "109.26.63.39";
                 dns = {
@@ -132,6 +132,7 @@ in {
                   "[BODY] == 109.26.63.39"
                   "[DNS_RCODE] == NOERROR"
                 ];
+                alerts = [{type = "email"; failure-theshold = 5;}];
               }
             ];
           };
