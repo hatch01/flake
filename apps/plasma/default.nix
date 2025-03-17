@@ -45,7 +45,6 @@ in {
         qtlocation # this is needed for merkuro
         kdepim-addons
         koi
-        kzones
       ]);
 
     hm = {
@@ -182,12 +181,6 @@ in {
             Plugin = {
               kwin4_effect_geometry_changeEnabled = true;
               kwin4_effect_shapecornersEnabled.value = true;
-              kzonesEnabled = true;
-            };
-
-            "[Script-kzones]" = {
-              enableEdgeSnapping = true;
-              trackLayoutPerScreen = true;
             };
           };
 
