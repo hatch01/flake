@@ -277,66 +277,23 @@ in {
           eval "$(${lib.getExe' pkgs.uv "uvx"} --generate-shell-completion zsh)"
         '';
 
-        zplug = {
+        antidote = {
           enable = true;
           plugins = [
-            {
-              name = "zsh-users/zsh-syntax-highlighting";
-              tags = ["defer:2"];
-            }
-            {
-              name = "plugins/colored-man-pages";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "plugins/thefuck";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "plugins/sudo";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "plugins/command-not-found";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "plugins/common-aliases";
-              tags = ["from:oh-my-zsh"];
-            }
-            {name = "unixorn/fzf-zsh-plugin";}
-            {
-              name = "zsh-users/zsh-autosuggestions";
-              tags = ["depth:1"];
-            }
-            {
-              name = "lib/clipboard";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "lib/completion";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "lib/grep";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "lib/history";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "lib/directories";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "lib/functions";
-              tags = ["from:oh-my-zsh"];
-            }
-            {
-              name = "lib/key-bindings";
-              tags = ["from:oh-my-zsh"];
-            }
+            "zsh-users/zsh-syntax-highlighting"
+            "ohmyzsh/ohmyzsh path:plugins/colored-man-pages"
+            "ohmyzsh/ohmyzsh path:plugins/sudo"
+            "ohmyzsh/ohmyzsh path:plugins/command-not-found"
+            "ohmyzsh/ohmyzsh path:plugins/common-aliases"
+            "unixorn/fzf-zsh-plugin"
+            "zsh-users/zsh-autosuggestions"
+            "ohmyzsh/ohmyzsh path:lib/clipboard.zsh"
+            "ohmyzsh/ohmyzsh path:lib/completion.zsh"
+            "ohmyzsh/ohmyzsh path:lib/grep.zsh"
+            "ohmyzsh/ohmyzsh path:lib/history.zsh"
+            "ohmyzsh/ohmyzsh path:lib/directories.zsh"
+            "ohmyzsh/ohmyzsh path:lib/functions.zsh"
+            "ohmyzsh/ohmyzsh path:lib/key-bindings.zsh"
           ];
         };
       };
