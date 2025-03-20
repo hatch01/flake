@@ -284,9 +284,6 @@ in {
               name = "zsh-users/zsh-syntax-highlighting";
               tags = ["defer:2"];
             }
-
-            #{ name = "plugins/git"; tags = [from:oh-my-zsh];}
-            #{ name = "plugins/gitignore"; tags = [from:oh-my-zsh];}
             {
               name = "plugins/colored-man-pages";
               tags = ["from:oh-my-zsh"];
