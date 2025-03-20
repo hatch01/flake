@@ -35,6 +35,131 @@ in {
       pbzip2
     ];
 
+    programs.starship = {
+      enable = true;
+      # presets = ["tokyo-night"];
+      settings = {
+        format = ''
+          ╭─ $hostname$os[](bg:#fcfcfc fg:#222626)$username[](bg:#769ff0 fg:#fcfcfc)$directory$direnv[](fg:#1d98f2 bg:#f67341)$git_branch$git_status$git_state[](fg:#f67341 bg:black) $kubernetes$docker_context$cmake$cobol$daml$dart$deno$dotnet$elixir$elm$erlang$fennel$gleam$golang$guix_shell$haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php$pulumi$purescript$python$quarto$raku$rlang$red$ruby$rust$scala$solidity$swift$terraform$typst$vlang$vagrant$zig$buf$nix_shell$conda$meson$spack$memory_usage$aws$gcloud$openstack$azure$nats$env_var$crystal$custom$sudo$jobs$container$shell
+          ╰$character'';
+        right_format = "[](fg:#0b0b0e)[$cmd_duration$status](bg:#0b0b0e)$time[](fg:#0b0b0e bg:white)$battery";
+        palette = "catppuccin_mocha";
+        cmd_duration = {
+          min_time = 500;
+        };
+        character = {
+          success_symbol = "[](bold white)";
+          error_symbol = "[](bold red)";
+        };
+        direnv = {
+          disabled = false;
+          symbol = "";
+          allowed_msg = "✅";
+          not_allowed_msg = "❌";
+          denied_msg = "🚫";
+          loaded_msg = "🚀";
+          unloaded_msg = "🛑";
+          style = "fg:black bg:#1d98f2";
+          format = "[$symbol$loaded/$allowed]($style)";
+        };
+        battery = {
+          format = "[ $percentage $symbol ]($style bg:#0b0b0e )";
+          charging_symbol = "";
+          display = [
+            {
+              threshold = 25;
+              style = "bold red";
+            }
+            {
+              threshold = 50;
+              style = "bold yellow";
+            }
+            {
+              threshold = 75;
+              style = "#aed13b";
+            }
+            {
+              threshold = 100;
+              style = "bold green";
+            }
+          ];
+        };
+        status = {
+          success_symbol = "✅";
+          disabled = false;
+          style = "bg:#0b0b0e";
+        };
+        directory = {
+          format = "[  $path $read_only ]($style)";
+          style = "fg:black bg:#1d98f2";
+          truncate_to_repo = false;
+          fish_style_pwd_dir_length = 5;
+          truncation_length = 3;
+        };
+        git_branch = {
+          format = "[ $symbol $branch ]($style)";
+          style = "fg:black bg:#f67341";
+          symbol = "";
+        };
+        git_status = {
+          format = "[$all_status$ahead_behind ]($style)";
+          modified = "";
+          style = "fg:black bg:#f67341";
+          ahead = "⇡$${count}";
+          diverged = "⇕⇡$${ahead_count}⇣$${behind_count}";
+          behind = "⇣$${count}";
+        };
+        os = {
+          disabled = false;
+          format = "[ $symbol ]($style)";
+          style = "bg:#222626";
+        };
+        palettes = {
+          catppuccin_mocha = {
+            base = "#1e1e2e";
+            blue = "#89b4fa";
+            crust = "#11111b";
+            flamingo = "#f2cdcd";
+            green = "#a6e3a1";
+            lavender = "#b4befe";
+            mantle = "#181825";
+            maroon = "#eba0ac";
+            mauve = "#cba6f7";
+            overlay0 = "#6c7086";
+            overlay1 = "#7f849c";
+            overlay2 = "#9399b2";
+            peach = "#fab387";
+            pink = "#f5c2e7";
+            red = "#f38ba8";
+            rosewater = "#f5e0dc";
+            sapphire = "#74c7ec";
+            sky = "#89dceb";
+            subtext0 = "#a6adc8";
+            subtext1 = "#bac2de";
+            surface0 = "#313244";
+            surface1 = "#45475a";
+            surface2 = "#585b70";
+            teal = "#94e2d5";
+            text = "#cdd6f4";
+            yellow = "#f9e2af";
+          };
+        };
+        time = {
+          utc_time_offset = "local";
+          disabled = false;
+          format = "[](fg:#fcfcfc bg:#0b0b0e)[ $time ]($style)";
+          style = "fg:#0b0b0e bg:#fcfcfc";
+          use_12hr = false;
+          time_format = "  %H:%M  %m.%d.%y  ";
+        };
+        username = {
+          show_always = true;
+          style_user = "fg:#000000 bg:#fcfcfc";
+          format = "[ $user ]($style)";
+        };
+      };
+    };
+
     hm = {
       programs.zsh = {
         enable = true;
@@ -68,14 +193,6 @@ in {
           ps = "${lib.getExe pkgs.procs}";
           webcam = lib.mkIf config.dev.androidtools.enable "${lib.getExe pkgs.scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
         };
-        initExtraFirst = ''
-          # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-          # Initialization code that may require console input (password prompts, [y/n]
-          # confirmations, etc.) must go above this block; everything else may go below.
-          if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-            source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-          fi
-        '';
         initExtra = ''
           export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
           nshell(){
@@ -164,10 +281,6 @@ in {
           enable = true;
           plugins = [
             {
-              name = "romkatv/powerlevel10k";
-              tags = ["as:theme" "depth:1"];
-            }
-            {
               name = "zsh-users/zsh-syntax-highlighting";
               tags = ["defer:2"];
             }
@@ -228,50 +341,6 @@ in {
               tags = ["from:oh-my-zsh"];
             }
           ];
-        };
-
-        localVariables = {
-          POWERLEVEL9K_MODE = "nerdfont-v3"; #maybe better to ask p10k configure for the right value
-          #config du prompt
-          POWERLEVEL9K_CUSTOM_USER = "echo $USER";
-          POWERLEVEL9K_CUSTOM_USER_ICON_BACKGROUND = 234;
-          POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS = ["status" "background_jobs" "time" "battery"];
-          POWERLEVEL9K_LEFT_PROMPT_ELEMENTS = ["os_icon" "custom_user" "dir" "dir_writable" "virtualenv" "anaconda" "pyenv" "root_indicator" "vcs"];
-          #prompt multiligne
-          POWERLEVEL9K_PROMPT_ADD_NEWLINE = true;
-          POWERLEVEL9K_PROMPT_ON_NEWLINE = true;
-          POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX = "\\u256d\\u2500 ";
-          POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX = "\\u2570\\uf460 ";
-
-          #config horloge calendrier pour prompt
-
-          POWERLEVEL9K_TIME_FORMAT = "%D{\\ue383 %H:%M \\uf073 %d.%m.%y}";
-
-          #config status
-          POWERLEVEL9K_STATUS_OK_BACKGROUND = 232;
-          POWERLEVEL9K_STATUS_OK_FOREGROUND = 46;
-          POWERLEVEL9K_STATUS_ERROR_BACKGROUND = 232;
-          POWERLEVEL9K_STATUS_ERROR_FOREGROUND = 196;
-
-          #config batterie
-
-          POWERLEVEL9K_BATTERY_CHARGING = "yellow";
-          POWERLEVEL9K_BATTERY_CHARGED = "green";
-          POWERLEVEL9K_BATTERY_DISCONNECTED = "$DEFAULT_COLOR";
-          POWERLEVEL9K_BATTERY_LOW_THRESHOLD = "10";
-          POWERLEVEL9K_BATTERY_LOW_COLOR = "red";
-          POWERLEVEL9K_BATTERY_ICON = "\\uf1e6";
-
-          #config indicateur root
-          POWERLEVEL9K_ROOT_ICON = "\\uf198";
-          POWERLEVEL9K_ROOT_INDICATOR_BACKGROUND = 196;
-          POWERLEVEL9K_ROOT_INDICATOR_FOREGROUND = 232;
-
-          #config indicateur de processus en arriere plan
-
-          POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND = 232;
-          POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND = 178;
-          POWERLEVEL9K_INSTANT_PROMPT = "quiet";
         };
       };
     };
