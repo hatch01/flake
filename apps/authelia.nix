@@ -105,8 +105,8 @@ in {
               disable = false;
               display_name = "Authelia";
               attestation_conveyance_preference = "indirect";
-              user_verification = "preferred";
               timeout = "60s";
+	      selection_criteria.user_verification = "preferred";
             };
 
             totp = {
