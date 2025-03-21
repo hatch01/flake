@@ -152,6 +152,10 @@ in {
 
     programs.msmtp = {
       enable = true;
+      extraConfig = ''
+	aliases
+	root: eymeric.monitoring@free.fr
+      '';
       accounts = {
         default = {
           auth = true;
