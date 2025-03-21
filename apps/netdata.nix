@@ -25,7 +25,7 @@ in {
   config = mkIf config.netdata.enable {
     systemd.services.netdata = {
       path = [pkgs.msmtp];
-      after = ["nginx.service" "postgresql.service"];
+      after = ["nginx.service" "postgresql.service" "fail2ban.service"];
     };
 
     users = {
