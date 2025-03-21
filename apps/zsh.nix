@@ -21,6 +21,7 @@ in {
       tokei
       bandwhich
       dust
+      duf
       sd
       hyperfine
       fd
@@ -167,6 +168,7 @@ in {
         enableCompletion = true;
         shellAliases = {
           du = lib.getExe pkgs.dust;
+          df = lib.getExe pkgs.duf;
           cp = "${lib.getExe pkgs.xcp} -r";
           mv = "${lib.getExe' pkgs.coreutils "mv"} -vi";
           cd = "z"; # not using direct path because it is provided by zoxide
