@@ -140,7 +140,7 @@ in {
             oidc_login_end_session_redirect = false;
             oidc_login_button_text = "Log in with Authelia";
             oidc_login_hide_password_form = false;
-            oidc_login_use_id_token = true;
+            oidc_login_use_id_token = false;
             oidc_login_attributes = {
               id = "preferred_username";
               name = "name";
@@ -153,7 +153,7 @@ in {
             oidc_login_proxy_ldap = false;
             oidc_login_disable_registration = false; # different from doc, to enable auto creation of new users
             oidc_login_redir_fallback = false;
-            oidc_login_tls_verify = false; # TODO set to true when using real certs
+            oidc_login_tls_verify = true;
             oidc_create_groups = false;
             oidc_login_webdav_enabled = false;
             oidc_login_password_authentication = false;
