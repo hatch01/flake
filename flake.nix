@@ -82,7 +82,6 @@
     camasca = {
       url = "github:uku3lig/camasca";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
     };
 
     proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
