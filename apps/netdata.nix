@@ -153,8 +153,8 @@ in {
     programs.msmtp = {
       enable = true;
       extraConfig = ''
-	aliases
-	root: eymeric.monitoring@free.fr
+        aliases
+        root: eymeric.monitoring@free.fr
       '';
       accounts = {
         default = {
@@ -164,6 +164,7 @@ in {
           tls = true;
           passwordeval = "cat ${config.age.secrets."server/smtpPassword".path}";
           user = "eymeric.monitoring";
+          from = "netdata@free.fr";
         };
       };
     };
