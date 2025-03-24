@@ -99,16 +99,23 @@ in {
         };
         git_branch = {
           format = "[ $symbol $branch ]($style)";
-          style = "fg:black bg:#f67341";
+          style = "fg:black bold bg:#f67341";
           symbol = "";
         };
+
         git_status = {
           format = "[$all_status$ahead_behind ]($style)";
-          modified = "";
-          style = "fg:black bg:#f67341";
+          modified = "!$${count}";
+          untracked = "U$${count}";
+          deleted = "🗑$${count} ";
+          renamed = "👅$${count}";
+          conflicted = "conflicted $${count}";
           ahead = "⇡$${count}";
           diverged = "⇕⇡$${ahead_count}⇣$${behind_count}";
           behind = "⇣$${count}";
+          staged = "[++\($count\)](green)";
+          stashed = "stashed";
+          style = "fg:black bold bg:#f67341";
         };
         os = {
           disabled = false;
