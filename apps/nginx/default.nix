@@ -257,6 +257,13 @@ in {
           };
         };
 
+        ${config.portfolio.domain} = mkIf config.portfolio.enable {
+          inherit (cfg) forceSSL enableACME;
+          locations = {
+            "/".proxyPass = "http://[::1]:${toString config.portfolio.port}";
+          };
+        };
+
         ${config.proxmox.domain} = mkIf config.proxmox.enable {
           inherit (cfg) forceSSL enableACME;
           locations = {

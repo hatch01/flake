@@ -83,7 +83,7 @@
     },
     "crane_2": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1717383740,
@@ -217,6 +217,27 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1741352980,
+        "narHash": "sha256-+u2UunDA4Cl5Fci3m7S643HzKmIDAe+fiXrLqYsR2fs=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "f4330d22f1c5d2ba72d3d22df5597d123fdb60a9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_3": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "portfolio",
           "nixpkgs"
         ]
       },
@@ -435,6 +456,18 @@
     },
     "nixpkgs_4": {
       "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-G5n+FOXLXcRx+3hCJ6Rt6ZQyF1zqQ0DL0sWAMn2Nk0w=",
+        "path": "/nix/store/fnc4632ncr5k5la19gp2gb255dx8pi9x-source",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
         "lastModified": 1714656196,
         "narHash": "sha256-kjQkA98lMcsom6Gbhw8SYzmwrSo+2nruiTcTZp5jK7o=",
         "owner": "NixOS",
@@ -449,7 +482,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1682134069,
         "narHash": "sha256-TnI/ZXSmRxQDt2sjRYK/8j8iha4B4zP2cnQCZZ3vp7k=",
@@ -484,6 +517,25 @@
         "owner": "nix-community",
         "repo": "plasma-manager",
         "type": "github"
+      }
+    },
+    "portfolio": {
+      "inputs": {
+        "flake-parts": "flake-parts_3",
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1742849266,
+        "narHash": "sha256-WrDi/bX7AqsbdpvZpaaQ+/SxMD3/fjQ6L25v9CS5hgc=",
+        "ref": "refs/heads/master",
+        "rev": "a40693a1f06c285ec0909f2e1d46ebf40e25f97c",
+        "revCount": 9,
+        "type": "git",
+        "url": "ssh://git@github.com/VirisOnGithub/portfolio"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/VirisOnGithub/portfolio"
       }
     },
     "proxmox-nixos": {
@@ -524,6 +576,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "plasma-manager": "plasma-manager",
+        "portfolio": "portfolio",
         "proxmox-nixos": "proxmox-nixos",
         "systems": "systems_3",
         "vscode-server": "vscode-server"
@@ -649,7 +702,7 @@
     "vscode-server": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1729422940,

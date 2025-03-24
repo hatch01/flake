@@ -87,6 +87,7 @@
     proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
 
     apolline.url = "git+ssh://git@github.com/hatch01/apolline";
+    portfolio.url = "git+ssh://git@github.com/VirisOnGithub/portfolio";
   };
   outputs = {flake-parts, ...} @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {

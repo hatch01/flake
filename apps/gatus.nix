@@ -91,6 +91,11 @@ in {
                 })
               (mkGatusCheck
                 {
+                  name = "portfolio";
+                  url = "https://${config.portfolio.domain}";
+                })
+              (mkGatusCheck
+                {
                   name = "speedtest";
                   url = "https://${config.librespeed.domain}/";
                 })

@@ -44,5 +44,6 @@
     ./config_updater.nix
     ./gatus.nix
     ./restic.nix
+    ./portfolio.nix
   ];
 }
