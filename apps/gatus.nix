@@ -13,8 +13,9 @@
     name,
     url,
     conditions ? [],
+    group ? "onyx"
   }: {
-    inherit interval alerts;
+    inherit interval alerts group;
     name = name;
     url = url;
     conditions =
@@ -93,6 +94,7 @@ in {
                 {
                   name = "portfolio";
                   url = "https://${config.portfolio.domain}";
+                  group = "clement";
                 })
               (mkGatusCheck
                 {
@@ -129,6 +131,7 @@ in {
                 inherit interval;
                 name = "adguard";
                 url = "109.26.63.39";
+                group="onyx";
                 dns = {
                   query-name = config.networking.domain;
                   query-type = "A";
@@ -161,7 +164,10 @@ in {
               password: \"\$SMTP_PASSWORD\"
               port: 587
               to: eymeric.monitoring@free.fr
-              username: eymeric.monitoring" >> "$out"
+              username: eymeric.monitoring
+              overrides:
+                - group: clement
+                  to: clement.reniers00@gmail.com" >> "$out"
         '') {};
     };
 
