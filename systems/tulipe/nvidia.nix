@@ -66,10 +66,10 @@
   # };
 
   # maybe needed for cuda
-  systemd.services.nvidia-control-devices = {
-    wantedBy = ["multi-user.target"];
-    serviceConfig.ExecStart = "${pkgs.linuxPackages.nvidia_x11.bin}/bin/nvidia-smi";
-  };
+  # systemd.services.nvidia-control-devices = {
+  #   wantedBy = ["multi-user.target"];
+  #   serviceConfig.ExecStart = "${pkgs.linuxPackages.nvidia_x11.bin}/bin/nvidia-smi";
+  # };
 
   # openGL
   hardware.graphics = {
@@ -102,7 +102,6 @@
     # supported GPUs is at:
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
-    # Currently alpha-quality/buggy, so false is currently the recommended setting.
     open = true;
 
     # Enable the Nvidia settings menu,
