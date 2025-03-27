@@ -28,8 +28,10 @@ in {
       group = "users";
       mode = "400";
     };
-    systemd.services.homepage-dashboard.environment."LOG_LEVEL" = "DEBUG";
-
+    systemd.services.homepage-dashboard.environment = {
+      "LOG_LEVEL" = "DEBUG";
+      "HOMEPAGE_ALLOWED_HOSTS" = config.homepage.domain;
+    };
     services = {
       homepage-dashboard = {
         enable = true;
@@ -37,6 +39,7 @@ in {
         environmentFile = config.age.secrets.homepage.path;
         bookmarks = [];
         listenPort = config.homepage.port;
+
         settings = {
           title = "Onyx Homepage";
           background = "https://images.unsplash.com/photo-1485431142439-206ba3a9383e?q=80&w=1966&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";

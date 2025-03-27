@@ -69,7 +69,7 @@ in {
           inherit (cfg) forceSSL enableACME;
           locations = {
             "/" = mkIf config.homepage.enable {
-              proxyPass = "http://[::1]:${toString config.homepage.port}";
+              proxyPass = "http://127.0.0.1:${toString config.homepage.port}";
               extraConfig = lib.strings.concatStringsSep "\n" [
                 (builtins.readFile ./auth-authrequest.conf)
               ];
