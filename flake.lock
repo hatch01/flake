@@ -46,26 +46,6 @@
         "url": "ssh://git@github.com/hatch01/apolline"
       }
     },
-    "camasca": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1743156553,
-        "narHash": "sha256-V9fTTCIOLJm7CnKqFzixXqhbqZtGf74cuowHmWJqIH4=",
-        "owner": "uku3lig",
-        "repo": "camasca",
-        "rev": "df916f03ff9bd5144d3afbff81c46b72f3ae3a7f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "uku3lig",
-        "repo": "camasca",
-        "type": "github"
-      }
-    },
     "crane": {
       "locked": {
         "lastModified": 1741148495,
@@ -564,7 +544,6 @@
       "inputs": {
         "agenix": "agenix",
         "apolline": "apolline",
-        "camasca": "camasca",
         "deploy-rs": "deploy-rs",
         "disko": "disko",
         "flake-parts": "flake-parts_2",

@@ -79,11 +79,6 @@
     impermanence.url = "github:nix-community/impermanence";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
-    camasca = {
-      url = "github:uku3lig/camasca";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
 
     apolline.url = "git+ssh://git@github.com/hatch01/apolline";
