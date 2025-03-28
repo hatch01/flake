@@ -28,7 +28,7 @@
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia-container-toolkit.enable = true;
-  vfio.enable = true;
+  vfio.enable = false;
 
   # specialisation = {
   #   "VFIO".configuration = {
