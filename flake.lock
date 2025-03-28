@@ -53,11 +53,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742774484,
-        "narHash": "sha256-pTffvAOeyHtl0r5AEp3NkTp6L78k/e6dceKfKv0mgJY=",
+        "lastModified": 1743156553,
+        "narHash": "sha256-V9fTTCIOLJm7CnKqFzixXqhbqZtGf74cuowHmWJqIH4=",
         "owner": "uku3lig",
         "repo": "camasca",
-        "rev": "47330085d6ca964be05ca3922d822dbb8c7b8989",
+        "rev": "df916f03ff9bd5144d3afbff81c46b72f3ae3a7f",
         "type": "github"
       },
       "original": {
