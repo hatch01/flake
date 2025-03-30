@@ -36,7 +36,7 @@ in {
           "/storage/homeassistant/influxdb"
         ];
         passwordFile = config.age.secrets."server/restic_key".path;
-        repository = "sftp://homeassistant/config/backup_eymeric";
+        repository = "sftp://homeassistant/backup/backup_eymeric";
 
         backupPrepareCommand = ''
                  ${lib.getExe pkgs.docker} exec -e INFLUX_TOKEN=$INFLUX_TOKEN influxdb influx backup /var/lib/influxdb2/influx.bak
