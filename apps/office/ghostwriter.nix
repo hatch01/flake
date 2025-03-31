@@ -30,14 +30,18 @@ in {
         md2(){
           for param in "''${@:2}"
             do
-         	    filename="''${param%.*}"
-            extension="''${param##*.}"
-         	    if [[ "$extension" == "md" ]]; then
-           		echo converting $param to $filename.$1
-        	pandoc ${pandocCommand} $param -o $filename.$1
-         	    else
-           		echo "File $param is not a markdown file $extension"
-         	    fi
+                filename="''${param%.*}"
+                extension="''${param##*.}"
+                if [[ "$extension" == "md" ]]; then
+                echo converting $param to $filename.$1
+                    if [[ "$1" == "pdf" ]]; then
+                    MERMAID_FILTER_FORMAT=pdf pandoc ${pandocCommand} $param -o $filename.$1
+                    else
+                    pandoc ${pandocCommand} $param -o $filename.$1
+                    fi
+                else
+                echo "File $param is not a markdown file $extension"
+                fi
           done
         }
       '';
