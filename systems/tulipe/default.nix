@@ -87,7 +87,6 @@
   };
   networking.hosts = {
     "109.26.63.39" = ["dns.onyx.ovh"];
-    "127.0.0.1" = ["pimprenelles"];
   };
 
   # Configure console keymap
