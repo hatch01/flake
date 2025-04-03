@@ -112,6 +112,14 @@
     overlays = [
       ((import ../overlays/unstable.nix) inputs.nixpkgs-unstable)
       ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
+      (
+        final: prev: {
+          authelia = prev.authelia.overrideAttrs (old: {
+            # 392258
+            env.GOEXPERIMENT = "nosynchashtriemap";
+          });
+        }
+      )
     ];
   };
 
