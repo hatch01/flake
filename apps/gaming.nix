@@ -46,7 +46,7 @@ in {
     };
 
     environment.systemPackages = with pkgs;
-      [mangohud]
+      [mangohud dolphin-emu]
       ++ optionals config.steam.protonup.enable [protonup protontricks]
       ++ optionals config.minecraft.enable [prismlauncher]
       ++ optionals config.steam.enable [ludusavi] # a backup tool for Steam games
