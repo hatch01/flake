@@ -118,6 +118,11 @@ in {
               ];
             }
           );
+          "health_alarm_notify.conf" = pkgs.writeText "health_alarm_notify.conf" ''
+            EMAIL_SENDER="netdata@free.fr"
+            SEND_EMAIL="YES"
+            DEFAULT_RECIPIENT_EMAIL="eymeric.monitoring@free.fr"
+          '';
         };
       };
 
@@ -144,18 +149,8 @@ in {
       };
     };
 
-    environment.etc."netdata/health_alarm_notify.conf".text = ''
-      EMAIL_SENDER="netdata@free.fr"
-      SEND_EMAIL="YES"
-      DEFAULT_RECIPIENT_EMAIL="eymeric.monitoring@free.fr"
-    '';
-
     programs.msmtp = {
       enable = true;
-      extraConfig = ''
-        aliases
-        root: eymeric.monitoring@free.fr
-      '';
       accounts = {
         default = {
           auth = true;
