@@ -143,7 +143,7 @@ in {
                 alerts = [
                   {
                     type = "email";
-                    failure-theshold = 5;
+                    failure-threshold = 5;
                   }
                 ];
               }
