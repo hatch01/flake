@@ -50,7 +50,7 @@ in {
       ++ optionals config.steam.protonup.enable [protonup protontricks]
       ++ optionals config.minecraft.enable [prismlauncher]
       ++ optionals config.steam.enable [ludusavi] # a backup tool for Steam games
-      ++ optionals config.remotePlay.enable [rustdesk parsec-bin]
+      ++ optionals config.remotePlay.enable [parsec-bin]
       ++ optionals config.winetools.enable [bottles wine]
       ++ optionals config.heroic.enable [pkgs.heroic];
   };
