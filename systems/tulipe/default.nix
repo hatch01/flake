@@ -111,6 +111,7 @@
 
   environment.systemPackages = with pkgs; [
     openrgb-plugin-hardwaresync
+    hyperhdr
   ];
 
   services.hardware.openrgb = {
