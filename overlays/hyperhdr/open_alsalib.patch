@@ -1,0 +1,13 @@
+diff --git a/sources/sound-capture/linux/SoundCaptureLinux.cpp b/sources/sound-capture/linux/SoundCaptureLinux.cpp
+index 5e3b9de..79dadae 100644
+--- a/sources/sound-capture/linux/SoundCaptureLinux.cpp
++++ b/sources/sound-capture/linux/SoundCaptureLinux.cpp
+@@ -81,7 +81,7 @@ bool AlsaWorkerThread::initAlsaLib()
+ 	{
+ 		closeAlsaLib();
+
+-		if ((_library = dlopen(ALSALIB, RTLD_NOW)) == nullptr)
++		if ((_library = dlopen("@alsa-lib@", RTLD_NOW)) == nullptr)
+ 		{
+ 			throw std::runtime_error("Could not open libasound.so.2");
+ 		}

@@ -3,6 +3,7 @@
   stdenv,
   fetchFromGitHub,
   fetchpatch,
+  replaceVars,
   cmake,
   pkg-config,
   alsa-lib,
@@ -52,6 +53,10 @@ stdenv.mkDerivation rec {
       name = "USE_SYSTEM_LIBS";
       url = "https://github.com/awawa-dev/HyperHDR/pull/1158.patch";
       hash = "sha256-Wm12ahepIqQz3mQ2zNycjAtwY3W+leHf23Y14C1YVfg=";
+    })
+    # fix opening of opening alsalib from dlopen
+    (replaceVars ./open_alsalib.patch {
+      alsa-lib = "${alsa-lib}/lib/libasound.so.2";
     })
   ];
 
