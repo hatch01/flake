@@ -21,6 +21,7 @@
   nanopb,
   linalg,
   stb,
+  makeWrapper,
 }:
 
 let
@@ -44,6 +45,7 @@ stdenv.mkDerivation rec {
     cmake
     pkg-config
     qt6Packages.wrapQtAppsHook
+    makeWrapper
   ];
 
   patches = [
@@ -52,11 +54,7 @@ stdenv.mkDerivation rec {
     (fetchpatch {
       name = "USE_SYSTEM_LIBS";
       url = "https://github.com/awawa-dev/HyperHDR/pull/1158.patch";
-      hash = "sha256-Wm12ahepIqQz3mQ2zNycjAtwY3W+leHf23Y14C1YVfg=";
-    })
-    # fix opening of opening alsalib from dlopen
-    (replaceVars ./open_alsalib.patch {
-      alsa-lib = "${alsa-lib}/lib/libasound.so.2";
+      hash = "sha256-rpy14D1VqvJILCQJAiqH/adoFrvyyfVA7dUKuDIdEys=";
     })
   ];
 
@@ -89,6 +87,11 @@ stdenv.mkDerivation rec {
     linalg
     stb
   ];
+
+  postInstall = ''
+    wrapProgram $out/bin/hyperhdr \
+      --prefix LD_LIBRARY_PATH : ${alsa-lib}/lib
+  '';
 
   meta = with lib; {
     description = "Highly optimized open source ambient lighting implementation based on modern digital video and audio stream analysis for Windows, macOS and Linux (x86 and Raspberry Pi / ARM";
