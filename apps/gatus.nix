@@ -13,7 +13,7 @@
     name,
     url,
     conditions ? [],
-    group ? "onyx"
+    group ? "onyx",
   }: {
     inherit interval alerts group;
     name = name;
@@ -131,7 +131,7 @@ in {
                 inherit interval;
                 name = "adguard";
                 url = "109.26.63.39";
-                group="onyx";
+                group = "onyx";
                 dns = {
                   query-name = config.networking.domain;
                   query-type = "A";
