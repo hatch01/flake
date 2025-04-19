@@ -22,9 +22,9 @@ in {
   config = mkIf config.cockpit.enable {
     services.cockpit.enable = true;
     services.cockpit.port = config.cockpit.port;
+    services.cockpit.allowed-origins = ["https://${config.cockpit.domain}" "wss://${config.cockpit.domain}"];
     services.cockpit.settings = {
       "WebService" = {
-        Origins = "https://${config.cockpit.domain} wss://${config.cockpit.domain}";
         ProtocolHeader = "X-Forwarded-Proto";
         ForwardedForHeader = "X-Forwarded-For";
       };
