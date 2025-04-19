@@ -28,10 +28,6 @@ in {
       group = "users";
       mode = "400";
     };
-    systemd.services.homepage-dashboard.environment = {
-      "LOG_LEVEL" = "DEBUG";
-      "HOMEPAGE_ALLOWED_HOSTS" = config.homepage.domain;
-    };
     services = {
       homepage-dashboard = {
         enable = true;
@@ -39,6 +35,7 @@ in {
         environmentFile = config.age.secrets.homepage.path;
         bookmarks = [];
         listenPort = config.homepage.port;
+        allowedHosts = config.homepage.domain;
 
         settings = {
           title = "Onyx Homepage";
