@@ -3,7 +3,6 @@
   stdenv,
   fetchFromGitHub,
   fetchpatch,
-  replaceVars,
   cmake,
   pkg-config,
   alsa-lib,
@@ -21,7 +20,6 @@
   nanopb,
   linalg,
   stb,
-  makeWrapper,
 }:
 
 let
@@ -37,26 +35,30 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "awawa-dev";
     repo = "HyperHDR";
-    rev = "master";
-    hash = "sha256-FlR915UC1RnQccF7ayr3+o5bugD8z618QIEA2o3lMJQ=";
+    tag = "v${version}";
+    hash = "sha256-S4in3fVjbkPfQe7ubuoUJ6AKha2luSjZPFS55aSo2jU=";
   };
 
   nativeBuildInputs = [
     cmake
     pkg-config
     qt6Packages.wrapQtAppsHook
-    makeWrapper
   ];
 
   patches = [
     # Allow completly unvendoring hyperhdr
-    # need to be merged and a new release created to remove
+    # This can be removed on the next hyperhdr release
     (fetchpatch {
       name = "USE_SYSTEM_LIBS";
-      url = "https://github.com/awawa-dev/HyperHDR/pull/1158.patch";
-      hash = "sha256-rpy14D1VqvJILCQJAiqH/adoFrvyyfVA7dUKuDIdEys=";
+      url = "https://github.com/awawa-dev/HyperHDR/pull/1161.patch";
+      hash = "sha256-a50RNbbhi40vigGLn1IBy7m5FKET6bbPNhLsoLE+ReI=";
     })
   ];
+
+  postPatch = ''
+    substituteInPlace sources/sound-capture/linux/SoundCaptureLinux.cpp \
+      --replace "libasound.so.2" "${alsa-lib}/lib/libasound.so.2"
+  '';
 
   cmakeFlags = [
     "-DPLATFORM=linux"
@@ -88,11 +90,6 @@ stdenv.mkDerivation rec {
     stb
   ];
 
-  postInstall = ''
-    wrapProgram $out/bin/hyperhdr \
-      --prefix LD_LIBRARY_PATH : ${alsa-lib}/lib
-  '';
-
   meta = with lib; {
     description = "Highly optimized open source ambient lighting implementation based on modern digital video and audio stream analysis for Windows, macOS and Linux (x86 and Raspberry Pi / ARM";
     homepage = "https://github.com/awawa-dev/HyperHDR";
@@ -103,3 +100,4 @@ stdenv.mkDerivation rec {
     platforms = platforms.linux;
   };
 }
+
