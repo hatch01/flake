@@ -26,7 +26,7 @@ in {
       ]
       ++ optionals multimedia.editing.enable [
         # editing
-        gimp
+        gimp3
         #blender
         imagemagick
         kdePackages.kdenlive
