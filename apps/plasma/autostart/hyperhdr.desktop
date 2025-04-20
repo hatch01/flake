@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=hyperhdr
+Exec="/home/eymeric/.config/autostart/hyperhdr.sh"
 Icon=
 Name=hyperhdr
 Path=
