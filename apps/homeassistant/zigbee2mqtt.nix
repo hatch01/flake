@@ -58,12 +58,12 @@ in {
           "0x70b3d52b600b87f6".friendly_name = "micro-onde; grille pain";
           "0xa4c1383010c51a37".friendly_name = "temperature Kevin";
           "0x70b3d52b600b8a69".friendly_name = "PC Kevin";
+          "0x70b3d52b600a3c36".friendly_name = "PC Eymeric";
           "0xa4c1387c77f5cec7".friendly_name = "temperature Salon";
           "0xa4c138c7433ae2c1".friendly_name = "temperature Salle de Bain";
           "0xa4c1380f61a7c337".friendly_name = "temperature Cuisine";
           "0x70b3d52b600bc013".friendly_name = "Serveur";
           "0xa4c138ee4f964b0c".friendly_name = "Chauffe eau";
-          "0x70b3d52b600a3c0f".friendly_name = "PC Eymeric";
           "0xa4c13825eae893f2".friendly_name = "Chauffage Couloir";
           "0xa4c1380d227318c3".friendly_name = "Chauffage Eymeric";
           "0xa4c138ccd59d1441".friendly_name = "Chauffage Kevin";
