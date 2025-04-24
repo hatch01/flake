@@ -22,7 +22,7 @@ in {
       librsvg
     ];
     hm = {
-      programs.zsh.initExtra = ''
+      programs.zsh.initContent = ''
         md2pdf(){
           md2 pdf $@
         }

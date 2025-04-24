@@ -202,7 +202,7 @@ in {
           ps = "${lib.getExe pkgs.procs}";
           webcam = lib.mkIf config.dev.androidtools.enable "${lib.getExe pkgs.scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
         };
-        initExtra = ''
+        initContent = ''
           export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
           nshell(){
             local packages=("$@")
