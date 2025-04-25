@@ -75,6 +75,7 @@ in {
           "0xb40ecfd1a9b30000".friendly_name = "Lumiere cuisine";
           "0x404ccafffe580984".friendly_name = "Water Sensor";
           "0x404ccafffe57e6ec".friendly_name = "Portail";
+          "0x404ccafffe57de0c".friendly_name = "Porte immeuble";
         };
       };
     };
