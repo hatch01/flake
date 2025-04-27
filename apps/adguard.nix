@@ -40,6 +40,7 @@ in {
           ];
           anonymize_client_ip = true;
           enable_dnssec = true;
+          serve_plain_dns = false;
         };
         tls = {
           enabled = true;

@@ -35,6 +35,7 @@
   gatus.enable = true;
   restic.enable = true;
   portfolio.enable = true;
+  incus.enable = true;
 
   librespeed.domain = "speedtest.${config.networking.domain}";
   adguard.domain = "dns.${config.networking.domain}";

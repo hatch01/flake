@@ -52,6 +52,7 @@ in {
         group = "nginx";
       }
       "/var/lib/tailscale"
+      "/var/lib/incus"
     ];
     files = [
       "/etc/ssh/ssh_host_ed25519_key"

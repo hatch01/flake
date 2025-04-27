@@ -127,26 +127,11 @@ in {
                     "[BODY].database == ok"
                   ];
                 })
-              {
-                inherit interval;
-                name = "adguard";
-                url = "109.26.63.39";
-                group = "onyx";
-                dns = {
-                  query-name = config.networking.domain;
-                  query-type = "A";
-                };
-                conditions = [
-                  "[BODY] == 109.26.63.39"
-                  "[DNS_RCODE] == NOERROR"
-                ];
-                alerts = [
-                  {
-                    type = "email";
-                    failure-threshold = 5;
-                  }
-                ];
-              }
+              (mkGatusCheck
+                {
+                  name = "adguard";
+                  url = "https://${config.adguard.domain}/";
+                })
             ];
           };
           passAsFile = ["value"];

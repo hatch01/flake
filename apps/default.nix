@@ -45,5 +45,6 @@
     ./gatus.nix
     ./restic.nix
     ./portfolio.nix
+    ./incus.nix
   ];
 }

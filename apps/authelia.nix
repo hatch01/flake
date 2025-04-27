@@ -336,6 +336,32 @@ in {
                     userinfo_signed_response_alg = "none";
                     token_endpoint_auth_method = "client_secret_basic";
                   }
+                ]
+                ++ optionals config.incus.enable [
+                  {
+                    client_id = "incus";
+                    client_name = "Incus";
+                    public = true;
+                    authorization_policy = "two_factor";
+                    redirect_uris = [
+                      "https://incus.onyx.ovh/oidc/callback"
+                      "https://${config.incus.domain}/iodc/callback"
+                    ];
+                    audience = [
+                      "https://${config.incus.domain}"
+                    ];
+                    scopes = [
+                      "openid"
+                      "offline_access"
+                    ];
+                    grant_types = [
+                      "refresh_token"
+                      "authorization_code"
+                    ];
+                    access_token_signed_response_alg = "RS256";
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "none";
+                  }
                 ];
             };
           };
