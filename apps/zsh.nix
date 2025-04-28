@@ -270,6 +270,29 @@ in {
           	  echo nothing to update
            fi
           }
+          sshrm(){
+            ARGS=$1
+            # CHECK if only IP/HOSTNAME or user@IP/user@HOSTAME
+            if [[ "$ARGS" =~ \@ ]]
+            then
+               	# KEEP only things after @ (The IP or HOSTNAME)
+               	SRV=$(echo $ARGS | cut -d '@' -f2)
+            else
+               	SRV="$ARGS"
+            fi
+
+            # REMOVE in known_hosts
+            ssh-keygen -R $SRV
+
+            # ASK to reconnect
+            read -p "Reconnect ? IT WILL RUN \"ssh $ARGS\" ? (y/N) " RECO
+
+            # CHECK ANSWSER
+            if [[ "$RECO" == "y" ]]
+            then
+           	    ssh "$ARGS"
+            fi
+          }
           # enable fzf
           [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
           #enable zoxide
