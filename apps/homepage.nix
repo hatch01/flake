@@ -180,6 +180,14 @@ in {
                   };
                 };
               }
+              {
+                "incus" = {
+                  icon = "incus.png";
+                  description = "incus c'est vraiment cool";
+                  href = "https://${config.incus.domain}";
+                  siteMonitor = "https://${config.incus.domain}";
+                };
+              }
             ];
           }
         ];
