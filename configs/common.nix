@@ -112,7 +112,6 @@
     overlays = [
       ((import ../overlays/unstable.nix) inputs.nixpkgs-unstable)
       ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
-      (import ../overlays/hyperhdr)
       (final: prev: {
         kalker = prev.callPackage ../overlays/kalker.nix {};
       })
