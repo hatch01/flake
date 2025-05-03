@@ -99,6 +99,7 @@
 
           # server
           "corefonts"
+          "netdata"
 
           "anytype"
           "anytype-heart"

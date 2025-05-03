@@ -39,7 +39,7 @@ in {
     services = {
       netdata = {
         enable = true;
-        package = pkgs.netdata.override {withNdsudo = true;};
+        package = pkgs.netdata.override {withNdsudo = true; withCloudUi = true; withDBengine = true;};
         extraNdsudoPackages = with pkgs; [
           fail2ban
           smartmontools
