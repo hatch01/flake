@@ -96,6 +96,7 @@
       kdePackages.ktorrent
       wl-clipboard
       helvum
+      yubioath-flutter
     ];
   };
 }
