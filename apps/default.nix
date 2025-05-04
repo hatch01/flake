@@ -46,5 +46,6 @@
     ./restic.nix
     ./portfolio.nix
     ./incus.nix
+    ./polypresence.nix
   ];
 }
