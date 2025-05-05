@@ -45,10 +45,12 @@ in {
         ExecStart = "${getExe inputs.polypresence.packages.${pkgs.system}.back}";
         User = "polypresence";
         Group = "polypresence";
+      	EnvironmentFile = config.age.secrets."server/smtpPasswordEnv".path;
       };
       environment = {
         ASPNETCORE_URLS = "http://127.0.0.1:${toString config.polypresence.backPort}\;http://[::1]:${toString config.polypresence.backPort}";
         ASPNETCORE_ENVIRONMENT = "Production";
+	DOTNET_USE_POLLING_FILE_WATCHER=toString 1;
         SMTP_USERNAME = "eymeric.monitoring";
         SMTP_FROM_EMAIL = "polypresence@onyx.fr";
         SMTP_HOST = "smtp.free.fr";
@@ -56,8 +58,6 @@ in {
         FRONTEND_URL = "https://${config.polypresence.domain}";
         STORAGE_PATH = "/storage/polypresence/";
       };
-      serviceConfig.EnvironmentFile =
-        config.age.secrets."server/smtpPasswordEnv".path;
     };
 
     systemd.services.polypresence-front = {
