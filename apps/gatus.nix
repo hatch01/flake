@@ -136,11 +136,13 @@ in {
                 {
                   name = "polypresence back";
                   url = "https://${config.polypresence.domain}/api";
+                  group = "polypresence";
                 })
               (mkGatusCheck
                 {
                   name = "polypresence front";
                   url = "https://${config.polypresence.domain}/";
+                  group = "polypresence";
                 })
             ];
           };

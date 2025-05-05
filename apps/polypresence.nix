@@ -66,7 +66,10 @@ in {
       wantedBy = ["multi-user.target"];
       serviceConfig = {
         Restart = "on-failure";
-        ExecStart = getExe (inputs.polypresence.packages.${pkgs.system}.front.override {port = config.polypresence.frontPort; domain = config.polypresence.domain;});
+        ExecStart = getExe (inputs.polypresence.packages.${pkgs.system}.front.override {
+          port = config.polypresence.frontPort;
+          domain = config.polypresence.domain;
+        });
         User = "polypresence";
         Group = "polypresence";
       };
