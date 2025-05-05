@@ -132,6 +132,16 @@ in {
                   name = "adguard";
                   url = "https://${config.adguard.domain}/";
                 })
+              (mkGatusCheck
+                {
+                  name = "polypresence back";
+                  url = "https://${config.polypresence.domain}/api";
+                })
+              (mkGatusCheck
+                {
+                  name = "polypresence front";
+                  url = "https://${config.polypresence.domain}/";
+                })
             ];
           };
           passAsFile = ["value"];
