@@ -14,7 +14,7 @@ in {
   config = mkIf config.ghostwriter.enable {
     environment.systemPackages = with pkgs; [
       kdePackages.ghostwriter
-      pandoc_3_6
+      pandoc
       nodejs
       texlive.combined.scheme-full
       mermaid-cli
