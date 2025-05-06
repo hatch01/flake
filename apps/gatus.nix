@@ -135,7 +135,10 @@ in {
               (mkGatusCheck
                 {
                   name = "polypresence back";
-                  url = "https://${config.polypresence.domain}/api";
+                  url = "https://${config.polypresence.domain}/api/status";
+                  conditions = [
+                    "[BODY].status == ok"
+                  ];
                   group = "polypresence";
                 })
               (mkGatusCheck
