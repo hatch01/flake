@@ -26,7 +26,7 @@ in {
       description = "The domain of the polypresence";
     };
 
-    polypresence.frontPath = inputs.polypresence.packages.${pkgs.system}.front.override {
+    polypresence.frontPath = toString inputs.polypresence.packages.${pkgs.system}.front.override {
       domain = config.polypresence.domain;
     };
   };
