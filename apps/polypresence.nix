@@ -27,7 +27,6 @@ in {
     };
 
     polypresence.frontPath = inputs.polypresence.packages.${pkgs.system}.front.override {
-      port = config.polypresence.frontPort;
       domain = config.polypresence.domain;
     };
   };
