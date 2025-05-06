@@ -26,8 +26,12 @@ in {
       description = "The domain of the polypresence";
     };
 
-    polypresence.frontPath = toString inputs.polypresence.packages.${pkgs.system}.front.override {
-      domain = config.polypresence.domain;
+    polypresence.frontPath = mkOption {
+      type = lib.types.path;
+      default = inputs.polypresence.packages.${pkgs.system}.front.override {
+        domain = config.polypresence.domain;
+      };
+      description = "Path to the polypresence frontend";
     };
   };
 
