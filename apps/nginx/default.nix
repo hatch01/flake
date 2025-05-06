@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -267,8 +268,14 @@ in {
         ${config.polypresence.domain} = mkIf config.polypresence.enable {
           inherit (cfg) forceSSL enableACME;
           locations = {
-            "/".proxyPass = "http://127.0.0.1:${toString config.polypresence.frontPort}";
+            "/".extraConfig = ''
+                try_files $uri $uri/ ${(inputs.polypresence.packages.${pkgs.system}.front.override {
+                  port = config.polypresence.frontPort;
+                  domain = config.polypresence.domain;
+                })}/lib/index.html;
+            '';
             "/api".proxyPass = "http://127.0.0.1:${toString config.polypresence.backPort}";
+
           };
         };
 

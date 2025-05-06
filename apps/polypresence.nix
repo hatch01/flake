@@ -60,19 +60,19 @@ in {
       };
     };
 
-    systemd.services.polypresence-front = {
-      enable = true;
-      description = "polypresence frontend";
-      wantedBy = ["multi-user.target"];
-      serviceConfig = {
-        Restart = "on-failure";
-        ExecStart = getExe (inputs.polypresence.packages.${pkgs.system}.front.override {
-          port = config.polypresence.frontPort;
-          domain = config.polypresence.domain;
-        });
-        User = "polypresence";
-        Group = "polypresence";
-      };
-    };
+    # systemd.services.polypresence-front = {
+    #   enable = true;
+    #   description = "polypresence frontend";
+    #   wantedBy = ["multi-user.target"];
+    #   serviceConfig = {
+    #     Restart = "on-failure";
+    #     ExecStart = getExe (inputs.polypresence.packages.${pkgs.system}.front.override {
+    #       port = config.polypresence.frontPort;
+    #       domain = config.polypresence.domain;
+    #     });
+    #     User = "polypresence";
+    #     Group = "polypresence";
+    #   };
+    # };
   };
 }
