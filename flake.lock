@@ -540,11 +540,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1746531939,
-        "narHash": "sha256-1GgNQ+uhHtxwTjEZU5kzL3kCq3WWjRUBOg/SGVELNYc=",
+        "lastModified": 1746532152,
+        "narHash": "sha256-tAwyc2Y/XhO8w22IKHPkzx5cXivUh6OqQPSN3Y7Aqts=",
         "ref": "refs/heads/main",
-        "rev": "1e8c3d4d95424e891b133df7498f6fd155fa3d63",
-        "revCount": 81,
+        "rev": "119e30500a44cce39aecae63ef99f503b8e9fbee",
+        "revCount": 82,
         "type": "git",
         "url": "ssh://git@github.com/Eclairsombre/PolyPresence"
       },
