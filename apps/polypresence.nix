@@ -26,10 +26,10 @@ in {
       description = "The domain of the polypresence";
     };
 
-    polypresence.frontPath = ''${inputs.polypresence.packages.${pkgs.system}.front.override {
+    polypresence.frontPath = inputs.polypresence.packages.${pkgs.system}.front.override {
       port = config.polypresence.frontPort;
       domain = config.polypresence.domain;
-    }}/lib'';
+    };
   };
 
   config = mkIf config.polypresence.enable {
