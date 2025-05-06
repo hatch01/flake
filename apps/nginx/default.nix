@@ -267,15 +267,15 @@ in {
 
         ${config.polypresence.domain} = mkIf config.polypresence.enable {
           inherit (cfg) forceSSL enableACME;
+          root = inputs.polypresence.packages.${pkgs.system}.front.override {
+            port = config.polypresence.frontPort;
+            domain = config.polypresence.domain;
+          };
           locations = {
             "/".extraConfig = ''
-                try_files $uri $uri/ ${(inputs.polypresence.packages.${pkgs.system}.front.override {
-                  port = config.polypresence.frontPort;
-                  domain = config.polypresence.domain;
-                })}/lib/index.html;
+                try_files $uri $uri/ /index.html;
             '';
             "/api".proxyPass = "http://127.0.0.1:${toString config.polypresence.backPort}";
-
           };
         };
 
