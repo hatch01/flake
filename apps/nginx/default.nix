@@ -268,7 +268,7 @@ in {
           inherit (cfg) forceSSL enableACME;
           locations = {
             "/".proxyPass = "http://127.0.0.1:${toString config.polypresence.frontPort}";
-            "~ ^/(api|login|proxy)".proxyPass = "http://127.0.0.1:${toString config.polypresence.backPort}";
+            "/api".proxyPass = "http://127.0.0.1:${toString config.polypresence.backPort}";
           };
         };
 
