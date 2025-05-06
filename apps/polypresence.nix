@@ -25,6 +25,11 @@ in {
       default = "polypresence.${config.networking.domain}";
       description = "The domain of the polypresence";
     };
+
+    polypresence.frontPath = ''${inputs.polypresence.packages.${pkgs.system}.front.override {
+      port = config.polypresence.frontPort;
+      domain = config.polypresence.domain;
+    }}/lib'';
   };
 
   config = mkIf config.polypresence.enable {
@@ -50,7 +55,7 @@ in {
       environment = {
         ASPNETCORE_URLS = "http://127.0.0.1:${toString config.polypresence.backPort}\;http://[::1]:${toString config.polypresence.backPort}";
         ASPNETCORE_ENVIRONMENT = "Production";
-	DOTNET_USE_POLLING_FILE_WATCHER=toString 1;
+        DOTNET_USE_POLLING_FILE_WATCHER=toString 1;
         SMTP_USERNAME = "eymeric.monitoring";
         SMTP_FROM_EMAIL = "polypresence@onyx.fr";
         SMTP_HOST = "smtp.free.fr";
@@ -59,20 +64,5 @@ in {
         STORAGE_PATH = "/storage/polypresence/";
       };
     };
-
-    # systemd.services.polypresence-front = {
-    #   enable = true;
-    #   description = "polypresence frontend";
-    #   wantedBy = ["multi-user.target"];
-    #   serviceConfig = {
-    #     Restart = "on-failure";
-    #     ExecStart = getExe (inputs.polypresence.packages.${pkgs.system}.front.override {
-    #       port = config.polypresence.frontPort;
-    #       domain = config.polypresence.domain;
-    #     });
-    #     User = "polypresence";
-    #     Group = "polypresence";
-    #   };
-    # };
   };
 }
