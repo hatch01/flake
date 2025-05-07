@@ -83,7 +83,10 @@
 
     apolline.url = "git+ssh://git@github.com/hatch01/apolline";
     portfolio.url = "git+ssh://git@github.com/VirisOnGithub/portfolio";
-    polypresence.url = "git+ssh://git@github.com/Eclairsombre/PolyPresence";
+    polypresence = {
+      url = "git+ssh://git@github.com/Eclairsombre/PolyPresence";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = {flake-parts, ...} @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
