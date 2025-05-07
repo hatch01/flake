@@ -41,7 +41,6 @@
   boot.supportedFilesystems = ["ntfs"];
   boot.binfmt = {
     emulatedSystems = ["aarch64-linux"];
-    preferStaticEmulators = true;
   };
   boot.kernelModules = ["v4l2loopback"];
   boot.kernelParams = ["amd_iommu=on"];
