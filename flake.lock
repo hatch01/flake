@@ -129,11 +129,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746638861,
-        "narHash": "sha256-fmphHNrbydmLECpXp2q9egb2IsqIjzvPboGkndGOye0=",
+        "lastModified": 1746695594,
+        "narHash": "sha256-pAAWYs3S+/tY65vemHZdVSXpeIz4JINEJZoPoBjr8JU=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "78d6a1365cde90a479edc9ff7ea5dbd8b2e0cfb8",
+        "rev": "6bb82b77ce140137177e30df067759931ab60a73",
         "type": "github"
       },
       "original": {
@@ -528,11 +528,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746636823,
-        "narHash": "sha256-vDn8qXmmoIRg/MlnWkhGmgSgJGKS9z9GBNeEAwrKGiY=",
+        "lastModified": 1746699441,
+        "narHash": "sha256-g5DCqFkm5/NZvRDYfpyG5h4lb1GpDQcXU1bg3B/gqVk=",
         "ref": "refs/heads/main",
-        "rev": "57ba5422bee0d467b41bafd68f267b0008fe6709",
-        "revCount": 107,
+        "rev": "be26f85f19142bbcc974a3815b6af97067a71924",
+        "revCount": 109,
         "type": "git",
         "url": "ssh://git@github.com/Eclairsombre/PolyPresence"
       },
