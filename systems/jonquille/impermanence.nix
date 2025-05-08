@@ -53,7 +53,6 @@ in {
       }
       "/var/lib/tailscale"
       "/var/lib/incus"
-      "/var/lib/pve-cluster"
     ];
     files = [
       "/etc/ssh/ssh_host_ed25519_key"
