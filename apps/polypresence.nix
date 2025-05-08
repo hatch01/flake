@@ -65,6 +65,12 @@ in {
         SMTP_PORT = toString 587;
         FRONTEND_URL = "https://${config.polypresence.domain}";
         STORAGE_PATH = "/storage/polypresence/";
+        MAIL_SENT_HOUR=toString 20;
+        MAIL_SENT_MINUTE=toString 0;
+        MAIL_SENT_SECOND=toString 0;
+        EDT_IMPORT_TIME_HOUR=toString 12;
+        EDT_IMPORT_TIME_MINUTE=toString 16;
+        EDT_IMPORT_TIME_SECOND=toString 0;
       };
     };
   };
