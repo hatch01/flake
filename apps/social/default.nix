@@ -22,7 +22,6 @@ in {
       mkIf config.social.enable [
         signal-desktop
         zapzap
-        skypeforlinux
         element-desktop
       ];
   };

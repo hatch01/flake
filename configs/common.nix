@@ -67,7 +67,6 @@
           #others
           "geogebra"
           "spotify"
-          "skypeforlinux"
           # Nvidia related things
           "nvidia-x11"
           "nvidia-settings"
