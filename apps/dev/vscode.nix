@@ -127,6 +127,7 @@ in {
             "debug.allowBreakpointsEverywhere" = true;
             "C_Cpp.debugShortcut" = true;
             "svelte.enable-ts-plugin" = true;
+            "chat.agent.enabled"= true;
           };
           keybindings = [
             {
