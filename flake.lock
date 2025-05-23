@@ -528,11 +528,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747294264,
-        "narHash": "sha256-Ykf8nO0a1a2fg34X/orFQ7Wmbt8IQwBwgoawrRZnI2w=",
+        "lastModified": 1747983384,
+        "narHash": "sha256-R8BNmzF8KaSDRcE1Weq2reIb/Gs59kxdU1oZZSD51UY=",
         "ref": "refs/heads/main",
-        "rev": "899b0c9879557b1da7d49152ea2ca0835f60dcb8",
-        "revCount": 123,
+        "rev": "6ed4409f789a91975f41442829be4858d0c62586",
+        "revCount": 127,
         "type": "git",
         "url": "ssh://git@github.com/Eclairsombre/PolyPresence"
       },
