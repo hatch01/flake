@@ -87,6 +87,9 @@ in {
             "https://hblock.molinero.dev/hosts"
             "https://hblock.molinero.dev/hosts_adblock.txt"
           ];
+        user_rules = [
+          "@@||copilot-telemetry.githubusercontent.com^"
+        ];
       };
     };
     networking.firewall.allowedTCPPorts = [853];
