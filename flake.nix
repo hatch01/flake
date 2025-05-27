@@ -89,6 +89,11 @@
       url = "git+ssh://git@github.com/Eclairsombre/PolyPresence";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix4nvchad = {
+      url = "github:nix-community/nix4nvchad";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = {flake-parts, ...} @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
