@@ -147,6 +147,12 @@ in {
                   url = "https://${config.polypresence.domain}/";
                   group = "polypresence";
                 })
+
+              (mkGatusCheck
+                {
+                  name = "pimprenelles";
+                  url = "https://www.pimprenelles.bio";
+                })
             ];
           };
           passAsFile = ["value"];
