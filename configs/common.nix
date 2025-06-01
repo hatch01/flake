@@ -197,7 +197,6 @@
       tree
       gnupg
       bat
-      thefuck
       trash-cli
       btop # replacement of htop/nmon
       iotop # io monitoring
@@ -228,6 +227,7 @@
   };
 
   programs.zsh.enable = true;
+  programs.pay-respects.enable = true;
 
   services.tailscale.enable = true;
 
