@@ -30,7 +30,6 @@
   nginx.enable = true;
   nginx.acme.enable = true;
   librespeed.enable = true;
-  proxmox.enable = true;
   apolline.enable = true;
   gatus.enable = true;
   restic.enable = true;
