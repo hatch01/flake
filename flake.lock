@@ -402,16 +402,16 @@
     },
     "nixpkgs-stable_2": {
       "locked": {
-        "lastModified": 1732981179,
-        "narHash": "sha256-F7thesZPvAMSwjRu0K8uFshTk3ZZSNAsXTIFvXBT+34=",
+        "lastModified": 1748437600,
+        "narHash": "sha256-hYKMs3ilp09anGO7xzfGs3JqEgUqFMnZ8GMAqI6/k04=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "62c435d93bf046a5396f3016472e8f7c8e2aed65",
+        "rev": "7282cb574e0607e65224d33be8241eae7cfe0979",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-24.11",
+        "ref": "nixos-25.05",
         "type": "indirect"
       }
     },
@@ -550,11 +550,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749022836,
-        "narHash": "sha256-i4wYmHFJ2na/TxbaQNjPg+M8ycIZ1ZtowZWOg2/ODfg=",
+        "lastModified": 1749036509,
+        "narHash": "sha256-Cf9Le7yJkTE6KcUXSeg7GusxBvljT+kIB9WYyYXEHSo=",
         "ref": "refs/heads/main",
-        "rev": "4490c1078904631978baac4dc8acb5fc47b7e60f",
-        "revCount": 131,
+        "rev": "63c4d85952b18f38b7c7f3511b8461638f7b72d0",
+        "revCount": 133,
         "type": "git",
         "url": "ssh://git@github.com/Eclairsombre/PolyPresence"
       },
@@ -590,11 +590,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1748689166,
-        "narHash": "sha256-nhDnTX4uYgRb5se4WufCpCLTfGy74mRZoy/997rjTjY=",
+        "lastModified": 1749035253,
+        "narHash": "sha256-ABq8mYd0+Uj+wKK7AcUaP+Ma2hwoUP63r/k7AmqnVe8=",
         "owner": "SaumonNet",
         "repo": "proxmox-nixos",
-        "rev": "60e72a806ed93815a39fcc052cb7e43b94384a26",
+        "rev": "bb52ad5b17c421cc58af558be8663dce6eb9faf8",
         "type": "github"
       },
       "original": {
