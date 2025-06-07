@@ -168,6 +168,10 @@
     extraOptions = ''
       !include ${config.age.secrets.githubToken.path}
     '';
+    channel.enable = false;
+    registry = {
+      n.flake = inputs.nixpkgs;
+    };
   };
 
   environment = {
