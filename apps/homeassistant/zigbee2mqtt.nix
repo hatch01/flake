@@ -13,6 +13,10 @@ in {
         default = 8080;
         description = "The port on which zigbee2mqtt will listen";
       };
+      domain = mkOption {
+        type = types.str;
+        default = "zigbee.${config.networking.domain}";
+      };
     };
   };
 

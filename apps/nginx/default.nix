@@ -350,6 +350,20 @@ in {
             "/internal/authelia/authz" = autheliaProxy;
           };
         };
+
+        ${config.zigbee2mqtt.domain} = mkIf config.zigbee2mqtt.enable {
+          inherit (cfg) forceSSL enableACME;
+          locations = {
+            "/" = {
+              proxyPass = "http://[::1]:${toString config.zigbee2mqtt.port}";
+              extraConfig = lib.strings.concatStringsSep "\n" [
+                (builtins.readFile ./auth-authrequest.conf)
+              ];
+            };
+            # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
+            "/internal/authelia/authz" = autheliaProxy;
+          };
+        };
       };
     };
     networking.firewall.allowedTCPPorts = [80 443];

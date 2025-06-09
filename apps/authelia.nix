@@ -207,6 +207,10 @@ in {
                   groups = ["home"];
                 }
                 ++ mkUserRule {
+                  appName = "zigbee2mqtt";
+                  groups = ["home"];
+                }
+                ++ mkUserRule {
                   appName = "apolline";
                   two_factor = false;
                 };

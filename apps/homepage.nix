@@ -122,7 +122,14 @@ in {
                   siteMonitor = "https://${config.nodered.domain}";
                 };
               }
-
+              {
+                "Zigbee2MQTT" = {
+                  icon = "zigbee2mqtt.png";
+                  description = "Zigbee2MQTT c'est vraiment cool";
+                  href = "https://${config.zigbee2mqtt.domain}";
+                  siteMonitor = "https://${config.zigbee2mqtt.domain}";
+                };
+              }
               {
                 "Grafana" = {
                   icon = "grafana.png";
