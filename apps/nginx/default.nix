@@ -356,6 +356,7 @@ in {
           locations = {
             "/" = {
               proxyPass = "http://[::1]:${toString config.zigbee2mqtt.port}";
+              proxyWebsockets = true;
               extraConfig = lib.strings.concatStringsSep "\n" [
                 (builtins.readFile ./auth-authrequest.conf)
               ];
