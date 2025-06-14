@@ -105,14 +105,14 @@ in {
 
         git_status = {
           format = "[$all_status$ahead_behind ]($style)";
-          modified = "!$${count}";
-          untracked = "U$${count}";
-          deleted = "🗑$${count} ";
-          renamed = "👅$${count}";
-          conflicted = "conflicted $${count}";
-          ahead = "⇡$${count}";
-          diverged = "⇕⇡$${ahead_count}⇣$${behind_count}";
-          behind = "⇣$${count}";
+          modified = "!$count";
+          untracked = "U$count";
+          deleted = "🗑$count ";
+          renamed = "👅$count";
+          conflicted = "conflicted $count";
+          ahead = "⇡$count";
+          diverged = "⇕⇡$ahead_count⇣$behind_count";
+          behind = "⇣$count";
           staged = "[++\($count\)](green)";
           stashed = "stashed";
           style = "fg:black bold bg:#f67341";
