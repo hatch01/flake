@@ -59,6 +59,12 @@ in {
 
           parental_enabled = false; # Parental control-based DNS requests filtering.
           safe_search.enabled = false; # Enforcing "Safe search" option for search engines, when possible.
+          rewrites = [
+            {
+              domain = "pimprenelles";
+              answer = "127.0.0.1";
+            }
+          ];
         };
 
         statistics = {
