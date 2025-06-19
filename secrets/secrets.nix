@@ -66,6 +66,7 @@ let
       "authelia/gitlabSecret"
 
       "apolline"
+      "node_red"
     ]
     // defineSecrets "lavande" [
       "rootPassword"
