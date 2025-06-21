@@ -19,7 +19,6 @@
   nix-related.enable = true;
   gitConfig.enable = true;
   zshConfig.enable = true;
-  # basic-tools.enable = true; # unneeded because it is set to true by default
 
   nixpkgs = {
     config = {
