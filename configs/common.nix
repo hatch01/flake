@@ -235,13 +235,16 @@
 
   services.tailscale.enable = true;
 
-  security.sudo.extraConfig = "Defaults targetpw";
-  security.sudo.extraRules = [
-    {
-      users = ["ALL"];
-      commands = ["SETENV: ALL"];
-    }
-  ];
+  security.sudo-rs = {
+    enable = true;
+    extraConfig = "Defaults targetpw";
+    extraRules = [
+      {
+        users = ["ALL"];
+        commands = ["SETENV: ALL"];
+      }
+    ];
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
