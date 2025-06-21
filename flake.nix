@@ -8,7 +8,7 @@
       "https://cache.nixos.org"
       "https://cuda-maintainers.cachix.org"
       "https://nix-community.cachix.org"
-      "https://cache.saumon.network/proxmox-nixos"
+      # "https://cache.saumon.network/proxmox-nixos"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
