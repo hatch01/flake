@@ -23,8 +23,8 @@ in {
 
   config = mkIf config.nodered.enable {
     age.secrets = mkSecret "node_red" {
-        owner = config.services.node-red.user;
-        group = config.services.node-red.group;
+      owner = config.services.node-red.user;
+      group = config.services.node-red.group;
     };
     services.node-red = {
       enable = true;
