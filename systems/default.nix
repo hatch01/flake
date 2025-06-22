@@ -111,6 +111,18 @@ in {
         inherit inputs;
       };
     };
+    lilas = {
+      system = "aarch64-linux";
+      modules =
+        server
+        ++ [
+          "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+        ];
+      domain = "kvm.onyx.ovh";
+      specialArgs = {
+        inherit inputs;
+      };
+    };
   };
   # // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
 }

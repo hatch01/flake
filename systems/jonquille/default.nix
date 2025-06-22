@@ -46,11 +46,6 @@
   boot.loader.timeout = 1;
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
-  nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    trusted-users = ["@wheel"];
-  };
-
   age = {
     identityPaths = ["/persistent/key"];
 
