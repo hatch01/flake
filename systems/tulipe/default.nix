@@ -15,7 +15,6 @@
   ];
 
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
     trusted-users = [username];
     max-jobs = 2; # how many derivation built at the same time
     cores = 5; # how many cores attributed to one build
