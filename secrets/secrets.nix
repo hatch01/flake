@@ -3,7 +3,8 @@ let
     tulipe = ["age1aq7l5msnq4leddht4sr3sm56v9qu408r94txwyutvz690tlxmdjss9lm94"];
     lavande = ["age17w7zsvgvdfr7tdkz9uwy2jhmjlt2273ktu6wtt976782nen0sfkql94ez6"];
     jonquille = ["age1ags68rkarp5ewj8dqzq74l48v8q7zdzesed3vp498e352grl3dzsqq3mww"];
-    server = jonquille ++ lavande;
+    lilas = ["age1xphfpwj7v5wwvnuhhqyvwlp7susnmmnx2ttccmn630wd9q8y0a2swy8ekj"];
+    server = jonquille ++ lavande ++ lilas;
     desktop = tulipe;
     all = desktop ++ server;
   };
@@ -24,6 +25,9 @@ let
     ]
     // defineSecrets "tulipe" [
       "userPassword"
+      "rootPassword"
+    ]
+    // defineSecrets "lilas" [
       "rootPassword"
     ]
     // defineSecrets "jonquille" [

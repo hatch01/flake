@@ -34,3 +34,6 @@ analyze:
 forcast machine:
   nix-forecast -c ".#nixosConfigurations.{{machine}}" -b https://cache.onyx.ovh -b https://cache.nixos.org -b https://cuda-maintainers.cachix.org -b https://cache.saumon.network/proxmox-nixos
 
+sd machine:
+    nix run nixpkgs#nixos-generators -- -f sd-aarch64 --flake .#{{machine}} --system aarch64-linux -o ./{{machine}}-sd-aarch64
+    echo image in ./{{machine}}-sd-aarch64/sd-image/

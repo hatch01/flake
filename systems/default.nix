@@ -113,11 +113,7 @@ in {
     };
     lilas = {
       system = "aarch64-linux";
-      modules =
-        server
-        ++ [
-          "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-        ];
+      modules = server;
       domain = "kvm.onyx.ovh";
       specialArgs = {
         inherit inputs;
