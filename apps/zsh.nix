@@ -34,6 +34,7 @@ in {
       bottom
       parallel
       pbzip2
+      caligula
     ];
 
     programs.starship = {
