@@ -97,6 +97,7 @@
       wl-clipboard
       helvum
       yubioath-flutter
+      caligula
     ];
   };
 }
