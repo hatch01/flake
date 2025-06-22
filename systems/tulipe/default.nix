@@ -14,6 +14,11 @@
     ./hardware-configuration.nix
   ];
 
+  systemd.services.nix-daemon.serviceConfig.Environment = [
+    "NIX_FMOD_USERNAME=hatchchien@protonmail.com"
+    "NIX_FMOD_PASSWORD=iJQvHRyGlFsCf85"
+  ];
+
   nix.settings = {
     trusted-users = [username];
     max-jobs = 2; # how many derivation built at the same time
@@ -104,7 +109,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
   virtualisation = {
-    waydroid.enable = true;
+    waydroid.enable = false;
   };
 
   environment.systemPackages = with pkgs; [
