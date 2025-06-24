@@ -99,7 +99,7 @@
 
     pikvm = {
       url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs = {flake-parts, ...} @ inputs:

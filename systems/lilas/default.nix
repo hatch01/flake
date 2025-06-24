@@ -15,6 +15,7 @@
 
   services.kvmd = {
     enable = true;
+    package = inputs.pikvm.packages.aarch64-linux.default;
   };
 
   age = {
