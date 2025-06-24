@@ -114,7 +114,7 @@ in {
     lilas = {
       system = "aarch64-linux";
       modules = server;
-      domain = "kvm.onyx.ovh";
+      domain = "192.168.1.191";
       specialArgs = {
         inherit inputs;
       };
