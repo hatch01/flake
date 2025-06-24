@@ -10,7 +10,12 @@
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    inputs.pikvm.nixosModules.default
   ];
+
+  services.kvmd = {
+    enable = true;
+  };
 
   age = {
     identityPaths = ["/etc/age/key"];
