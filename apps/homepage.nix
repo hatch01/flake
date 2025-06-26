@@ -184,7 +184,7 @@ in {
                   href = "https://${config.gatus.domain}";
                   widget = {
                     type = "gatus";
-                    url = "http://[::1]:${toString config.gatus.port}";
+                    url = "http://192.168.1.202:${toString config.gatus.port}";
                   };
                 };
               }
