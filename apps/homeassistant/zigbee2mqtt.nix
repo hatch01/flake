@@ -37,7 +37,7 @@ in {
         serial = {
           port = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20240220202746-if00";
           adapter = "ember";
-          baudrate = 230400;
+          baudrate = 115200;
         };
         frontend = {
           port = config.zigbee2mqtt.port;
