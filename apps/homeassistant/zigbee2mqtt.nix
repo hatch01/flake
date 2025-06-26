@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -15,7 +16,7 @@ in {
       };
       domain = mkOption {
         type = types.str;
-        default = "zigbee.${config.networking.domain}";
+        default = "zigbee.${base_domain_name}";
       };
     };
   };

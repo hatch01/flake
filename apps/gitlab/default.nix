@@ -2,6 +2,7 @@
   config,
   lib,
   mkSecrets,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -11,7 +12,7 @@ in {
       enable = mkEnableOption "enable Gitlab";
       domain = mkOption {
         type = types.str;
-        default = "gitlab.${config.networking.domain}";
+        default = "gitlab.${base_domain_name}";
         description = "The domain of the Gitlab instance";
       };
     };

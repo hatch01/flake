@@ -3,6 +3,7 @@
   config,
   inputs,
   system,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
@@ -12,7 +13,7 @@ in {
       enable = mkEnableOption "Enable Proxmox";
       domain = mkOption {
         type = types.str;
-        default = "proxmox.${config.networking.domain}";
+        default = "proxmox.${base_domain_name}";
         description = "The domain name for the Proxmox server";
       };
       port = mkOption {

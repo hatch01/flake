@@ -2,6 +2,7 @@
   config,
   mkSecret,
   lib,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -11,7 +12,7 @@ in {
       enable = mkEnableOption "Enable homepage";
       domain = mkOption {
         type = types.str;
-        default = config.networking.domain;
+        default = base_domain_name;
         description = "The domain of the homepage";
       };
       port = mkOption {

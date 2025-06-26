@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -31,7 +32,7 @@ in {
       enable = mkEnableOption "enable gatus";
       domain = mkOption {
         type = types.str;
-        default = "gatus.${config.networking.domain}";
+        default = "gatus.${base_domain_name}";
         description = "The domain of the gatus instance";
       };
       port = mkOption {

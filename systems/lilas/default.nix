@@ -6,6 +6,7 @@
   lib,
   inputs,
   mkSecrets,
+  config,
   ...
 }: {
   imports = [
@@ -16,6 +17,7 @@
 
   container.enable = lib.mkForce false;
   gatus.enable = true;
+  networking.firewall.allowedTCPPorts = [ config.gatus.port ];
 
   services.kvmd = {
     enable = true;

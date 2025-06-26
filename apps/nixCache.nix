@@ -2,6 +2,7 @@
   config,
   lib,
   mkSecret,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -11,7 +12,7 @@ in {
       enable = mkEnableOption "enable nixCache";
       domain = mkOption {
         type = types.str;
-        default = "cache.${config.networking.domain}";
+        default = "cache.${base_domain_name}";
         description = "The domain of the nixCache instance";
       };
       port = mkOption {

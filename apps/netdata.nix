@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -11,7 +12,7 @@ in {
       enable = mkEnableOption "enable Netdata";
       domain = mkOption {
         type = types.str;
-        default = "netdata.${config.networking.domain}";
+        default = "netdata.${base_domain_name}";
         description = "The domain of the Netdata instance";
       };
       port = mkOption {

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -11,7 +12,7 @@ in {
       enable = mkEnableOption "enable ForgeJo";
       domain = mkOption {
         type = types.str;
-        default = "forge.${config.networking.domain}";
+        default = "forge.${base_domain_name}";
         description = "The domain of the ForgeJo instance";
       };
       port = mkOption {

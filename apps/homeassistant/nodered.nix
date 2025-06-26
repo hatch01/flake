@@ -3,6 +3,7 @@
   lib,
   mkSecret,
   pkgs,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -12,7 +13,7 @@ in {
       enable = mkEnableOption "Home Assistant";
       domain = mkOption {
         type = types.str;
-        default = "nodered.${config.networking.domain}";
+        default = "nodered.${base_domain_name}";
       };
       port = mkOption {
         type = types.int;

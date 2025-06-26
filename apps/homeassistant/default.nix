@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -16,7 +17,7 @@ in {
       enable = mkEnableOption "Home Assistant";
       domain = mkOption {
         type = types.str;
-        default = "home.${config.networking.domain}";
+        default = "home.${base_domain_name}";
       };
       port = mkOption {
         type = types.int;

@@ -3,6 +3,7 @@
   lib,
   pkgs,
   mkSecrets,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -22,7 +23,7 @@ in {
       enableElement = mkEnableOption "enable matrix element";
       domain = mkOption {
         type = types.str;
-        default = "matrix.${config.networking.domain}";
+        default = "matrix.${base_domain_name}";
         description = "The domain of the matrix instance";
       };
       port = mkOption {
@@ -114,7 +115,7 @@ in {
       settings.app_service_config_files = [puppetFile];
       extraConfigFiles = [masFile];
 
-      settings.server_name = config.networking.domain;
+      settings.server_name = base_domain_name;
       settings.public_baseurl = "https://${config.matrix.domain}";
       settings.listeners = [
         {

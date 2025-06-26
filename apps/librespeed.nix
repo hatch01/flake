@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -10,7 +11,7 @@ in {
       enable = mkEnableOption "enable librespeed";
       domain = mkOption {
         type = types.str;
-        default = "librespeed.${config.networking.domain}";
+        default = "speedtest.${base_domain_name}";
         description = "The domain of the librespeed instance";
       };
       port = mkOption {

@@ -2,6 +2,7 @@
   config,
   lib,
   mkSecret,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -26,7 +27,7 @@ in {
         };
         domain = mkOption {
           type = types.str;
-          default = "grafana.${config.networking.domain}";
+          default = "grafana.${base_domain_name}";
         };
       };
     };

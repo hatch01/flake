@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf;
@@ -14,7 +15,7 @@ in {
     };
     cockpit.domain = mkOption {
       type = lib.types.str;
-      default = "cockpit.${config.networking.domain}";
+      default = "cockpit.${base_domain_name}";
       description = "The domain of the cockpit";
     };
   };

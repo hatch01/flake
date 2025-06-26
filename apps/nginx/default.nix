@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -37,7 +38,7 @@ in {
       virtualHosts = let
         cfg = {
           forceSSL = config.nginx.acme.enable;
-          useACMEHost = config.networking.domain;
+          useACMEHost = base_domain_name;
           enableACME = config.nginx.acme.enable;
           extraConfig = "proxy_cache cache;\n";
         };
@@ -46,7 +47,7 @@ in {
           then {
             "m.homeserver".base_url = "https://${config.matrix.domain}";
             "org.matrix.msc2965.authentication" = {
-              "issuer" = "https://${config.networking.domain}/";
+              "issuer" = "https://${base_domain_name}/";
               "account" = "https://${config.matrix.mas.domain}/account";
             };
           }
@@ -66,7 +67,7 @@ in {
           extraConfig = builtins.readFile ./auth-location.conf;
         };
       in {
-        "${config.networking.domain}" = mkIf config.homepage.enable {
+        "${base_domain_name}" = mkIf config.homepage.enable {
           inherit (cfg) forceSSL enableACME;
           locations = {
             "/" = mkIf config.homepage.enable {
@@ -98,7 +99,7 @@ in {
           };
         };
 
-        ${config.gatus.domain} = mkIf config.gatus.enable {
+        ${config.gatus.domain} = {
           inherit (cfg) forceSSL enableACME;
           locations = {
             "/" = {

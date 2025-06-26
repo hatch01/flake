@@ -3,6 +3,7 @@
   mkSecrets,
   lib,
   pkgs,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types optionalAttrs optionals;
@@ -12,7 +13,7 @@ in {
       enable = mkEnableOption "Nextcloud";
       domain = mkOption {
         type = types.str;
-        default = "nextcloud.${config.networking.domain}";
+        default = "nextcloud.${base_domain_name}";
       };
       port = mkOption {
         type = types.int;
@@ -23,7 +24,7 @@ in {
       enable = mkEnableOption "OnlyOffice document server";
       domain = mkOption {
         type = types.str;
-        default = "onlyoffice.${config.networking.domain}";
+        default = "onlyoffice.${base_domain_name}";
       };
       port = mkOption {
         type = types.int;

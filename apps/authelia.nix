@@ -3,6 +3,7 @@
   config,
   mkSecrets,
   pkgs,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf optionals types;
@@ -29,7 +30,7 @@ in {
       enable = mkEnableOption "enable Authelia";
       domain = mkOption {
         type = types.str;
-        default = "authelia.${config.networking.domain}";
+        default = "authelia.${base_domain_name}";
         description = "The domain of the Authelia instance";
       };
       port = mkOption {
@@ -183,12 +184,12 @@ in {
                   # be careful with the order of the rules it is important
                   # https://www.authelia.com/configuration/security/access-control/#rule-matching
                   {
-                    domain_regex = ".*\.${config.networking.domain}";
+                    domain_regex = ".*\.${base_domain_name}";
                     policy = "bypass";
                     networks = ["internal"];
                   }
                   {
-                    domain_regex = ".*\.${config.networking.domain}";
+                    domain_regex = ".*\.${base_domain_name}";
                     policy = "two_factor";
                     subject = [
                       ["group:admin"]
@@ -227,9 +228,9 @@ in {
             session = {
               cookies = [
                 {
-                  domain = config.networking.domain;
+                  domain = base_domain_name;
                   authelia_url = "https://${config.authelia.domain}";
-                  default_redirection_url = "https://${config.networking.domain}";
+                  default_redirection_url = "https://${base_domain_name}";
                 }
               ];
             };

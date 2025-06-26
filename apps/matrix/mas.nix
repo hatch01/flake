@@ -3,6 +3,7 @@
   lib,
   pkgs,
   mkSecret,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption;
@@ -107,7 +108,7 @@ in {
                   "::1/128"
                 ];
                 public_base = "https://${config.matrix.mas.domain}/";
-                issuer = "https://${config.networking.domain}/";
+                issuer = "https://${base_domain_name}/";
               };
               database = {
                 host = "127.0.0.1";
@@ -151,7 +152,7 @@ in {
                 enabled = false;
               };
               matrix = {
-                homeserver = config.networking.domain;
+                homeserver = base_domain_name;
                 endpoint = "http://[::1]:${toString config.matrix.port}/";
                 secret = "$matrix_secret";
               };

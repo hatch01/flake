@@ -4,6 +4,7 @@
   inputs,
   pkgs,
   mkSecret,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf;
@@ -17,7 +18,7 @@ in {
     };
     apolline.domain = mkOption {
       type = lib.types.str;
-      default = "apolline.${config.networking.domain}";
+      default = "apolline.${base_domain_name}";
       description = "The domain of the apolline";
     };
   };

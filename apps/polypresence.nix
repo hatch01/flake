@@ -3,6 +3,7 @@
   config,
   inputs,
   pkgs,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf getExe;
@@ -22,7 +23,7 @@ in {
     };
     polypresence.domain = mkOption {
       type = lib.types.str;
-      default = "polypresence.${config.networking.domain}";
+      default = "polypresence.${base_domain_name}";
       description = "The domain of the polypresence";
     };
 

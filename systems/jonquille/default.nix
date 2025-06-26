@@ -4,6 +4,7 @@
 {
   config,
   mkSecrets,
+  base_domain_name,
   ...
 }: {
   imports = [
@@ -35,10 +36,6 @@
   portfolio.enable = true;
   incus.enable = true;
   polypresence.enable = true;
-
-  librespeed.domain = "speedtest.${config.networking.domain}";
-  adguard.domain = "dns.${config.networking.domain}";
-  # gitlab.domain = "forge.${config.networking.domain}";
 
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -22,17 +23,17 @@ in {
           displayname_template = "{{ or .GlobalName .Username .ID }} (Discord)";
           permissions = {
             "*" = "relay";
-            "${config.networking.domain}" = "user";
-            "@root:${config.networking.domain}" = "admin";
+            "${base_domain_name}" = "user";
+            "@root:${base_domain_name}" = "admin";
           };
           login_shared_secret_map = {
-            "${config.networking.domain}" = "as_token:$SHARED_AS_TOKEN";
+            "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
           };
           sync_direct_chat_list = true;
         };
         homeserver = {
           address = "http://localhost:${toString config.matrix.port}";
-          domain = config.networking.domain;
+          domain = base_domain_name;
         };
         appservice = {
           database = {

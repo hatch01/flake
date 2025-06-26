@@ -98,7 +98,7 @@ in {
     jonquille = {
       system = "x86_64-linux";
       modules = server;
-      domain = "onyx.ovh";
+      domain = base_domain_name;
       specialArgs = {
         inherit inputs;
       };

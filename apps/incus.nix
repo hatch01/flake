@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
@@ -10,7 +11,7 @@ in {
       enable = mkEnableOption "Enable incus";
       domain = mkOption {
         type = types.str;
-        default = "incus.${config.networking.domain}";
+        default = "incus.${base_domain_name}";
         description = "The domain name for the incus server";
       };
       port = mkOption {

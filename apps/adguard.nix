@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  base_domain_name,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -10,7 +11,7 @@ in {
       enable = mkEnableOption "enable Adguard";
       domain = mkOption {
         type = types.str;
-        default = "adguard.${config.networking.domain}";
+        default = "dns.${base_domain_name}";
         description = "The domain of the Adguard instance";
       };
       port = mkOption {
