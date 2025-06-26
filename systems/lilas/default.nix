@@ -13,6 +13,8 @@
     inputs.pikvm.nixosModules.default
   ];
 
+  container.enable = lib.mkForce false;
+
   services.kvmd = {
     enable = true;
     package = inputs.pikvm.packages.aarch64-linux.default;
