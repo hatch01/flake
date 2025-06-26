@@ -31,7 +31,6 @@
   nginx.acme.enable = true;
   librespeed.enable = true;
   apolline.enable = true;
-  gatus.enable = true;
   restic.enable = true;
   portfolio.enable = true;
   incus.enable = true;

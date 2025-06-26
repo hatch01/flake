@@ -179,7 +179,7 @@ in {
 
     postgres.initialScripts = [
       ''
-        CREATE ROLE "gatus";
+        CREATE ROLE "gatus" LOGIN;
         CREATE DATABASE "gatus" WITH OWNER "gatus";
       ''
     ];

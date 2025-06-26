@@ -102,7 +102,7 @@ in {
           inherit (cfg) forceSSL enableACME;
           locations = {
             "/" = {
-              proxyPass = "http://[::1]:${toString config.gatus.port}";
+              proxyPass = "http://192.168.1.202:${toString config.gatus.port}";
               extraConfig = lib.strings.concatStringsSep "\n" [
                 (builtins.readFile ./auth-authrequest.conf)
               ];

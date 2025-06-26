@@ -9,7 +9,7 @@ in {
   options = {
     postgres.initialScripts = mkOption {
       type = types.listOf types.str;
-      default = "";
+      default = [];
       description = ''
         A script to run after the database has been created.
       '';
@@ -17,6 +17,7 @@ in {
   };
   config = {
     services.postgresql = {
+      enable = true;
       initialScript =
         pkgs.writeText "mautrix-signal.sql"
         (lib.concatStrings (config.postgres.initialScripts or []));

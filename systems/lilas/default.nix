@@ -5,6 +5,7 @@
   pkgs,
   lib,
   inputs,
+  mkSecrets,
   ...
 }: {
   imports = [
@@ -14,6 +15,7 @@
   ];
 
   container.enable = lib.mkForce false;
+  gatus.enable = true;
 
   services.kvmd = {
     enable = true;
@@ -22,6 +24,19 @@
 
   age = {
     identityPaths = ["/etc/age/key"];
+
+    secrets = mkSecrets {
+      "server/smtpPassword" = {
+        group = "smtp";
+        mode = "440";
+        root = true;
+      };
+      "server/smtpPasswordEnv" = {
+        group = "smtp";
+        mode = "440";
+        root = true;
+      };
+    };
   };
 
   # Basic system configuration for Raspberry Pi 4
