@@ -46,6 +46,7 @@ in {
   imports = [];
 
   config = mkIf config.gatus.enable {
+    services.postgresql.enable = true;
     services.gatus = {
       enable = true;
       environmentFile = config.age.secrets."server/smtpPasswordEnv".path;
