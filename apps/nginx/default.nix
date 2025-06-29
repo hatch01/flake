@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   base_domain_name,
   ...
 }: let

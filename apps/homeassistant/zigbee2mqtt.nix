@@ -84,10 +84,5 @@ in {
         };
       };
     };
-
-    services.mosquitto = {
-      enable = true;
-      dataDir = "/storage/homeassistant/mosquitto";
-    };
   };
 }

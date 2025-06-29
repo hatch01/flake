@@ -10,6 +10,8 @@ in {
     ./zigbee2mqtt.nix
     ./influx.nix
     ./nodered.nix
+    ./matter.nix
+    ./openthread.nix
   ];
 
   options = {
@@ -31,6 +33,8 @@ in {
     influxdb.enable = true;
     influxdb.grafana.enable = true;
     nodered.enable = true;
+    openthread.enable = true;
+    matter.enable = true;
     virtualisation.oci-containers.containers.homeassistant = {
       volumes = ["/storage/homeassistant/:/config"];
       environment.TZ = "Europe/Paris";
@@ -39,6 +43,11 @@ in {
         "--network=host"
         "--add-host=host.docker.internal:host-gateway"
       ];
+    };
+
+    services.mosquitto = {
+      enable = true;
+      dataDir = "/storage/homeassistant/mosquitto";
     };
 
     postgres.initialScripts = [

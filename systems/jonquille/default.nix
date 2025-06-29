@@ -36,6 +36,7 @@
   portfolio.enable = true;
   incus.enable = true;
   polypresence.enable = true;
+  openthread.enable = true;
 
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;

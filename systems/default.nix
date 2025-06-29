@@ -12,7 +12,19 @@
 
   mkSystem = systems: {
     nixosConfigurations = builtins.mapAttrs (name: value:
-      inputs.nixpkgs.lib.nixosSystem {
+      inputs.nixpkgs-patcher.lib.nixosSystem {
+        nixpkgsPatcher = {
+          nixpkgs = inputs.nixpkgs;
+          enable = true;
+          patches = pkgs:
+            with pkgs; [
+              (fetchpatch2 {
+                name = "git-review-bump.patch";
+                url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
+                hash = "sha256-Hyn/mESLB118TA4Lbt5zaRi0e3GItZVh4lMFPFR9OoY=";
+              })
+            ];
+        };
         system = value.system;
         modules =
           value.modules

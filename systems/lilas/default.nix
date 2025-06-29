@@ -17,7 +17,7 @@
 
   container.enable = lib.mkForce false;
   gatus.enable = true;
-  networking.firewall.allowedTCPPorts = [ config.gatus.port ];
+  networking.firewall.allowedTCPPorts = [config.gatus.port];
 
   services.kvmd = {
     enable = true;
