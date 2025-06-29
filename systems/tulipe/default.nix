@@ -115,6 +115,7 @@
   environment.systemPackages = with pkgs; [
     openrgb-plugin-hardwaresync
     hyperhdr
+    tigervnc
   ];
 
   services.hardware.openrgb = {
