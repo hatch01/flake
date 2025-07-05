@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  pandocCommand = "--mathjax --toc --wrap=preserve -L /home/eymeric/.local/share/pandoc/filters/search_replace/filter.lua --filter=/home/eymeric/.local/share/pandoc/filters/asciimathml-pandocfilter/asciimathfilter.js --filter mermaid-filter -f markdown+hard_line_breaks+multiline_tables --template eisvogel -N --highlight-style kate";
+  pandocCommand = "--mathjax --toc --toc-depth=6 --wrap=preserve -L /home/eymeric/.local/share/pandoc/filters/search_replace/filter.lua --filter=/home/eymeric/.local/share/pandoc/filters/asciimathml-pandocfilter/asciimathfilter.js --filter mermaid-filter -f markdown+hard_line_breaks+multiline_tables --template eisvogel -N --highlight-style kate";
 in {
   options = {
     ghostwriter.enable = mkEnableOption "Enable ghostwriter";
