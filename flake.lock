@@ -590,17 +590,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1751047830,
-        "narHash": "sha256-HYhxltoL8sq9wr0oWfGJABjJZIi6Cb9+MQ0MXTWZ+k8=",
-        "ref": "refs/heads/main",
-        "rev": "44fa72f175f4ed8706a99a03eeea4dee095591d7",
-        "revCount": 9,
-        "type": "git",
-        "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
+        "lastModified": 1751792797,
+        "narHash": "sha256-YOg5515yWXDj0X5rh/XiSMsPYlqdlmC65w8BmHy5eqw=",
+        "path": "/home/eymeric/tmp/nixos-pikvm",
+        "type": "path"
       },
       "original": {
-        "type": "git",
-        "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
+        "path": "/home/eymeric/tmp/nixos-pikvm",
+        "type": "path"
       }
     },
     "plasma-manager": {
