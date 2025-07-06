@@ -98,7 +98,8 @@
     };
 
     pikvm = {
-      url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
+      url = "/home/eymeric/tmp/nixos-pikvm"; 
+      # url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
