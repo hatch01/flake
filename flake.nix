@@ -104,6 +104,12 @@
     };
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
+
+    foodi = {
+      url = "git+https://forge.onyx.ovh/eymeric/foodi.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
   };
   outputs = {flake-parts, ...} @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {

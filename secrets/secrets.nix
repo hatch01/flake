@@ -71,6 +71,8 @@ let
 
       "apolline"
       "node_red"
+
+      "foodi"
     ]
     // defineSecrets "lavande" [
       "rootPassword"
