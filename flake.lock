@@ -317,11 +317,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752081219,
-        "narHash": "sha256-O5fINpQg4XmE4TqjphR3yWAAax/Nv65NnbqYtLsi3zc=",
+        "lastModified": 1752445490,
+        "narHash": "sha256-of17WO2PYjORbJjE8/E7OCOtZK0SOybpJG8AMfttFWo=",
         "ref": "refs/heads/main",
-        "rev": "2a3b1a012da754eebf463951b77a7f9350037e3e",
-        "revCount": 7,
+        "rev": "ce774a42306e63cad46033a145165819e9d211fc",
+        "revCount": 8,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/foodi.git"
       },
