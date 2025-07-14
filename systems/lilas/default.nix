@@ -25,6 +25,14 @@
     package = inputs.pikvm.packages.aarch64-linux.default;
   };
 
+  security.sudo-rs = {
+    enable = lib.mkForce false;
+  };
+
+  security.sudo = {
+    enable = true;
+  };
+
   age = {
     identityPaths = ["/etc/age/key"];
 
@@ -43,6 +51,25 @@
   };
 
   # Basic system configuration for Raspberry Pi 4
+
+  # Nginx reverse proxy for kvmd Unix socket
+  services.nginx = {
+    enable = true;
+    virtualHosts."lilas" = {
+      listen = [
+        { addr = "0.0.0.0"; port = 80; }
+      ];
+      locations."/" = {
+        proxyPass = "http://unix:/run/kvmd/kvmd.sock";
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        '';
+      };
+    };
+  };
 
   # Disable ZFS to avoid the build error
   # boot.supportedFilesystems.zfs = lib.mkForce false;
