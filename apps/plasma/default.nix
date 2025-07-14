@@ -53,7 +53,7 @@ in {
         workspace = {
           clickItemTo = "open";
           lookAndFeel = "Catppuccin-Latte-Blue";
-          cursor.theme = "Catppuccin-Mocha-Dark-Cursors";
+          cursor.theme = "catppuccin-mocha-dark-cursors";
           iconTheme = "breeze";
         };
 
@@ -218,9 +218,9 @@ in {
               light.value = "Breeze";
             };
             "IconTheme" = {
-              dark.value = "catppuccin-mocha-dark-cursors";
+              dark.value = "breeze-dark";
               enabled.value = true;
-              light.value = "catppuccin-mocha-dark-cursors";
+              light.value = "breeze";
             };
             "KvantumStyle" = {
               dark.value = "";
