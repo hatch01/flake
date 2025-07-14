@@ -126,7 +126,7 @@ in {
     lilas = {
       system = "aarch64-linux";
       modules = server;
-      domain = "192.168.1.202";
+      domain = "lilas";
       specialArgs = {
         inherit inputs;
       };
