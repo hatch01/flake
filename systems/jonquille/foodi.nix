@@ -1,4 +1,9 @@
-{inputs, mkSecret, config, ...}:{
+{
+  inputs,
+  mkSecret,
+  config,
+  ...
+}: {
   imports = [
     inputs.foodi.nixosModules.default
   ];
