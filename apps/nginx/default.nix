@@ -5,7 +5,7 @@
   base_domain_name,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption mkOption optional;
 in {
   options = {
     nginx.enable = mkEnableOption "Nginx";

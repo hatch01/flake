@@ -31,6 +31,8 @@
   homeassistant.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
+  services.nginx.defaultListenAddresses = [ "127.0.0.1" ];
+  services.nginx.defaultSSLListenPort = 4443;
   librespeed.enable = true;
   apolline.enable = true;
   restic.enable = true;
@@ -38,6 +40,7 @@
   incus.enable = true;
   polypresence.enable = true;
   openthread.enable = true;
+  sslh.enable = true;
 
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;
