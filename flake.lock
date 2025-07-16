@@ -875,15 +875,15 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1750353031,
-        "narHash": "sha256-Bx7DOPLhkr8Z60U9Qw4l0OidzHoqLDKQH5rDV5ef59A=",
-        "owner": "nix-community",
+        "lastModified": 1752654872,
+        "narHash": "sha256-foGgZu8+bCNIGeuDqQ84jNbmKZpd+JvnrL2WlyU4tuU=",
+        "owner": "hatch01",
         "repo": "nixos-vscode-server",
-        "rev": "4ec4859b12129c0436b0a471ed1ea6dd8a317993",
+        "rev": "1b3e72b109cb1d58d018a64b8825ec5f45676097",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "hatch01",
         "repo": "nixos-vscode-server",
         "type": "github"
       }
