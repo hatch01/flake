@@ -26,7 +26,7 @@
   inputs = {
     # Official NixOS package source, using nixos-unstable branch here
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "nixpkgs/master";
     nixpkgs-stable.url = "nixpkgs/nixos-25.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -81,7 +81,7 @@
 
     deploy-rs.url = "github:serokell/deploy-rs";
     impermanence.url = "github:nix-community/impermanence";
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    vscode-server.url = "github:hatch01/nixos-vscode-server";
 
     proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
 
@@ -98,8 +98,8 @@
     };
 
     pikvm = {
-      url = "/home/eymeric/tmp/nixos-pikvm";
-      # url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
+      #url = "/home/eymeric/tmp/nixos-pikvm";
+      url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
