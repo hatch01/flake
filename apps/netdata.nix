@@ -25,7 +25,7 @@ in {
   };
 
   config = mkIf config.netdata.enable {
-    age.secrets = mkSecret "server/netdata_notify" {root = true;};
+    age.secrets = mkSecret "server/netdata_notify" {root = true; owner = "netdata"; group = "netdata";};
 
     systemd.services.netdata = {
       after = ["nginx.service" "postgresql.service" "fail2ban.service"];
@@ -45,7 +45,6 @@ in {
         package = pkgs.netdata.override {
           withNdsudo = true;
           withCloudUi = true;
-          withDBengine = true;
         };
         extraNdsudoPackages = with pkgs; [
           fail2ban
