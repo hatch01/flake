@@ -14,7 +14,10 @@
     nixosConfigurations = builtins.mapAttrs (name: value:
       inputs.nixpkgs-patcher.lib.nixosSystem {
         nixpkgsPatcher = {
-          nixpkgs = if value.stable then inputs.nixpkgs else inputs.nixpkgs-stable;
+          nixpkgs =
+            if (value.stable or false)
+            then inputs.nixpkgs-stable
+            else inputs.nixpkgs;
           enable = true;
           patches = pkgs:
             with pkgs; [
