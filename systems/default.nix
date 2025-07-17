@@ -2,7 +2,8 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   username = "eymeric";
   stateVersion = "24.05";
   sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs eymericdechelette@gmail.com";
@@ -11,69 +12,68 @@
   secretsPath = ../secrets;
 
   mkSystem = systems: {
-    nixosConfigurations = builtins.mapAttrs (name: value:
+    nixosConfigurations = builtins.mapAttrs (
+      name: value:
       inputs.nixpkgs-patcher.lib.nixosSystem {
         nixpkgsPatcher = {
-          nixpkgs =
-            if (value.stable or false)
-            then inputs.nixpkgs-stable
-            else inputs.nixpkgs;
+          nixpkgs = if (value.stable or false) then inputs.nixpkgs-stable else inputs.nixpkgs;
           enable = true;
-          patches = pkgs:
-            with pkgs; [
+          patches =
+            pkgs: with pkgs; [
               (fetchpatch2 {
                 name = "git-review-bump.patch";
                 url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
                 hash = "sha256-Hyn/mESLB118TA4Lbt5zaRi0e3GItZVh4lMFPFR9OoY=";
               })
+              (fetchpatch2 {
+                name = "netdata.patch";
+                url = "https://github.com/NixOS/nixpkgs/pull/426186.diff";
+                hash = "sha256-pFgXxB4Iqnw2E5rFQ534+xED690sLtNykjmFsclFdjo=";
+              })
             ];
         };
         system = value.system;
-        modules =
-          value.modules
-          ++ [
-            ./${name}
-            ./${name}/hardware-configuration.nix
-            {
-              config.networking = {
-                hostName = name;
-                domain = value.domain or name;
-              };
-            }
-          ];
-        specialArgs =
-          rec {
-            inherit inputs username stateVersion sshPublicKey base_domain_name;
-            mkSecrets = builtins.mapAttrs (secretName: secretValue:
-              lib.removeAttrs secretValue ["root"]
-              // {
-                file = "${secretsPath}/${
-                  if (secretValue.root or false)
-                  then ""
-                  else "${name}/"
-                }${secretName}.age";
-              });
-            mkSecret = secretName: other: mkSecrets {${secretName} = other;};
-            stable = value.stable or false;
-            system = value.system;
+        modules = value.modules ++ [
+          ./${name}
+          ./${name}/hardware-configuration.nix
+          {
+            config.networking = {
+              hostName = name;
+              domain = value.domain or name;
+            };
           }
-          // (value.specialArgs or {});
-      })
-    systems;
-    deploy.nodes =
-      builtins.mapAttrs (
-        name: value: {
-          hostname = value.sshAddress or value.domain or name;
-          profiles.system = {
-            #look at how not to use ssh root login but pass via sudo
-            user = value.user or "root";
-            sshUser = value.sshUser or "root";
-            remoteBuild = value.remoteBuild or true; # think on it if it is a great option
-            path = inputs.deploy-rs.lib.${value.system}.activate.nixos inputs.self.nixosConfigurations.${name};
-          };
-        }
-      )
-      systems;
+        ];
+        specialArgs = rec {
+          inherit
+            inputs
+            username
+            stateVersion
+            sshPublicKey
+            base_domain_name
+            ;
+          mkSecrets = builtins.mapAttrs (
+            secretName: secretValue:
+            lib.removeAttrs secretValue [ "root" ]
+            // {
+              file = "${secretsPath}/${if (secretValue.root or false) then "" else "${name}/"}${secretName}.age";
+            }
+          );
+          mkSecret = secretName: other: mkSecrets { ${secretName} = other; };
+          stable = value.stable or false;
+          system = value.system;
+        } // (value.specialArgs or { });
+      }
+    ) systems;
+    deploy.nodes = builtins.mapAttrs (name: value: {
+      hostname = value.sshAddress or value.domain or name;
+      profiles.system = {
+        #look at how not to use ssh root login but pass via sudo
+        user = value.user or "root";
+        sshUser = value.sshUser or "root";
+        remoteBuild = value.remoteBuild or true; # think on it if it is a great option
+        path = inputs.deploy-rs.lib.${value.system}.activate.nixos inputs.self.nixosConfigurations.${name};
+      };
+    }) systems;
   };
 
   nixos = with inputs; [
@@ -85,7 +85,8 @@
     #nur.nixosModules.nur
   ];
 
-  server = with inputs;
+  server =
+    with inputs;
     [
       vscode-server.nixosModules.default
       inputs.proxmox-nixos.nixosModules.proxmox-ve
@@ -93,14 +94,16 @@
     ]
     ++ nixos;
 
-  desktop = with inputs;
+  desktop =
+    with inputs;
     [
       ../configs/desktop.nix
       lanzaboote.nixosModules.lanzaboote
       flatpaks.nixosModules.nix-flatpak
     ]
     ++ nixos;
-in {
+in
+{
   flake = mkSystem {
     tulipe = {
       system = "x86_64-linux";
