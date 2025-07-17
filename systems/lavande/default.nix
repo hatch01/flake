@@ -5,9 +5,10 @@
   config,
   mkSecrets,
   ...
-}: {
+}:
+{
   age = {
-    identityPaths = ["/persistent/key"];
+    identityPaths = [ "/persistent/key" ];
 
     secrets = mkSecrets {
       "server/smtpPassword" = {
@@ -58,7 +59,7 @@
   };
 
   nix.optimise.automatic = true;
-  nix.optimise.dates = ["03:45"]; # Optional; allows customizing optimisation schedule
+  nix.optimise.dates = [ "03:45" ]; # Optional; allows customizing optimisation schedule
 
   nix.extraOptions = ''
     !include ${config.age.secrets.githubToken.path}

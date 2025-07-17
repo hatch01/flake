@@ -3,8 +3,14 @@
   lib,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
   script = ''
     read request
     path=$(echo "$request" | awk '{print $2}' | cut -d'?' -f1)
@@ -61,7 +67,8 @@
         ;;
     esac
   '';
-in {
+in
+{
   options = {
     configUpdater = {
       enable = mkEnableOption "enable config updater";
@@ -85,16 +92,14 @@ in {
         util-linux
       ];
       description = "HTTP server using socat for Git update actions";
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Restart = "always";
         StandardOutput = "journal+console";
         StandardError = "journal+console";
       };
       script = ''
-        socat TCP4-LISTEN:${builtins.toString config.configUpdater.port},reuseaddr,fork SYSTEM:${
-          lib.getExe (pkgs.writeShellScriptBin "route-hander" script)
-        }
+        socat TCP4-LISTEN:${builtins.toString config.configUpdater.port},reuseaddr,fork SYSTEM:${lib.getExe (pkgs.writeShellScriptBin "route-hander" script)}
       '';
     };
   };

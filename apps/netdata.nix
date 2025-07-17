@@ -5,9 +5,16 @@
   base_domain_name,
   mkSecret,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     netdata = {
       enable = mkEnableOption "enable Netdata";
@@ -25,17 +32,25 @@ in {
   };
 
   config = mkIf config.netdata.enable {
-    age.secrets = mkSecret "server/netdata_notify" {root = true; owner = "netdata"; group = "netdata";};
+    age.secrets = mkSecret "server/netdata_notify" {
+      root = true;
+      owner = "netdata";
+      group = "netdata";
+    };
 
     systemd.services.netdata = {
-      after = ["nginx.service" "postgresql.service" "fail2ban.service"];
+      after = [
+        "nginx.service"
+        "postgresql.service"
+        "fail2ban.service"
+      ];
     };
 
     users = {
       users.netdata = {
         isSystemUser = true;
         group = "netdata";
-        extraGroups = ["smtp"];
+        extraGroups = [ "smtp" ];
       };
     };
 
@@ -45,6 +60,8 @@ in {
         package = pkgs.netdata.override {
           withNdsudo = true;
           withCloudUi = true;
+          withDebug = true;
+          withDBengine = true;
         };
         extraNdsudoPackages = with pkgs; [
           fail2ban
@@ -75,8 +92,7 @@ in {
         };
         configDir = {
           "go.d/nginx.conf" = pkgs.writeText "nginx.conf" (
-            lib.generators.toYAML {}
-            {
+            lib.generators.toYAML { } {
               jobs = [
                 {
                   name = "local";
@@ -86,8 +102,7 @@ in {
             }
           );
           "go.d/fail2ban.conf" = pkgs.writeText "fail2ban.conf" (
-            lib.generators.toYAML {}
-            {
+            lib.generators.toYAML { } {
               jobs = [
                 {
                   name = "fail2ban";
@@ -97,8 +112,7 @@ in {
             }
           );
           "go.d/smartctl.conf" = pkgs.writeText "smartctl.conf" (
-            lib.generators.toYAML {}
-            {
+            lib.generators.toYAML { } {
               jobs = [
                 {
                   name = "smartctl";
@@ -108,8 +122,7 @@ in {
             }
           );
           "go.d/zfspool.conf" = pkgs.writeText "zfspool.conf" (
-            lib.generators.toYAML {}
-            {
+            lib.generators.toYAML { } {
               jobs = [
                 {
                   name = "zfspool";
@@ -140,14 +153,17 @@ in {
       postgresql = {
         enable = true;
         ensureUsers = [
-          {name = "netdata";}
+          { name = "netdata"; }
         ];
       };
     };
 
     environment.persistence."/persistent" = {
-      directories = ["/var/lib/netdata" "/var/cache/netdata"];
+      directories = [
+        "/var/lib/netdata"
+        "/var/cache/netdata"
+      ];
     };
-    postgres.initialScripts = ["GRANT pg_monitor TO netdata;"];
+    postgres.initialScripts = [ "GRANT pg_monitor TO netdata;" ];
   };
 }

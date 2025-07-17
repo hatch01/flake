@@ -3,13 +3,15 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption types;
-in {
+in
+{
   options = {
     postgres.initialScripts = mkOption {
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
       description = ''
         A script to run after the database has been created.
       '';
@@ -17,12 +19,10 @@ in {
   };
   config = {
     services.postgresql = {
-      initialScript =
-        pkgs.writeText "mautrix-signal.sql"
-        (lib.concatStrings (config.postgres.initialScripts or []));
-      authentication =
-        lib.mkIf config.homeassistant.enable
-        "host homeassistant_db     homeassistant   192.168.1.200/24      md5 # Home Assistant server";
+      initialScript = pkgs.writeText "mautrix-signal.sql" (
+        lib.concatStrings (config.postgres.initialScripts or [ ])
+      );
+      authentication = lib.mkIf config.homeassistant.enable "host homeassistant_db     homeassistant   192.168.1.200/24      md5 # Home Assistant server";
       enableTCPIP = config.homeassistant.enable;
     };
   };

@@ -5,9 +5,16 @@
   pkgs,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     nodered = {
       enable = mkEnableOption "Home Assistant";

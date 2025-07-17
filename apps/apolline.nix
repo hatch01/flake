@@ -6,9 +6,11 @@
   mkSecret,
   base_domain_name,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkOption mkIf;
-in {
+in
+{
   options = {
     apolline.enable = mkEnableOption "Enable apolline";
     apolline.port = mkOption {
@@ -24,20 +26,20 @@ in {
   };
 
   config = mkIf config.apolline.enable {
-    age.secrets = mkSecret "apolline" {};
+    age.secrets = mkSecret "apolline" { };
 
     users = {
       users.apolline = {
         group = "apolline";
         isSystemUser = true;
       };
-      groups.apolline = {};
+      groups.apolline = { };
     };
 
     systemd.services.apolline = {
       enable = true;
       description = "apolline";
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Restart = "on-failure";
         EnvironmentFile = config.age.secrets.apolline.path;

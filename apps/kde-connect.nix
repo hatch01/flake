@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     kdeconnect.enable = mkEnableOption "kdeconnect-kde";
   };

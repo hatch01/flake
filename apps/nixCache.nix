@@ -4,9 +4,16 @@
   mkSecret,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     nixCache = {
       enable = mkEnableOption "enable nixCache";
@@ -28,7 +35,7 @@ in {
         isSystemUser = true;
         group = "nix-serve";
       };
-      groups.nix-serve = {};
+      groups.nix-serve = { };
     };
 
     age.secrets = mkSecret "cache-priv-key.pem" {

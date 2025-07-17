@@ -3,9 +3,16 @@
   config,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
+in
+{
   options = {
     incus = {
       enable = mkEnableOption "Enable incus";
@@ -59,10 +66,10 @@ in {
             driver = "dir";
           }
         ];
-        storage_volumes = [];
+        storage_volumes = [ ];
         profiles = [
           {
-            config = {};
+            config = { };
             description = "";
             devices = {
               eth0 = {
@@ -80,7 +87,7 @@ in {
             project = "default";
           }
         ];
-        projects = [];
+        projects = [ ];
         cluster = null;
       };
     };

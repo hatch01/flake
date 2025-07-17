@@ -4,9 +4,11 @@
   config,
   username,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     gitConfig.enable = mkEnableOption "Enable git configuration";
   };

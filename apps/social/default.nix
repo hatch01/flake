@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkDefault mkIf;
-in {
+in
+{
   options = {
     social.enable = mkEnableOption "Enable social apps";
   };
@@ -18,7 +20,8 @@ in {
     # enable vesktop if social apps are enabled
     # but be able to disable it
     vesktop.enable = mkDefault config.social.enable;
-    environment.systemPackages = with pkgs;
+    environment.systemPackages =
+      with pkgs;
       mkIf config.social.enable [
         signal-desktop
         zapzap

@@ -5,9 +5,16 @@
   pkgs,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf getExe;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    getExe
+    ;
+in
+{
   options = {
     polypresence.enable = mkEnableOption "Enable polypresence";
     polypresence.backPort = mkOption {
@@ -42,13 +49,13 @@ in {
         group = "polypresence";
         isSystemUser = true;
       };
-      groups.polypresence = {};
+      groups.polypresence = { };
     };
 
     systemd.services.polypresence-back = {
       enable = true;
       description = "polypresence backend";
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Restart = "on-failure";
         ExecStart = "${getExe inputs.polypresence.packages.${pkgs.system}.back}";

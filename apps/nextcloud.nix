@@ -5,9 +5,18 @@
   pkgs,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types optionalAttrs optionals;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    optionalAttrs
+    optionals
+    ;
+in
+{
   options = {
     nextcloud = {
       enable = mkEnableOption "Nextcloud";
@@ -71,8 +80,7 @@ in {
         # apps
         extraApps =
           {
-            inherit
-              (config.services.nextcloud.package.packages.apps)
+            inherit (config.services.nextcloud.package.packages.apps)
               contacts
               calendar
               tasks
@@ -97,8 +105,7 @@ in {
             };
           }
           // optionals config.onlyofficeDocumentServer.enable {
-            inherit
-              (config.services.nextcloud.package.packages.apps)
+            inherit (config.services.nextcloud.package.packages.apps)
               onlyoffice
               ;
           };
@@ -181,7 +188,7 @@ in {
     };
     virtualisation.oci-containers.containers.onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
       image = "onlyoffice/documentserver:latest";
-      ports = ["${toString config.onlyofficeDocumentServer.port}:80"];
+      ports = [ "${toString config.onlyofficeDocumentServer.port}:80" ];
       environmentFiles = [
         config.age.secrets.onlyofficeDocumentServerKey.path
       ];

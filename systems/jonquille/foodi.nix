@@ -3,12 +3,13 @@
   mkSecret,
   config,
   ...
-}: {
+}:
+{
   imports = [
     inputs.foodi.nixosModules.default
   ];
 
-  age.secrets = mkSecret "foodi" {};
+  age.secrets = mkSecret "foodi" { };
 
   services.foodi = {
     enable = true;

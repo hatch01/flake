@@ -5,9 +5,11 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     plasma.enable = mkEnableOption "Plasma Desktop";
   };
@@ -39,7 +41,7 @@ in {
     ];
 
     environment.systemPackages =
-      []
+      [ ]
       ++ (with pkgs.kdePackages; [
         merkuro
         qtlocation # this is needed for merkuro
@@ -70,10 +72,10 @@ in {
             "Switch One Desktop Up" = "Meta+Shift+Up";
             "Switch One Desktop to the Left" = "Meta+Shift+Left";
             "Switch One Desktop to the Right" = "Meta+Shift+Right";
-            "Switch Window Down" = [];
+            "Switch Window Down" = [ ];
             "Switch Window Left" = "Meta+Alt+Left";
             "Switch Window Right" = "Meta+Alt+Right";
-            "Switch Window Up" = [];
+            "Switch Window Up" = [ ];
             "Switch to Desktop 1" = "Meta+F1";
             "Switch to Desktop 2" = "Meta+F2";
             "Switch to Desktop 3" = "Meta+F3";
@@ -96,8 +98,8 @@ in {
             "Window to Desktop 8" = "Meta+3";
             "Window to Desktop 9" = "Meta+4";
             "Window to Desktop 10" = "Meta+5";
-            "Window to Next Screen" = [];
-            "Window to Previous Screen" = [];
+            "Window to Next Screen" = [ ];
+            "Window to Previous Screen" = [ ];
             "Window to Screen 0" = "Meta+Ctrl+1";
             "Window to Screen 1" = "Meta+Ctrl+2";
             "view_zoom_in" = "Meta+Ctrl+Num++";

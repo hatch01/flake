@@ -3,9 +3,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     fail2ban = {
       enable = mkEnableOption "enable fail2ban";

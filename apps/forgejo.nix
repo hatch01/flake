@@ -4,9 +4,16 @@
   pkgs,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     forgejo = {
       enable = mkEnableOption "enable ForgeJo";
@@ -23,7 +30,7 @@ in {
     };
   };
 
-  imports = [];
+  imports = [ ];
 
   config = mkIf config.forgejo.enable {
     # mkforce to fix conflict with other services

@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     basic-tools.enable = mkEnableOption "basic-tools";
   };
@@ -18,8 +20,12 @@ in {
       kshutdown
       textpieces
       kdePackages.filelight
-      (kdePackages.skanpage.override
-        {tesseractLanguages = ["eng" "fra"];})
+      (kdePackages.skanpage.override {
+        tesseractLanguages = [
+          "eng"
+          "fra"
+        ];
+      })
 
       zap # cybersecurity website test
 

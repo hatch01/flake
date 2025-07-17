@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) optionals mkEnableOption mkIf;
-in {
+in
+{
   options = {
     container.enable = mkEnableOption "Enable container support";
     container.distrobox.enable = mkEnableOption "Enable distrobox";
@@ -13,7 +15,8 @@ in {
 
   config = mkIf config.container.enable {
     environment = {
-      systemPackages = with pkgs;
+      systemPackages =
+        with pkgs;
         [
           docker-compose
           podman-compose

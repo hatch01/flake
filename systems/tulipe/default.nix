@@ -8,7 +8,8 @@
   username,
   mkSecret,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -20,20 +21,27 @@
   ];
 
   nix.settings = {
-    trusted-users = [username];
+    trusted-users = [ username ];
     max-jobs = 2; # how many derivation built at the same time
     cores = 5; # how many cores attributed to one build
   };
 
   age = {
-    secrets = mkSecret "userPassword" {};
+    secrets = mkSecret "userPassword" { };
   };
 
   users.users = {
     "${username}" = {
       isNormalUser = true;
       shell = pkgs.zsh;
-      extraGroups = ["networkmanager" "vboxusers" "video" "input" "docker" "dialout"];
+      extraGroups = [
+        "networkmanager"
+        "vboxusers"
+        "video"
+        "input"
+        "docker"
+        "dialout"
+      ];
       hashedPasswordFile = config.age.secrets.userPassword.path;
     };
   };
@@ -42,14 +50,14 @@
   # Bootloader.
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = ["ntfs"];
+  boot.supportedFilesystems = [ "ntfs" ];
   boot.binfmt = {
-    emulatedSystems = ["aarch64-linux"];
+    emulatedSystems = [ "aarch64-linux" ];
   };
-  boot.kernelModules = ["v4l2loopback"];
-  boot.kernelParams = ["amd_iommu=on"];
-  system.nixos.tags = ["tulipe"];
-  boot.extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
+  boot.kernelModules = [ "v4l2loopback" ];
+  boot.kernelParams = [ "amd_iommu=on" ];
+  system.nixos.tags = [ "tulipe" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
   boot.lanzaboote = {
     enable = true;
@@ -66,7 +74,10 @@
     nssmdns4 = true;
     openFirewall = true;
   };
-  hardware.sane.extraBackends = [pkgs.epkowa pkgs.utsushi];
+  hardware.sane.extraBackends = [
+    pkgs.epkowa
+    pkgs.utsushi
+  ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -75,21 +86,24 @@
   # Enable networking
   networking = {
     networkmanager.enable = true;
-    nameservers = ["127.0.0.1" "::1"];
+    nameservers = [
+      "127.0.0.1"
+      "::1"
+    ];
     networkmanager.dns = "none";
   };
 
   services.dnsproxy = {
     enable = true;
     settings = {
-      upstream = ["https://dns.onyx.ovh/dns-query"];
-      listen-addrs = ["127.0.0.1"];
+      upstream = [ "https://dns.onyx.ovh/dns-query" ];
+      listen-addrs = [ "127.0.0.1" ];
       # We don't need any bootstrap DNS server because we are setting the ip directly in the hosts section
       # bootstrap = ["9.9.9.9"];
     };
   };
   networking.hosts = {
-    "109.26.63.39" = ["dns.onyx.ovh"];
+    "109.26.63.39" = [ "dns.onyx.ovh" ];
   };
 
   # Configure console keymap
@@ -123,11 +137,14 @@
     package = pkgs.openrgb-with-all-plugins;
   };
 
-  services.udev.packages = with pkgs; [openrgb numworks-udev-rules];
+  services.udev.packages = with pkgs; [
+    openrgb
+    numworks-udev-rules
+  ];
 
   services.pcscd.enable = true;
 
   age = {
-    identityPaths = ["/etc/age/key"];
+    identityPaths = [ "/etc/age/key" ];
   };
 }

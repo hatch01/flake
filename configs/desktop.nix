@@ -2,7 +2,8 @@
   inputs,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./wifi.nix
   ];
@@ -59,7 +60,7 @@
   office.enable = true;
   ghostty.enable = true;
 
-  home-manager.sharedModules = with inputs; [plasma-manager.homeManagerModules.plasma-manager];
+  home-manager.sharedModules = with inputs; [ plasma-manager.homeManagerModules.plasma-manager ];
 
   services.flatpak = {
     enable = true;
@@ -80,7 +81,12 @@
 
   environment = {
     systemPackages = with pkgs; [
-      (catppuccin-kde.override {flavour = ["mocha" "latte"];})
+      (catppuccin-kde.override {
+        flavour = [
+          "mocha"
+          "latte"
+        ];
+      })
       catppuccin-cursors.mochaDark
       kdePackages.partitionmanager
       gnome-disk-utility

@@ -1,5 +1,6 @@
 (
-  nixpkgs-stable: final: prev: let
+  nixpkgs-stable: final: prev:
+  let
     stable = import nixpkgs-stable {
       system = prev.system;
       config = prev.config;
@@ -8,9 +9,10 @@
       "nasc"
     ];
   in
-    builtins.listToAttrs (map (x: {
-        name = x;
-        value = stable.${x};
-      })
-      stablePackages)
+  builtins.listToAttrs (
+    map (x: {
+      name = x;
+      value = stable.${x};
+    }) stablePackages
+  )
 )

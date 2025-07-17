@@ -3,10 +3,12 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   pandocCommand = "--mathjax --toc --toc-depth=6 --wrap=preserve -L /home/eymeric/.local/share/pandoc/filters/search_replace/filter.lua --filter=/home/eymeric/.local/share/pandoc/filters/asciimathml-pandocfilter/asciimathfilter.js --filter mermaid-filter -f markdown+hard_line_breaks+multiline_tables --template eisvogel -N --highlight-style kate";
-in {
+in
+{
   options = {
     ghostwriter.enable = mkEnableOption "Enable ghostwriter";
   };
@@ -73,7 +75,9 @@ in {
               then
                   echo "Converting $i to $markdownFile"
                   cd $path
-                  MERMAID_FILTER_FORMAT=svg MERMAID_FILTER_BACKGROUND=transparent pandoc ${builtins.replaceStrings ["--template eisvogel" ""] ["" ""] pandocCommand} $i -o $markdownFile
+                  MERMAID_FILTER_FORMAT=svg MERMAID_FILTER_BACKGROUND=transparent pandoc ${
+                    builtins.replaceStrings [ "--template eisvogel" "" ] [ "" "" ] pandocCommand
+                  } $i -o $markdownFile
               fi
           done
         '';
@@ -123,7 +127,7 @@ in {
             ''
           );
         };
-        Install.WantedBy = ["default.target"];
+        Install.WantedBy = [ "default.target" ];
       };
 
       systemd.user.timers.lesson_generator = {
@@ -135,7 +139,7 @@ in {
           OnCalendar = "*:0/15";
           Persistent = true;
         };
-        Install.WantedBy = ["timers.target"];
+        Install.WantedBy = [ "timers.target" ];
       };
 
       programs.plasma = {

@@ -3,9 +3,11 @@
   config,
   base_domain_name,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkOption mkIf;
-in {
+in
+{
   options = {
     cockpit.enable = mkEnableOption "Enable cockpit";
     cockpit.port = mkOption {
@@ -24,7 +26,10 @@ in {
     services.cockpit = {
       enable = true;
       port = config.cockpit.port;
-      allowed-origins = ["https://${config.cockpit.domain}" "wss://${config.cockpit.domain}"];
+      allowed-origins = [
+        "https://${config.cockpit.domain}"
+        "wss://${config.cockpit.domain}"
+      ];
       settings = {
         "WebService" = {
           ProtocolHeader = "X-Forwarded-Proto";

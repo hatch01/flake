@@ -3,9 +3,11 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     keepassxc.enable = mkEnableOption "keepassxc";
     keepassxc.autostart = mkEnableOption "keepassxc autostart";
@@ -31,10 +33,12 @@ in {
       };
 
       # autostart keepassxc
-      home.file.".config/autostart/org.keepassxc.KeePassXC.desktop" = lib.mkIf config.keepassxc.autostart {
-        source = ./org.keepassxc.KeePassXC.desktop;
-        force = true;
-      };
+      home.file.".config/autostart/org.keepassxc.KeePassXC.desktop" =
+        lib.mkIf config.keepassxc.autostart
+          {
+            source = ./org.keepassxc.KeePassXC.desktop;
+            force = true;
+          };
     };
   };
 }

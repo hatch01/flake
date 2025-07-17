@@ -4,9 +4,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     ghostty = {
       enable = mkEnableOption "enable ghostty";

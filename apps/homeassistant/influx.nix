@@ -4,9 +4,16 @@
   mkSecret,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   imports = [
     ./zigbee2mqtt.nix
   ];
@@ -73,7 +80,7 @@ in {
       };
     };
     virtualisation.oci-containers.containers.influxdb = {
-      volumes = ["/storage/homeassistant/influxdb/:/var/lib/influxdb2"];
+      volumes = [ "/storage/homeassistant/influxdb/:/var/lib/influxdb2" ];
       image = "influxdb:latest";
       extraOptions = [
         "--network=host"

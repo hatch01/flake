@@ -4,9 +4,11 @@
   lib,
   username,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     vm.enable = mkEnableOption "Enable virtualisation support";
   };
@@ -17,7 +19,7 @@ in {
     programs.virt-manager.enable = true;
 
     # Add user to libvirtd group
-    users.users.${username}.extraGroups = ["libvirtd"];
+    users.users.${username}.extraGroups = [ "libvirtd" ];
 
     # Install necessary packages
     environment.systemPackages = with pkgs; [
@@ -31,7 +33,7 @@ in {
       gnome-boxes
     ];
 
-    users.extraGroups.vboxusers.members = ["eymeric"];
+    users.extraGroups.vboxusers.members = [ "eymeric" ];
 
     # Manage the virtualisation services
     virtualisation = {
@@ -52,8 +54,7 @@ in {
             (pkgs.OVMF.override {
               secureBoot = true;
               tpmSupport = true;
-            })
-            .fd
+            }).fd
           ];
           runAsRoot = false;
         };

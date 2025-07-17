@@ -3,9 +3,11 @@
   lib,
   base_domain_name,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     matrix = {
       discord = {

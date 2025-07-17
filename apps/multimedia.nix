@@ -3,9 +3,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) optionals mkEnableOption mkIf;
-in {
+in
+{
   options = {
     multimedia.enable = mkEnableOption "Enable multimedia reading packages";
     multimedia.editing.enable = mkEnableOption "Enable multimedia editing packages";
@@ -14,8 +16,9 @@ in {
   config = with config; {
     # if we have editing tools, it is likely we also want to read multimedia
     multimedia.enable = mkIf multimedia.editing.enable true;
-    environment.systemPackages = with pkgs;
-      []
+    environment.systemPackages =
+      with pkgs;
+      [ ]
       ++ optionals multimedia.enable [
         # reading
         ffmpeg-full

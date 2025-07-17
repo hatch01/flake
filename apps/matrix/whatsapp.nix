@@ -3,9 +3,11 @@
   lib,
   base_domain_name,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     matrix = {
       whatsapp = {
@@ -15,7 +17,7 @@ in {
   };
 
   config = mkIf config.matrix.whatsapp.enable {
-    systemd.services.matrix-synapse.serviceConfig.SupplementaryGroups = ["mautrix-whatsapp"];
+    systemd.services.matrix-synapse.serviceConfig.SupplementaryGroups = [ "mautrix-whatsapp" ];
     services.matrix-synapse.settings.app_service_config_files = [
       # "/var/lib/mautrix-whatsapp/whatsapp-registration.yaml"
     ];

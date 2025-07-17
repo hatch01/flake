@@ -3,9 +3,16 @@
   config,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     zigbee2mqtt = {
       enable = mkEnableOption "enable zigbee2mqtt";

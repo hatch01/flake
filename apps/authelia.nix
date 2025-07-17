@@ -5,26 +5,31 @@
   pkgs,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf optionals types;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    optionals
+    types
+    ;
   autheliaInstance = "main";
-  mkUserRule = {
-    appName,
-    two_factor ? true,
-    groups ? [],
-  }:
+  mkUserRule =
+    {
+      appName,
+      two_factor ? true,
+      groups ? [ ],
+    }:
     optionals config."${appName}".enable [
       {
         domain = config."${appName}".domain;
-        policy =
-          if two_factor
-          then "two_factor"
-          else "one_factor";
-        subject =
-          builtins.concatLists (map (group: [["group:${group}"]]) groups);
+        policy = if two_factor then "two_factor" else "one_factor";
+        subject = builtins.concatLists (map (group: [ [ "group:${group}" ] ]) groups);
       }
     ];
-in {
+in
+{
   options = {
     authelia = {
       enable = mkEnableOption "enable Authelia";
@@ -42,12 +47,13 @@ in {
   };
 
   config = mkIf config.authelia.enable {
-    age.secrets = let
-      cfg = {
-        owner = "authelia";
-        group = "authelia";
-      };
-    in
+    age.secrets =
+      let
+        cfg = {
+          owner = "authelia";
+          group = "authelia";
+        };
+      in
       mkSecrets {
         "authelia/storageKey" = cfg;
         "authelia/jwtKey" = cfg;
@@ -58,13 +64,13 @@ in {
       users.authelia = {
         isSystemUser = true;
         group = "authelia";
-        extraGroups = ["smtp"];
+        extraGroups = [ "smtp" ];
       };
-      groups.authelia = {};
+      groups.authelia = { };
     };
 
     systemd.services.authelia = {
-      after = ["postgresql.service"];
+      after = [ "postgresql.service" ];
     };
     systemd.services."authelia-${autheliaInstance}" = {
       environment = {
@@ -90,12 +96,11 @@ in {
           settingsFiles = [
             # neet to write this in plain text because nix to yaml is doing some weird stuff
             # see https://github.com/NixOS/nixpkgs/pull/299309 for details
-            (builtins.toFile
-              "authelia_id_provider_key.yaml"
-              ''                identity_providers:
-                  oidc:
-                    jwks:
-                    - key: {{ secret "/run/agenix/authelia/oAuth2PrivateKey" | mindent 10 "|" | msquote }}'')
+            (builtins.toFile "authelia_id_provider_key.yaml" ''
+              identity_providers:
+                oidc:
+                  jwks:
+                  - key: {{ secret "/run/agenix/authelia/oAuth2PrivateKey" | mindent 10 "|" | msquote }}'')
           ];
 
           settings = {
@@ -118,9 +123,9 @@ in {
               period = 30;
               skew = 1;
               secret_size = 32;
-              allowed_algorithms = ["SHA1"];
-              allowed_digits = [6];
-              allowed_periods = [30];
+              allowed_algorithms = [ "SHA1" ];
+              allowed_digits = [ 6 ];
+              allowed_periods = [ 30 ];
               disable_reuse_security_policy = false;
             };
 
@@ -176,7 +181,7 @@ in {
               networks = [
                 {
                   name = "internal";
-                  networks = ["127.0.0.1/32"];
+                  networks = [ "127.0.0.1/32" ];
                 }
               ];
               rules =
@@ -186,13 +191,13 @@ in {
                   {
                     domain_regex = ".*\.${base_domain_name}";
                     policy = "bypass";
-                    networks = ["internal"];
+                    networks = [ "internal" ];
                   }
                   {
                     domain_regex = ".*\.${base_domain_name}";
                     policy = "two_factor";
                     subject = [
-                      ["group:admin"]
+                      [ "group:admin" ]
                     ];
                   }
                 ]
@@ -205,11 +210,11 @@ in {
                 }
                 ++ mkUserRule {
                   appName = "nodered";
-                  groups = ["home"];
+                  groups = [ "home" ];
                 }
                 ++ mkUserRule {
                   appName = "zigbee2mqtt";
-                  groups = ["home"];
+                  groups = [ "home" ];
                 }
                 ++ mkUserRule {
                   appName = "apolline";
@@ -244,7 +249,7 @@ in {
               #   }
               # ];
               clients =
-                []
+                [ ]
                 ++ optionals config.nextcloud.enable [
                   {
                     client_name = "NextCloud";
@@ -255,7 +260,7 @@ in {
                     authorization_policy = "two_factor";
                     require_pkce = true;
                     pkce_challenge_method = "S256";
-                    redirect_uris = ["https://${config.nextcloud.domain}/apps/oidc_login/oidc"];
+                    redirect_uris = [ "https://${config.nextcloud.domain}/apps/oidc_login/oidc" ];
                     scopes = [
                       "openid"
                       "profile"
@@ -274,7 +279,7 @@ in {
                     client_secret = "$pbkdf2-sha512$310000$EZtlQ4D8vOBPYNwxDbNk.w$oD6J/PyDotGjOUjq2uLaDpdO.uAVX3LpSvQgxD.q.G9FS8JQ5CKhx3j8HPdJlV2Gt2Pmvo/P0dpsX01Cic3A/g";
                     public = false;
                     authorization_policy = "two_factor";
-                    redirect_uris = ["https://${config.forgejo.domain}/user/oauth2/authelia/callback"];
+                    redirect_uris = [ "https://${config.forgejo.domain}/user/oauth2/authelia/callback" ];
                     scopes = [
                       "openid"
                       "email"
@@ -292,7 +297,9 @@ in {
                     client_secret = "$pbkdf2-sha512$310000$XVZ/KKrIuhfG7m/bnQXEHQ$/cHzLB6xyflth5HKJWR/Lc.//j4S/YiJ6lSaEH.rmskegD6c4zdgbni1Q.yfZrdRBg13.E8MGSyw4X1KpECv7Q";
                     public = false;
                     authorization_policy = "two_factor";
-                    redirect_uris = ["https://${config.matrix.mas.domain}/upstream/callback/01H8PKNWKKRPCBW4YGH1RWV279"];
+                    redirect_uris = [
+                      "https://${config.matrix.mas.domain}/upstream/callback/01H8PKNWKKRPCBW4YGH1RWV279"
+                    ];
                     scopes = [
                       "openid"
                       "groups"
@@ -300,8 +307,11 @@ in {
                       "email"
                       "offline_access"
                     ];
-                    grant_types = ["refresh_token" "authorization_code"];
-                    response_types = ["code"];
+                    grant_types = [
+                      "refresh_token"
+                      "authorization_code"
+                    ];
+                    response_types = [ "code" ];
                   }
                 ]
                 ++ optionals config.proxmox.enable [
@@ -315,7 +325,7 @@ in {
                     pkce_challenge_method = "S256";
                     userinfo_signed_response_alg = "none";
                     token_endpoint_auth_method = "client_secret_basic";
-                    redirect_uris = ["https://${config.proxmox.domain}"];
+                    redirect_uris = [ "https://${config.proxmox.domain}" ];
                     scopes = [
                       "openid"
                       "profile"
@@ -332,7 +342,7 @@ in {
                     authorization_policy = "two_factor";
                     require_pkce = true;
                     pkce_challenge_method = "S256";
-                    redirect_uris = ["https://${config.influxdb.grafana.domain}/login/generic_oauth"];
+                    redirect_uris = [ "https://${config.influxdb.grafana.domain}/login/generic_oauth" ];
                     scopes = [
                       "openid"
                       "profile"
@@ -376,7 +386,7 @@ in {
 
       postgresql = {
         enable = true;
-        ensureDatabases = ["authelia"];
+        ensureDatabases = [ "authelia" ];
         ensureUsers = [
           {
             name = "authelia";

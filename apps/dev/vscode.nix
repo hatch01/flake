@@ -3,9 +3,11 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     vscode.enable = mkEnableOption "vscode";
   };
@@ -87,7 +89,7 @@ in {
             "nix.serverSettings" = {
               "nixd" = {
                 "formatting" = {
-                  "command" = ["alejandra"]; # // or nixfmt or nixpkgs-fmt
+                  "command" = [ "alejandra" ]; # // or nixfmt or nixpkgs-fmt
                 };
                 "options" = {
                   nixpkgs.expr = "(builtins.getFlake \"/home/eymeric/tmp/flake\").inputs.nixpkgs";
@@ -103,7 +105,7 @@ in {
               "expr" = "import <nixpkgs> { }";
             };
             "formatting" = {
-              "command" = ["alejandra"]; # or nixfmt or nixpkgs-fmt
+              "command" = [ "alejandra" ]; # or nixfmt or nixpkgs-fmt
             };
 
             # vue

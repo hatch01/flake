@@ -1,5 +1,6 @@
-{...}: {
-  disabledModules = ["services/matrix/mautrix-discord.nix"];
+{ ... }:
+{
+  disabledModules = [ "services/matrix/mautrix-discord.nix" ];
   imports = [
     ./mautrix-discord.nix
   ];

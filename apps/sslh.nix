@@ -2,9 +2,16 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     sslh = {
       enable = mkEnableOption "enable sslh";
@@ -19,7 +26,10 @@ in {
   config = mkIf config.sslh.enable {
     services.sslh = {
       enable = true;
-      listenAddresses = ["0.0.0.0" "[::]"];
+      listenAddresses = [
+        "0.0.0.0"
+        "[::]"
+      ];
       port = config.sslh.port;
       settings = {
         timeout = 1000;

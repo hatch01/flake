@@ -2,48 +2,50 @@
   config,
   mkSecret,
   ...
-}: let
-  ipv4 = {method = "auto";};
+}:
+let
+  ipv4 = {
+    method = "auto";
+  };
   ipv6 = {
     addr-gen-mode = "default";
     method = "auto";
   };
-in {
+in
+{
   age = {
-    secrets = mkSecret "desktop/wifi" {root = true;};
+    secrets = mkSecret "desktop/wifi" { root = true; };
   };
   #networks
   networking.networkmanager.ensureProfiles = {
-    environmentFiles = ["${config.age.secrets."desktop/wifi".path}"];
-    profiles = let
-      mkWifi = name: args: {
-        ${name} = {
-          connection = {
-            id = name;
-            # uuid = "4da44d32-bd84-4e91-9f7b-649567c0bced";
-            type = "wifi";
-            permissions = "";
+    environmentFiles = [ "${config.age.secrets."desktop/wifi".path}" ];
+    profiles =
+      let
+        mkWifi = name: args: {
+          ${name} = {
+            connection = {
+              id = name;
+              # uuid = "4da44d32-bd84-4e91-9f7b-649567c0bced";
+              type = "wifi";
+              permissions = "";
+            };
+            wifi = {
+              mode = "infrastructure";
+              ssid = name;
+            };
+            wifi-security = {
+              key-mgmt = "wpa-psk";
+              psk = if (args.password or "") != "" then args.password else "\$${name}_password";
+            };
+            inherit ipv4 ipv6;
           };
-          wifi = {
-            mode = "infrastructure";
-            ssid = name;
-          };
-          wifi-security = {
-            key-mgmt = "wpa-psk";
-            psk =
-              if (args.password or "") != ""
-              then args.password
-              else "\$${name}_password";
-          };
-          inherit ipv4 ipv6;
         };
-      };
-    in
-      mkWifi "HHCuisine" {}
-      // mkWifi "HHCuisine5G" {password = "$HHCuisine_password";}
-      // mkWifi "Onyx" {}
-      // mkWifi "Onyx 5G" {password = "$Onyx_password";}
-      // mkWifi "Installe onyx !" {password = "$onyx2_password";}
+      in
+      mkWifi "HHCuisine" { }
+      // mkWifi "HHCuisine5G" { password = "$HHCuisine_password"; }
+      // mkWifi "Onyx" { }
+      // mkWifi "Onyx 5G" { password = "$Onyx_password"; }
+      // mkWifi "Installe onyx !" { password = "$onyx2_password"; }
       // {
         eduroam = {
           connection = {

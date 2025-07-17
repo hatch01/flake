@@ -3,13 +3,14 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.services.mautrix-discord;
   dataDir = "/var/lib/mautrix-discord";
   registrationFile = "${dataDir}/discord-registration.yaml";
   settingsFile = "${dataDir}/config.yaml";
   settingsFileUnsubstituted = settingsFormat.generate "mautrix-discord-config-unsubstituted.json" cfg.settings;
-  settingsFormat = pkgs.formats.json {};
+  settingsFormat = pkgs.formats.json { };
   appservicePort = 29334;
 
   # to be used with a list of lib.mkIf values
@@ -33,8 +34,8 @@
     bridge = {
       username_template = "discord_{{.}}";
       displayname_template = "{{or .ProfileName .PhoneNumber \"Unknown user\"}}";
-      double_puppet_server_map = {};
-      login_shared_secret_map = {};
+      double_puppet_server_map = { };
+      login_shared_secret_map = { };
       command_prefix = "!discord";
       permissions."*" = "relay";
       relay.enabled = true;
@@ -48,7 +49,8 @@
       };
     };
   };
-in {
+in
+{
   options.services.mautrix-discord = {
     enable = lib.mkEnableOption "mautrix-discord, a Matrix-Discord puppeting bridge";
 
@@ -142,34 +144,37 @@ in {
       description = "Mautrix-Discord bridge user";
     };
 
-    users.groups.mautrix-discord = {};
+    users.groups.mautrix-discord = { };
 
     services.matrix-synapse = lib.mkIf cfg.registerToSynapse {
-      settings.app_service_config_files = [registrationFile];
+      settings.app_service_config_files = [ registrationFile ];
     };
     systemd.services.matrix-synapse = lib.mkIf cfg.registerToSynapse {
-      serviceConfig.SupplementaryGroups = ["mautrix-discord"];
+      serviceConfig.SupplementaryGroups = [ "mautrix-discord" ];
     };
 
     # Note: this is defined here to avoid the docs depending on `config`
-    services.mautrix-discord.settings.homeserver = optOneOf (with config.services; [
-      (lib.mkIf matrix-synapse.enable (mkDefaults {
-        domain = matrix-synapse.settings.server_name;
-      }))
-      (lib.mkIf matrix-conduit.enable (mkDefaults {
-        domain = matrix-conduit.settings.global.server_name;
-        address = "http://localhost:${toString matrix-conduit.settings.global.port}";
-      }))
-    ]);
+    services.mautrix-discord.settings.homeserver = optOneOf (
+      with config.services;
+      [
+        (lib.mkIf matrix-synapse.enable (mkDefaults {
+          domain = matrix-synapse.settings.server_name;
+        }))
+        (lib.mkIf matrix-conduit.enable (mkDefaults {
+          domain = matrix-conduit.settings.global.server_name;
+          address = "http://localhost:${toString matrix-conduit.settings.global.port}";
+        }))
+      ]
+    );
 
     systemd.services.mautrix-discord = {
       description = "mautrix-discord, a Matrix-Discord puppeting bridge.";
 
-      wantedBy = ["multi-user.target"];
-      wants = ["network-online.target"] ++ cfg.serviceDependencies;
-      after = ["network-online.target"] ++ cfg.serviceDependencies;
+      wantedBy = [ "multi-user.target" ];
+      wants = [ "network-online.target" ] ++ cfg.serviceDependencies;
+      after = [ "network-online.target" ] ++ cfg.serviceDependencies;
       # ffmpeg is required for conversion of voice messages
-      path = [pkgs.lottieconverter];
+      path = [ pkgs.lottieconverter ];
 
       preStart = ''
         # substitute the settings file by environment variables
@@ -236,12 +241,12 @@ in {
         RestrictSUIDSGID = true;
         SystemCallArchitectures = "native";
         SystemCallErrorNumber = "EPERM";
-        SystemCallFilter = ["@system-service"];
+        SystemCallFilter = [ "@system-service" ];
         Type = "simple";
-        UMask = 0027;
+        UMask = 27;
       };
-      restartTriggers = [settingsFileUnsubstituted];
+      restartTriggers = [ settingsFileUnsubstituted ];
     };
   };
-  meta.maintainers = with lib.maintainers; [niklaskorz];
+  meta.maintainers = with lib.maintainers; [ niklaskorz ];
 }

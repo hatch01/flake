@@ -3,18 +3,17 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   imports = [
-    (
-      import ../../apps/vfio.nix {
-        # RTX 3060
-        gpuIDs = [
-          "10de:25a5" # Graphics
-          "10de:2291" # Audio
-        ];
-        inherit config lib;
-      }
-    )
+    (import ../../apps/vfio.nix {
+      # RTX 3060
+      gpuIDs = [
+        "10de:25a5" # Graphics
+        "10de:2291" # Audio
+      ];
+      inherit config lib;
+    })
   ];
 
   ollama.cudaEnabled = true;
@@ -25,7 +24,7 @@
     nvtopPackages.full
   ];
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia-container-toolkit.enable = true;
   vfio.enable = false;
@@ -75,7 +74,7 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = [pkgs.mesa];
+    extraPackages = [ pkgs.mesa ];
   };
   # Load nvidia driver for Xorg and Wayland
   hardware.nvidia = {

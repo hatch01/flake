@@ -3,11 +3,13 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   thunderbird_profile = "default_thunderbird";
 
   inherit (lib) mkEnableOption mkDefault mkIf;
-in {
+in
+{
   options = {
     thunderbird.enable = mkEnableOption "Enable Thunderbird";
     thunderbird.account.eymericdechelette_gmail.enable = mkEnableOption "Enable Eymeric Déchelette Gmail account";
@@ -51,7 +53,7 @@ in {
 
           thunderbird = {
             enable = true;
-            profiles = ["${thunderbird_profile}"];
+            profiles = [ "${thunderbird_profile}" ];
             settings = id: {
               "mail.smtpserver.smtp_${id}.authMode" = 10;
               "mail.server.server_${id}.authMethod" = 10;
@@ -72,7 +74,7 @@ in {
           smtp.tls.enable = true;
           thunderbird = {
             enable = true;
-            profiles = ["${thunderbird_profile}"];
+            profiles = [ "${thunderbird_profile}" ];
             settings = id: {
               "mail.smtpserver.smtp_${id}.authMode" = 10;
               "mail.server.server_${id}.authMethod" = 10;
@@ -94,7 +96,7 @@ in {
           primary = true;
           thunderbird = {
             enable = true;
-            profiles = ["${thunderbird_profile}"];
+            profiles = [ "${thunderbird_profile}" ];
             settings = id: {
               "mail.identity.id_${id}.reply_on_top" = 1;
             };
@@ -113,7 +115,7 @@ in {
           smtp.tls.enable = true;
           thunderbird = {
             enable = true;
-            profiles = ["${thunderbird_profile}"];
+            profiles = [ "${thunderbird_profile}" ];
             settings = id: {
               "mail.identity.id_${id}.reply_on_top" = 1;
             };
@@ -128,7 +130,7 @@ in {
           userName = "hatchlechien@gmail.com";
           thunderbird = {
             enable = true;
-            profiles = ["${thunderbird_profile}"];
+            profiles = [ "${thunderbird_profile}" ];
             settings = id: {
               "mail.smtpserver.smtp_${id}.authMode" = 10;
               "mail.server.server_${id}.authMethod" = 10;
@@ -151,7 +153,7 @@ in {
 
           thunderbird = {
             enable = true;
-            profiles = ["${thunderbird_profile}"];
+            profiles = [ "${thunderbird_profile}" ];
             settings = id: {
               "mail.identity.id_${id}.reply_on_top" = 1;
             };

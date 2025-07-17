@@ -2,7 +2,10 @@
   description = "Eymeric's NixOS Flake";
 
   nixConfig = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     substituters = [
       "https://cache.onyx.ovh"
       "https://cache.nixos.org"
@@ -111,47 +114,26 @@
       inputs.flake-parts.follows = "flake-parts";
     };
   };
-  outputs = {flake-parts, ...} @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux"];
+  outputs =
+    { flake-parts, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
       imports = [
         # inputs.pre-commit-hooks-nix.flakeModule
         # inputs.treefmt-nix.flakeModule
         ./systems
       ];
 
-      perSystem = {pkgs, ...}: {
-        # # Auto formatters. This also adds a flake check to ensure that the
-        # # source tree was auto formatted.
-        # treefmt.config = {
-        #   projectRootFile = ".git/config";
-        #   package = pkgs.treefmt;
-        #   flakeCheck = false; # use pre-commit's check instead
-        #   programs = {
-        #     alejandra.enable = true;
-        #     shellcheck.enable = false;
-        #     shfmt = {
-        #       indent_size = null;
-        #     };
-        #     prettier.enable = true;
-        #   };
-        # };
-
-        # pre-commit = {
-        #   check.enable = true;
-        #   settings.hooks = {
-        #     ripsecrets = {
-        #       enable = true;
-        #     };
-        #     treefmt.enable = true;
-        #     typos.enable = false;
-        #   };
-        # };
-        devShells.default = pkgs.mkShell {
-          # Inherit all of the pre-commit hooks.
-          # inputsFrom = [config.pre-commit.devShell];
-          buildInputs = with pkgs; [pkgs.deploy-rs just alejandra];
+      perSystem =
+        { pkgs, ... }:
+        {
+          formatter = pkgs.nixfmt-tree;
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              pkgs.deploy-rs
+              just
+            ];
+          };
         };
-      };
     };
 }

@@ -4,9 +4,16 @@
   mkSecrets,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     gitlab = {
       enable = mkEnableOption "enable Gitlab";
@@ -23,14 +30,14 @@ in {
   ];
 
   config = mkIf config.gitlab.enable {
-    age.secrets = let
-      cfg = {
-        owner = "gitlab";
-        group = "gitlab";
-      };
-    in
-      mkSecrets
-      {
+    age.secrets =
+      let
+        cfg = {
+          owner = "gitlab";
+          group = "gitlab";
+        };
+      in
+      mkSecrets {
         "gitlab/databasePasswordFile" = cfg;
         "gitlab/initialRootPasswordFile" = cfg;
         "gitlab/secretFile" = cfg;
@@ -40,7 +47,7 @@ in {
         "gitlab/openIdKey" = cfg;
       };
 
-    users.users.gitlab.extraGroups = ["smtp"];
+    users.users.gitlab.extraGroups = [ "smtp" ];
 
     services.gitlab = {
       enable = true;
@@ -81,7 +88,7 @@ in {
         omniauth = {
           enabled = true;
           auto_sign_in_with_provider = "openid_connect";
-          allow_single_sign_on = ["openid_connect"];
+          allow_single_sign_on = [ "openid_connect" ];
           block_auto_created_users = false;
           providers = [
             {
@@ -93,7 +100,12 @@ in {
                 strategy_class = "OmniAuth::Strategies::OpenIDConnect";
                 issuer = "https://${config.authelia.domain}";
                 discovery = true;
-                scope = ["openid" "profile" "email" "groups"];
+                scope = [
+                  "openid"
+                  "profile"
+                  "email"
+                  "groups"
+                ];
                 client_auth_method = "basic";
                 response_type = "code";
                 response_mode = "query";
@@ -102,7 +114,9 @@ in {
                 pkce = true;
                 client_options = {
                   identifier = "gitlab";
-                  secret = {_secret = "${config.age.secrets."gitlab/openIdKey".path}";};
+                  secret = {
+                    _secret = "${config.age.secrets."gitlab/openIdKey".path}";
+                  };
                   redirect_uri = "https://${config.gitlab.domain}/users/auth/openid_connect/callback";
                 };
               };

@@ -1,4 +1,5 @@
-{mkSecret, ...}: {
+{ mkSecret, ... }:
+{
   imports = [
     ../apps/proxmox.nix
   ];

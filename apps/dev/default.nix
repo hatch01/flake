@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption optionals;
-in {
+in
+{
   imports = [
     ./editors.nix
     ./arduino.nix
@@ -17,10 +19,10 @@ in {
   };
 
   config = {
-    environment.systemPackages = with pkgs;
-      []
-      ++ optionals config.dev.androidtools.enable
-      [
+    environment.systemPackages =
+      with pkgs;
+      [ ]
+      ++ optionals config.dev.androidtools.enable [
         android-tools
         scrcpy
       ]

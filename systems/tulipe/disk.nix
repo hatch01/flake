@@ -45,19 +45,29 @@
             size = "400G";
             content = {
               type = "btrfs";
-              extraArgs = ["-f"];
+              extraArgs = [ "-f" ];
               subvolumes = {
                 "/root" = {
                   mountpoint = "/";
-                  mountOptions = ["compress=zstd" "noatime"];
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                  ];
                 };
                 "/nix" = {
                   mountpoint = "/nix";
-                  mountOptions = ["compress=zstd" "noatime"];
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                  ];
                 };
                 "/var" = {
                   mountpoint = "/var";
-                  mountOptions = ["compress=zstd" "noatime" "nodatacow"];
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                    "nodatacow"
+                  ];
                 };
               };
             };

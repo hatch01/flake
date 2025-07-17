@@ -8,9 +8,10 @@
   mkSecrets,
   sshPublicKey,
   ...
-}: {
+}:
+{
   imports = [
-    (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" username])
+    (lib.mkAliasOptionModule [ "hm" ] [ "home-manager" "users" username ])
     ../apps
     ../modules
   ];
@@ -21,13 +22,17 @@
   zshConfig.enable = true;
 
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    trusted-users = ["@wheel"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [ "@wheel" ];
   };
 
   nixpkgs = {
     config = {
-      allowUnfreePredicate = pkg:
+      allowUnfreePredicate =
+        pkg:
         builtins.elem (lib.getName pkg) [
           # vscode
           "vscode"
@@ -98,7 +103,7 @@
           "libcusparse"
           "libnpp"
           "libXNVCtrl"
-          "blender" #only because of cuda
+          "blender" # only because of cuda
 
           # server
           "corefonts"
@@ -117,15 +122,17 @@
       ((import ../overlays/unstable.nix) inputs.nixpkgs-unstable)
       ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
       (final: prev: {
-        kalker = prev.callPackage ../overlays/kalker.nix {};
+        kalker = prev.callPackage ../overlays/kalker.nix { };
       })
     ];
   };
 
   age = {
     secrets = mkSecrets {
-      rootPassword = {};
-      githubToken = {root = true;};
+      rootPassword = { };
+      githubToken = {
+        root = true;
+      };
     };
   };
 
@@ -166,7 +173,7 @@
   };
 
   nix = {
-    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     # package = pkgs.lix;
     optimise.automatic = true;
     extraOptions = ''
@@ -179,47 +186,50 @@
   };
 
   environment = {
-    systemPackages = with pkgs; let
-      inherit (pkgs.stdenv.hostPlatform) system;
-    in [
-      inputs.agenix.packages.${system}.default
-      neovim
-      wget
-      tealdeer
-      sbctl
-      just
-      clang
-      killall
-      nmap
-      openvpn
-      nix-index
-      nix-output-monitor
-      nvd
-      openssl
-      pv # monitor the progress of data through a pipe
-      hyfetch
-      zip
-      unzip
-      file
-      which
-      tree
-      gnupg
-      bat
-      trash-cli
-      btop # replacement of htop/nmon
-      iotop # io monitoring
-      iftop # network monitoring
-      nixfmt-rfc-style
-      alejandra
-      nixd
-      sqlite
+    systemPackages =
+      with pkgs;
+      let
+        inherit (pkgs.stdenv.hostPlatform) system;
+      in
+      [
+        inputs.agenix.packages.${system}.default
+        neovim
+        wget
+        tealdeer
+        sbctl
+        just
+        clang
+        killall
+        nmap
+        openvpn
+        nix-index
+        nix-output-monitor
+        nvd
+        openssl
+        pv # monitor the progress of data through a pipe
+        hyfetch
+        zip
+        unzip
+        file
+        which
+        tree
+        gnupg
+        bat
+        trash-cli
+        btop # replacement of htop/nmon
+        iotop # io monitoring
+        iftop # network monitoring
+        nixfmt-rfc-style
+        alejandra
+        nixd
+        sqlite
 
-      # python is useful
-      virtualenv
-      poetry
-      uv
-      (python3.withPackages (ps: []))
-    ];
+        # python is useful
+        virtualenv
+        poetry
+        uv
+        (python3.withPackages (ps: [ ]))
+      ];
   };
 
   programs.neovim = {
@@ -244,8 +254,8 @@
     extraConfig = "Defaults targetpw";
     extraRules = [
       {
-        users = ["ALL"];
-        commands = ["SETENV: ALL"];
+        users = [ "ALL" ];
+        commands = [ "SETENV: ALL" ];
       }
     ];
   };

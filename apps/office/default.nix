@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) optionals mkEnableOption;
-in {
+in
+{
   imports = [
     ./ghostwriter.nix
   ];
@@ -17,10 +19,10 @@ in {
   };
 
   config = {
-    environment.systemPackages = with pkgs;
-      []
-      ++ optionals config.office.enable
-      [
+    environment.systemPackages =
+      with pkgs;
+      [ ]
+      ++ optionals config.office.enable [
         pdfarranger
         rnote
         anytype

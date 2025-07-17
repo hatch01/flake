@@ -6,7 +6,8 @@
   mkSecrets,
   base_domain_name,
   ...
-}: {
+}:
+{
   imports = [
     ./impermanence.nix
     ./foodi.nix
@@ -31,7 +32,7 @@
   homeassistant.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
-  services.nginx.defaultListenAddresses = ["127.0.0.1"];
+  services.nginx.defaultListenAddresses = [ "127.0.0.1" ];
   services.nginx.defaultSSLListenPort = 4443;
   librespeed.enable = true;
   apolline.enable = true;
@@ -45,10 +46,10 @@
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;
   boot.loader.timeout = 1;
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   age = {
-    identityPaths = ["/persistent/key"];
+    identityPaths = [ "/persistent/key" ];
 
     secrets = mkSecrets {
       "server/smtpPassword" = {
@@ -71,7 +72,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # zfs
-  boot.supportedFilesystems = ["zfs"];
+  boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
   systemd.services.zfs-mount.enable = false;
 
@@ -128,7 +129,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     mutableUsers = false;
-    groups.smtp = {};
+    groups.smtp = { };
   };
 
   # Enable the OpenSSH daemon.
@@ -140,7 +141,7 @@
   };
 
   nix.optimise.automatic = true;
-  nix.optimise.dates = ["03:45"]; # Optional; allows customizing optimisation schedule
+  nix.optimise.dates = [ "03:45" ]; # Optional; allows customizing optimisation schedule
 
   nix.extraOptions = ''
     !include ${config.age.secrets.githubToken.path}

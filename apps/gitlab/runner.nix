@@ -4,9 +4,11 @@
   mkSecret,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf;
-in {
+in
+{
   config = mkIf config.gitlab.enable {
     age.secrets = mkSecret "gitlab/runnerRegistrationConfigFile" {
       # owner = "root";
@@ -62,7 +64,17 @@ in {
             . ${pkgs.nix}/etc/profile.d/nix-daemon.sh
             ${pkgs.nix}/bin/nix-channel --add https://nixos.org/channels/nixos-unstable  nixpkgs
             ${pkgs.nix}/bin/nix-channel --update nixpkgs
-            ${pkgs.nix}/bin/nix-env -i ${concatStringsSep " " (with pkgs; [nix cacert git openssh])}
+            ${pkgs.nix}/bin/nix-env -i ${
+              concatStringsSep " " (
+                with pkgs;
+                [
+                  nix
+                  cacert
+                  git
+                  openssh
+                ]
+              )
+            }
           '';
           environmentVariables = {
             ENV = "/etc/profile";

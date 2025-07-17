@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     ollama.enable = mkEnableOption "Enable nix-related";
     ollama.cudaEnabled = mkEnableOption "Enable CUDA";

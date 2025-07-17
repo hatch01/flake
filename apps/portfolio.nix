@@ -4,9 +4,11 @@
   inputs,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkOption mkIf;
-in {
+in
+{
   options = {
     portfolio.enable = mkEnableOption "Enable portfolio";
     portfolio.port = mkOption {
@@ -27,13 +29,13 @@ in {
         group = "portfolio";
         isSystemUser = true;
       };
-      groups.portfolio = {};
+      groups.portfolio = { };
     };
 
     systemd.services.portfolio = {
       enable = true;
       description = "portfolio";
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Restart = "on-failure";
         ExecStart = "${inputs.portfolio.packages.${pkgs.system}.default}/bin/portfolio";

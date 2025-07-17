@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf optionals;
-in {
+in
+{
   imports = [
     ./vscode.nix
   ];
@@ -16,7 +18,8 @@ in {
 
   config = mkIf config.dev.enable {
     arduino.enable = true;
-    environment.systemPackages = with pkgs;
+    environment.systemPackages =
+      with pkgs;
       [
         neovide
         zed-editor

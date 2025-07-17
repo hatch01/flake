@@ -3,9 +3,16 @@
   config,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     adguard = {
       enable = mkEnableOption "enable Adguard";
@@ -36,8 +43,8 @@ in {
       settings = {
         dns = {
           upstream_dns = [
-            "9.9.9.9" #dns.quad9.net
-            "149.112.112.112" #dns.quad9.net
+            "9.9.9.9" # dns.quad9.net
+            "149.112.112.112" # dns.quad9.net
           ];
           anonymize_client_ip = true;
           enable_dnssec = true;
@@ -81,24 +88,26 @@ in {
         # to not have to manually create {enabled = true; url = "";} for every filter
         # This is, however, fully optional
         filters =
-          map (url: {
-            enabled = true;
-            url = url;
-          }) [
-            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
-            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
-            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt" # uBlock₀ filters – Badware risk
-            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt" # AdGuard DNS filter
-            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_59.txt" # AdGuard DNS Popup Hosts filter
-            "https://big.oisd.nl"
-            "https://hblock.molinero.dev/hosts"
-            "https://hblock.molinero.dev/hosts_adblock.txt"
-          ];
+          map
+            (url: {
+              enabled = true;
+              url = url;
+            })
+            [
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt" # uBlock₀ filters – Badware risk
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt" # AdGuard DNS filter
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_59.txt" # AdGuard DNS Popup Hosts filter
+              "https://big.oisd.nl"
+              "https://hblock.molinero.dev/hosts"
+              "https://hblock.molinero.dev/hosts_adblock.txt"
+            ];
         user_rules = [
           "@@||copilot-telemetry.githubusercontent.com^"
         ];
       };
     };
-    networking.firewall.allowedTCPPorts = [853];
+    networking.firewall.allowedTCPPorts = [ 853 ];
   };
 }

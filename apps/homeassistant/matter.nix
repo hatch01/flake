@@ -4,9 +4,16 @@
   base_domain_name,
   inputs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     matter = {
       enable = mkEnableOption "enable matter";

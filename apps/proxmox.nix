@@ -5,9 +5,16 @@
   system,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
+in
+{
   options = {
     proxmox = {
       enable = mkEnableOption "Enable Proxmox";
@@ -42,7 +49,7 @@ in {
     # networking.bridges.vmbr0.interfaces = ["ens18"];
     # networking.interfaces.vmbr0.useDHCP = lib.mkDefault true;
 
-    networking.bridges.vmbr0.interfaces = ["eno1"];
+    networking.bridges.vmbr0.interfaces = [ "eno1" ];
     networking.interfaces.vmbr0.useDHCP = lib.mkDefault true;
 
     programs.fuse.userAllowOther = true;

@@ -3,9 +3,16 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) optionals mkEnableOption mkDefault mkIf;
-in {
+}:
+let
+  inherit (lib)
+    optionals
+    mkEnableOption
+    mkDefault
+    mkIf
+    ;
+in
+{
   options = {
     gaming.enable = mkEnableOption "Enable Gaming";
     remotePlay.enable = mkEnableOption "Enable Steam Remote Play";
@@ -45,13 +52,23 @@ in {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
     };
 
-    environment.systemPackages = with pkgs;
-      [mangohud dolphin-emu]
-      ++ optionals config.steam.protonup.enable [protonup protontricks]
-      ++ optionals config.minecraft.enable [prismlauncher]
-      ++ optionals config.steam.enable [ludusavi] # a backup tool for Steam games
-      ++ optionals config.remotePlay.enable [parsec-bin]
-      ++ optionals config.winetools.enable [bottles wine]
-      ++ optionals config.heroic.enable [pkgs.heroic];
+    environment.systemPackages =
+      with pkgs;
+      [
+        mangohud
+        dolphin-emu
+      ]
+      ++ optionals config.steam.protonup.enable [
+        protonup
+        protontricks
+      ]
+      ++ optionals config.minecraft.enable [ prismlauncher ]
+      ++ optionals config.steam.enable [ ludusavi ] # a backup tool for Steam games
+      ++ optionals config.remotePlay.enable [ parsec-bin ]
+      ++ optionals config.winetools.enable [
+        bottles
+        wine
+      ]
+      ++ optionals config.heroic.enable [ pkgs.heroic ];
   };
 }

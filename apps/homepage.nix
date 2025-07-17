@@ -4,9 +4,16 @@
   lib,
   base_domain_name,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-in {
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
+in
+{
   options = {
     homepage = {
       enable = mkEnableOption "Enable homepage";
@@ -34,7 +41,7 @@ in {
         enable = true;
         openFirewall = false;
         environmentFile = config.age.secrets.homepage.path;
-        bookmarks = [];
+        bookmarks = [ ];
         listenPort = config.homepage.port;
         allowedHosts = config.homepage.domain;
 
@@ -228,7 +235,7 @@ in {
             resources = {
               cpu = true;
               memory = true;
-              disk = ["/dev/disk/by-partlabel/disk-main-root"];
+              disk = [ "/dev/disk/by-partlabel/disk-main-root" ];
               cputemp = true;
               tempmin = 0;
               tempmax = 100;
@@ -239,8 +246,8 @@ in {
             };
           }
         ];
-        kubernetes = [];
-        docker = [];
+        kubernetes = [ ];
+        docker = [ ];
         customJS = "";
         customCSS = "";
       };

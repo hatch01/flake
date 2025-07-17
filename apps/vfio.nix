@@ -4,11 +4,12 @@
   config,
   gpuIDs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
-  options.vfio.enable =
-    mkEnableOption "Configure the machine for VFIO";
+in
+{
+  options.vfio.enable = mkEnableOption "Configure the machine for VFIO";
 
   config = mkIf config.vfio.enable {
     boot = {

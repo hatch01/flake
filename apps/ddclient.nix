@@ -3,9 +3,11 @@
   config,
   mkSecret,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     ddclient = {
       enable = mkEnableOption "enable ddclient";
@@ -13,7 +15,7 @@ in {
   };
 
   config = mkIf config.ddclient.enable {
-    age.secrets = mkSecret "dyndns" {};
+    age.secrets = mkSecret "dyndns" { };
 
     services.ddclient = {
       enable = true;

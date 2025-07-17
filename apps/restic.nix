@@ -4,9 +4,11 @@
   mkSecrets,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
-in {
+in
+{
   options = {
     restic.enable = mkEnableOption "Enable restic backup";
   };
@@ -17,17 +19,21 @@ in {
         mode = "600";
         root = true;
       };
-      "server/restic_key" = {root = true;};
-      "server/influx_root_token" = {root = true;};
+      "server/restic_key" = {
+        root = true;
+      };
+      "server/influx_root_token" = {
+        root = true;
+      };
     };
 
-    environment.systemPackages = [pkgs.restic];
+    environment.systemPackages = [ pkgs.restic ];
 
     services.restic.backups = {
       remotebackup = {
         initialize = true;
         environmentFile = config.age.secrets."server/influx_root_token".path;
-        pruneOpts = ["--keep-last 7"];
+        pruneOpts = [ "--keep-last 7" ];
         paths = [
           "/storage"
         ];
