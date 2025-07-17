@@ -31,7 +31,7 @@
   homeassistant.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
-  services.nginx.defaultListenAddresses = [ "127.0.0.1" ];
+  services.nginx.defaultListenAddresses = ["127.0.0.1"];
   services.nginx.defaultSSLListenPort = 4443;
   librespeed.enable = true;
   apolline.enable = true;
