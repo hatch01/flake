@@ -5,7 +5,6 @@
       config = prev.config;
     };
     unstablePackages = [
-    	"msmtp"
     ];
   in
     builtins.listToAttrs (map (x: {

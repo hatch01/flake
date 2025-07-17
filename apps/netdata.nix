@@ -3,6 +3,7 @@
   config,
   pkgs,
   base_domain_name,
+  mkSecret,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
@@ -24,8 +25,9 @@ in {
   };
 
   config = mkIf config.netdata.enable {
+    age.secrets = mkSecret "server/netdata_notify" {root = true;};
+
     systemd.services.netdata = {
-      path = [pkgs.msmtp];
       after = ["nginx.service" "postgresql.service" "fail2ban.service"];
     };
 
@@ -123,11 +125,7 @@ in {
               ];
             }
           );
-          "health_alarm_notify.conf" = pkgs.writeText "health_alarm_notify.conf" ''
-            EMAIL_SENDER="netdata@free.fr"
-            SEND_EMAIL="YES"
-            DEFAULT_RECIPIENT_EMAIL="eymeric.monitoring@free.fr"
-          '';
+          "health_alarm_notify.conf" = config.age.secrets."server/netdata_notify".path;
         };
       };
 
@@ -151,21 +149,6 @@ in {
         ensureUsers = [
           {name = "netdata";}
         ];
-      };
-    };
-
-    programs.msmtp = {
-      enable = true;
-      accounts = {
-        default = {
-          auth = true;
-          host = "smtp.free.fr";
-          port = 587;
-          tls = true;
-          passwordeval = "cat ${config.age.secrets."server/smtpPassword".path}";
-          user = "eymeric.monitoring";
-          from = "netdata@free.fr";
-        };
       };
     };
 

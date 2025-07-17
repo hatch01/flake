@@ -22,6 +22,7 @@ let
       "cockpit_private_key"
       "restic_key"
       "influx_root_token"
+      "netdata_notify"
     ]
     // defineSecrets "tulipe" [
       "userPassword"
