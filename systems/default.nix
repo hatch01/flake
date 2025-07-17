@@ -14,7 +14,7 @@
     nixosConfigurations = builtins.mapAttrs (name: value:
       inputs.nixpkgs-patcher.lib.nixosSystem {
         nixpkgsPatcher = {
-          nixpkgs = inputs.nixpkgs;
+          nixpkgs = if value.stable then inputs.nixpkgs else inputs.nixpkgs-stable;
           enable = true;
           patches = pkgs:
             with pkgs; [
@@ -127,6 +127,7 @@ in {
       system = "aarch64-linux";
       modules = server;
       domain = "lilas";
+      stable = true;
       specialArgs = {
         inherit inputs;
       };
