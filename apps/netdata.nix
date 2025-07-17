@@ -68,15 +68,9 @@ in {
           db = {
             mode = "dbengine";
             "storage tiers" = 3;
-
-            # Tier 0, per second data
-            "dbengine multihost disk space MB" = 1024;
-
-            # Tier 1, per minute data
-            "dbengine tier 1 multihost disk space MB" = 1024;
-
-            # Tier 2, per hour data
-            "dbengine tier 2 multihost disk space MB" = 1024;
+            "dbengine tier 0 retention time" = "14d";
+            "dbengine tier 1 retention time" = "3mo";
+            "dbengine tier 2 retention time" = "2y";
           };
         };
         configDir = {
