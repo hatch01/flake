@@ -8,7 +8,8 @@
   mkSecrets,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
@@ -18,7 +19,10 @@
   container.enable = lib.mkForce false;
   gatus.enable = true;
   cockpit.enable = true;
-  networking.firewall.allowedTCPPorts = [config.gatus.port config.cockpit.port];
+  networking.firewall.allowedTCPPorts = [
+    config.gatus.port
+    config.cockpit.port
+  ];
 
   services.kvmd = {
     enable = true;
@@ -34,7 +38,7 @@
   };
 
   age = {
-    identityPaths = ["/etc/age/key"];
+    identityPaths = [ "/etc/age/key" ];
 
     secrets = mkSecrets {
       "server/smtpPassword" = {
@@ -57,7 +61,10 @@
     enable = true;
     virtualHosts."lilas" = {
       listen = [
-        { addr = "0.0.0.0"; port = 80; }
+        {
+          addr = "0.0.0.0";
+          port = 80;
+        }
       ];
       locations."/" = {
         proxyPass = "http://unix:/run/kvmd/kvmd.sock";
@@ -74,8 +81,11 @@
   # Disable ZFS to avoid the build error
   # boot.supportedFilesystems.zfs = lib.mkForce false;
   boot.loader.timeout = 1;
-  boot.supportedFilesystems = lib.mkForce ["ext4" "vfat"];
-  boot.kernelParams = ["boot.shell_on_fail"];
+  boot.supportedFilesystems = lib.mkForce [
+    "ext4"
+    "vfat"
+  ];
+  boot.kernelParams = [ "boot.shell_on_fail" ];
 
   # Basic bootloader configuration
   boot.loader.grub.enable = false;
