@@ -16,6 +16,20 @@
     inputs.pikvm.nixosModules.default
   ];
 
+  environment.systemPackages = with pkgs; [
+    ffmpeg
+    i2c-tools
+    v4l-utils
+    gst_all_1.gstreamer
+    dtc
+  ];
+
+  hardware.i2c.enable = true;
+
+  hardware.raspberry-pi."4" = {
+    tc358743.enable = true;
+    apply-overlays-dtmerge.enable = true;
+  };
   container.enable = lib.mkForce false;
   gatus.enable = true;
   cockpit.enable = true;
@@ -67,7 +81,8 @@
         }
       ];
       locations."/" = {
-        proxyPass = "http://unix:/run/kvmd/kvmd.sock";
+        proxyPass = "http://unix:/run/kvmd/kvmd.sock:/";
+        proxyWebsockets = true;
         extraConfig = ''
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
@@ -86,13 +101,6 @@
     "vfat"
   ];
   boot.kernelParams = [ "boot.shell_on_fail" ];
-
-  # Basic bootloader configuration
-  boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
-
-  # Use latest kernel packages as in your configuration
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable firmware for Raspberry Pi
   hardware.enableRedistributableFirmware = true;

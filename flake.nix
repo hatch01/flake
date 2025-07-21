@@ -32,7 +32,8 @@
     nixpkgs-unstable.url = "nixpkgs/master";
     nixpkgs-stable.url = "nixpkgs/nixos-25.05";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    # nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware.url = "github:hatch01/nixos-hardware";
 
     systems.url = "github:nix-systems/default";
 
@@ -101,8 +102,8 @@
     };
 
     pikvm = {
-      #url = "/home/eymeric/tmp/nixos-pikvm";
-      url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
+      url = "/home/eymeric/tmp/nixos-pikvm";
+      # url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
