@@ -184,42 +184,41 @@ in
                   networks = [ "127.0.0.1/32" ];
                 }
               ];
-              rules =
-                [
-                  # be careful with the order of the rules it is important
-                  # https://www.authelia.com/configuration/security/access-control/#rule-matching
-                  {
-                    domain_regex = ".*\.${base_domain_name}";
-                    policy = "bypass";
-                    networks = [ "internal" ];
-                  }
-                  {
-                    domain_regex = ".*\.${base_domain_name}";
-                    policy = "two_factor";
-                    subject = [
-                      [ "group:admin" ]
-                    ];
-                  }
-                ]
-                ++ mkUserRule {
-                  appName = "homepage";
-                  two_factor = false;
+              rules = [
+                # be careful with the order of the rules it is important
+                # https://www.authelia.com/configuration/security/access-control/#rule-matching
+                {
+                  domain_regex = ".*\.${base_domain_name}";
+                  policy = "bypass";
+                  networks = [ "internal" ];
                 }
-                ++ mkUserRule {
-                  appName = "librespeed";
+                {
+                  domain_regex = ".*\.${base_domain_name}";
+                  policy = "two_factor";
+                  subject = [
+                    [ "group:admin" ]
+                  ];
                 }
-                ++ mkUserRule {
-                  appName = "nodered";
-                  groups = [ "home" ];
-                }
-                ++ mkUserRule {
-                  appName = "zigbee2mqtt";
-                  groups = [ "home" ];
-                }
-                ++ mkUserRule {
-                  appName = "apolline";
-                  two_factor = false;
-                };
+              ]
+              ++ mkUserRule {
+                appName = "homepage";
+                two_factor = false;
+              }
+              ++ mkUserRule {
+                appName = "librespeed";
+              }
+              ++ mkUserRule {
+                appName = "nodered";
+                groups = [ "home" ];
+              }
+              ++ mkUserRule {
+                appName = "zigbee2mqtt";
+                groups = [ "home" ];
+              }
+              ++ mkUserRule {
+                appName = "apolline";
+                two_factor = false;
+              };
             };
 
             authentication_backend = {
