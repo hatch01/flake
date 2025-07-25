@@ -55,6 +55,7 @@ in
         external_converters = [
           "water.js"
         ];
+        availability =  true;
         devices = {
           "0x00158d0005d263a7" = {
             friendly_name = "ZLinky";
