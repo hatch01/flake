@@ -30,7 +30,8 @@ let
       conditions = [
         "[STATUS] == 200"
         "[RESPONSE_TIME] < 10000"
-      ] ++ conditions;
+      ]
+      ++ conditions;
     };
 in
 {
