@@ -19,18 +19,21 @@ let
           nixpkgs = if (value.stable or false) then inputs.nixpkgs-stable else inputs.nixpkgs;
           enable = true;
           patches =
-            pkgs: with pkgs; [
-              (fetchpatch2 {
-                name = "git-review-bump.patch";
-                url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
-                hash = "sha256-Hyn/mESLB118TA4Lbt5zaRi0e3GItZVh4lMFPFR9OoY=";
-              })
-              (fetchpatch2 {
-                name = "netdata.patch";
-                url = "https://github.com/NixOS/nixpkgs/pull/426186.diff";
-                hash = "sha256-pFgXxB4Iqnw2E5rFQ534+xED690sLtNykjmFsclFdjo=";
-              })
-            ];
+            if (value.stable or false) then
+              (_: [ ])
+            else
+              pkgs: with pkgs; [
+                (fetchpatch2 {
+                  name = "git-review-bump.patch";
+                  url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
+                  hash = "sha256-Hyn/mESLB118TA4Lbt5zaRi0e3GItZVh4lMFPFR9OoY=";
+                })
+                (fetchpatch2 {
+                  name = "netdata.patch";
+                  url = "https://github.com/NixOS/nixpkgs/pull/426186.diff";
+                  hash = "sha256-h/W9oxe4LCUjuJ7UoTkpYwz/pRK/MYJuWkA6ZosKdLY=";
+                })
+              ];
         };
         system = value.system;
         modules = value.modules ++ [
@@ -61,7 +64,8 @@ let
           mkSecret = secretName: other: mkSecrets { ${secretName} = other; };
           stable = value.stable or false;
           system = value.system;
-        } // (value.specialArgs or { });
+        }
+        // (value.specialArgs or { });
       }
     ) systems;
     deploy.nodes = builtins.mapAttrs (name: value: {
