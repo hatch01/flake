@@ -24,12 +24,6 @@
     dtc
   ];
 
-  hardware.i2c.enable = true;
-
-  hardware.raspberry-pi."4" = {
-    tc358743.enable = true;
-    apply-overlays-dtmerge.enable = true;
-  };
   container.enable = lib.mkForce false;
   gatus.enable = true;
   cockpit.enable = true;
