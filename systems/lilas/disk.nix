@@ -1,7 +1,7 @@
 {
   disko.devices =
     let
-      rootDisk = "/dev/sda";
+      rootDisk = "/dev/mmcblk1";
     in
     {
       disk = {
