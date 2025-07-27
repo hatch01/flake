@@ -7,10 +7,10 @@
         content = {
           type = "table";
           format = "msdos";
-          partitions = {
-            PIBOOT = {
-              label = "PIBOOT";
-              type = "primary";
+          partitions = [
+            {
+              name = "PIBOOT";
+              part-type = "primary";
               start = "0";
               end = "256MiB";
               content = {
@@ -18,10 +18,10 @@
                 format = "vfat";
                 mountpoint = "/boot";
               };
-            };
-            PIPST = {
-              label = "PIPST";
-              type = "primary";
+            }
+            {
+              name = "PIPST";
+              part-type = "primary";
               start = "256MiB";
               end = "512MiB";
               content = {
@@ -30,10 +30,10 @@
                 mountpoint = "/var/lib/kvmd/pst";
                 mountOptions = [ "reserved=0" ];
               };
-            };
-            PIROOT = {
-              label = "PIROOT";
-              type = "primary";
+            }
+            {
+              name = "PIROOT";
+              part-type = "primary";
               start = "512MiB";
               end = "6656MiB";
               content = {
@@ -41,10 +41,10 @@
                 format = "ext4";
                 mountpoint = "/";
               };
-            };
-            PIMSD = {
-              label = "PIMSD";
-              type = "primary";
+            }
+            {
+              name = "PIMSD";
+              part-type = "primary";
               start = "6656MiB";
               end = "100%";
               content = {
@@ -53,8 +53,8 @@
                 mountpoint = "/var/lib/kvmd/msd";
                 mountOptions = [ "reserved=0" ];
               };
-            };
-          };
+            }
+          ];
         };
       };
     };
