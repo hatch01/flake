@@ -28,7 +28,7 @@
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/var/lib/kvmd/pst";
-                mountOptions = [ "reserved=0" ];
+                mkfs.ext4.extraArgs = [ "-m" "0" ];
               };
             }
             {
@@ -51,7 +51,7 @@
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/var/lib/kvmd/msd";
-                mountOptions = [ "reserved=0" ];
+                mkfs.ext4.extraArgs = [ "-m" "0" ];
               };
             }
           ];
