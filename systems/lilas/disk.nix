@@ -35,7 +35,7 @@
               name = "PIROOT";
               part-type = "primary";
               start = "512MiB";
-              end = "6656MiB";
+              end = "51200MiB";
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -45,7 +45,7 @@
             {
               name = "PIMSD";
               part-type = "primary";
-              start = "6656MiB";
+              start = "51200MiB";
               end = "100%";
               content = {
                 type = "filesystem";
