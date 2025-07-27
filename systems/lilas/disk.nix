@@ -9,7 +9,8 @@
           device = rootDisk;
           type = "disk";
           content = {
-            type = "msdos";
+            type = "table";
+            format = "msdos";
             partitions = {
               PIBOOT = {
                 label = "PIBOOT";
