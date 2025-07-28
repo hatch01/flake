@@ -9,7 +9,6 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./disk.nix
   ];
 
   boot.initrd.availableKernelModules = [
@@ -19,6 +18,12 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/NIXOS_SD"; # this is important!
+    fsType = "ext4";
+    options = [ "noatime" ];
+  };
 
   swapDevices = [ ];
 
