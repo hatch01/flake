@@ -160,7 +160,7 @@ in
             # notifier needed for 2FA and email
             # https://www.authelia.com/configuration/notifications/introduction/
             notifier = {
-              disable_startup_check = false;
+              disable_startup_check = true;
               smtp = {
                 # using 587 port which is unencrypted I know but did not manage to make it working with 465
                 # however this is very not probable that someone will sniff the network
