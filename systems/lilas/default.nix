@@ -32,6 +32,8 @@
     config.cockpit.port
   ];
 
+  hardware.enableAllHardware = lib.mkForce false; # needed for sd image creation not crash : https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-2868994145
+
   services.kvmd = {
     enable = true;
     package = inputs.pikvm.packages.aarch64-linux.default;
