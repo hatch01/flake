@@ -4,3 +4,4 @@
 /result
 .direnv
 secrets/*.key
+*-sd-*
