@@ -29,7 +29,10 @@
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/var/lib/kvmd/pst";
-                extraArgs = [ "-m" "0" ];
+                extraArgs = [
+                  "-m"
+                  "0"
+                ];
               };
             }
             {
@@ -52,7 +55,10 @@
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/var/lib/kvmd/msd";
-                extraArgs = [ "-m" "0" ];
+                extraArgs = [
+                  "-m"
+                  "0"
+                ];
               };
             }
           ];
