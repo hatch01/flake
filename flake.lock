@@ -337,11 +337,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1753812716,
-        "narHash": "sha256-OjnjoalP00CyV34zg6T+Un2QoYiHCdRvMbqrweopyyY=",
+        "lastModified": 1753943136,
+        "narHash": "sha256-eiEE5SabVcIlGSTRcRyBjmJMaYAV95SJnjy8YSsVeW4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2f588d275ebd8243be6c29e7bf3ec7409baa0aa7",
+        "rev": "bd82507edd860c453471c46957cbbe3c9fd01b5c",
         "type": "github"
       },
       "original": {
@@ -401,11 +401,11 @@
         "nvchad-starter": "nvchad-starter"
       },
       "locked": {
-        "lastModified": 1753597837,
-        "narHash": "sha256-mgxkP0BmqaPotDEUGVEf/R8Hq+lvh5XmbA4Rw94ldEI=",
+        "lastModified": 1753920445,
+        "narHash": "sha256-I/j13/nejEWh8d0eBmbno2O49hjT0fv/AXzKPi+usAg=",
         "owner": "nix-community",
         "repo": "nix4nvchad",
-        "rev": "c7ef3874c638fe2b5182f3707b0a16fdc35ac5cc",
+        "rev": "ff90d48dbb9bbcc810e8a13b1b76541c28c83543",
         "type": "github"
       },
       "original": {
@@ -488,11 +488,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1753489912,
-        "narHash": "sha256-uDCFHeXdRIgJpYmtcUxGEsZ+hYlLPBhR83fdU+vbC1s=",
+        "lastModified": 1753749649,
+        "narHash": "sha256-+jkEZxs7bfOKfBIk430K+tK9IvXlwzqQQnppC2ZKFj4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "13e8d35b7d6028b7198f8186bc0347c6abaa2701",
+        "rev": "1f08a4df998e21f4e8be8fb6fbf61d11a1a5076a",
         "type": "github"
       },
       "original": {
@@ -518,11 +518,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1753816391,
-        "narHash": "sha256-douPNhCUMkSxtJTeFRQDZ/WzT8WlSxK9zrOM9uwhBco=",
+        "lastModified": 1753945832,
+        "narHash": "sha256-0FE/fld+HLqtQSauqT01qYNsHFN7En5Uz0YcxDBorQY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3cd0113c05fe252c445c264c3a5c94612c57c0c7",
+        "rev": "f65d381e7460ebbe5d516d2664d3f2ef9898d180",
         "type": "github"
       },
       "original": {
@@ -629,8 +629,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1753816826,
-        "narHash": "sha256-J3h/k7IaAFqCaNWoH1XlV4gJlBly+N8/CV5AlL59Tn4=",
+        "lastModified": 1753821519,
+        "narHash": "sha256-+2fbY91v3MrXJuWnc+knCLMZspP7L9XGlvk8xNNP8yE=",
         "path": "/home/eymeric/tmp/nixos-pikvm",
         "type": "path"
       },
