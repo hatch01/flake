@@ -33,18 +33,6 @@ let
                   url = "https://github.com/NixOS/nixpkgs/pull/426186.diff";
                   hash = "sha256-FXbUYP0oaoWI8Z6nEkN9VJk4d2H9zr3+5q6mRlyJl/4=";
                 })
-                (fetchpatch2 {
-                  # open-policy-agent: skip test too dependent on go version #428831
-                  name = "open-policy-agent.patch";
-                  url = "https://github.com/NixOS/nixpkgs/pull/428831.diff";
-                  hash = "sha256-ZLc2yUg/T/CdJd267UhbLlBXI1Ep40j+kUGVH99TgwI=";
-                })
-                (fetchpatch2 {
-                  # open-policy-agent: skip test too dependent on go version #428831
-                  name = "platformio.patch";
-                  url = "https://github.com/NixOS/nixpkgs/pull/429157.diff";
-                  hash = "sha256-O8CG0os+COa9Yr6fPzDsLJ7SYfNisWkKA5LZ6iMLJpo=";
-                })
               ];
         };
         system = value.system;
