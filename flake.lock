@@ -579,6 +579,18 @@
     },
     "nixpkgs_4": {
       "locked": {
+        "lastModified": 1754169897,
+        "narHash": "sha256-hcOifYabreAsfi5Buzptu2FckE2TRkV9MKNx9kLYWqo=",
+        "path": "/home/eymeric/code_bidouille/projet/nixpkgs",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/eymeric/code_bidouille/projet/nixpkgs",
+        "type": "path"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
         "lastModified": 0,
         "narHash": "sha256-G5n+FOXLXcRx+3hCJ6Rt6ZQyF1zqQ0DL0sWAMn2Nk0w=",
         "path": "/nix/store/fnc4632ncr5k5la19gp2gb255dx8pi9x-source",
@@ -589,7 +601,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1682134069,
         "narHash": "sha256-TnI/ZXSmRxQDt2sjRYK/8j8iha4B4zP2cnQCZZ3vp7k=",
@@ -624,13 +636,11 @@
       "inputs": {
         "flake-parts": "flake-parts_3",
         "nixos-hardware": "nixos-hardware_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1754152097,
-        "narHash": "sha256-bjBoLTFe7Jmn8oPvrYqeiN/+yigkbNH0wc09hI2uqOs=",
+        "lastModified": 1754170126,
+        "narHash": "sha256-WiVEk8lTlmha7vsw99gLaJyvclJMzzZZhVZVgghHBjw=",
         "path": "/home/eymeric/tmp/nixos-pikvm",
         "type": "path"
       },
@@ -686,7 +696,7 @@
     "portfolio": {
       "inputs": {
         "flake-parts": "flake-parts_5",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1743060492,
@@ -885,7 +895,7 @@
     "vscode-server": {
       "inputs": {
         "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1753541140,
