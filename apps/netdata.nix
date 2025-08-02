@@ -77,7 +77,7 @@ in
             "memory mode" = "map";
           };
           logs = {
-            level = "info";
+            level = "error";
           };
           ml = {
             "enabled" = "yes";
