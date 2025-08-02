@@ -23,7 +23,7 @@ in
             enable = true;
             registerToSynapse = true;
             settings = {
-              network.displayname_template = "{{or .DisplayName .Username \"Unknown user\"}}";
+              network.displayname_template = "{{or .DisplayName .Username \"Unknown user\"}} (Insta)";
               bridge = {
                 permissions = {
                   "*" = "relay";
