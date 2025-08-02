@@ -22,6 +22,7 @@ in
     ./discord.nix
     ./whatsapp.nix
     ./mas.nix
+    ./instagram.nix
   ];
 
   options = {
@@ -45,6 +46,7 @@ in
     matrix.whatsapp.enable = true;
     matrix.discord.enable = true;
     matrix.mas.enable = true;
+    matrix.instagram.enable = true;
 
     age.secrets = mkSecrets {
       "matrix_shared_secret" = {
