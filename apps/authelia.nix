@@ -222,6 +222,8 @@ in
             };
 
             authentication_backend = {
+              password_reset.disable = true;
+              password_change.disable = true;
               file = {
                 # a agenix managed yaml doc : https://www.authelia.com/reference/guides/passwords/#yaml-format
                 path = config.age.secrets."authelia/authBackend".path;
