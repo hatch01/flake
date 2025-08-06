@@ -35,8 +35,8 @@ in
       dataDir = "/storage/homeassistant/zigbee2mqtt";
 
       settings = {
-        homeassistant = true;
-        permit_join = false;
+        version = 4;
+        homeassistant.enabled = true;
         mqtt = {
           base_topic = "zigbee2mqtt";
           server = "mqtt://localhost";
@@ -52,10 +52,7 @@ in
         advanced = {
           log_level = "warning";
         };
-        external_converters = [
-          "water.js"
-        ];
-        availability = true;
+        availability.enabled = true;
         devices = {
           "0x00158d0005d263a7" = {
             friendly_name = "ZLinky";
