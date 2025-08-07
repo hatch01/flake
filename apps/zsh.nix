@@ -176,6 +176,7 @@ in
         enable = true;
         autosuggestion.enable = true;
         enableCompletion = true;
+        completionInit = ""; # not comp init because antidote will handle it
         shellAliases = {
           du = lib.getExe pkgs.dust;
           df = lib.getExe pkgs.duf;
