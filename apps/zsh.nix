@@ -39,6 +39,8 @@ in
       caligula
     ];
 
+    environment.pathsToLink = [ "/share/zsh" ];
+
     programs.starship = {
       enable = true;
       # presets = ["tokyo-night"];
