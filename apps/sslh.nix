@@ -26,8 +26,16 @@ in
   config = mkIf config.sslh.enable {
     services.nginx = mkIf config.nginx.enable {
       defaultListen = [
-        { addr = "127.0.0.1"; port = 4443; ssl = true; }
-        { addr = "0.0.0.0"; port = 80; ssl = false;}
+        {
+          addr = "127.0.0.1";
+          port = 4443;
+          ssl = true;
+        }
+        {
+          addr = "0.0.0.0";
+          port = 80;
+          ssl = false;
+        }
       ];
     };
     services.sslh = {
