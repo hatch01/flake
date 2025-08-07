@@ -316,8 +316,10 @@ in
           enable = true;
           plugins = [
             "zsh-users/zsh-syntax-highlighting"
+            "zsh-users/zsh-completions"
             "ohmyzsh/ohmyzsh path:plugins/colored-man-pages"
             "ohmyzsh/ohmyzsh path:plugins/sudo"
+            "ohmyzsh/ohmyzsh path:plugins/git"
             "ohmyzsh/ohmyzsh path:plugins/command-not-found"
             "ohmyzsh/ohmyzsh path:plugins/common-aliases"
             "unixorn/fzf-zsh-plugin"
