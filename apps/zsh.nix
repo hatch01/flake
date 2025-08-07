@@ -83,18 +83,17 @@ in
           ps = "${lib.getExe pkgs.procs}";
           webcam = lib.mkIf config.dev.androidtools.enable "${lib.getExe pkgs.scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
         };
-        initExtraFirst = ''
-          (( ''${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
-          # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-          # Initialization code that may require console input (password prompts, [y/n]
-          # confirmations, etc.) must go above this block; everything else may go below.
-          if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-            source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-          fi
-          (( ''${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
-        '';
         initContent = mkMerge [
           (mkBefore ''
+            (( ''${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
+            # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+            # Initialization code that may require console input (password prompts, [y/n]
+            # confirmations, etc.) must go above this block; everything else may go below.
+            if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+              source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+            fi
+            (( ''${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
+
             if [ -n "''${ZSH_PROFILE_STARTUP:+x}" ]
             then
               zmodload zsh/zprof
