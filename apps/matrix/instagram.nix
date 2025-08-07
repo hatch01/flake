@@ -19,37 +19,37 @@ in
   config = mkIf config.matrix.instagram.enable {
     services.mautrix-meta = {
       instances = {
-          instagram = {
-            enable = true;
-            registerToSynapse = true;
-            settings = {
-              network.displayname_template = "{{or .DisplayName .Username \"Unknown user\"}} (Insta)";
-              bridge = {
-                permissions = {
-                  "*" = "relay";
-                  "${base_domain_name}" = "user";
-                  "@root:${base_domain_name}" = "admin";
-                };
-                login_shared_secret_map = {
-                  "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
-                };
-                sync_direct_chat_list = true;
+        instagram = {
+          enable = true;
+          registerToSynapse = true;
+          settings = {
+            network.displayname_template = "{{or .DisplayName .Username \"Unknown user\"}} (Insta)";
+            bridge = {
+              permissions = {
+                "*" = "relay";
+                "${base_domain_name}" = "user";
+                "@root:${base_domain_name}" = "admin";
               };
-              homeserver = {
-                address = "http://localhost:${toString config.matrix.port}";
-                domain = base_domain_name;
+              login_shared_secret_map = {
+                "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
               };
-              appservice = {
-                database = {
-                  type = "postgres";
-                  uri = "postgresql:///mautrix-meta?host=/run/postgresql";
-                };
+              sync_direct_chat_list = true;
+            };
+            homeserver = {
+              address = "http://localhost:${toString config.matrix.port}";
+              domain = base_domain_name;
+            };
+            appservice = {
+              database = {
+                type = "postgres";
+                uri = "postgresql:///mautrix-meta?host=/run/postgresql";
               };
             };
-            environmentFile = config.age.secrets.matrix_shared_secret.path;
           };
+          environmentFile = config.age.secrets.matrix_shared_secret.path;
         };
       };
+    };
     postgres.initialScripts = [
       ''
         CREATE ROLE "mautrix-meta-instagram" WITH LOGIN PASSWORD 'mautrix-meta-instagram';
