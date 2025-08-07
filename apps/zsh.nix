@@ -5,7 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkMerge
+    mkBefore
+    mkAfter
+    mkDefault
+    ;
 in
 {
   options = {
@@ -208,112 +215,125 @@ in
           ps = "${lib.getExe pkgs.procs}";
           webcam = lib.mkIf config.dev.androidtools.enable "${lib.getExe pkgs.scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
         };
-        initContent = ''
-          export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
-          nshell(){
-            local packages=("$@")
-            local package_list=()
-
-            for pkg in "''${packages[@]}"; do
-              package_list+=("nixpkgs#$pkg")
-            done
-
-            NIXPKGS_ALLOW_UNFREE=1 ${lib.getExe pkgs.nix} shell --impure "''${package_list[@]}"
-          }
-
-          ccd() {
-            cd $1 && ${lib.getExe' pkgs.ncurses "clear"}
-          }
-          cp_song() {
-            ${lib.getExe pkgs.rsync} -var $1 $2
-          }
-          flatpak_backup(){
-            ${lib.getExe' pkgs.flatpak "flatpak"} list --app --show-details | \
-            ${lib.getExe pkgs.gawk} '{print "${lib.getExe' pkgs.flatpak "flatpak"} install --assumeyes --user \""$2"\" \""$1}' | \
-            ${lib.getExe' pkgs.coreutils "cut"} -d "/" -f1 | ${lib.getExe pkgs.gawk} '{print $0"\""}'
-          }
-          nix-quick(){
-            ${lib.getExe pkgs.nix} flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
-          }
-          flake-parts(){
-            ${lib.getExe pkgs.nix} flake init -t github:hercules-ci/flake-parts
-          }
-          upgrade(){
-            current_commit=$(sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
-          if [[ $1 == "--full" ]]
-          then
-            sudo ${lib.getExe pkgs.nix} flake update /etc/nixos --commit-lock-file
-          else
-            sudo ${lib.getExe pkgs.nix} flake lock \
-              --update-input nixpkgs \
-              --update-input lanzaboote \
-              --update-input home-manager \
-              --update-input plasma-manager \
-              --update-input flatpaks \
-              --update-input agenix \
-              --commit-lock-file \
-              /etc/nixos
-          fi
-          new_commit=$(sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
-           if [ "$current_commit" != "$new_commit" ]
-           then
-             ${lib.getExe pkgs.nh} os switch /etc/nixos
-             if [ $? -eq 0 ]
-          	    then
-            	    echo ok
-          	    else
-            	    echo error
-            	    oldStash=$(sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
-            	    sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash push --all -m "Stash changes before update"
-            	    sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos reset --hard HEAD~
-            	    newStash=$(sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
-            	    if [ "$oldStash" != "$newStash" ]
-            	    then
-                	  sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash pop
-             	  fi
-            	fi
-           else
-          	  echo nothing to update
-           fi
-          }
-          sshrm(){
-            ARGS=$1
-            # CHECK if only IP/HOSTNAME or user@IP/user@HOSTAME
-            if [[ "$ARGS" =~ \@ ]]
+        initContent = mkMerge [
+          (mkBefore ''
+            if [ -n "$${ZSH_PROFILE_STARTUP:+x}" ]
             then
-               	# KEEP only things after @ (The IP or HOSTNAME)
-               	SRV=$(echo $ARGS | cut -d '@' -f2)
+              zmodload zsh/zprof
+            fi
+          '')
+          (mkDefault ''
+            export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
+            nshell(){
+              local packages=("$@")
+              local package_list=()
+
+              for pkg in "''${packages[@]}"; do
+                package_list+=("nixpkgs#$pkg")
+              done
+
+              NIXPKGS_ALLOW_UNFREE=1 ${lib.getExe pkgs.nix} shell --impure "''${package_list[@]}"
+            }
+
+            ccd() {
+              cd $1 && ${lib.getExe' pkgs.ncurses "clear"}
+            }
+            cp_song() {
+              ${lib.getExe pkgs.rsync} -var $1 $2
+            }
+            flatpak_backup(){
+              ${lib.getExe' pkgs.flatpak "flatpak"} list --app --show-details | \
+              ${lib.getExe pkgs.gawk} '{print "${lib.getExe' pkgs.flatpak "flatpak"} install --assumeyes --user \""$2"\" \""$1}' | \
+              ${lib.getExe' pkgs.coreutils "cut"} -d "/" -f1 | ${lib.getExe pkgs.gawk} '{print $0"\""}'
+            }
+            nix-quick(){
+              ${lib.getExe pkgs.nix} flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
+            }
+            flake-parts(){
+              ${lib.getExe pkgs.nix} flake init -t github:hercules-ci/flake-parts
+            }
+            upgrade(){
+              current_commit=$(sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
+            if [[ $1 == "--full" ]]
+            then
+              sudo ${lib.getExe pkgs.nix} flake update /etc/nixos --commit-lock-file
             else
-               	SRV="$ARGS"
+              sudo ${lib.getExe pkgs.nix} flake lock \
+                --update-input nixpkgs \
+                --update-input lanzaboote \
+                --update-input home-manager \
+                --update-input plasma-manager \
+                --update-input flatpaks \
+                --update-input agenix \
+                --commit-lock-file \
+                /etc/nixos
             fi
+            new_commit=$(sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos log -1 --pretty=%H)
+             if [ "$current_commit" != "$new_commit" ]
+             then
+               ${lib.getExe pkgs.nh} os switch /etc/nixos
+               if [ $? -eq 0 ]
+            	    then
+              	    echo ok
+            	    else
+              	    echo error
+              	    oldStash=$(sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
+              	    sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash push --all -m "Stash changes before update"
+              	    sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos reset --hard HEAD~
+              	    newStash=$(sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos rev-parse -q --verify refs/stash)
+              	    if [ "$oldStash" != "$newStash" ]
+              	    then
+                  	  sudo ${lib.getExe pkgs.git} --git-dir=/etc/nixos/.git --work-tree=/etc/nixos stash pop
+               	  fi
+              	fi
+             else
+            	  echo nothing to update
+             fi
+            }
+            sshrm(){
+              ARGS=$1
+              # CHECK if only IP/HOSTNAME or user@IP/user@HOSTAME
+              if [[ "$ARGS" =~ \@ ]]
+              then
+                 	# KEEP only things after @ (The IP or HOSTNAME)
+                 	SRV=$(echo $ARGS | cut -d '@' -f2)
+              else
+                 	SRV="$ARGS"
+              fi
 
-            # REMOVE in known_hosts
-            ssh-keygen -R $SRV
+              # REMOVE in known_hosts
+              ssh-keygen -R $SRV
 
-            # ASK to reconnect
-            read -p "Reconnect ? IT WILL RUN \"ssh $ARGS\" ? (y/N) " RECO
+              # ASK to reconnect
+              read -p "Reconnect ? IT WILL RUN \"ssh $ARGS\" ? (y/N) " RECO
 
-            # CHECK ANSWSER
-            if [[ "$RECO" == "y" ]]
+              # CHECK ANSWSER
+              if [[ "$RECO" == "y" ]]
+              then
+             	    ssh "$ARGS"
+              fi
+            }
+            # enable fzf
+            [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+            #enable zoxide
+            eval "$(${lib.getExe pkgs.zoxide} init zsh)"
+            # enable nix-index
+            source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+
+            # enable poetry completions
+            fpath+=~/.zfunc
+
+            # enable uv completions
+            eval "$(${lib.getExe pkgs.uv} generate-shell-completion zsh)"
+            eval "$(${lib.getExe' pkgs.uv "uvx"} --generate-shell-completion zsh)"
+          '')
+          (mkAfter ''
+            if [ -n "$ZSH_PROFILE_STARTUP" ]
             then
-           	    ssh "$ARGS"
+              zprof
             fi
-          }
-          # enable fzf
-          [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-          #enable zoxide
-          eval "$(${lib.getExe pkgs.zoxide} init zsh)"
-          # enable nix-index
-          source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-
-          # enable poetry completions
-          fpath+=~/.zfunc
-          autoload -Uz compinit && compinit
-
-          # enable uv completions
-          eval "$(${lib.getExe pkgs.uv} generate-shell-completion zsh)"
-          eval "$(${lib.getExe' pkgs.uv "uvx"} --generate-shell-completion zsh)"
-        '';
+          '')
+        ];
 
         antidote = {
           enable = true;
