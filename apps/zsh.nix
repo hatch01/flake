@@ -11,7 +11,7 @@ let
     mkMerge
     mkBefore
     mkAfter
-    mkDefault
+    mkOrder
     ;
 in
 {
@@ -222,7 +222,7 @@ in
               zmodload zsh/zprof
             fi
           '')
-          (mkDefault ''
+          (mkOrder 1000 ''
             export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
             nshell(){
               local packages=("$@")
