@@ -47,6 +47,7 @@ in
           baudrate = 115200;
         };
         frontend = {
+          enable = true;
           port = config.zigbee2mqtt.port;
         };
         advanced = {
