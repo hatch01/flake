@@ -18,17 +18,17 @@ in
     environment.systemPackages = [
       inputs.nix4nvchad.packages.${system}.nvchad
     ];
-    programs.neovim = {
-      #enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      configure = {
-        customRC = ''
-          set shiftwidth=2
-            set ignorecase
-        '';
-      };
-    };
+    #    programs.neovim = {
+    #      #enable = true;
+    #      defaultEditor = true;
+    #      viAlias = true;
+    #      vimAlias = true;
+    #      configure = {
+    #        customRC = ''
+    #          set shiftwidth=2
+    #            set ignorecase
+    #        '';
+    #      };
+    #    };
   };
 }

@@ -86,6 +86,8 @@ in
           gitnix = "${lib.getExe pkgs.git} add . && ${lib.getExe pkgs.git} commit --amend --no-edit && ${lib.getExe pkgs.git} push --force";
           ps = "${lib.getExe pkgs.procs}";
           webcam = lib.mkIf config.dev.androidtools.enable "${lib.getExe pkgs.scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
+          vi = "nvim";
+          vim = "nvim";
         };
         initContent = mkMerge [
           (mkBefore ''
