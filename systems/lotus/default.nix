@@ -19,6 +19,7 @@
     inputs.nixos-wsl.nixosModules.default
   ];
 
+  container.enable = lib.mkForce false;
   wsl.enable = true;
   wsl.defaultUser = username;
 
