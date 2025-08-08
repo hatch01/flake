@@ -47,8 +47,9 @@ in
           baudrate = 115200;
         };
         frontend = {
-          enable = true;
+          enabled = true;
           port = config.zigbee2mqtt.port;
+          package = "zigbee2mqtt-windfront";
         };
         advanced = {
           log_level = "warning";
