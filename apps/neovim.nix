@@ -3,6 +3,7 @@
   pkgs,
   lib,
   inputs,
+  system,
   ...
 }:
 let
@@ -14,23 +15,18 @@ in
   };
 
   config = mkIf config.neovim.enable {
-    hm = {
-      imports = [
-        inputs.nix4nvchad.homeManagerModule
-      ];
-      programs.nvchad = {
-        enable = true;
-      };
-
-      programs.neovim = {
-      	enable = true;
-        defaultEditor = true;
-        viAlias = true;
-        vimAlias = true;
-        vimdiffAlias = true;
-        extraConfig = ''
+    environment.systemPackages = [
+      inputs.nix4nvchad.packages.${system}.nvchad
+    ];
+    programs.neovim = {
+      #enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      configure = {
+        customRC = ''
           set shiftwidth=2
-          set ignorecase
+            set ignorecase
         '';
       };
     };

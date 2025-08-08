@@ -16,6 +16,7 @@
     ../modules
   ];
 
+  neovim.enable = true;
   container.enable = true;
   nix-related.enable = true;
   gitConfig.enable = true;
@@ -193,7 +194,6 @@
       in
       [
         inputs.agenix.packages.${system}.default
-        neovim
         wget
         tealdeer
         sbctl
@@ -231,19 +231,6 @@
         (python3.withPackages (ps: [ ]))
       ];
   };
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    configure = {
-      customRC = ''
-        set shiftwidth=2
-      '';
-    };
-  };
-
   services.tailscale.enable = true;
 
   security.sudo-rs = {

@@ -5,7 +5,7 @@
   ...
 }:
 let
-inherit (lib) mkDefault;
+  inherit (lib) mkDefault;
 in
 {
   imports = [
@@ -43,7 +43,6 @@ in
 
   multimedia.enable = mkDefault true;
   multimedia.editing.enable = mkDefault true;
-  neovim.enable = mkDefault true;
   thunderbird.enable = mkDefault true;
   ollama.enable = mkDefault true;
 
