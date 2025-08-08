@@ -244,9 +244,6 @@
     };
   };
 
-  programs.zsh.enable = true;
-  programs.pay-respects.enable = true;
-
   services.tailscale.enable = true;
 
   security.sudo-rs = {
