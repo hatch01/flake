@@ -353,11 +353,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754575993,
-        "narHash": "sha256-0ut8TM76DeMnexgwNyMx2c5flhp4IPtqQ79XR0hpmY0=",
+        "lastModified": 1754613544,
+        "narHash": "sha256-ueR1mGX4I4DWfDRRxxMphbKDNisDeMPMusN72VV1+cc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d8a475e179888553b6863204a93295da6ee13eb4",
+        "rev": "cc2fa2331aebf9661d22bb507d362b39852ac73f",
         "type": "github"
       },
       "original": {
@@ -417,11 +417,11 @@
         "nvchad-starter": "nvchad-starter"
       },
       "locked": {
-        "lastModified": 1754459346,
-        "narHash": "sha256-40a0T+QdNKtIuUeUtg8Cgkks8iyLEFfu7aUY6NxOfhI=",
+        "lastModified": 1754623015,
+        "narHash": "sha256-umZ7j2O30ldgae2bSY8Uw/dlpxwnJfp1Jicd1FG+WBQ=",
         "owner": "nix-community",
         "repo": "nix4nvchad",
-        "rev": "2a415e5b1e1ac80bd69307a4a0acef595ad73a07",
+        "rev": "549689141102c17fcb582e5ef5a4f4ec3ed7b9ca",
         "type": "github"
       },
       "original": {
@@ -447,14 +447,17 @@
     },
     "nixos-hardware_2": {
       "locked": {
-        "lastModified": 1754214338,
-        "narHash": "sha256-9jR7Mh+8MgUChRjv0DeY0C/56ZjJq2SMeSdaU/wNb8s=",
-        "path": "/home/eymeric/tmp/nixos-hardware",
-        "type": "path"
+        "lastModified": 1753816285,
+        "narHash": "sha256-8B7IGPypx+yA93o4mDOgaEvlpvvCOyo/L/90jKJeDsA=",
+        "owner": "hatch01",
+        "repo": "nixos-hardware",
+        "rev": "46cc6488711df05ae408839549d7f402f07b7df5",
+        "type": "github"
       },
       "original": {
-        "path": "/home/eymeric/tmp/nixos-hardware",
-        "type": "path"
+        "owner": "hatch01",
+        "repo": "nixos-hardware",
+        "type": "github"
       }
     },
     "nixos-wsl": {
@@ -521,11 +524,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1754292888,
-        "narHash": "sha256-1ziydHSiDuSnaiPzCQh1mRFBsM2d2yRX9I+5OPGEmIE=",
+        "lastModified": 1754563854,
+        "narHash": "sha256-YzNTExe3kMY9lYs23mZR7jsVHe5TWnpwNrsPOpFs/b8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ce01daebf8489ba97bd1609d185ea276efdeb121",
+        "rev": "e728d7ae4bb6394bbd19eec52b7358526a44c414",
         "type": "github"
       },
       "original": {
@@ -551,11 +554,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1754589999,
-        "narHash": "sha256-iUnjHJy4s2o/OPeVay5rUBmTfZXJR/LE//w/3UKQoi8=",
+        "lastModified": 1754660419,
+        "narHash": "sha256-rWFHGEGDPEljarb9HszqgvVaRXOhxmMFCLrUXPKrERs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "332856681dedca5549e3f3df67bb666bf945cefb",
+        "rev": "17d12a71264080ac77d157918ba293bb6fa74024",
         "type": "github"
       },
       "original": {
@@ -628,8 +631,8 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1754214371,
-        "narHash": "sha256-Ph4dWYS3R4N9zXaWK2KuaHZbdrMCSfa0B6yVtI9Oeco=",
+        "lastModified": 1754172563,
+        "narHash": "sha256-GJl+7oFzlSYnftzhO0mxwOESt0T6llycvT9CUQ3ZYKo=",
         "path": "/home/eymeric/code_bidouille/projet/nixpkgs",
         "type": "path"
       },
@@ -688,14 +691,17 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1754420160,
-        "narHash": "sha256-z3TZBj5cBWNzhCIo9IfbGbmrya0C117X9jbizTs6n/s=",
-        "path": "/home/eymeric/tmp/nixos-pikvm",
-        "type": "path"
+        "lastModified": 1754172709,
+        "narHash": "sha256-LS5Z4czkDuO8/Oq7Je0TknkaQRmfQMWMI3Bn3JvBzYc=",
+        "ref": "refs/heads/main",
+        "rev": "820432e3bf951a2ccf9009ba791cc2fadc231a08",
+        "revCount": 25,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
       },
       "original": {
-        "path": "/home/eymeric/tmp/nixos-pikvm",
-        "type": "path"
+        "type": "git",
+        "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
       }
     },
     "plasma-manager": {
