@@ -1,49 +1,53 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }:
+let
+inherit (lib) mkDefault;
+in
 {
   imports = [
     ./wifi.nix
   ];
 
   # apps enabling
-  plasma.enable = true;
+  plasma.enable = mkDefault true;
 
   # dev
-  dev.enable = true;
-  dev.androidtools.enable = true;
-  jetbrains.enable = true;
-  vscode.enable = true;
+  dev.enable = mkDefault true;
+  dev.androidtools.enable = mkDefault true;
+  jetbrains.enable = mkDefault true;
+  vscode.enable = mkDefault true;
 
   # office
-  libreoffice.enable = true;
-  onlyofficeDesktopEditor.enable = true;
-  ghostwriter.enable = true;
-  cloud-storage.enable = true;
+  libreoffice.enable = mkDefault true;
+  onlyofficeDesktopEditor.enable = mkDefault true;
+  ghostwriter.enable = mkDefault true;
+  cloud-storage.enable = mkDefault true;
 
   # keepass
-  keepassxc.enable = true;
-  keepassxc.autostart = true;
+  keepassxc.enable = mkDefault true;
+  keepassxc.autostart = mkDefault true;
 
-  social.enable = true;
+  social.enable = mkDefault true;
   #vesktop.enable = false; default to the same value as social.enable
 
   espanso.enable = false;
-  homebank.enable = true;
-  container.distrobox.enable = true;
-  vm.enable = true;
-  kdeconnect.enable = true;
-  konsole.enable = true;
+  homebank.enable = mkDefault true;
+  container.distrobox.enable = mkDefault true;
+  vm.enable = mkDefault true;
+  kdeconnect.enable = mkDefault true;
+  konsole.enable = mkDefault true;
 
-  multimedia.enable = true;
-  multimedia.editing.enable = true;
-  neovim.enable = true;
-  thunderbird.enable = true;
-  ollama.enable = true;
+  multimedia.enable = mkDefault true;
+  multimedia.editing.enable = mkDefault true;
+  neovim.enable = mkDefault true;
+  thunderbird.enable = mkDefault true;
+  ollama.enable = mkDefault true;
 
-  gaming.enable = true;
+  gaming.enable = mkDefault true;
   # remotePlay.enable = false # enabled by default if gaming.enable is true
   # steam = {
   #   enable = false # enabled by default if gaming.enable is true
@@ -55,15 +59,15 @@
   # winetools.enable = false # enabled by default if gaming.enable is true
   # heroic.enable = false # enabled by default if gaming.enable is true
 
-  basic-tools.enable = true;
-  bitcoinClient.enable = true;
-  office.enable = true;
-  ghostty.enable = true;
+  basic-tools.enable = mkDefault true;
+  bitcoinClient.enable = mkDefault true;
+  office.enable = mkDefault true;
+  ghostty.enable = mkDefault true;
 
   home-manager.sharedModules = with inputs; [ plasma-manager.homeManagerModules.plasma-manager ];
 
   services.flatpak = {
-    enable = true;
+    enable = mkDefault true;
     update.auto = {
       enable = true;
       onCalendar = "weekly"; # Default value

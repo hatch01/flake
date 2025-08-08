@@ -31,6 +31,7 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "nixpkgs/master";
     nixpkgs-stable.url = "nixpkgs/nixos-25.05";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     # nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-hardware.url = "github:hatch01/nixos-hardware";

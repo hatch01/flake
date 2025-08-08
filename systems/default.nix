@@ -117,6 +117,15 @@ in
         inherit inputs;
       };
     };
+    lotus = {
+      system = "x86_64-linux";
+      modules = server;
+      domain = "127.0.0.1";
+      specialArgs = {
+        inherit inputs;
+      };
+    };
+
     jonquille = {
       system = "x86_64-linux";
       modules = server;

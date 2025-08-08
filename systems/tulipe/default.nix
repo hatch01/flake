@@ -10,11 +10,6 @@
   ...
 }:
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
-
   systemd.services.nix-daemon.serviceConfig.Environment = [
     "NIX_FMOD_USERNAME=hatchchien@protonmail.com"
     "NIX_FMOD_PASSWORD=iJQvHRyGlFsCf85"
