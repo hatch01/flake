@@ -216,11 +216,11 @@
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
-        "lastModified": 1754091436,
-        "narHash": "sha256-XKqDMN1/Qj1DKivQvscI4vmHfDfvYR2pfuFOJiCeewM=",
+        "lastModified": 1754487366,
+        "narHash": "sha256-pHYj8gUBapuUzKV/kN/tR3Zvqc7o6gdFB9XKXIp1SQ8=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "67df8c627c2c39c41dbec76a1f201929929ab0bd",
+        "rev": "af66ad14b28a127c5c0f3bbb298218fc63528a18",
         "type": "github"
       },
       "original": {
@@ -417,11 +417,11 @@
         "nvchad-starter": "nvchad-starter"
       },
       "locked": {
-        "lastModified": 1754623015,
-        "narHash": "sha256-umZ7j2O30ldgae2bSY8Uw/dlpxwnJfp1Jicd1FG+WBQ=",
+        "lastModified": 1754712681,
+        "narHash": "sha256-xlA2l81P5XYXWRDkLTuUSHQzQr+2zZG5D7Xe6iuawiU=",
         "owner": "nix-community",
         "repo": "nix4nvchad",
-        "rev": "549689141102c17fcb582e5ef5a4f4ec3ed7b9ca",
+        "rev": "ea23adcf3b0da91b4d8f55f09ef08e374d794ddc",
         "type": "github"
       },
       "original": {
@@ -432,11 +432,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1753816285,
-        "narHash": "sha256-8B7IGPypx+yA93o4mDOgaEvlpvvCOyo/L/90jKJeDsA=",
+        "lastModified": 1754685678,
+        "narHash": "sha256-oQ4JZiS7RNbyQ+LJQqtEOrO3a2zh5zSkgd/nBAZih8o=",
         "owner": "hatch01",
         "repo": "nixos-hardware",
-        "rev": "46cc6488711df05ae408839549d7f402f07b7df5",
+        "rev": "680761f019c3d37c5a3d920b1ff8c61ded68cd6b",
         "type": "github"
       },
       "original": {
@@ -447,11 +447,11 @@
     },
     "nixos-hardware_2": {
       "locked": {
-        "lastModified": 1753816285,
-        "narHash": "sha256-8B7IGPypx+yA93o4mDOgaEvlpvvCOyo/L/90jKJeDsA=",
+        "lastModified": 1754685678,
+        "narHash": "sha256-oQ4JZiS7RNbyQ+LJQqtEOrO3a2zh5zSkgd/nBAZih8o=",
         "owner": "hatch01",
         "repo": "nixos-hardware",
-        "rev": "46cc6488711df05ae408839549d7f402f07b7df5",
+        "rev": "680761f019c3d37c5a3d920b1ff8c61ded68cd6b",
         "type": "github"
       },
       "original": {
@@ -524,11 +524,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1754563854,
-        "narHash": "sha256-YzNTExe3kMY9lYs23mZR7jsVHe5TWnpwNrsPOpFs/b8=",
+        "lastModified": 1754689972,
+        "narHash": "sha256-eogqv6FqZXHgqrbZzHnq43GalnRbLTkbBbFtEfm1RSc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e728d7ae4bb6394bbd19eec52b7358526a44c414",
+        "rev": "fc756aa6f5d3e2e5666efcf865d190701fef150a",
         "type": "github"
       },
       "original": {
@@ -554,11 +554,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1754660419,
-        "narHash": "sha256-rWFHGEGDPEljarb9HszqgvVaRXOhxmMFCLrUXPKrERs=",
+        "lastModified": 1754754819,
+        "narHash": "sha256-1jgrehqxDSh2TBsRiFDYzlkJ+cNZQ9thApzvOTCdMBA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "17d12a71264080ac77d157918ba293bb6fa74024",
+        "rev": "bcc20cad1608fbbe08641e5106c0755cfd0154ad",
         "type": "github"
       },
       "original": {
@@ -631,8 +631,8 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1754172563,
-        "narHash": "sha256-GJl+7oFzlSYnftzhO0mxwOESt0T6llycvT9CUQ3ZYKo=",
+        "lastModified": 1754685886,
+        "narHash": "sha256-viNMWWI4wMbMxYHqe24zEmOtg+9ubSZnm7ZW2DjZk84=",
         "path": "/home/eymeric/code_bidouille/projet/nixpkgs",
         "type": "path"
       },
@@ -691,17 +691,14 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1754172709,
-        "narHash": "sha256-LS5Z4czkDuO8/Oq7Je0TknkaQRmfQMWMI3Bn3JvBzYc=",
-        "ref": "refs/heads/main",
-        "rev": "820432e3bf951a2ccf9009ba791cc2fadc231a08",
-        "revCount": 25,
-        "type": "git",
-        "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
+        "lastModified": 1754687984,
+        "narHash": "sha256-650zszeCagiVvPa9RpgjRs6wGL/6TSrFJR6aItln8ME=",
+        "path": "/home/eymeric/tmp/nixos-pikvm",
+        "type": "path"
       },
       "original": {
-        "type": "git",
-        "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
+        "path": "/home/eymeric/tmp/nixos-pikvm",
+        "type": "path"
       }
     },
     "plasma-manager": {
