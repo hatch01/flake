@@ -18,6 +18,7 @@ in
     environment.systemPackages = [
       inputs.nix4nvchad.packages.${system}.nvchad
     ];
+    environment.variables.EDITOR = "nvim";
     #    programs.neovim = {
     #      #enable = true;
     #      defaultEditor = true;
