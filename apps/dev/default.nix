@@ -32,6 +32,8 @@ in
         httpy-cli
         jq
         httptoolkit
+        statix
+        deadnix
       ];
 
     hm.home.file.".zfunc/_poetry" = {
