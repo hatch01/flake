@@ -82,9 +82,6 @@ in
                 proxyPass = "http://127.0.0.1:${toString config.homepage.port}";
                 extraConfig = lib.strings.concatStringsSep "\n" [
                   (builtins.readFile ./auth-authrequest.conf)
-                  ''
-                    client_max_body_size 10G;
-                  ''
                 ];
               };
 
@@ -205,8 +202,14 @@ in
                 proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
               };
 
-              "~ ^(/_matrix|/_synapse/client)".proxyPass = "http://[::1]:${toString config.matrix.port}";
-
+              "~ ^(/_matrix|/_synapse/client)" = {
+                proxyPass = "http://[::1]:${toString config.matrix.port}";
+                extraConfig =
+                  ''
+                    client_max_body_size 10G;
+                  ''
+                ;
+              };
               "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
             };
           };
