@@ -204,11 +204,9 @@ in
 
               "~ ^(/_matrix|/_synapse/client)" = {
                 proxyPass = "http://[::1]:${toString config.matrix.port}";
-                extraConfig =
-                  ''
-                    client_max_body_size 10G;
-                  ''
-                ;
+                extraConfig = ''
+                  client_max_body_size 10G;
+                '';
               };
               "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
             };

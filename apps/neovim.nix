@@ -19,7 +19,9 @@ in
       inputs.nix4nvchad.packages.${system}.nvchad
     ];
     environment.variables.EDITOR = "nvim";
-    hm.home.sessionVariables = { EDITOR = "nvim"; };
+    hm.home.sessionVariables = {
+      EDITOR = "nvim";
+    };
     #    programs.neovim = {
     #      #enable = true;
     #      defaultEditor = true;
