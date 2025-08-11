@@ -75,7 +75,7 @@ in
           groups_attribute_path = "groups";
           name_attribute_path = "name";
           use_pkce = true;
-          role_attribute_path = "contains(groups, 'admin') && 'Admin' || contains(groups, 'editor') && 'Editor' || 'Viewer'";
+          role_attribute_path = "contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'editor') && 'Editor' || 'Viewer'";
         };
       };
     };

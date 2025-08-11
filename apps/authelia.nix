@@ -249,6 +249,15 @@ in
               #     key = ''{{ secret "${config.age.secrets."authelia/oAuth2PrivateKey".path}" | mindent 10 "|" | msquote }}'';
               #   }
               # ];
+              claims_policies = {
+                grafana.id_token = [
+                  "email"
+                  "name"
+                  "groups"
+                  "preferred_username"
+                ];
+
+              };
               clients =
                 [ ]
                 ++ optionals config.nextcloud.enable [
@@ -337,6 +346,7 @@ in
                 ++ optionals config.influxdb.grafana.enable [
                   {
                     client_id = "grafana";
+                    claims_policy = "grafana";
                     client_name = "Grafana";
                     client_secret = "$pbkdf2-sha512$310000$qxL5kiQdjtage4ccg4zvhw$zRW7z7OS7rCDGwEWgKm5WcY.wLrJ31sONLfqIDE5fLfS9fELCna38kBCsr6g8U6CqSlhl.l6ylqYp8cLBRD/Ig";
                     public = false;
@@ -350,6 +360,9 @@ in
                       "groups"
                       "email"
                     ];
+                    response_types = [ "code" ];
+                    grant_types = [ "authorization_code" ];
+                    access_token_signed_response_alg = "none";
                     userinfo_signed_response_alg = "none";
                     token_endpoint_auth_method = "client_secret_basic";
                   }
