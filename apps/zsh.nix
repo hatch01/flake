@@ -280,6 +280,7 @@ in
         antidote = {
           enable = true;
           plugins = [
+            "Aloxaf/fzf-tab"
             "zsh-users/zsh-completions"
             "ohmyzsh/ohmyzsh path:plugins/colored-man-pages"
             "ohmyzsh/ohmyzsh path:plugins/sudo"
@@ -296,7 +297,6 @@ in
             "ohmyzsh/ohmyzsh path:lib/functions.zsh"
             "ohmyzsh/ohmyzsh path:lib/key-bindings.zsh"
             "romkatv/powerlevel10k"
-            "Aloxaf/fzf-tab"
             "zdharma-continuum/fast-syntax-highlighting"
           ];
         };
