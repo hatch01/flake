@@ -297,6 +297,7 @@ in
             "ohmyzsh/ohmyzsh path:lib/functions.zsh"
             "ohmyzsh/ohmyzsh path:lib/key-bindings.zsh"
             "romkatv/powerlevel10k"
+            "Aloxaf/fzf-tab"
           ];
         };
       };
