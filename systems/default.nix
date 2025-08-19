@@ -31,7 +31,7 @@ let
                 (fetchpatch2 {
                   name = "netdata.patch";
                   url = "https://github.com/NixOS/nixpkgs/pull/426186.diff";
-                  hash = "sha256-FXbUYP0oaoWI8Z6nEkN9VJk4d2H9zr3+5q6mRlyJl/4=";
+                  hash = "sha256-D8zkNQmKWxyNQ+qMfTBlboVWQFoiZRAr4/hMutc6+l4=";
                 })
               ];
         };
