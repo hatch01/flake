@@ -20,6 +20,10 @@
   ];
 
   container.enable = lib.mkForce false;
+  office.enable = true;
+  home-manager.sharedModules = with inputs; [ plasma-manager.homeManagerModules.plasma-manager ];
+  ghostwriter.enable = true;
+
   wsl.enable = true;
   wsl.defaultUser = username;
   hm = {
