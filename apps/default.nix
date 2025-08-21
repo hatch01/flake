@@ -49,5 +49,6 @@
     ./incus.nix
     ./polypresence.nix
     ./sslh.nix
+    ./wakapi.nix
   ];
 }

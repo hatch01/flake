@@ -384,6 +384,12 @@ in
               "/internal/authelia/authz" = autheliaProxy;
             };
           };
+          ${config.wakapi.domain} = mkIf config.wakapi.enable {
+            inherit (cfg) forceSSL enableACME;
+            locations = {
+              "/".proxyPass = "http://[::1]:${toString config.wakapi.port}";
+            };
+          };
         };
     };
     networking.firewall.allowedTCPPorts = [

@@ -40,6 +40,7 @@
   polypresence.enable = true;
   openthread.enable = true;
   sslh.enable = true;
+  wakapi.enable = true;
 
   # networking.interfaces."eno1".wakeOnLan.policy =
   networking.interfaces."eno1".wakeOnLan.enable = true;

@@ -24,6 +24,7 @@ let
       "restic_key"
       "influx_root_token"
       "netdata_notify"
+      "wakapi_salt"
     ]
     // defineSecrets "tulipe" [
       "userPassword"

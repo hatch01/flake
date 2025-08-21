@@ -105,6 +105,14 @@ in
                   siteMonitor = "https://${config.matrix.domain}/";
                 };
               }
+              {
+                "wakapi" = {
+                  icon = "wakapi.png";
+                  description = "Wakapi c'est vraiment cool";
+                  href = "https://${config.wakapi.domain}/";
+                  siteMonitor = "https://${config.wakapi.domain}/";
+                };
+              }
             ];
           }
           {
