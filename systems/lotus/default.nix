@@ -23,6 +23,11 @@
   office.enable = true;
   home-manager.sharedModules = with inputs; [ plasma-manager.homeManagerModules.plasma-manager ];
   ghostwriter.enable = true;
+  
+  hm.home.file.".zed_server" = {
+    source = "${pkgs.zed-editor.remote_server}/bin";
+    recursive = true;
+  };
 
   wsl.enable = true;
   wsl.defaultUser = username;
