@@ -93,7 +93,7 @@ in
       catppuccin-cursors.mochaDark
       kdePackages.partitionmanager
       gnome-disk-utility
-      libsForQt5.kpmcore
+      kdePackages.kpmcore
       glxinfo
       appimage-run
       firefox
