@@ -27,11 +27,14 @@
   };
 
   inputs = {
-    # Official NixOS package source, using nixos-unstable branch here
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "nixpkgs/master";
     nixpkgs-stable.url = "nixpkgs/nixos-25.05";
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+    };
 
     # nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-hardware.url = "github:hatch01/nixos-hardware";
@@ -70,7 +73,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flatpaks.url = "github:gmodena/nix-flatpak/?ref=v0.6.0";
+    flatpaks.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
@@ -78,42 +81,72 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    # treefmt-nix.url = "github:numtide/treefmt-nix";
-    # pre-commit-hooks-nix = {
-    #   url = "github:cachix/pre-commit-hooks.nix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
-    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.utils.follows = "flake-utils";
+    };
     impermanence.url = "github:nix-community/impermanence";
-    vscode-server.url = "github:hatch01/nixos-vscode-server";
 
-    proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
+    vscode-server = {
+      url = "github:hatch01/nixos-vscode-server";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    apolline.url = "git+ssh://git@github.com/hatch01/apolline";
-    portfolio.url = "git+ssh://git@github.com/VirisOnGithub/portfolio";
+    proxmox-nixos = {
+      url = "github:SaumonNet/proxmox-nixos";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.utils.follows = "flake-utils";
+    };
+
+    apolline = {
+      url = "git+ssh://git@github.com/hatch01/apolline";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    portfolio = {
+      url = "git+ssh://git@github.com/VirisOnGithub/portfolio";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     polypresence = {
       url = "git+ssh://git@github.com/Eclairsombre/PolyPresence";
+      inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix4nvchad = {
       url = "github:nix-community/nix4nvchad";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     pikvm = {
       #url = "/home/eymeric/tmp/nixos-pikvm";
       url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
-      #inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.nixos-hardware.follows = "nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
 
     foodi = {
       url = "git+https://forge.onyx.ovh/eymeric/foodi.git";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
     };
   };
   outputs =
