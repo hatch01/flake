@@ -135,7 +135,7 @@ in
                 })
                 (mkGatusCheck {
                   name = "polypresence back";
-                  url = "https://${config.polypresence.domain}/api/status";
+                  url = "https://polypresence.fr/api/status";
                   conditions = [
                     "[BODY].status == ok"
                   ];
@@ -143,7 +143,7 @@ in
                 })
                 (mkGatusCheck {
                   name = "polypresence front";
-                  url = "https://${config.polypresence.domain}/";
+                  url = "https://polypresence.fr/";
                   group = "polypresence";
                 })
 
