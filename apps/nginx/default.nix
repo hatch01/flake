@@ -284,17 +284,6 @@ in
             };
           };
 
-          ${config.polypresence.domain} = mkIf config.polypresence.enable {
-            inherit (cfg) forceSSL enableACME;
-            locations = {
-              "/".extraConfig = ''
-                root ${config.polypresence.frontPath};
-                try_files $uri $uri/ /index.html;
-              '';
-              "/api".proxyPass = "http://127.0.0.1:${toString config.polypresence.backPort}";
-            };
-          };
-
           ${config.incus.domain} = mkIf config.incus.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {

@@ -37,7 +37,6 @@
   restic.enable = true;
   portfolio.enable = true;
   incus.enable = true;
-  polypresence.enable = true;
   openthread.enable = true;
   sslh.enable = true;
   wakapi.enable = true;

@@ -113,11 +113,6 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    polypresence = {
-      url = "git+ssh://git@github.com/Eclairsombre/PolyPresence";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix4nvchad = {
       url = "github:nix-community/nix4nvchad";
@@ -130,7 +125,7 @@
       url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixos-hardware.follows = "nixos-hardware";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";

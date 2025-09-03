@@ -492,29 +492,6 @@
         "type": "github"
       }
     },
-    "polypresence": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1756888763,
-        "narHash": "sha256-Jql1aaRK6X98v0XTGFvGHZ1ZQSw2RGg6ErnL7W9rE3A=",
-        "ref": "refs/heads/main",
-        "rev": "4effc94e6dbd206f7e8a99a594917eff008330a1",
-        "revCount": 156,
-        "type": "git",
-        "url": "ssh://git@github.com/Eclairsombre/PolyPresence"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/Eclairsombre/PolyPresence"
-      }
-    },
     "portfolio": {
       "inputs": {
         "flake-parts": [
@@ -590,7 +567,6 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pikvm": "pikvm",
         "plasma-manager": "plasma-manager",
-        "polypresence": "polypresence",
         "portfolio": "portfolio",
         "proxmox-nixos": "proxmox-nixos",
         "systems": "systems",
