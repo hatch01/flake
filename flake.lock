@@ -456,11 +456,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1756893953,
-        "narHash": "sha256-AseI9o+QA/ZGzUbjjvPWNymwLocZs9F0gVtt506rxrI=",
+        "lastModified": 1756894208,
+        "narHash": "sha256-04jZu1bHC09aMEL98fOS1C7YQ9NPuxz8X66mituRsm8=",
         "ref": "refs/heads/main",
-        "rev": "230f3c4fb54fb497bc4bff862ef18e841cff22e4",
-        "revCount": 41,
+        "rev": "277f8cec253f3ac18eb446575164bbffcd568abc",
+        "revCount": 42,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
       },
