@@ -112,7 +112,7 @@ in
               local package_list=()
 
               for pkg in "''${packages[@]}"; do
-                package_list+=("nixpkgs#$pkg")
+                package_list+=("n#$pkg")
               done
 
               NIXPKGS_ALLOW_UNFREE=1 ${lib.getExe pkgs.nix} shell --impure "''${package_list[@]}"
