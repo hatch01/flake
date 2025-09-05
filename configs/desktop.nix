@@ -63,7 +63,7 @@ in
   office.enable = mkDefault true;
   ghostty.enable = mkDefault true;
 
-  home-manager.sharedModules = with inputs; [ plasma-manager.homeManagerModules.plasma-manager ];
+  home-manager.sharedModules = with inputs; [ plasma-manager.homeModules.plasma-manager ];
 
   services.flatpak = {
     enable = mkDefault true;
