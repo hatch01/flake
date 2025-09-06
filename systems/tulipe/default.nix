@@ -39,7 +39,7 @@
       hashedPasswordFile = config.age.secrets.userPassword.path;
     };
   };
-  services.logind.lidSwitch = "ignore";
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
 
   # Bootloader.
   boot.kernelPackages = pkgs.linuxPackages_latest;
