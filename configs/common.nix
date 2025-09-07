@@ -147,6 +147,8 @@
     nix-direnv.enable = true;
   };
 
+  programs.nix-index-database.comma.enable = true;
+
   system.stateVersion = stateVersion;
 
   # Set your time zone.

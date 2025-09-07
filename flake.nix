@@ -136,6 +136,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";

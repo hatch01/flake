@@ -81,6 +81,7 @@ let
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
     impermanence.nixosModules.impermanence # maybe optimize this because it is not used in all systems
+    nix-index-database.nixosModules.nix-index
     #nur.nixosModules.nur
   ];
 
