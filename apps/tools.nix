@@ -14,7 +14,6 @@ in
 
   config = mkIf config.basic-tools.enable {
     environment.systemPackages = with pkgs; [
-      krename
       localsend
       minder
       kshutdown
