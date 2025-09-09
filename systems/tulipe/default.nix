@@ -126,6 +126,7 @@
     openrgb-plugin-hardwaresync
     hyperhdr
     tigervnc
+    nrf-udev
   ];
 
   services.hardware.openrgb = {

@@ -116,6 +116,7 @@
 
           "anytype"
           "anytype-heart"
+          "nrf-udev"
         ];
 
       permittedInsecurePackages = [
