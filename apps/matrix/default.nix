@@ -14,13 +14,14 @@ let
     types
     ;
   puppetFile = "/var/lib/matrix-synapse/puppet.yaml";
-  oidcFile = "/var/lib/matrix-synapse/matrix-oidc.yaml";
+  masFile = "/var/lib/matrix-synapse/matrix-authentication-service.yaml";
 in
 {
   imports = [
     ./signal.nix
     ./discord.nix
     ./whatsapp.nix
+    ./mas.nix
     ./instagram.nix
   ];
 
@@ -44,6 +45,7 @@ in
     matrix.signal.enable = true;
     matrix.whatsapp.enable = true;
     matrix.discord.enable = true;
+    matrix.mas.enable = true;
     matrix.instagram.enable = true;
 
     age.secrets = mkSecrets {
@@ -82,40 +84,32 @@ in
                 ))
               }'
 
-        test -f '${oidcFile}' && rm -f '${oidcFile}'
+        test -f '${masFile}' && rm -f '${masFile}'
           ${pkgs.envsubst}/bin/envsubst \
-              -o '${oidcFile}' \
+              -o '${masFile}' \
               -i '${
-                (pkgs.writeText "synapse-oidc.yaml" (
+                (pkgs.writeText "matrix-authentication-service.yaml" (
                   lib.generators.toYAML { } {
-                    oidc_providers = [
-                      {
-                        idp_id = "authelia";
-                        idp_name = "Authelia";
-                        idp_icon = "mxc://authelia.com/cKlrTPsGvlpKxAYeHWJsdVHI";
-                        discover = true;
-                        issuer = "https://${config.authelia.domain}";
-                        client_id = "synapse";
-                        client_secret = "$authelia";
-                        scopes = [
-                          "openid"
-                          "profile"
-                          "email"
-                          "groups"
-                        ];
-                        allow_existing_users = true;
-                        user_mapping_provider = {
-                          config = {
-                            subject_claim = "sub";
-                            localpart_template = "{{ user.preferred_username }}";
-                            display_name_template = "{{ user.name }}";
-                            email_template = "{{ user.email }}";
-                          };
-                        };
-                        attribute_requirements = [ ];
-                        user_profile_method = "userinfo_endpoint";
-                      }
-                    ];
+                    experimental_features = {
+                      msc3861 = {
+                        enabled = true;
+
+                        # Synapse will call `{issuer}/.well-known/openid-configuration` to get the OIDC configuration
+                        issuer = "https://onyx.ovh/";
+
+                        # Matches the `client_id` in the auth service config
+                        client_id = "0000000000000000000SYNAPSE";
+                        client_auth_method = "client_secret_basic";
+                        # Matches the `client_secret` in the auth service config
+                        client_secret = "$client_secret";
+
+                        # Matches the `matrix.secret` in the auth service config
+                        admin_token = "$admin_token";
+
+                        # URL to advertise to clients where users can self-manage their account
+                        account_management_url = "http=//localhost=8080/account";
+                      };
+                    };
                   }
                 ))
               }'
@@ -130,7 +124,7 @@ in
       ];
 
       settings.app_service_config_files = [ puppetFile ];
-      extraConfigFiles = [ oidcFile ];
+      extraConfigFiles = [ masFile ];
 
       settings.server_name = base_domain_name;
       settings.public_baseurl = "https://${config.matrix.domain}";
