@@ -50,7 +50,6 @@ let
       # Matrix
       "matrix_shared_secret"
       "matrix_sliding_sync"
-      "mas_config"
 
       # cache
       "cache-priv-key.pem"

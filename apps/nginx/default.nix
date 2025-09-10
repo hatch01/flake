@@ -50,10 +50,11 @@ in
           clientConfig =
             if config.matrix.enable then
               {
+                default_identity_server = "https://${config.matrix.domain}";
                 "m.homeserver".base_url = "https://${config.matrix.domain}";
                 "org.matrix.msc2965.authentication" = {
                   "issuer" = "https://${base_domain_name}/";
-                  "account" = "https://${config.matrix.mas.domain}/account";
+                  "account" = "https://${config.matrix.domain}/account";
                 };
               }
             else
@@ -92,7 +93,6 @@ in
                 "m.server" = "${config.matrix.domain}:443";
               });
               "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
-              "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
             };
           };
           ${config.netdata.domain} = mkIf config.netdata.enable {
@@ -187,7 +187,7 @@ in
             root = mkIf config.matrix.enableElement (
               pkgs.element-web.override {
                 conf = {
-                  default_server_config = clientConfig; # see `clientConfig` from the snippet above.
+                  default_server_config = clientConfig;
                 };
               }
             );
@@ -199,7 +199,7 @@ in
               # Forward to the auth service
               "~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
                 priority = 100;
-                proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
+                proxyPass = "http://[::1]:${toString config.matrix.port}";
               };
 
               "~ ^(/_matrix|/_synapse/client)" = {
@@ -209,14 +209,6 @@ in
                 '';
               };
               "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
-            };
-          };
-
-          ${config.matrix.mas.domain} = mkIf config.matrix.mas.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
-            locations = {
-              "/".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
-              "/assets/".root = "${pkgs.matrix-authentication-service}/share/matrix-authentication-service/";
             };
           };
 

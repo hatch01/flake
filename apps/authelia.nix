@@ -299,26 +299,29 @@ in
                     token_endpoint_auth_method = "client_secret_basic";
                   }
                 ]
-                ++ optionals config.matrix.mas.enable [
+                ++ optionals config.matrix.enable [
                   {
-                    client_name = "Matrix";
-                    client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
+                    client_name = "Synapse";
+                    client_id = "synapse";
                     # the client secret is a random hash so don't worry about it
-                    client_secret = "$pbkdf2-sha512$310000$XVZ/KKrIuhfG7m/bnQXEHQ$/cHzLB6xyflth5HKJWR/Lc.//j4S/YiJ6lSaEH.rmskegD6c4zdgbni1Q.yfZrdRBg13.E8MGSyw4X1KpECv7Q";
+                    client_secret = "$pbkdf2-sha512$310000$Y/nMv.mHxr2dExlXSzA/Og$DxjPtShyaBO.Db.uUjyckEB7Su4jb5qSpEh..7URBC/XhijfSLICCj.LfxOqmPw7s0b1Y57mJpwAbFD11Tsl0g";
                     public = false;
                     authorization_policy = "two_factor";
+                    require_pkce = false;
+                    pkce_challenge_method = "";
+                    access_token_signed_response_alg = "none";
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "client_secret_basic";
                     redirect_uris = [
-                      "https://${config.matrix.mas.domain}/upstream/callback/01H8PKNWKKRPCBW4YGH1RWV279"
+                      "https://${config.matrix.domain}/_synapse/client/oidc/callback"
                     ];
                     scopes = [
                       "openid"
-                      "groups"
                       "profile"
                       "email"
-                      "offline_access"
+                      "groups"
                     ];
                     grant_types = [
-                      "refresh_token"
                       "authorization_code"
                     ];
                     response_types = [ "code" ];
