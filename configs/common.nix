@@ -238,7 +238,10 @@
         (python3.withPackages (ps: [ ]))
       ];
   };
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    package = pkgs.tailscale.overrideAttrs(oa: { doCheck = false; });
+  };
 
   security.sudo-rs = {
     enable = true;
