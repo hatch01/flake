@@ -6,7 +6,7 @@
       config = prev.config;
     };
     stablePackages = [
-      "nasc"
+      "tigervnc"
     ];
   in
   builtins.listToAttrs (
