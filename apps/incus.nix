@@ -31,6 +31,7 @@ in
 
   config = mkIf config.incus.enable {
     networking.nftables.enable = true;
+    networking.firewall.trustedInterfaces = [ "incusbr*" ];
     virtualisation.incus = {
       enable = true;
       ui = {
