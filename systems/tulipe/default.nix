@@ -126,7 +126,6 @@
     openrgb-plugin-hardwaresync
     hyperhdr
     tigervnc
-    nrf-udev
   ];
 
   services.hardware.openrgb = {
@@ -137,6 +136,7 @@
   services.udev.packages = with pkgs; [
     openrgb
     numworks-udev-rules
+    nrf-udev
   ];
 
   services.pcscd.enable = true;
