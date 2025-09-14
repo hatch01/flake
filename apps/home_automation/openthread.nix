@@ -34,19 +34,20 @@ in
   };
 
   config = mkIf config.openthread.enable {
-    # services.openthread-border-router = {
-    #   backboneInterface = "eno1";
-    #   enable = true;
-    #   radio = {
-    #     device = "/dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_5449f26b5b53ef11b6e222e0174bec31-if00-port0";
-    #     baudRate = 460800;
-    #   };
-    #   rest = {
-    #     listenPort = config.openthread.restPort;
-    #   };
-    #   web = {
-    #     listenPort = config.openthread.webPort;
-    #   };
-    # };
+    services.openthread-border-router = {
+      backboneInterface = "eno1";
+      enable = true;
+      radio = {
+        device = "/dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_5449f26b5b53ef11b6e222e0174bec31-if00-port0";
+        baudRate = 460800;
+      };
+      rest = {
+        listenAddress = "0.0.0.0";
+        listenPort = config.openthread.restPort;
+      };
+      web = {
+        listenPort = config.openthread.webPort;
+      };
+    };
   };
 }

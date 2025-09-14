@@ -34,7 +34,7 @@
     ./fail2ban.nix
     ./ddclient.nix
     ./matrix
-    ./homeassistant
+    ./home_automation
     ./watchtower.nix
     ./bitcoin.nix
     ./cockpit.nix

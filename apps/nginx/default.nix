@@ -225,13 +225,13 @@ in
             locations."/".proxyPass = "http://127.0.0.1:${toString config.nixCache.port}";
           };
 
-          ${config.homeassistant.domain} = mkIf config.homeassistant.enable {
+          ${config.home_assistant.domain} = mkIf config.home_assistant.enable {
             inherit (cfg) forceSSL enableACME;
             extraConfig = ''
               proxy_buffering off;
             '';
             locations."/" = {
-              proxyPass = "http://[::1]:${toString config.homeassistant.port}";
+              proxyPass = "http://[::1]:${toString config.home_assistant.port}";
               proxyWebsockets = true;
             };
           };

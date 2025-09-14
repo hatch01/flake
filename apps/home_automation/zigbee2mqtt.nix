@@ -29,6 +29,11 @@ in
   };
 
   config = mkIf config.zigbee2mqtt.enable {
+    services.mosquitto = {
+      enable = true;
+      dataDir = "/storage/homeassistant/mosquitto";
+    };
+
     systemd.services.zigbee2mqtt.serviceConfig.Restart = lib.mkForce "always";
     services.zigbee2mqtt = {
       enable = true;

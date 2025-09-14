@@ -13,16 +13,8 @@ let
     ;
 in
 {
-  imports = [
-    ./zigbee2mqtt.nix
-    ./influx.nix
-    ./nodered.nix
-    ./matter.nix
-    ./openthread.nix
-  ];
-
   options = {
-    homeassistant = {
+    home_assistant = {
       enable = mkEnableOption "Home Assistant";
       domain = mkOption {
         type = types.str;
@@ -35,26 +27,15 @@ in
     };
   };
 
-  config = mkIf config.homeassistant.enable {
-    zigbee2mqtt.enable = true;
-    influxdb.enable = true;
-    influxdb.grafana.enable = true;
-    nodered.enable = true;
-    openthread.enable = true;
-    matter.enable = true;
-    virtualisation.oci-containers.containers.homeassistant = {
-      volumes = [ "/storage/homeassistant/:/config" ];
+  config = mkIf config.home_assistant.enable {
+    virtualisation.oci-containers.containers.home_assistant = {
+      volumes = [ "/storage/home_assistant/:/config" ];
       environment.TZ = "Europe/Paris";
       image = "ghcr.io/home-assistant/home-assistant:stable";
       extraOptions = [
         "--network=host"
         "--add-host=host.docker.internal:host-gateway"
       ];
-    };
-
-    services.mosquitto = {
-      enable = true;
-      dataDir = "/storage/homeassistant/mosquitto";
     };
 
     postgres.initialScripts = [

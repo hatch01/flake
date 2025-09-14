@@ -121,11 +121,11 @@ in
                 "Home Assistant" = {
                   icon = "home-assistant.png";
                   description = "HomeAssistant c'est vraiment cool";
-                  href = "https://${config.homeassistant.domain}";
-                  siteMonitor = "https://${config.homeassistant.domain}";
+                  href = "https://${config.home_assistant.domain}";
+                  siteMonitor = "https://${config.home_assistant.domain}";
                   widget = {
                     type = "homeassistant";
-                    url = "https://${config.homeassistant.domain}";
+                    url = "https://${config.home_assistant.domain}";
                     key = "{{HOMEPAGE_VAR_HOMEASSISTANT}}";
                   };
                 };

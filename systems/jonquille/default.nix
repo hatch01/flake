@@ -28,7 +28,7 @@
   matrix.enableElement = true;
   watchtower.enable = true;
   ddclient.enable = false;
-  homeassistant.enable = true;
+  home_automation.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
 
