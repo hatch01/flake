@@ -240,7 +240,9 @@
   };
   services.tailscale = {
     enable = true;
-    package = pkgs.tailscale.overrideAttrs(oa: { doCheck = false; });
+    package = pkgs.tailscale.overrideAttrs (oa: {
+      doCheck = false;
+    });
   };
 
   security.sudo-rs = {

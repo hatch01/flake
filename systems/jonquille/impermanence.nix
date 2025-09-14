@@ -1,11 +1,7 @@
 {
   lib,
-  config,
   ...
 }:
-let
-  inherit (lib) optionals;
-in
 {
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir /btrfs_tmp
