@@ -216,6 +216,10 @@ in
                 groups = [ "home" ];
               }
               ++ mkUserRule {
+                appName = "esp_home";
+                groups = [ "home" ];
+              }
+              ++ mkUserRule {
                 appName = "apolline";
                 two_factor = false;
               };

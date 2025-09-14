@@ -373,6 +373,21 @@ in
               "/internal/authelia/authz" = autheliaProxy;
             };
           };
+
+          ${config.esp_home.domain} = mkIf config.esp_home.enable {
+            inherit (cfg) forceSSL enableACME;
+            locations = {
+              "/" = {
+                proxyPass = "http://[::1]:${toString config.esp_home.port}";
+                extraConfig = lib.strings.concatStringsSep "\n" [
+                  (builtins.readFile ./auth-authrequest.conf)
+                ];
+              };
+              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
+              "/internal/authelia/authz" = autheliaProxy;
+            };
+          };
+
           ${config.wakapi.domain} = mkIf config.wakapi.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {

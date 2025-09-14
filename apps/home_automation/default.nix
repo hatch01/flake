@@ -17,6 +17,7 @@ in
     ./nodered.nix
     ./matter.nix
     ./openthread.nix
+    ./esp_home.nix
   ];
 
   options = {

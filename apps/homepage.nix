@@ -154,6 +154,18 @@ in
                   siteMonitor = "https://${config.influxdb.grafana.domain}";
                 };
               }
+              {
+                "Esp Home" = {
+                  icon = "esphome.png";
+                  description = "Esp Home c'est vraiment cool";
+                  href = "https://${config.esp_home.domain}";
+                  siteMonitor = "https://${config.esp_home.domain}";
+                  widget = {
+                    type = "esphome";
+                    url = "http://[::1]:${toString config.esp_home.port}";
+                  };
+                };
+              }
             ];
           }
           {
