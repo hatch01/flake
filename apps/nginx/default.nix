@@ -378,7 +378,7 @@ in
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/" = {
-                proxyPass = "http://[::1]:${toString config.esp_home.port}";
+                proxyPass = "http://127.0.0.1:${toString config.esp_home.port}";
                 proxyWebsockets = true;
                 extraConfig = lib.strings.concatStringsSep "\n" [
                   (builtins.readFile ./auth-authrequest.conf)

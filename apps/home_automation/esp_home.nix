@@ -29,19 +29,27 @@ in
   };
 
   config = mkIf config.esp_home.enable {
-    environment.persistence."/persistent" = {
-      directories = [
-        {
-          directory = "/var/lib/esphome";
-          user = "esphome";
-          group = "esphome";
-        }
+    virtualisation.oci-containers.containers.esphome = {
+      volumes = [ "/persistent/esphome:/config" ];
+      environment.TZ = "Europe/Paris";
+      image = "ghcr.io/esphome/esphome";
+      extraOptions = [
+        "--network=host"
       ];
     };
-    services.esphome = {
-      enable = true;
-      port = config.esp_home.port;
-      allowedDevices = [ ]; # Force no access to serial devices
-    };
+    # environment.persistence."/persistent" = {
+    #   directories = [
+    #     {
+    #       directory = "/var/lib/esphome";
+    #       user = "esphome";
+    #       group = "esphome";
+    #     }
+    #   ];
+    # };
+    # services.esphome = {
+    #   enable = true;
+    #   port = config.esp_home.port;
+    #   allowedDevices = [ ]; # Force no access to serial devices
+    # };
   };
 }
