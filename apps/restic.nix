@@ -39,15 +39,15 @@ in
         ];
         exclude = [
           "/storage/postgresql"
-          "/storage/homeassistant/influxdb"
+          "/storage/home_assistant/influxdb"
         ];
         passwordFile = config.age.secrets."server/restic_key".path;
         repository = "sftp://homeassistant/backup/backup_eymeric";
 
         backupPrepareCommand = ''
-                 ${lib.getExe pkgs.docker} exec -e INFLUX_TOKEN=$INFLUX_TOKEN influxdb influx backup /var/lib/influxdb2/influx.bak
-          mv /storage/homeassistant/influxdb/influx.bak /storage/influx.bak
-                 ${lib.getExe' pkgs.sudo "sudo"} -u postgres ${lib.getExe' config.services.postgresql.package "pg_dumpall"} > /storage/postgres.sql
+          ${lib.getExe pkgs.docker} exec -e INFLUX_TOKEN=$INFLUX_TOKEN influxdb influx backup /var/lib/influxdb2/influx.bak
+          mv /storage/home_assistant/influxdb/influx.bak /storage/influx.bak
+          ${lib.getExe' pkgs.sudo "sudo"} -u postgres ${lib.getExe' config.services.postgresql.package "pg_dumpall"} > /storage/postgres.sql
         '';
 
         backupCleanupCommand = ''

@@ -31,13 +31,13 @@ in
   config = mkIf config.zigbee2mqtt.enable {
     services.mosquitto = {
       enable = true;
-      dataDir = "/storage/homeassistant/mosquitto";
+      dataDir = "/storage/home_assistant/mosquitto";
     };
 
     systemd.services.zigbee2mqtt.serviceConfig.Restart = lib.mkForce "always";
     services.zigbee2mqtt = {
       enable = true;
-      dataDir = "/storage/homeassistant/zigbee2mqtt";
+      dataDir = "/storage/home_assistant/zigbee2mqtt";
 
       settings = {
         version = 4;

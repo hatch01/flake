@@ -80,7 +80,7 @@ in
       };
     };
     virtualisation.oci-containers.containers.influxdb = {
-      volumes = [ "/storage/homeassistant/influxdb/:/var/lib/influxdb2" ];
+      volumes = [ "/storage/home_assistant/influxdb/:/var/lib/influxdb2" ];
       image = "influxdb:latest";
       extraOptions = [
         "--network=host"

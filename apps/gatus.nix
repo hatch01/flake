@@ -115,8 +115,8 @@ in
                   ];
                 })
                 (mkGatusCheck {
-                  name = "homeassistant";
-                  url = "https://${config.homeassistant.domain}/manifest.json";
+                  name = "home_assistant";
+                  url = "https://${config.home_assistant.domain}/manifest.json";
                 })
                 (mkGatusCheck {
                   name = "nodered";

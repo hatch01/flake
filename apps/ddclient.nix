@@ -34,7 +34,7 @@ in
         config.homepage.domain
         config.netdata.domain
         config.nixCache.domain
-        config.homeassistant.domain
+        config.home_assistant.domain
         config.onlyofficeDocumentServer.domain
       ];
     };

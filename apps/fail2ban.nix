@@ -46,10 +46,10 @@ in
           filter = "cockpit";
           maxretry = 5;
         };
-        homeassistant.settings = {
+        home_assistant.settings = {
           enabled = true;
           port = "http,https";
-          filter = "homeassistant";
+          filter = "home_assistant";
           backend = "systemd";
           maxretry = 5;
         };
@@ -71,10 +71,10 @@ in
         failregex = pam_unix\(cockpit:auth\): authentication failure; logname=.* uid=.* euid=.* tty=.* ruser=.* rhost=<HOST>
         journalmatch = SYSLOG_FACILITY=10 PRIORITY=5
       '';
-      "fail2ban/filter.d/homeassistant.local".text = ''
+      "fail2ban/filter.d/home_assistant.local".text = ''
         [Definition]
         failregex = ^.*Login attempt or request with invalid authentication from <HOST>.*$
-        journalmatch = _SYSTEMD_UNIT=docker-homeassistant.service
+        journalmatch = _SYSTEMD_UNIT=docker-home_assistant.service
       '';
     };
   };
