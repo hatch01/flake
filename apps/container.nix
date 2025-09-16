@@ -5,20 +5,29 @@
   ...
 }:
 let
-  inherit (lib) optionals mkEnableOption mkIf;
+  inherit (lib)
+    optionals
+    mkEnableOption
+    mkIf
+    mkDefault
+    ;
 in
 {
   options = {
     container.enable = mkEnableOption "Enable container support";
+    container.docker.enable = mkEnableOption "Enable Docker";
+    container.podman.enable = mkEnableOption "Enable Podman";
     container.distrobox.enable = mkEnableOption "Enable distrobox";
   };
 
   config = mkIf config.container.enable {
+    container.docker.enable = mkDefault true;
+    container.podman.enable = mkDefault true;
+
     environment = {
       systemPackages =
         with pkgs;
-        [
-          docker-compose
+        optionals config.container.podman.enable [
           podman-compose
         ]
         ++ optionals config.container.distrobox.enable [
@@ -27,7 +36,7 @@ in
     };
 
     virtualisation = {
-      docker = {
+      docker = mkIf config.container.docker.enable {
         enable = true;
         storageDriver = "btrfs";
         rootless = {
@@ -35,7 +44,7 @@ in
           setSocketVariable = true;
         };
       };
-      podman = {
+      podman = mkIf config.container.podman.enable {
         enable = true;
         defaultNetwork.settings.dns_enabled = true;
       };

@@ -19,7 +19,7 @@
     inputs.nixos-wsl.nixosModules.default
   ];
 
-  container.enable = lib.mkForce false;
+  container.docker.enable = false;
   office.enable = true;
   home-manager.sharedModules = with inputs; [ plasma-manager.homeModules.plasma-manager ];
   ghostwriter.enable = true;
