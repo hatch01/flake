@@ -24,6 +24,13 @@
   home-manager.sharedModules = with inputs; [ plasma-manager.homeModules.plasma-manager ];
   ghostwriter.enable = true;
 
+  # dev params
+  dev.enable = true;
+  jetbrains.enable = false;
+  arduino.enable = false;
+  dev.androidtools.enable = false;
+  vscode.enable = false;
+
   hm.home.file.".zed_server" = {
     source = "${pkgs.zed-editor.remote_server}/bin";
     recursive = true;

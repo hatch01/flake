@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf optionals;
+  inherit (lib) mkEnableOption mkIf optionals mkDefault;
 in
 {
   imports = [
@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf config.dev.enable {
-    arduino.enable = true;
+    arduino.enable = mkDefault true;
     environment.systemPackages =
       with pkgs;
       [
