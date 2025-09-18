@@ -20,7 +20,7 @@ let
           enable = true;
           patches =
             if (value.stable or false) then
-              (_: [ ])
+              _: [ ]
             else
               pkgs: with pkgs; [
                 (fetchpatch2 {
