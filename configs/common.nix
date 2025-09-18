@@ -117,6 +117,7 @@
           "anytype"
           "anytype-heart"
           "nrf-udev"
+          "iscan-ds"
         ];
 
       permittedInsecurePackages = [
