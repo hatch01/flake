@@ -6,6 +6,7 @@
       config = prev.config;
     };
     unstablePackages = [
+      "gatus"
     ];
   in
   builtins.listToAttrs (
