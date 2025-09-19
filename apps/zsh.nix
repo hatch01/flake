@@ -196,6 +196,13 @@ in
              	    ssh "$ARGS"
               fi
             }
+            s () {
+              local server
+              server=$(grep -E '^Host ' ~/.ssh/config | awk '{print $2}' | fzf)
+              if [[ -n $server ]]; then
+                ssh $server
+              fi
+            }
             # enable fzf
             [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
             #enable zoxide
