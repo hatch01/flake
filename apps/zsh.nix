@@ -198,9 +198,24 @@ in
             }
             s () {
               local server
-              server=$(grep -E '^Host ' ~/.ssh/config | awk '{print $2}' | fzf)
+              local query="$1"
+              local hosts
+              hosts=$(grep -E '^Host ' ~/.ssh/config | awk '{print $2}')
+
+              if [[ -n $query ]]; then
+                server=$(echo "$hosts" | grep -i "$query")
+                count=$(echo "$server" | wc -l)
+                if [[ $count -eq 1 ]]; then
+                  ssh "$server"
+                  return
+                fi
+                server=$(echo "$hosts" | fzf --query="$query")
+              else
+                server=$(echo "$hosts" | fzf)
+              fi
+
               if [[ -n $server ]]; then
-                ssh $server
+                ssh "$server"
               fi
             }
             # enable fzf
