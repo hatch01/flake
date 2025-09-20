@@ -8,6 +8,7 @@
     stablePackages = [
       "tigervnc"
       "kdePackages.plasma-workspace"
+      "kdePackages.kwin"
     ];
   in
   builtins.listToAttrs (
