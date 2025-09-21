@@ -5,7 +5,12 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf optionals mkDefault;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    optionals
+    mkDefault
+    ;
 in
 {
   imports = [
