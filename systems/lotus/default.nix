@@ -45,8 +45,11 @@
           signByDefault = lib.mkForce false;
         };
       };
-      zsh.shellAliases = {
-        zeditor = "export ZED_ALLOW_EMULATED_GPU=1; unset WAYLAND_DISPLAY; zeditor";
+      zsh = {
+        initContent = lib.mkAfter "eval $(${lib.getExe pkgs.wsl2-ssh-agent})";
+        shellAliases = {
+          zeditor = "export ZED_ALLOW_EMULATED_GPU=1; unset WAYLAND_DISPLAY; zeditor";
+        };
       };
     };
   };

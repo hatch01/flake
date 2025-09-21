@@ -28,6 +28,11 @@ let
                   url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
                   hash = "sha256-Hyn/mESLB118TA4Lbt5zaRi0e3GItZVh4lMFPFR9OoY=";
                 })
+                (fetchpatch2 {
+                  name = "wsl2-ssh-agent.patch";
+                  url = "https://github.com/NixOS/nixpkgs/pull/444409.diff";
+                  hash = "sha256-njqS+g9oKnXkw/y+3ZYTGeLmUjCPmxoZSEfU2TQhbc8=";
+                })
               ];
         };
         system = value.system;
