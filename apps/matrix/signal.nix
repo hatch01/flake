@@ -40,7 +40,7 @@ in
         network = {
           device_name = "mautrix-signal";
           disappear_view_once = false;
-          displayname_template = "'{{or .ContactName \" Unknown user \"}} (Signal)'";
+          displayname_template = "{{or .ContactName \" Unknown user \"}} (Signal)";
           location_format = "'https://www.google.com/maps/place/%[1]s,%[2]s'";
           note_to_self_avatar = "mxc://maunium.net/REBIVrqjZwmaWpssCZpBlmlL";
           number_in_topic = true;
