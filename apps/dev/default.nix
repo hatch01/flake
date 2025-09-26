@@ -21,7 +21,7 @@ in
   config = {
     environment.systemPackages =
       with pkgs;
-      [ ]
+      [ glab ]
       ++ optionals config.dev.androidtools.enable [
         android-tools
         scrcpy
