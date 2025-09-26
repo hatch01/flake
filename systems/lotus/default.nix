@@ -36,6 +36,10 @@
     recursive = true;
   };
 
+  age = {
+    identityPaths = [ "/etc/age/key" ];
+  };
+
   wsl.enable = true;
   wsl.defaultUser = username;
   hm = {
