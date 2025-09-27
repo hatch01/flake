@@ -45,37 +45,34 @@ let
   # Each exporter has a condition that determines if it should be enabled
   availableExporters = {
     node = {
-      condition = true; # Always enabled when prometheus is enabled
+      enable = true; # Always enabled when prometheus is enabled
       config = {
         enabledCollectors = [ "systemd" ];
       };
     };
 
-    process = {
-      condition = true; # Process monitoring and statistics
-    };
+    process.enable = true; # Process monitoring and statistics
+    zfs.enable = true; # ZFS filesystem metrics
+    mqtt.enable = config.zigbee2mqtt.enable or false; # MQTT broker metrics
+    systemd.enable = true; # Systemd service metrics
 
     smartctl = {
-      condition = true; # SMART disk health monitoring
+      enable = true; # SMART disk health monitoring
       config = {
         devices = config.prometheus.smartctl.devices;
       };
     };
 
-    zfs = {
-      condition = true; # ZFS filesystem metrics
-    };
-
     # === Service Monitoring ===
     nginx = {
-      condition = true; # Nginx web server metrics
+      enable = true; # Nginx web server metrics
       config = {
         scrapeUri = "http://localhost/stub_status";
       };
     };
 
     postgres = {
-      condition = config.prometheus.postgres; # PostgreSQL database metrics
+      enable = config.prometheus.postgres; # PostgreSQL database metrics
       config = {
         runAsLocalSuperUser = true;
       };
@@ -83,20 +80,16 @@ let
 
     # === Application Monitoring ===
     nextcloud = {
-      condition = config.nextcloud.enable or false; # Nextcloud application metrics
+      enable = config.nextcloud.enable or false; # Nextcloud application metrics
       config = {
         tokenFile = config.age.secrets.nextcloud_prometheus.path;
         url = "https://${config.nextcloud.domain}";
       };
     };
 
-    mqtt = {
-      condition = config.zigbee2mqtt.enable or false; # MQTT broker metrics
-    };
-
     # === Backup Monitoring ===
     restic = {
-      condition = true; # Backup status and statistics
+      enable = true; # Backup status and statistics
       config = {
         repository = config.services.restic.backups.remotebackup.repository;
         passwordFile = config.services.restic.backups.remotebackup.passwordFile;
@@ -106,7 +99,7 @@ let
   };
 
   # Filter exporters based on their conditions (e.g., service availability)
-  enabledExporters = filterAttrs (name: exporter: exporter.condition) availableExporters;
+  enabledExporters = filterAttrs (name: exporter: exporter.enable) availableExporters;
 
   # Generate exporter configurations
   exporterConfigs = mapAttrsToList (name: exporter: {
@@ -177,7 +170,7 @@ in
       };
 
       # Nginx configuration for stub_status (only if nginx exporter is enabled)
-      nginx = mkIf (availableExporters.nginx.condition) {
+      nginx = mkIf (availableExporters.nginx.enable) {
         enable = true;
         virtualHosts."_" = {
           locations."/stub_status" = {
