@@ -18,6 +18,7 @@ in
     };
   };
   config = {
+    prometheus.postgres = true;
     services.postgresql = {
       initialScript = pkgs.writeText "mautrix-signal.sql" (
         lib.concatStrings (config.postgres.initialScripts or [ ])

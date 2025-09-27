@@ -23,7 +23,6 @@ let
       "cockpit_private_key"
       "restic_key"
       "influx_root_token"
-      "netdata_notify"
       "wakapi_salt"
     ]
     // defineSecrets "tulipe" [
@@ -78,7 +77,11 @@ let
       "apolline"
       "node_red"
 
-      "foodi"
+      # # Generate random value (for example using openssl)
+      # TOKEN=$(openssl rand -hex 32)
+      # # Set token (using the occ console application)
+      # occ config:app:set serverinfo token --value "$TOKEN"
+      "nextcloud_prometheus"
     ]
     // defineSecrets "lavande" [
       "rootPassword"

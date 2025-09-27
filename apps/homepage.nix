@@ -171,18 +171,6 @@ in
           {
             "Administration" = [
               {
-                "Netdata" = {
-                  icon = "netdata.png";
-                  description = "netdata c'est vraiment cool";
-                  href = "https://${config.netdata.domain}";
-                  siteMonitor = "https://${config.netdata.domain}";
-                  widget = {
-                    type = "netdata";
-                    url = "http://[::1]:${toString config.netdata.port}";
-                  };
-                };
-              }
-              {
                 "Adguard" = {
                   icon = "adguard-home.png";
                   description = "Adguard c'est vraiment cool";

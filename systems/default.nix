@@ -33,6 +33,11 @@ let
                   url = "https://github.com/NixOS/nixpkgs/pull/444409.diff";
                   hash = "sha256-njqS+g9oKnXkw/y+3ZYTGeLmUjCPmxoZSEfU2TQhbc8=";
                 })
+                (fetchpatch2 {
+                  name = "prometheus_restic.patch";
+                  url = "https://github.com/NixOS/nixpkgs/pull/422189.diff";
+                  hash = "sha256-6Arvp87woQU5/9g1mQj+c5ufeXFSWGkULPOMsRgsh/U=";
+                })
               ];
         };
         system = value.system;

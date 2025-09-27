@@ -32,7 +32,6 @@ in
         config.nextcloud.domain
         config.matrix.domain
         config.homepage.domain
-        config.netdata.domain
         config.nixCache.domain
         config.home_assistant.domain
         config.onlyofficeDocumentServer.domain

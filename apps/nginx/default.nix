@@ -95,11 +95,11 @@ in
               "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
             };
           };
-          ${config.netdata.domain} = mkIf config.netdata.enable {
+          ${config.prometheus.domain} = mkIf config.prometheus.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/" = {
-                proxyPass = "http://[::1]:${toString config.netdata.port}";
+                proxyPass = "http://[::1]:${toString config.prometheus.port}";
                 extraConfig = lib.strings.concatStringsSep "\n" [
                   (builtins.readFile ./auth-authrequest.conf)
                 ];
