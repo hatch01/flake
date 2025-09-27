@@ -47,7 +47,10 @@ let
     node = {
       enable = true; # Always enabled when prometheus is enabled
       config = {
-        enabledCollectors = [ "systemd" ];
+        enabledCollectors = [
+          "systemd"
+          "processes"
+        ];
       };
     };
 
