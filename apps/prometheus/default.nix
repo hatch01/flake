@@ -29,7 +29,6 @@ let
     mkForce
     mapAttrsToList
     filterAttrs
-    filesystem
     ;
 
   # Helper function to create an exporter configuration
@@ -57,7 +56,7 @@ let
 
     process.enable = true; # Process monitoring and statistics
     zfs.enable = true; # ZFS filesystem metrics
-    mqtt.enable = config.zigbee2mqtt.enable or false; # MQTT broker metrics
+    mqtt.enable = config.zigbee2mqtt.enable; # MQTT broker metrics
     systemd.enable = true; # Systemd service metrics
 
     smartctl = {
@@ -82,16 +81,14 @@ let
       };
     };
 
-    # === Application Monitoring ===
     nextcloud = {
-      enable = config.nextcloud.enable or false; # Nextcloud application metrics
+      enable = config.nextcloud.enable; # Nextcloud application metrics
       config = {
         tokenFile = config.age.secrets.nextcloud_prometheus.path;
         url = "https://${config.nextcloud.domain}";
       };
     };
 
-    # === Backup Monitoring ===
     restic = {
       enable = true; # Backup status and statistics
       config = {

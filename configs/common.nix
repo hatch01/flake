@@ -23,7 +23,7 @@
   zshConfig.enable = true;
 
   nix = {
-    package = pkgs.nixVersions.latest;
+    package = pkgs.nixVersions.git;
     settings = {
       experimental-features = [
         "nix-command"
