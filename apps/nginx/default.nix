@@ -109,6 +109,20 @@ in
             };
           };
 
+          ${config.prometheus.alertManager.domain} = mkIf config.prometheus.enable {
+            inherit (cfg) forceSSL enableACME;
+            locations = {
+              "/" = {
+                proxyPass = "http://[::1]:${toString config.prometheus.alertManager.port}";
+                extraConfig = lib.strings.concatStringsSep "\n" [
+                  (builtins.readFile ./auth-authrequest.conf)
+                ];
+              };
+              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
+              "/internal/authelia/authz" = autheliaProxy;
+            };
+          };
+
           ${config.gatus.domain} = {
             inherit (cfg) forceSSL enableACME;
             locations = {

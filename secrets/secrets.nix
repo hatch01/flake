@@ -82,6 +82,7 @@ let
       # # Set token (using the occ console application)
       # occ config:app:set serverinfo token --value "$TOKEN"
       "nextcloud_prometheus"
+      "discord_prometheus"
     ]
     // defineSecrets "lavande" [
       "rootPassword"

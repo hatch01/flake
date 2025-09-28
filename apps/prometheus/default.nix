@@ -16,7 +16,7 @@
   lib,
   config,
   base_domain_name,
-  mkSecret,
+  mkSecrets,
   ...
 }:
 
@@ -29,6 +29,7 @@ let
     mkForce
     mapAttrsToList
     filterAttrs
+    filesystem
     ;
 
   # Helper function to create an exporter configuration
@@ -116,9 +117,26 @@ let
     static_configs = [
       {
         targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.${name}.port}" ];
+        labels = {
+          hostname = config.networking.hostName;
+        };
+      }
+    ];
+    # Relabel to ensure that the instance label is set to the hostname
+    relabel_configs = [
+      {
+        source_labels = [ "hostname" ];
+        target_label = "instance";
       }
     ];
   }) enabledExporters;
+
+  # Automatically load all rule files from alerts subfolder
+  ruleFiles =
+    let
+      alertsPath = config.prometheus.alertsPath;
+    in
+    map (name: alertsPath + "/${name}") (lib.attrNames (builtins.readDir alertsPath));
 
 in
 {
@@ -137,6 +155,19 @@ in
       };
       postgres = mkEnableOption "Activer l'exporter PostgreSQL";
 
+      alertManager = {
+        domain = mkOption {
+          type = types.str;
+          default = "alertmanager.${base_domain_name}";
+          description = "Domaine de l'instance Alert Manager";
+        };
+        port = mkOption {
+          type = types.int;
+          default = 9093;
+          description = "Port de l'Alert Manager";
+        };
+      };
+
       smartctl = {
         devices = mkOption {
           type = types.listOf types.str;
@@ -149,12 +180,32 @@ in
         };
       };
 
+      alertsPath = mkOption {
+        type = types.path;
+        default = ./alerts;
+        description = "Path to the alerts directory containing rule files";
+      };
+
     };
   };
 
   config = mkIf config.prometheus.enable {
-    age.secrets = mkIf (config.nextcloud.enable or false) (
-      mkSecret "nextcloud_prometheus" { owner = "nextcloud-exporter"; }
+    age.secrets = mkSecrets (
+      {
+        discord_prometheus = {
+          owner = "prometheus";
+        };
+      }
+      // (
+        if config.nextcloud.enable then
+          {
+            nextcloud_prometheus = {
+              owner = "nextcloud-exporter";
+            };
+          }
+        else
+          { }
+      )
     );
 
     systemd.services.prometheus-restic-exporter.serviceConfig.ProtectHome = mkForce false;
@@ -170,6 +221,43 @@ in
 
         # Generated exporter configurations
         exporters = builtins.listToAttrs exporterConfigs;
+
+        # Automatically loaded alert rules from alerts subfolder
+        ruleFiles = ruleFiles;
+
+        alertmanagers = [
+          {
+            static_configs = [ { targets = [ "localhost:${toString config.prometheus.alertManager.port}" ]; } ];
+          }
+        ];
+
+        alertmanager = {
+          enable = true;
+          port = config.prometheus.alertManager.port;
+          webExternalUrl = "https://${config.prometheus.alertManager.domain}";
+          environmentFile = config.age.secrets.discord_prometheus.path;
+          checkConfig = false; # Disable because the url is provided by env file which is not available at check time
+          configuration = {
+            route = {
+              receiver = "discord";
+              group_by = [ "alertname" ];
+              group_wait = "30s";
+              group_interval = "5m";
+              repeat_interval = "3h";
+            };
+            receivers = [
+              {
+                name = "discord";
+                discord_configs = [
+                  {
+                    webhook_url = "\${webhook}";
+                  }
+                ];
+              }
+            ];
+          };
+        };
+
       };
 
       # Nginx configuration for stub_status (only if nginx exporter is enabled)
