@@ -217,7 +217,44 @@ in
         webExternalUrl = "https://${config.prometheus.domain}";
 
         # Generated scrape configurations
-        scrapeConfigs = scrapeConfigs;
+        scrapeConfigs = scrapeConfigs ++ [
+          # Prometheus self-monitoring
+          {
+            job_name = "prometheus";
+            static_configs = [
+              {
+                targets = [ "localhost:${toString config.prometheus.port}" ];
+                labels = {
+                  hostname = config.networking.hostName;
+                };
+              }
+            ];
+            relabel_configs = [
+              {
+                source_labels = [ "hostname" ];
+                target_label = "instance";
+              }
+            ];
+          }
+          # Alertmanager monitoring
+          {
+            job_name = "alertmanager";
+            static_configs = [
+              {
+                targets = [ "localhost:${toString config.prometheus.alertManager.port}" ];
+                labels = {
+                  hostname = config.networking.hostName;
+                };
+              }
+            ];
+            relabel_configs = [
+              {
+                source_labels = [ "hostname" ];
+                target_label = "instance";
+              }
+            ];
+          }
+        ];
 
         # Generated exporter configurations
         exporters = builtins.listToAttrs exporterConfigs;
