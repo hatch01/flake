@@ -1,16 +1,22 @@
-# Prometheus monitoring module with exporters
+# Prometheus monitoring module with exporters and multi-host support
 #
 # This module provides a clean, structured approach to configuring Prometheus
-# with multiple exporters. Key improvements:
-# - All exporters listen only on 127.0.0.1 for security
-# - Uses NixOS default ports for exporters (no duplication)
-# - Scrape configs are automatically generated from exporter configurations
-# - Conditional enabling based on other service availability
-# - Reduced repetition through helper functions
+# with multiple exporters across multiple hosts via Tailscale. Key features:
+# - Local exporters listen on 127.0.0.1 for security
+# - Remote exporters listen on Tailscale interface
+# - Automatic scrape config generation for both local and remote hosts
+# - Easy addition of new hosts via configuration
+# - Conditional enabling based on service availability
 #
-# Example usage to customize exporter ports:
-# services.prometheus.exporters.node.port = 9101;
-# services.prometheus.exporters.nginx.port = 9114;
+# Example usage:
+# prometheus = {
+#   enable = true;
+#   remoteHosts = {
+#     lilas = {
+#       exporters = ["node" "systemd" "zfs"];
+#     };
+#   };
+# };
 
 {
   lib,
@@ -31,13 +37,23 @@ let
     filterAttrs
     ;
 
-  # Helper function to create an exporter configuration
-  # Ensures all exporters listen on localhost only
-  mkExporter =
+  # Helper function to create a local exporter configuration
+  # Local exporters listen on localhost only for security
+  mkLocalExporter =
     name: baseConfig:
     {
       enable = true;
       listenAddress = "127.0.0.1";
+    }
+    // baseConfig;
+
+  # Helper function to create a remote exporter configuration
+  # Remote exporters listen on all interfaces (0.0.0.0) for Tailscale access
+  mkRemoteExporter =
+    name: baseConfig:
+    {
+      enable = true;
+      listenAddress = "0.0.0.0";
     }
     // baseConfig;
 
@@ -99,18 +115,41 @@ let
     };
   };
 
-  # Filter exporters based on their conditions (e.g., service availability)
-  enabledExporters = filterAttrs (name: exporter: exporter.enable) availableExporters;
+  # Determine if this is the Prometheus server host
+  isPrometheusHost = config.prometheus.enable;
 
-  # Generate exporter configurations
-  exporterConfigs = mapAttrsToList (name: exporter: {
+  # Filter exporters based on their conditions and host type
+  enabledLocalExporters =
+    if isPrometheusHost then filterAttrs (name: exporter: exporter.enable) availableExporters else { };
+
+  # For remote hosts, only enable basic exporters or specified ones
+  enabledRemoteExporters =
+    if !isPrometheusHost && config.prometheus.exporters.enable then
+      filterAttrs (
+        name: exporter: builtins.elem name config.prometheus.exporters.enabled && exporter.enable
+      ) availableExporters
+    else
+      { };
+
+  # Generate local exporter configurations (for Prometheus host)
+  localExporterConfigs = mapAttrsToList (name: exporter: {
     name = name;
-    value = mkExporter name (exporter.config or { });
-  }) enabledExporters;
+    value = mkLocalExporter name (exporter.config or { });
+  }) enabledLocalExporters;
 
-  # Generate scrape configurations from the actual exporter configs
-  scrapeConfigs = mapAttrsToList (name: exporter: {
-    job_name = name;
+  # Generate remote exporter configurations (for non-Prometheus hosts)
+  remoteExporterConfigs =
+    if !isPrometheusHost && config.prometheus.exporters.enable then
+      mapAttrsToList (name: exporter: {
+        name = name;
+        value = mkRemoteExporter name (exporter.config or { });
+      }) enabledRemoteExporters
+    else
+      [ ];
+
+  # Generate scrape configurations for local exporters
+  localScrapeConfigs = mapAttrsToList (name: exporter: {
+    job_name = "${name}-${config.networking.hostName}";
     static_configs = [
       {
         targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.${name}.port}" ];
@@ -119,14 +158,39 @@ let
         };
       }
     ];
-    # Relabel to ensure that the instance label is set to the hostname
     relabel_configs = [
       {
         source_labels = [ "hostname" ];
         target_label = "instance";
       }
     ];
-  }) enabledExporters;
+  }) enabledLocalExporters;
+
+  # Generate scrape configurations for remote hosts
+  remoteScrapeConfigs = flatten (
+    mapAttrsToList (
+      hostName: hostConfig:
+      map (exporterName: {
+        job_name = "${exporterName}-${hostName}";
+        static_configs = [
+          {
+            targets = [
+              "${hostName}:${toString config.services.prometheus.exporters.${exporterName}.port}"
+            ];
+            labels = {
+              hostname = hostName;
+            };
+          }
+        ];
+        relabel_configs = [
+          {
+            source_labels = [ "hostname" ];
+            target_label = "instance";
+          }
+        ];
+      }) hostConfig.exporters
+    ) config.prometheus.remoteHosts
+  );
 
   # Automatically load all rule files from alerts subfolder
   ruleFiles =
@@ -139,7 +203,43 @@ in
 {
   options = {
     prometheus = {
-      enable = mkEnableOption "Activer Prometheus";
+      enable = mkEnableOption "Activer Prometheus (serveur principal)";
+
+      # Options for remote hosts (non-Prometheus hosts)
+      exporters = {
+        enable = mkEnableOption "Activer les exporters sur cet hôte";
+        enabled = mkOption {
+          type = types.listOf types.str;
+          default = [
+            "node"
+            "systemd"
+            "process"
+          ];
+          description = "Liste des exporters à activer sur cet hôte";
+        };
+      };
+
+      # Remote hosts configuration (only used on Prometheus host)
+      remoteHosts = mkOption {
+        type = types.attrsOf (
+          types.submodule {
+            options = {
+              exporters = mkOption {
+                type = types.listOf types.str;
+                default = [
+                  "node"
+                  "systemd"
+                  "process"
+                ];
+                description = "Liste des exporters à scraper sur cet hôte";
+              };
+            };
+          }
+        );
+        default = { };
+        description = "Configuration des hôtes distants à monitorer";
+      };
+
       domain = mkOption {
         type = types.str;
         default = "prometheus.${base_domain_name}";
@@ -182,81 +282,91 @@ in
         default = ./alerts;
         description = "Path to the alerts directory containing rule files";
       };
-
     };
   };
 
-  config = mkIf config.prometheus.enable {
-    age.secrets = mkSecrets (
-      {
-        discord_prometheus = {
-          owner = "prometheus";
-        };
-      }
-      // (
-        if config.nextcloud.enable then
-          {
-            nextcloud_prometheus = {
-              owner = "nextcloud-exporter";
-            };
-          }
-        else
-          { }
+  config = mkIf (config.prometheus.enable || config.prometheus.exporters.enable) {
+
+    # Secrets (only on Prometheus host)
+    age.secrets = mkIf config.prometheus.enable (
+      mkSecrets (
+        {
+          discord_prometheus = {
+            owner = "prometheus";
+          };
+        }
+        // (
+          if config.nextcloud.enable then
+            {
+              nextcloud_prometheus = {
+                owner = "nextcloud-exporter";
+              };
+            }
+          else
+            { }
+        )
       )
     );
 
-    systemd.services.prometheus-restic-exporter.serviceConfig.ProtectHome = mkForce false;
+    # Fix for restic exporter (only if enabled)
+    systemd.services = mkIf (config.prometheus.enable && enabledLocalExporters ? restic) {
+      prometheus-restic-exporter.serviceConfig.ProtectHome = mkForce false;
+    };
 
     services = {
-      prometheus = {
+      # Prometheus server configuration (only on Prometheus host)
+      prometheus = mkIf config.prometheus.enable {
         enable = true;
         port = config.prometheus.port;
         webExternalUrl = "https://${config.prometheus.domain}";
 
-        # Generated scrape configurations
-        scrapeConfigs = scrapeConfigs ++ [
-          # Prometheus self-monitoring
-          {
-            job_name = "prometheus";
-            static_configs = [
-              {
-                targets = [ "localhost:${toString config.prometheus.port}" ];
-                labels = {
-                  hostname = config.networking.hostName;
-                };
-              }
-            ];
-            relabel_configs = [
-              {
-                source_labels = [ "hostname" ];
-                target_label = "instance";
-              }
-            ];
-          }
-          # Alertmanager monitoring
-          {
-            job_name = "alertmanager";
-            static_configs = [
-              {
-                targets = [ "localhost:${toString config.prometheus.alertManager.port}" ];
-                labels = {
-                  hostname = config.networking.hostName;
-                };
-              }
-            ];
-            relabel_configs = [
-              {
-                source_labels = [ "hostname" ];
-                target_label = "instance";
-              }
-            ];
-          }
-        ];
+        # Combined scrape configurations (local + remote)
+        scrapeConfigs =
+          localScrapeConfigs
+          ++ remoteScrapeConfigs
+          ++ [
+            # Prometheus self-monitoring
+            {
+              job_name = "prometheus";
+              static_configs = [
+                {
+                  targets = [ "localhost:${toString config.prometheus.port}" ];
+                  labels = {
+                    hostname = config.networking.hostName;
+                  };
+                }
+              ];
+              relabel_configs = [
+                {
+                  source_labels = [ "hostname" ];
+                  target_label = "instance";
+                }
+              ];
+            }
+            # Alertmanager monitoring
+            {
+              job_name = "alertmanager";
+              static_configs = [
+                {
+                  targets = [ "localhost:${toString config.prometheus.alertManager.port}" ];
+                  labels = {
+                    hostname = config.networking.hostName;
+                  };
+                }
+              ];
+              relabel_configs = [
+                {
+                  source_labels = [ "hostname" ];
+                  target_label = "instance";
+                }
+              ];
+            }
+          ];
 
-        # Generated exporter configurations
-        exporters = builtins.listToAttrs exporterConfigs;
+        # Local exporter configurations
+        exporters = builtins.listToAttrs localExporterConfigs;
 
-        # Automatically loaded alert rules from alerts subfolder
+        # Alert rules (only on Prometheus host)
         ruleFiles = ruleFiles;
 
         alertmanagers = [
@@ -270,7 +380,8 @@ in
           port = config.prometheus.alertManager.port;
           webExternalUrl = "https://${config.prometheus.alertManager.domain}";
           environmentFile = config.age.secrets.discord_prometheus.path;
-          checkConfig = false; # Disable because the url is provided by env file which is not available at check time
+
+          checkConfig = false;
           configuration = {
             route = {
               receiver = "discord";
@@ -291,26 +402,38 @@ in
             ];
           };
         };
-
       };
+
+      # Remote exporter configurations (only on non-Prometheus hosts)
+      prometheus.exporters = mkIf config.prometheus.exporters.enable (
+        builtins.listToAttrs remoteExporterConfigs
+      );
 
       # Nginx configuration for stub_status (only if nginx exporter is enabled)
-      nginx = mkIf (availableExporters.nginx.enable) {
-        enable = true;
-        virtualHosts."_" = {
-          locations."/stub_status" = {
-            extraConfig = ''
-              stub_status on;
-              access_log off;
-              allow 127.0.0.1;
-              deny all;
-            '';
+      nginx =
+        mkIf
+          (
+            enabledLocalExporters ? nginx
+            || (config.prometheus.exporters.enable && builtins.elem "nginx" config.prometheus.exporters.enabled)
+          )
+          {
+            enable = true;
+            virtualHosts."_" = {
+              locations."/stub_status" = {
+                extraConfig = ''
+                  stub_status on;
+                  access_log off;
+                  allow 127.0.0.1;
+                  allow 100.64.0.0/10;  # Allow Tailscale network
+                  deny all;
+                '';
+              };
+            };
           };
-        };
-      };
     };
 
-    environment.persistence."/persistent".directories = [
+    # Persistence (only on Prometheus host)
+    environment.persistence."/persistent".directories = mkIf config.prometheus.enable [
       "/var/lib/prometheus2"
     ];
   };

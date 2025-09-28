@@ -26,7 +26,23 @@
   networking.firewall.allowedTCPPorts = [
     config.gatus.port
     config.cockpit.port
+  ]
+  ++ lib.optionals config.prometheus.exporters.enable [
+    # Prometheus exporters ports (9100+)
+    9100 # node_exporter
+    9256 # process_exporter
+    9308 # systemd_exporter
   ];
+
+  # Enable Prometheus exporters for monitoring from jonquille
+  prometheus.exporters = {
+    enable = true;
+    enabled = [
+      "node"
+      "systemd"
+      "process"
+    ];
+  };
 
   hardware.enableAllHardware = lib.mkForce false; # needed for sd image creation not crash : https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-2868994145
 

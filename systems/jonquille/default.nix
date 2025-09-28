@@ -20,6 +20,15 @@
   forgejo.enable = true;
   configUpdater.enable = true;
   prometheus.enable = true;
+  prometheus.remoteHosts = {
+    lilas = {
+      exporters = [
+        "node"
+        "systemd"
+        "process"
+      ];
+    };
+  };
   nixCache.enable = true;
   adguard.enable = true;
   fail2ban.enable = true;
