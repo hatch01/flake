@@ -42,6 +42,9 @@ in
     environment.systemPackages = with pkgs; [
       libvirt-dbus
       virt-manager
+      osinfo-db
+      osinfo-db-tools
+      libosinfo
       cockpit-files
       cockpit-machines
       cockpit-podman
