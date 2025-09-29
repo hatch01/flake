@@ -31,7 +31,7 @@ let
                 (fetchpatch2 {
                   name = "wsl2-ssh-agent.patch";
                   url = "https://github.com/NixOS/nixpkgs/pull/444409.diff";
-                  hash = "sha256-njqS+g9oKnXkw/y+3ZYTGeLmUjCPmxoZSEfU2TQhbc8=";
+                  hash = "sha256-m7WOd5Ski6pVnwHL/FGpJ+IdkW8aJkCYoZTQmotMwh0=";
                 })
                 (fetchpatch2 {
                   name = "prometheus_restic.patch";
