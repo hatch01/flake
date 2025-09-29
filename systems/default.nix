@@ -43,6 +43,11 @@ let
                   url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
                   hash = "sha256-VcB+wOejaHDvXhVIctc7rI3Y2WOPmliWK2WKmCWh1sM=";
                 })
+                (fetchpatch2 {
+                  name = "libvirt-dbus.patch";
+                  url = "https://github.com/NixOS/nixpkgs/pull/447197.diff";
+                  hash = "sha256-0EfMztGf/qJeXdedEaH/Bronakqv29I5XyhZa3nYHVc=";
+                })
               ];
         };
         system = value.system;

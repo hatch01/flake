@@ -24,7 +24,24 @@ in
   };
 
   config = mkIf config.cockpit.enable {
+    virtualisation = {
+      libvirtd.enable = true;
+    };
+
+    users = {
+      users.libvirtdbus = {
+        isSystemUser = true;
+        group = "libvirtdbus";
+        description = "Libvirt D-Bus bridge";
+      };
+      groups.libvirtdbus = { };
+    };
+
+    systemd.packages = [ pkgs.libvirt-dbus ];
+
     environment.systemPackages = with pkgs; [
+      libvirt-dbus
+      virt-manager
       cockpit-files
       cockpit-machines
       cockpit-podman
