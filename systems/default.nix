@@ -38,6 +38,11 @@ let
                   url = "https://github.com/NixOS/nixpkgs/pull/422189.diff";
                   hash = "sha256-6Arvp87woQU5/9g1mQj+c5ufeXFSWGkULPOMsRgsh/U=";
                 })
+                (fetchpatch2 {
+                  name = "cockpit.patch";
+                  url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
+                  hash = "sha256-VcB+wOejaHDvXhVIctc7rI3Y2WOPmliWK2WKmCWh1sM=";
+                })
               ];
         };
         system = value.system;

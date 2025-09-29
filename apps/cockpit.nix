@@ -2,6 +2,7 @@
   lib,
   config,
   base_domain_name,
+  pkgs,
   ...
 }:
 let
@@ -23,6 +24,12 @@ in
   };
 
   config = mkIf config.cockpit.enable {
+    environment.systemPackages = with pkgs; [
+      cockpit-files
+      cockpit-machines
+      cockpit-podman
+    ];
+
     services.cockpit = {
       enable = true;
       port = config.cockpit.port;
