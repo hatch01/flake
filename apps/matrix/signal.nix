@@ -52,11 +52,6 @@ in
           address = "http://localhost:${toString config.matrix.port}";
           domain = base_domain_name;
         };
-        appservice = {
-          address = "https://localhost:29328";
-          async_transactions = false;
-          bot.avatar = "mxc://maunium.net/wPJgTQbZOtpBFmDNkiNEMDUp";
-        };
         database = {
           type = "postgres";
           uri = "postgresql:///mautrix-signal?host=/run/postgresql";

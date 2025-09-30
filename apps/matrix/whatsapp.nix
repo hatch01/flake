@@ -55,10 +55,6 @@ in
           address = "http://localhost:${toString config.matrix.port}";
           domain = base_domain_name;
         };
-        appservice = {
-          address = "https://localhost:29328";
-          async_transactions = false;
-        };
         database = {
           type = "postgres";
           uri = "postgresql:///mautrix-whatsapp?host=/run/postgresql";
