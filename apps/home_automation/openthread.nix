@@ -37,6 +37,7 @@ in
   config =
     if !stable then
       mkIf config.openthread.enable {
+        environment.persistence."/persistent".directories = [ "/var/lib/thread" ];
         services.openthread-border-router = {
           backboneInterface = "eno1";
           enable = true;
