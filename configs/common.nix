@@ -145,6 +145,8 @@
   programs.direnv = {
     enable = true;
     loadInNixShell = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
     nix-direnv.enable = true;
   };
 
