@@ -24,7 +24,7 @@ let
             else
               pkgs: with pkgs; [
                 (fetchpatch2 {
-                  name = "git-review-bump.patch";
+                  name = "openthread-border-router.patch";
                   url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
                   hash = "sha256-Hyn/mESLB118TA4Lbt5zaRi0e3GItZVh4lMFPFR9OoY=";
                 })
