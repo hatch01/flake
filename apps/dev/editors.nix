@@ -31,12 +31,12 @@ in
         kdePackages.kate
       ]
       ++ optionals config.jetbrains.enable [
-        jetbrains.idea-ultimate
-        jetbrains.pycharm-professional
-        jetbrains.clion
-        jetbrains.rust-rover
-        jetbrains.phpstorm
-        jetbrains.datagrip
+        # jetbrains.idea-ultimate
+        # jetbrains.pycharm-professional
+        # jetbrains.clion
+        # jetbrains.rust-rover
+        # jetbrains.phpstorm
+        # jetbrains.datagrip
       ];
   };
 }
