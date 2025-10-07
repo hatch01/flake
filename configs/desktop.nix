@@ -43,6 +43,7 @@ in
 
   multimedia.enable = mkDefault true;
   multimedia.editing.enable = mkDefault true;
+  multimedia.audio.enable = mkDefault true;
   thunderbird.enable = mkDefault true;
   ollama.enable = mkDefault true;
 
