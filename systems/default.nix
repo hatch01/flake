@@ -26,7 +26,7 @@ let
                 (fetchpatch2 {
                   name = "openthread-border-router.patch";
                   url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
-                  hash = "sha256-Hyn/mESLB118TA4Lbt5zaRi0e3GItZVh4lMFPFR9OoY=";
+                  hash = "sha256-1GBu8HC470ZmCg2gX8p2Uj2jo+j8yRK836PD2uf8v+4=";
                 })
                 (fetchpatch2 {
                   name = "wsl2-ssh-agent.patch";

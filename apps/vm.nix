@@ -47,15 +47,7 @@ in
       libvirtd = {
         enable = true;
         qemu = {
-          ovmf.enable = true;
           swtpm.enable = true;
-          ovmf.packages = [
-            pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd # AAVMF
-            (pkgs.OVMF.override {
-              secureBoot = true;
-              tpmSupport = true;
-            }).fd
-          ];
           runAsRoot = false;
         };
       };

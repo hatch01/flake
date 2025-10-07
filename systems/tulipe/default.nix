@@ -65,7 +65,7 @@
   hardware.sane.enable = true; # enables support for SANE scanners
   services.avahi = {
     enable = true;
-    nssmdns4 = true;
+    # nssmdns4 = true;
     openFirewall = true;
   };
   hardware.sane.extraBackends = [
