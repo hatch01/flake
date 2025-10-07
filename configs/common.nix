@@ -117,6 +117,7 @@
           "anytype-heart"
           "nrf-udev"
           "iscan-ds"
+          "Oracle_VirtualBox_Extension_Pack"
         ];
 
       permittedInsecurePackages = [
@@ -128,8 +129,22 @@
       ((import ../overlays/unstable.nix) inputs.nixpkgs-unstable)
       ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
       (final: prev: {
-        kalker = prev.callPackage ../overlays/kalker.nix { };
         openthread-border-router = prev.openthread-border-router.overrideAttrs (oldAttrs: {
+          cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+          ];
+        });
+        mdns = prev.mdns.overrideAttrs (oldAttrs: {
+          cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+          ];
+        });
+        hyperhdr = prev.hyperhdr.overrideAttrs (oldAttrs: {
+          cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+          ];
+        });
+        dolphin-emu = prev.dolphin-emu.overrideAttrs (oldAttrs: {
           cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
             "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
           ];
