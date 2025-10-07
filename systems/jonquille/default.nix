@@ -4,6 +4,7 @@
 {
   config,
   mkSecrets,
+  lib,
   ...
 }:
 {
@@ -37,7 +38,6 @@
   restic.enable = true;
   portfolio.enable = true;
   incus.enable = true;
-  openthread.enable = true;
   sslh.enable = true;
   wakapi.enable = true;
 

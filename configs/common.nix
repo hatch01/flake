@@ -129,6 +129,11 @@
       ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
       (final: prev: {
         kalker = prev.callPackage ../overlays/kalker.nix { };
+        openthread-border-router = prev.openthread-border-router.overrideAttrs (oldAttrs: {
+          cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+          ];
+        });
       })
     ];
   };
