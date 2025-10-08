@@ -211,104 +211,11 @@ in
                   siteMonitor = "https://${config.incus.domain}";
                 };
               }
-              {
-                "Prometheus" = {
-                  icon = "prometheus.png";
-                  description = "Prometheus monitoring system";
-                  href = "https://${config.prometheus.domain}";
-                  siteMonitor = "https://${config.prometheus.domain}";
-                  widget = {
-                    type = "prometheus";
-                    url = "http://[::1]:${toString config.prometheus.port}";
-                  };
-                };
-              }
-              {
-                "Alertmanager" = {
-                  icon = "alertmanager.png";
-                  description = "Prometheus Alertmanager";
-                  href = "https://${config.prometheus.alertManager.domain}";
-                  siteMonitor = "https://${config.prometheus.alertManager.domain}";
-                  widget = {
-                    type = "prometheusmetric";
-                    url = "http://[::1]:${toString config.prometheus.port}";
-                    refreshInterval = 5000;
-                    metrics = [
-                      {
-                        label = "Active Alerts";
-                        query = "sum(alertmanager_alerts{state=\"active\"})";
-                        format = {
-                          type = "number";
-                          options = {
-                            maximumFractionDigits = 0;
-                          };
-                        };
-                      }
-                      {
-                        label = "Firing Alerts";
-                        query = "sum(alertmanager_alerts{state=\"firing\"})";
-                        format = {
-                          type = "number";
-                          options = {
-                            maximumFractionDigits = 0;
-                          };
-                        };
-                      }
-                    ];
-                  };
-                };
-              }
             ];
           }
         ];
 
         widgets = [
-          {
-            prometheusmetric = {
-              type = "prometheusmetric";
-              url = "http://[::1]:${toString config.prometheus.port}";
-              refreshInterval = 10000;
-              metrics = [
-                {
-                  label = "CPU Usage";
-                  query = "(100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100))";
-                  format = {
-                    type = "percent";
-                    options = {
-                      maximumFractionDigits = 1;
-                    };
-                  };
-                }
-                {
-                  label = "Memory Usage";
-                  query = "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100";
-                  format = {
-                    type = "percent";
-                    options = {
-                      maximumFractionDigits = 1;
-                    };
-                  };
-                }
-                {
-                  label = "Disk Usage";
-                  query = "(1 - (node_filesystem_avail_bytes{mountpoint=\"/\"} / node_filesystem_size_bytes{mountpoint=\"/\"})) * 100";
-                  format = {
-                    type = "percent";
-                    options = {
-                      maximumFractionDigits = 1;
-                    };
-                  };
-                }
-                {
-                  label = "Uptime";
-                  query = "time() - node_boot_time_seconds";
-                  format = {
-                    type = "duration";
-                  };
-                }
-              ];
-            };
-          }
           {
             datetime = {
               text_size = "4x1";

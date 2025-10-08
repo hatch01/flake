@@ -43,6 +43,16 @@ let
                   url = "https://github.com/NixOS/nixpkgs/pull/447197.diff";
                   hash = "sha256-0EfMztGf/qJeXdedEaH/Bronakqv29I5XyhZa3nYHVc=";
                 })
+                (fetchpatch2 {
+                  name = "beszel.patch";
+                  url = "https://github.com/NixOS/nixpkgs/pull/380731.diff";
+                  hash = "sha256-4gcavWlkrol8cXystnG418MM58GOX2AaiOCF6wGlQIs=";
+                })
+                (fetchpatch2 {
+                  name = "beszel-update.patch";
+                  url = "https://github.com/NixOS/nixpkgs/pull/449260.diff";
+                  hash = "sha256-s6lPO82VYc745OSF5vp6Zu5Cs4augOxhuuW7m1FLAmE=";
+                })
               ];
         };
         system = value.system;

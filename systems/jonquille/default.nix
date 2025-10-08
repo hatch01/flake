@@ -18,8 +18,9 @@
   authelia.enable = true;
   # gitlab.enable = true;
   forgejo.enable = true;
+  beszel.hub.enable = true;
+  beszel.agent.enable = true;
   configUpdater.enable = true;
-  prometheus.enable = true;
   nixCache.enable = true;
   adguard.enable = true;
   fail2ban.enable = true;

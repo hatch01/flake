@@ -95,34 +95,12 @@ in
               "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
             };
           };
-          ${config.prometheus.domain} = mkIf config.prometheus.enable {
+          ${config.beszel.hub.domain} = mkIf config.beszel.hub.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
-              "/" = {
-                proxyPass = "http://[::1]:${toString config.prometheus.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
-              };
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
+              "/".proxyPass = "http://127.0.0.1:${toString config.beszel.hub.port}";
             };
           };
-
-          ${config.prometheus.alertManager.domain} = mkIf config.prometheus.enable {
-            inherit (cfg) forceSSL enableACME;
-            locations = {
-              "/" = {
-                proxyPass = "http://[::1]:${toString config.prometheus.alertManager.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
-              };
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
-            };
-          };
-
           ${config.gatus.domain} = {
             inherit (cfg) forceSSL enableACME;
             locations = {

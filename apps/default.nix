@@ -28,7 +28,7 @@
     ./nextcloud.nix
     ./authelia.nix
     ./nginx
-    ./prometheus
+    ./beszel
     ./nixCache.nix
     ./adguard.nix
     ./fail2ban.nix
