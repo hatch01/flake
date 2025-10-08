@@ -9,6 +9,7 @@
       "matrix-synapse-wrapped"
       "matrix-synapse"
       "rlottie"
+      "pdfarranger"
     ];
 
   in
