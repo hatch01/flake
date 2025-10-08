@@ -30,11 +30,6 @@ in
   };
 
   config = mkIf config.beszel.hub.enable {
-    systemd.services.beszel-hub = {
-      serviceConfig = {
-        ReadWritePaths = "/storage/beszel";
-      };
-    };
     services.beszel.hub = {
       enable = true;
       port = config.beszel.hub.port;
