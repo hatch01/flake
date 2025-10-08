@@ -35,6 +35,8 @@ in
       image = "ghcr.io/esphome/esphome";
       extraOptions = [
         "--network=host"
+        "--device=/dev/ttyACM0"
+        "--device=/dev/ttyACM1"
       ];
     };
     # environment.persistence."/persistent" = {
