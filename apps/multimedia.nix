@@ -62,6 +62,10 @@ in
         qsynth
         fluidsynth
         carla
+        qjackctl
+        qpwgraph
+        helvum
+        coppwr
       ];
   };
 }

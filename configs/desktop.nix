@@ -105,8 +105,8 @@ in
       kdePackages.yakuake
       kdePackages.ktorrent
       wl-clipboard
-      helvum
       yubioath-flutter
+      pwvucontrol
     ];
   };
 }
