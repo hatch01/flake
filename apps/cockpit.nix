@@ -3,10 +3,16 @@
   config,
   base_domain_name,
   pkgs,
+  stable,
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    optionals
+    ;
 in
 {
   options = {
@@ -37,18 +43,22 @@ in
       groups.libvirtdbus = { };
     };
 
-    systemd.packages = [ pkgs.libvirt-dbus ];
+    systemd.packages = mkIf (!stable) [ pkgs.libvirt-dbus ];
 
-    environment.systemPackages = with pkgs; [
-      libvirt-dbus
-      virt-manager
-      osinfo-db
-      osinfo-db-tools
-      libosinfo
-      cockpit-files
-      cockpit-machines
-      cockpit-podman
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        virt-manager
+        osinfo-db
+        osinfo-db-tools
+        libosinfo
+      ]
+      ++ optionals (!stable) [
+        libvirt-dbus
+        cockpit-files
+        cockpit-machines
+        cockpit-podman
+      ];
 
     services.cockpit = {
       enable = true;
