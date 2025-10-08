@@ -21,6 +21,7 @@
   nix-related.enable = true;
   gitConfig.enable = true;
   zshConfig.enable = true;
+  beszel.agent.enable = true;
 
   nix = {
     package = pkgs.nixVersions.git;

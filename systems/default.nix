@@ -19,41 +19,54 @@ let
           nixpkgs = if (value.stable or false) then inputs.nixpkgs-stable else inputs.nixpkgs;
           enable = true;
           patches =
-            if (value.stable or false) then
-              _: [ ]
-            else
-              pkgs: with pkgs; [
-                (fetchpatch2 {
-                  name = "openthread-border-router.patch";
-                  url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
-                  hash = "sha256-1GBu8HC470ZmCg2gX8p2Uj2jo+j8yRK836PD2uf8v+4=";
-                })
-                (fetchpatch2 {
-                  name = "wsl2-ssh-agent.patch";
-                  url = "https://github.com/NixOS/nixpkgs/pull/444409.diff";
-                  hash = "sha256-m7WOd5Ski6pVnwHL/FGpJ+IdkW8aJkCYoZTQmotMwh0=";
-                })
-                (fetchpatch2 {
-                  name = "cockpit.patch";
-                  url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
-                  hash = "sha256-VcB+wOejaHDvXhVIctc7rI3Y2WOPmliWK2WKmCWh1sM=";
-                })
-                (fetchpatch2 {
-                  name = "libvirt-dbus.patch";
-                  url = "https://github.com/NixOS/nixpkgs/pull/447197.diff";
-                  hash = "sha256-0EfMztGf/qJeXdedEaH/Bronakqv29I5XyhZa3nYHVc=";
-                })
-                (fetchpatch2 {
-                  name = "beszel.patch";
-                  url = "https://github.com/NixOS/nixpkgs/pull/380731.diff";
-                  hash = "sha256-4gcavWlkrol8cXystnG418MM58GOX2AaiOCF6wGlQIs=";
-                })
-                (fetchpatch2 {
-                  name = "beszel-update.patch";
-                  url = "https://github.com/NixOS/nixpkgs/pull/449260.diff";
-                  hash = "sha256-s6lPO82VYc745OSF5vp6Zu5Cs4augOxhuuW7m1FLAmE=";
-                })
-              ];
+            pkgs:
+            with pkgs;
+            (
+              if (value.stable or false) then
+                [ ]
+              else
+                [
+
+                  (fetchpatch2 {
+                    name = "openthread-border-router.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
+                    hash = "sha256-1GBu8HC470ZmCg2gX8p2Uj2jo+j8yRK836PD2uf8v+4=";
+                  })
+                  (fetchpatch2 {
+                    name = "wsl2-ssh-agent.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/444409.diff";
+                    hash = "sha256-m7WOd5Ski6pVnwHL/FGpJ+IdkW8aJkCYoZTQmotMwh0=";
+                  })
+                  (fetchpatch2 {
+                    name = "cockpit.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
+                    hash = "sha256-VcB+wOejaHDvXhVIctc7rI3Y2WOPmliWK2WKmCWh1sM=";
+                  })
+                  (fetchpatch2 {
+                    name = "libvirt-dbus.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/447197.diff";
+                    hash = "sha256-0EfMztGf/qJeXdedEaH/Bronakqv29I5XyhZa3nYHVc=";
+                  })
+                  (fetchpatch2 {
+                    name = "jebrains.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/449437.diff";
+                    hash = "sha256-Q7rotMLtzpGbqS6WK4hlwDB0B+zJKIO+E96owWd28U8=";
+                  })
+                  (fetchpatch2 {
+                    name = "beszel-update.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/449260.diff";
+                    hash = "sha256-s6lPO82VYc745OSF5vp6Zu5Cs4augOxhuuW7m1FLAmE=";
+                  })
+                ]
+            )
+            # Common patches for stable and unstable
+            ++ [
+              (fetchpatch2 {
+                name = "beszel.patch";
+                url = "https://github.com/NixOS/nixpkgs/pull/380731.diff";
+                hash = "sha256-4gcavWlkrol8cXystnG418MM58GOX2AaiOCF6wGlQIs=";
+              })
+            ];
         };
         system = value.system;
         modules = value.modules ++ [
