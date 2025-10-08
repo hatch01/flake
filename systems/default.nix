@@ -29,7 +29,7 @@ let
                   (fetchpatch2 {
                     name = "openthread-border-router.patch";
                     url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
-                    hash = "sha256-1GBu8HC470ZmCg2gX8p2Uj2jo+j8yRK836PD2uf8v+4=";
+                    hash = "sha256-EYh/AsayqbRYFOSHLG8T/N9IjBtT3oa6XNI+Y61ktoc=";
                   })
                   (fetchpatch2 {
                     name = "wsl2-ssh-agent.patch";
@@ -63,7 +63,7 @@ let
               (fetchpatch2 {
                 name = "beszel.patch";
                 url = "https://github.com/NixOS/nixpkgs/pull/380731.diff";
-                hash = "sha256-4gcavWlkrol8cXystnG418MM58GOX2AaiOCF6wGlQIs=";
+                hash = "sha256-PwTrdJt1dElFRMX/9u/YcxjtOKT2VKrILdBKcZmgD8g=";
               })
             ];
         };
