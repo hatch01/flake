@@ -162,7 +162,7 @@ in
                   siteMonitor = "https://${config.esp_home.domain}";
                   widget = {
                     type = "esphome";
-                    url = "http://[::1]:${toString config.esp_home.port}";
+                    url = "http://localhost:${toString config.esp_home.port}";
                   };
                 };
               }
