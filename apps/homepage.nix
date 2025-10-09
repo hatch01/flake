@@ -211,6 +211,21 @@ in
                   siteMonitor = "https://${config.incus.domain}";
                 };
               }
+              {
+                "Beszel" = {
+                  icon = "beszel.png";
+                  description = "Beszel c'est vraiment cool";
+                  href = "https://${config.beszel.hub.domain}";
+                  siteMonitor = "https://${config.beszel.hub.domain}";
+                  widget = {
+                    type = "beszel";
+                    url = "https://${config.beszel.hub.domain}";
+                    username = "{{HOMEPAGE_VAR_BESZEL_USERNAME}}";
+                    password = "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}";
+                    version = 2;
+                  };
+                };
+              }
             ];
           }
         ];
