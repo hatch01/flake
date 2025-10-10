@@ -47,11 +47,6 @@ let
                     hash = "sha256-0EfMztGf/qJeXdedEaH/Bronakqv29I5XyhZa3nYHVc=";
                   })
                   (fetchpatch2 {
-                    name = "jebrains.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/449437.diff";
-                    hash = "sha256-Q7rotMLtzpGbqS6WK4hlwDB0B+zJKIO+E96owWd28U8=";
-                  })
-                  (fetchpatch2 {
                     name = "beszel-update.patch";
                     url = "https://github.com/NixOS/nixpkgs/pull/449260.diff";
                     hash = "sha256-s6lPO82VYc745OSF5vp6Zu5Cs4augOxhuuW7m1FLAmE=";
