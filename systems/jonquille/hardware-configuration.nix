@@ -15,10 +15,7 @@
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
-    "ehci_pci"
     "ahci"
-    "usbhid"
-    "usb_storage"
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
@@ -35,6 +32,9 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
+
+  # networking.interfaces."eno1".wakeOnLan.policy =
+  networking.interfaces."enp1s0".wakeOnLan.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

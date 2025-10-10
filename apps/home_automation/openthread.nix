@@ -39,7 +39,7 @@ in
       mkIf config.openthread.enable {
         environment.persistence."/persistent".directories = [ "/var/lib/thread" ];
         services.openthread-border-router = {
-          backboneInterface = "eno1";
+          backboneInterface = "enp1s0";
           enable = true;
           radio = {
             device = "/dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_5449f26b5b53ef11b6e222e0174bec31-if00-port0";
