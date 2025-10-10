@@ -54,21 +54,23 @@ in
 
     environment.systemPackages =
       with pkgs;
-      [
+      with config;
+      [ ]
+      ++ optionals gaming.enable [
         mangohud
         dolphin-emu
       ]
-      ++ optionals config.steam.protonup.enable [
+      ++ optionals steam.protonup.enable [
         protonup
         protontricks
       ]
-      ++ optionals config.minecraft.enable [ prismlauncher ]
-      ++ optionals config.steam.enable [ ludusavi ] # a backup tool for Steam games
-      ++ optionals config.remotePlay.enable [ parsec-bin ]
-      ++ optionals config.winetools.enable [
+      ++ optionals minecraft.enable [ prismlauncher ]
+      ++ optionals steam.enable [ ludusavi ] # a backup tool for Steam games
+      ++ optionals remotePlay.enable [ parsec-bin ]
+      ++ optionals winetools.enable [
         bottles
         wine
       ]
-      ++ optionals config.heroic.enable [ pkgs.heroic ];
+      ++ optionals heroic.enable [ pkgs.heroic ];
   };
 }
