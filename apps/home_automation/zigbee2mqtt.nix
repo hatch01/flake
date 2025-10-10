@@ -90,7 +90,6 @@ in
           "0x70b3d52b600a4ffd".friendly_name = "Bouilloire";
           "0x70b3d52b600a4e24".friendly_name = "Lave linge";
           "0xb40ecfd1a9b30000".friendly_name = "Lumiere cuisine";
-          "0x404ccafffe580984".friendly_name = "Water Sensor";
           "0x404ccafffe57de0c".friendly_name = "Porte immeuble";
         };
       };
