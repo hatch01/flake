@@ -27,7 +27,7 @@ in
           userName = username;
           userEmail = "eymericdechelette@gmail.com";
           signing = {
-            key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs";
+            key = "/home/${username}/.ssh/yubikey.pub";
             signByDefault = true;
             format = "ssh";
           };

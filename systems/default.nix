@@ -6,7 +6,6 @@
 let
   username = "eymeric";
   stateVersion = "24.05";
-  sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8szPPvvc4T9fsIR876a51XTWqSjtLZaYNmH++zQzNs eymericdechelette@gmail.com";
   base_domain_name = "onyx.ovh";
 
   secretsPath = ../secrets;
@@ -84,7 +83,6 @@ let
             inputs
             username
             stateVersion
-            sshPublicKey
             base_domain_name
             ;
           mkSecrets = builtins.mapAttrs (

@@ -36,6 +36,7 @@ in
 
     environment.systemPackages = with pkgs; [
       yubioath-flutter
+      yubikey-manager
     ];
 
     boot.initrd.systemd.enable = true;

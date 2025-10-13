@@ -218,6 +218,48 @@ in
                 ssh "$server"
               fi
             }
+
+            unalias gg
+            gg() {
+              echo "🔍 Détection de la YubiKey insérée..."
+
+              # Liste des credentials FIDO2, affiche le PIN prompt
+              creds=$(${lib.getExe pkgs.yubikey-manager} fido credentials list | ${lib.getExe pkgs.gawk} '/ssh:/ {print $2}')
+
+              if [ -z "$creds" ]; then
+                  echo "⚠️  Aucune clé SSH FIDO2 détectée sur la YubiKey."
+                  return 1
+              fi
+
+              # Si plusieurs clés, demande de choisir
+              if [ $(echo "$creds" | wc -l) -gt 1 ]; then
+                  echo "🗝️  Clés disponibles sur la YubiKey :"
+                  select chosen in $creds; do
+                      label=$(echo "$chosen" | sed 's/^ssh://')
+                      break
+                  done
+              else
+                  label=$(echo "$creds" | sed 's/^ssh://')
+              fi
+
+              echo "✅ YubiKey détectée : ''${label}"
+
+              # Chemin de la clé publique correspondant au label
+              keypath="$HOME/.ssh/id_ed25519_sk_rk_''${label}.pub"
+              privkey="$HOME/.ssh/id_ed25519_sk_rk_''${label}"
+
+              if [ ! -f "$keypath" ]; then
+                  echo "⚠️  Fichier $keypath introuvable."
+                  echo "🔑  Regénèration de la clé"
+                  ${lib.getExe' pkgs.openssh "ssh-keygen"} -K
+              fi
+
+              # Création des liens symboliques .ssh/yubikey et .ssh/yubikey.pub
+              ln -sf "$privkey" "$HOME/.ssh/yubikey"
+              ln -sf "$keypath" "$HOME/.ssh/yubikey.pub"
+              echo "✅ Liens créés : ~/.ssh/yubikey et ~/.ssh/yubikey.pub"
+            }
+
             # enable fzf
             [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
             #enable zoxide

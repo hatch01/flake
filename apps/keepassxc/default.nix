@@ -24,7 +24,7 @@ in
           "kwalletrc"."org.freedesktop.secrets"."apiEnabled".value = false;
 
           # keepassxc
-          "keepassxc/keepassxc.ini"."SSHAgent"."Enabled".value = true;
+          "keepassxc/keepassxc.ini"."SSHAgent"."Enabled".value = false;
           "keepassxc/keepassxc.ini"."FdoSecrets"."Enabled".value = true;
           "keepassxc/keepassxc.ini"."General"."HideWindowOnCopy".value = true;
           "keepassxc/keepassxc.ini"."Browser"."Enabled".value = true;
