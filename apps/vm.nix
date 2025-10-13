@@ -37,12 +37,12 @@ in
 
     # Manage the virtualisation services
     virtualisation = {
-      # virtualbox = {
-      #   host = {
-      #     enable = true;
-      #     enableExtensionPack = true;
-      #   };
-      # };
+      virtualbox = {
+        host = {
+          enable = true;
+          enableExtensionPack = true;
+        };
+      };
 
       libvirtd = {
         enable = true;
