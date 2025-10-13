@@ -39,17 +39,12 @@ let
                   (fetchpatch2 {
                     name = "cockpit.patch";
                     url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
-                    hash = "sha256-VcB+wOejaHDvXhVIctc7rI3Y2WOPmliWK2WKmCWh1sM=";
+                    hash = "sha256-vL4n6/DTr+or5GjAOxrUtEe9UtDXmhwXQ/cUlFfL/Tw=";
                   })
                   (fetchpatch2 {
                     name = "libvirt-dbus.patch";
                     url = "https://github.com/NixOS/nixpkgs/pull/447197.diff";
                     hash = "sha256-0EfMztGf/qJeXdedEaH/Bronakqv29I5XyhZa3nYHVc=";
-                  })
-                  (fetchpatch2 {
-                    name = "beszel-update.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/449260.diff";
-                    hash = "sha256-s6lPO82VYc745OSF5vp6Zu5Cs4augOxhuuW7m1FLAmE=";
                   })
                 ]
             )
@@ -58,7 +53,7 @@ let
               (fetchpatch2 {
                 name = "beszel.patch";
                 url = "https://github.com/NixOS/nixpkgs/pull/380731.diff";
-                hash = "sha256-PwTrdJt1dElFRMX/9u/YcxjtOKT2VKrILdBKcZmgD8g=";
+                hash = "sha256-inRCRrQ8+DvkAJ/qqUQ/UfIHq0MT/1YsuSsrg5NR7MY=";
               })
             ];
         };
