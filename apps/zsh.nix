@@ -196,7 +196,8 @@ in
              	    ssh "$ARGS"
               fi
             }
-            s () {
+
+            s() {
               local server
               local query="$1"
               local hosts
