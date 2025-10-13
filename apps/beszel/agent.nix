@@ -35,11 +35,5 @@ in
       };
       # environmentFile
     };
-    systemd.services.beszel-agent = {
-      serviceConfig = {
-        DynamicUser = lib.mkForce false;
-        User = "root";
-      };
-    };
   };
 }
