@@ -49,5 +49,6 @@
     ./incus.nix
     ./sslh.nix
     ./wakapi.nix
+    ./yubikey.nix
   ];
 }

@@ -26,7 +26,15 @@
                 name = "encrypted";
                 # for example use `echo -n "password" > /tmp/secret.key`
                 passwordFile = "/tmp/secret.key";
-                settings.allowDiscards = true;
+                settings = {
+                  allowDiscards = true;
+                  crypttabExtraOpts = [
+                    # sudo systemd-cryptenroll /dev/nvme1n1p2 --fido2-device=auto --fido2-with-user-verification=true
+                    # sudo systemd-cryptenroll /dev/nvme1n1p2 --wipe-slot=fido2
+                    "fido2-device=auto"
+                    "token-timeout=10"
+                  ];
+                };
                 content = {
                   type = "lvm_pv";
                   vg = "pool";

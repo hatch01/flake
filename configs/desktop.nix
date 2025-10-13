@@ -63,6 +63,7 @@ in
   bitcoinClient.enable = mkDefault true;
   office.enable = mkDefault true;
   ghostty.enable = mkDefault true;
+  yubikey.enable = mkDefault true;
 
   home-manager.sharedModules = with inputs; [ plasma-manager.homeModules.plasma-manager ];
 
@@ -105,7 +106,6 @@ in
       kdePackages.yakuake
       kdePackages.ktorrent
       wl-clipboard
-      yubioath-flutter
       pwvucontrol
     ];
   };
