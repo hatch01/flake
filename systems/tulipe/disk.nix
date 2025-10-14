@@ -25,7 +25,7 @@
                 type = "luks";
                 name = "encrypted";
                 # for example use `echo -n "password" > /tmp/secret.key`
-                passwordFile = "/tmp/secret.key";
+                # passwordFile = "/tmp/secret.key";
                 settings = {
                   allowDiscards = true;
                   crypttabExtraOpts = [
