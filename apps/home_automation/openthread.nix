@@ -50,6 +50,7 @@ in
             listenPort = config.openthread.restPort;
           };
           web = {
+            enable = true;
             listenPort = config.openthread.webPort;
           };
         };
