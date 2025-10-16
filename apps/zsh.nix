@@ -222,6 +222,13 @@ in
 
             unalias gg
             gg() {
+#            ssh-keygen -t ed25519-sk \
+#                    -O resident \
+#                    -O verify-required \
+#                    -O application=ssh:yubi_balade \
+#                    -f ~/.ssh/id_ed25519_sk_yubi_balade \
+#                    -C "eymericdechelette@gmail.com"
+
               echo "🔍 Détection de la YubiKey insérée..."
 
               # Liste des credentials FIDO2, affiche le PIN prompt
