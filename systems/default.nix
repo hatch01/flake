@@ -41,11 +41,6 @@ let
                     url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
                     hash = "sha256-vL4n6/DTr+or5GjAOxrUtEe9UtDXmhwXQ/cUlFfL/Tw=";
                   })
-                  (fetchpatch2 {
-                    name = "libvirt-dbus.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/447197.diff";
-                    hash = "sha256-0EfMztGf/qJeXdedEaH/Bronakqv29I5XyhZa3nYHVc=";
-                  })
                 ]
             )
             # Common patches for stable and unstable
