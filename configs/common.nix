@@ -258,13 +258,6 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  programs.ssh = {
-    extraConfig = ''
-      Host *
-        IdentityFile /home/${username}/.ssh/yubikey
-    '';
-    startAgent = true;
-  };
 
   users.users = {
     root = {

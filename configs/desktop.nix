@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  username,
   ...
 }:
 let
@@ -83,6 +84,14 @@ in
     hack
     jetbrains-mono
   ];
+
+  programs.ssh = {
+    extraConfig = ''
+      Host *
+        IdentityFile /home/${username}/.ssh/yubikey
+    '';
+    startAgent = true;
+  };
 
   environment = {
     systemPackages = with pkgs; [
