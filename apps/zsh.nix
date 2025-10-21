@@ -220,52 +220,28 @@ in
               fi
             }
 
-            unalias gg
-            gg() {
-            # ssh-keygen -t ed25519-sk \
-            #         -O resident \
-            #         -O verify-required \
-            #        -O application=ssh:yubi_balade \
-            #        -f ~/.ssh/id_ed25519_sk_yubi_balade \
-            #        -C "eymericdechelette@gmail.com"
+            upkey() {
+              # Récupère le serial number de la YubiKey branchée
+              SERIAL=$(ykman list -s 2>/dev/null | head -1)
 
-              echo "🔍 Détection de la YubiKey insérée..."
+              if [ -z "$SERIAL" ]; then
+                  echo "error: Aucune YubiKey détectée !" 1>&2
+                  exit 1
+              fi
+              
+              if [[ -L "/home/${username}/.config/git/config" ]]; then
+                ${lib.getExe' pkgs.coreutils "cp"} --remove-destination "$(readlink -f /home/${username}/.config/git/config)" /home/${username}/.config/git/config
+              fi
 
-              # Liste des credentials FIDO2, affiche le PIN prompt
-              creds=$(${lib.getExe pkgs.yubikey-manager} fido credentials list | ${lib.getExe pkgs.gawk} '/ssh:/ {print $2}')
-
-              if [ -z "$creds" ]; then
-                  echo "⚠️  Aucune clé SSH FIDO2 détectée sur la YubiKey."
+              # Détermine la clé SSH en fonction du serial number
+              if [ "$SERIAL" = "18682465" ]; then
+                  git config --global user.signingkey D0AD1018A2265DD49857E9CC5F756369C087D6A5
+              elif [ "$SERIAL" = "18682488" ]; then
+                  git config --global user.signingkey F479C13D6363690CD125A698298F395540137D9E
+              else
+                  echo "error: YubiKey non reconnue : $SERIAL" 1>&2
                   return 1
               fi
-
-              # Si plusieurs clés, demande de choisir
-              if [ $(echo "$creds" | wc -l) -gt 1 ]; then
-                  echo "🗝️  Clés disponibles sur la YubiKey :"
-                  select chosen in $creds; do
-                      label=$(echo "$chosen" | sed 's/^ssh://')
-                      break
-                  done
-              else
-                  label=$(echo "$creds" | sed 's/^ssh://')
-              fi
-
-              echo "✅ YubiKey détectée : ''${label}"
-
-              # Chemin de la clé publique correspondant au label
-              keypath="$HOME/.ssh/id_ed25519_sk_rk_''${label}.pub"
-              privkey="$HOME/.ssh/id_ed25519_sk_rk_''${label}"
-
-              if [ ! -f "$keypath" ]; then
-                  echo "⚠️  Fichier $keypath introuvable."
-                  echo "🔑  Regénèration de la clé"
-                  ${lib.getExe' pkgs.openssh "ssh-keygen"} -K
-              fi
-
-              # Création des liens symboliques .ssh/yubikey et .ssh/yubikey.pub
-              ln -sf "$privkey" "$HOME/.ssh/yubikey"
-              ln -sf "$keypath" "$HOME/.ssh/yubikey.pub"
-              echo "✅ Liens créés : ~/.ssh/yubikey et ~/.ssh/yubikey.pub"
             }
 
             # enable fzf

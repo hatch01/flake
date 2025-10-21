@@ -40,6 +40,8 @@ in
     ];
 
     services.pcscd.enable = true;
+    hardware.gpgSmartcards.enable = true;
+    services.udev.packages = [ pkgs.yubikey-personalization ];
 
     boot.initrd.systemd.enable = true;
     boot.initrd.kernelModules = [
@@ -52,5 +54,10 @@ in
       "nls_iso8859-1"
       "usbhid"
     ];
+
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
   };
 }

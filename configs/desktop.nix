@@ -90,7 +90,6 @@ in
       Host *
         IdentityFile /home/${username}/.ssh/yubikey
     '';
-    startAgent = true;
   };
 
   environment = {
