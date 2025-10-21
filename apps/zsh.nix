@@ -235,9 +235,9 @@ in
 
               # Détermine la clé SSH en fonction du serial number
               if [ "$SERIAL" = "18682465" ]; then
-                  git config --global user.signingkey D0AD1018A2265DD49857E9CC5F756369C087D6A5
+                  git config --global user.signingkey 2062A09259B7F6043C1AE8BA9AEBA130F4A6B1A7
               elif [ "$SERIAL" = "18682488" ]; then
-                  git config --global user.signingkey F479C13D6363690CD125A698298F395540137D9E
+                  git config --global user.signingkey EB3D34C78AEFF9626C4A4255E836B5CC4E27C9B0
               else
                   echo "error: YubiKey non reconnue : $SERIAL" 1>&2
                   return 1
