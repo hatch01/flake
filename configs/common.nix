@@ -274,7 +274,9 @@
         # -C "eymericdechelette@gmail.com"
 
         # yubikey portable
-        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIOGqFz4kiEm4GpCU5f9t8vhSFG+PRGHuFf3G+O6hlsyYAAAAD3NzaDp5dWJpX2JhbGFkZQ== ssh:yubi_balade"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMgBUUYGMNyWrI7PcaLamr+m/qN7MHr2EVo9Bg1PgOTk openpgp:0x1A89806C"
+        # yubikey maison
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEZabbXZ/GH1oT/Eb//vSdGZhpZm5DkIeqtpzz87wIyd openpgp:0xEA67B583"
       ];
     };
     ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
