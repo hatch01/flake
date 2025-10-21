@@ -39,6 +39,8 @@ in
       yubikey-manager
     ];
 
+    services.pcscd.enable = true;
+
     boot.initrd.systemd.enable = true;
     boot.initrd.kernelModules = [
       "usb_storage"

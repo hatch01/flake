@@ -146,8 +146,6 @@
     nrf-udev
   ];
 
-  services.pcscd.enable = true;
-
   age = {
     identityPaths = [ "/etc/age/key" ];
   };
