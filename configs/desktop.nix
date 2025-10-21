@@ -85,12 +85,12 @@ in
     jetbrains-mono
   ];
 
-  programs.ssh = {
-    extraConfig = ''
-      Host *
-        IdentityFile /home/${username}/.ssh/yubikey
-    '';
-  };
+  # programs.ssh = {
+  #   extraConfig = ''
+  #     Host *
+  #       IdentityFile /home/${username}/.ssh/yubikey
+  #   '';
+  # };
 
   environment = {
     systemPackages = with pkgs; [

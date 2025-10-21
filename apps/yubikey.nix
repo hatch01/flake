@@ -43,6 +43,12 @@ in
     services.pcscd.enable = true;
     hardware.gpgSmartcards.enable = true;
     services.udev.packages = [ pkgs.yubikey-personalization ];
+    hm.services.gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      enableZshIntegration = true;
+
+    };
 
     boot.initrd.systemd.enable = true;
     boot.initrd.kernelModules = [
