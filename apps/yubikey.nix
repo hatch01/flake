@@ -38,6 +38,7 @@ in
     environment.systemPackages = with pkgs; [
       yubioath-flutter
       yubikey-manager
+      kdePackages.kleopatra
     ];
 
     services.pcscd.enable = true;
