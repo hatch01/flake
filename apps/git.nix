@@ -55,9 +55,8 @@ in
             };
           };
           signing = {
-            key = "/home/${username}/.ssh/yubikey.pub";
+            key = "5F756369C087D6A5";
             signByDefault = true;
-            format = "ssh";
           };
         };
         gh = {
