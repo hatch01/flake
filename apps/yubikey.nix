@@ -10,6 +10,9 @@ let
     mkIf
     types
     ;
+
+  generateU2FAuthFile =
+    username: entries: pkgs.writeText "u2f" "${username}:${lib.concatStringsSep ":" entries}";
 in
 {
   options = {
@@ -26,12 +29,14 @@ in
     security.pam.u2f = {
       enable = true;
       settings = {
-        # pamu2fcfg -uroot
-        authfile = pkgs.writeText "u2f" ''
-          # 13/10/2025
-          root:W9CHKqgATqKYaenRfuNjkc1cAXRjoshq3bpcF0vcOBh4s/MeoBodACyBo9qUoJHvkt8n7W7uJ2KfD/p9Q5xukw==,Hx2Jld8EMTl8C9eT+oIg6lzCMnTl2QF4PdlhFtdZuukuV3/hDlHf7Ltwo3/h+Go7X+xdgIb6AHCv7z2Enj6Bag==,es256,+presence
-          root:IGjPOv3ojp/lcJbrgX5uhUc7NlZLomMlXdFnsOnQaJDTVAzAEtmlCZzf+rnC9yUvHhMbKMjJKdQFXFDxnmStZg==,4an7GeeOLfKFyIlLO2iP1h/0vabU466rQ6EIs+Ms5fj9cU5tvnKRMET+uoVO+55gpVYXIfDRBh89CgH0Omtk1w==,es256,+presence
-        '';
+        # pamu2fcfg -n # remove the leading :
+        authfile = generateU2FAuthFile "root" [
+          "Ei8K9Ma3LL+ois6vcU4N9q4rZcj94L0Lxw4EAFw2doe7DErUQfgkg2Q7MoEmj9IA70tdFpWgvftqL5uvhQT2CQ==,CkQXn6XxgcsSLXuI4/CqZk0xueBDfk83pSsbwW9iklO4YAuROhYg6NcpMunW5sohado5jgIQCrxBbob8SG8diA==,es256,+presence"
+          "wueuhWZKeN1FIp5KNKZ/wdanqf8LKRZuS6/D3TOg1fj3iTuisXnAsP8faLhjiI1KagEPZXbpbNNwiBpB9QreAg==,EhK2Y5OWgzpdAzuyHPUtxd1/xCJWqQ78Yyh0l7LOYcRCO1kBVaIOHJWlrkITj6Kn4pY5upZvFyho8CqtipELFA==,es256,+presence"
+        ];
+        # authfile = pkgs.writeText "u2f" ''
+        #   root:Ei8K9Ma3LL+ois6vcU4N9q4rZcj94L0Lxw4EAFw2doe7DErUQfgkg2Q7MoEmj9IA70tdFpWgvftqL5uvhQT2CQ==,CkQXn6XxgcsSLXuI4/CqZk0xueBDfk83pSsbwW9iklO4YAuROhYg6NcpMunW5sohado5jgIQCrxBbob8SG8diA==,es256,+presence:wueuhWZKeN1FIp5KNKZ/wdanqf8LKRZuS6/D3TOg1fj3iTuisXnAsP8faLhjiI1KagEPZXbpbNNwiBpB9QreAg==,EhK2Y5OWgzpdAzuyHPUtxd1/xCJWqQ78Yyh0l7LOYcRCO1kBVaIOHJWlrkITj6Kn4pY5upZvFyho8CqtipELFA==,es256,+presence
+        # '';
       };
     };
 
