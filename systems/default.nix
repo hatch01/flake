@@ -36,11 +36,11 @@ let
                     url = "https://github.com/NixOS/nixpkgs/pull/444409.diff";
                     hash = "sha256-m7WOd5Ski6pVnwHL/FGpJ+IdkW8aJkCYoZTQmotMwh0=";
                   })
-                  (fetchpatch2 {
-                    name = "cockpit.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
-                    hash = "sha256-vL4n6/DTr+or5GjAOxrUtEe9UtDXmhwXQ/cUlFfL/Tw=";
-                  })
+                  # (fetchpatch2 {
+                  #   name = "cockpit.patch";
+                  #   url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
+                  #   hash = "sha256-vL4n6/DTr+or5GjAOxrUtEe9UtDXmhwXQ/cUlFfL/Tw=";
+                  # })
                 ]
             )
             # Common patches for stable and unstable

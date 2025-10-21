@@ -54,10 +54,10 @@ in
         libosinfo
       ]
       ++ optionals (!stable) [
-        libvirt-dbus
-        cockpit-files
-        cockpit-machines
-        cockpit-podman
+        # libvirt-dbus
+        # cockpit-files
+        # cockpit-machines
+        # cockpit-podman
       ];
 
     services.cockpit = {
