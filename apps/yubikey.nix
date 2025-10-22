@@ -46,14 +46,17 @@ in
       kdePackages.kleopatra
     ];
 
-    services.pcscd.enable = true;
     hardware.gpgSmartcards.enable = true;
     services.udev.packages = [ pkgs.yubikey-personalization ];
-    hm.services.gpg-agent = {
-      enable = true;
-      enableSshSupport = true;
-      enableZshIntegration = true;
-
+    hm = {
+      services.gpg-agent = {
+        enable = true;
+        enableSshSupport = true;
+        enableZshIntegration = true;
+      };
+      programs.gpg.scdaemonSettings = {
+        disable-ccid = true;
+      };
     };
 
     boot.initrd.systemd.enable = true;

@@ -13,6 +13,7 @@ in
   };
 
   config = mkIf config.bitcoinClient.enable {
+    services.pcscd.enable = true;
     environment.systemPackages = with pkgs; [
       pcsclite
       sparrow
