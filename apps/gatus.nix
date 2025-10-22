@@ -133,6 +133,12 @@ in
                   name = "adguard";
                   url = "https://${config.adguard.domain}/";
                 })
+
+                (mkGatusCheck {
+                  name = "VaultWarden";
+                  url = "https://${config.vaultwarden.domain}/api/alive";
+                })
+
                 (mkGatusCheck {
                   name = "polypresence back";
                   url = "https://polypresence.fr/api/status";

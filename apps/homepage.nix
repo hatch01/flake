@@ -113,6 +113,14 @@ in
                   siteMonitor = "https://${config.wakapi.domain}/";
                 };
               }
+              {
+                "VaultWarden" = {
+                  icon = "vaultwarden.png";
+                  description = "VaultWarden oui oui";
+                  href = "https://${config.vaultwarden.domain}/";
+                  siteMonitor = "https://${config.vaultwarden.domain}/";
+                };
+              }
             ];
           }
           {

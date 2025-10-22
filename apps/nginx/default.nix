@@ -6,10 +6,7 @@
   ...
 }:
 let
-  inherit (lib)
-    mkIf
-    mkEnableOption
-    ;
+  inherit (lib) mkIf mkEnableOption;
 in
 {
   options = {
@@ -45,7 +42,9 @@ in
             forceSSL = config.nginx.acme.enable;
             useACMEHost = base_domain_name;
             enableACME = config.nginx.acme.enable;
-            extraConfig = "proxy_cache cache;\n";
+            extraConfig = ''
+              proxy_cache cache;
+            '';
           };
           clientConfig =
             if config.matrix.enable then
@@ -80,9 +79,7 @@ in
             locations = {
               "/" = mkIf config.homepage.enable {
                 proxyPass = "http://127.0.0.1:${toString config.homepage.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
+                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
               };
 
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
@@ -106,9 +103,7 @@ in
             locations = {
               "/" = {
                 proxyPass = "http://192.168.1.202:${toString config.gatus.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
+                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
               };
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
@@ -139,9 +134,7 @@ in
             locations = {
               "/" = {
                 proxyPass = "https://[::1]:${toString config.adguard.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
+                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
               };
 
               # Homepage need to access control/stats without authentication
@@ -246,9 +239,7 @@ in
             locations = {
               "/" = {
                 proxyPass = "http://[::1]:${toString config.librespeed.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
+                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
               };
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
@@ -260,9 +251,7 @@ in
             locations = {
               "/" = {
                 proxyPass = "http://[::1]:${toString config.apolline.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
+                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
               };
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
@@ -357,9 +346,7 @@ in
               "/" = {
                 proxyPass = "http://[::1]:${toString config.zigbee2mqtt.port}";
                 proxyWebsockets = true;
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
+                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
               };
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
@@ -372,9 +359,7 @@ in
               "/" = {
                 proxyPass = "http://127.0.0.1:${toString config.esp_home.port}";
                 proxyWebsockets = true;
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
+                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
               };
               # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
               "/internal/authelia/authz" = autheliaProxy;
@@ -386,6 +371,11 @@ in
             locations = {
               "/".proxyPass = "http://[::1]:${toString config.wakapi.port}";
             };
+          };
+
+          ${config.vaultwarden.domain} = mkIf config.vaultwarden.enable {
+            inherit (cfg) forceSSL extraConfig enableACME;
+            locations."/".proxyPass = "http://[::1]:${toString config.vaultwarden.port}";
           };
         };
     };

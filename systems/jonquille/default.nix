@@ -1,11 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{
-  config,
-  mkSecrets,
-  ...
-}:
+{ config, mkSecrets, ... }:
 {
   imports = [
     ./impermanence.nix
@@ -39,6 +35,7 @@
   incus.enable = true;
   sslh.enable = true;
   wakapi.enable = true;
+  vaultwarden.enable = true;
 
   boot.loader.timeout = 1;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
