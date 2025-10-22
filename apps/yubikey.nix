@@ -34,9 +34,6 @@ in
           "Ei8K9Ma3LL+ois6vcU4N9q4rZcj94L0Lxw4EAFw2doe7DErUQfgkg2Q7MoEmj9IA70tdFpWgvftqL5uvhQT2CQ==,CkQXn6XxgcsSLXuI4/CqZk0xueBDfk83pSsbwW9iklO4YAuROhYg6NcpMunW5sohado5jgIQCrxBbob8SG8diA==,es256,+presence"
           "wueuhWZKeN1FIp5KNKZ/wdanqf8LKRZuS6/D3TOg1fj3iTuisXnAsP8faLhjiI1KagEPZXbpbNNwiBpB9QreAg==,EhK2Y5OWgzpdAzuyHPUtxd1/xCJWqQ78Yyh0l7LOYcRCO1kBVaIOHJWlrkITj6Kn4pY5upZvFyho8CqtipELFA==,es256,+presence"
         ];
-        # authfile = pkgs.writeText "u2f" ''
-        #   root:Ei8K9Ma3LL+ois6vcU4N9q4rZcj94L0Lxw4EAFw2doe7DErUQfgkg2Q7MoEmj9IA70tdFpWgvftqL5uvhQT2CQ==,CkQXn6XxgcsSLXuI4/CqZk0xueBDfk83pSsbwW9iklO4YAuROhYg6NcpMunW5sohado5jgIQCrxBbob8SG8diA==,es256,+presence:wueuhWZKeN1FIp5KNKZ/wdanqf8LKRZuS6/D3TOg1fj3iTuisXnAsP8faLhjiI1KagEPZXbpbNNwiBpB9QreAg==,EhK2Y5OWgzpdAzuyHPUtxd1/xCJWqQ78Yyh0l7LOYcRCO1kBVaIOHJWlrkITj6Kn4pY5upZvFyho8CqtipELFA==,es256,+presence
-        # '';
       };
     };
 
