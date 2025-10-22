@@ -3,6 +3,7 @@
   lib,
   mkSecret,
   base_domain_name,
+  stable,
   ...
 }:
 let
@@ -29,7 +30,10 @@ in
     };
   };
 
-  config = mkIf config.beszel.hub.enable {
+  config =
+if !stable then
+
+  mkIf config.beszel.hub.enable {
     services.beszel.hub = {
       enable = true;
       port = config.beszel.hub.port;
@@ -40,5 +44,5 @@ in
       };
       # environmentFile = ....
     };
-  };
+  } else { };
 }
