@@ -51,7 +51,6 @@ in
           connection = {
             id = "eduroam";
             type = "wifi";
-            permissions = "";
           };
           wifi = {
             mode = "infrastructure";
@@ -61,9 +60,8 @@ in
             key-mgmt = "wpa-eap";
           };
           "802-1x" = {
-            eap = "peap";
+            eap = "peap;";
             identity = "$eduroam_user";
-            password-flags = "1";
             password = "$eduroam_password";
             phase2-auth = "mschapv2";
           };
