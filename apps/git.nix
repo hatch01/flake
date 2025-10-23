@@ -28,7 +28,7 @@ in
           enable = true;
           settings = {
             user = {
-              email = "eymericdechelette@gmail.com";
+              email = "hatchchien@protonmail.com";
               name = username;
             };
             pull.rebase = true;
