@@ -6,6 +6,8 @@
       config = prev.config;
     };
     stablePackages = [
+      "nextcloud-client"
+      "dolphin-emu"
     ];
 
   in

@@ -41,11 +41,6 @@ let
                   #   url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
                   #   hash = "sha256-vL4n6/DTr+or5GjAOxrUtEe9UtDXmhwXQ/cUlFfL/Tw=";
                   # })
-                  (fetchpatch2 {
-                    name = "beszel.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/380731.diff";
-                    hash = "sha256-inRCRrQ8+DvkAJ/qqUQ/UfIHq0MT/1YsuSsrg5NR7MY=";
-                  })
                 ]
             )
             # Common patches for stable and unstable

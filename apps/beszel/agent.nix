@@ -25,21 +25,16 @@ in
     };
   };
 
-  config =
-    if !stable then
-
-      mkIf config.beszel.agent.enable {
-        services.beszel.agent = {
-          enable = true;
-          openFirewall = false;
-          # extraPath
-          environment = {
-            PORT = builtins.toString config.beszel.agent.port;
-            KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlwZwhYxzn9RtjWNdPd5raNIa6eQzXCf9994GSRBGjK";
-          };
-          # environmentFile
-        };
-      }
-    else
-      { };
+  config = mkIf config.beszel.agent.enable {
+    services.beszel.agent = {
+      enable = true;
+      openFirewall = false;
+      # extraPath
+      environment = {
+        PORT = builtins.toString config.beszel.agent.port;
+        KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlwZwhYxzn9RtjWNdPd5raNIa6eQzXCf9994GSRBGjK";
+      };
+      # environmentFile
+    };
+  };
 }

@@ -30,10 +30,7 @@ in
     };
   };
 
-  config =
-if !stable then
-
-  mkIf config.beszel.hub.enable {
+  config = mkIf config.beszel.hub.enable {
     services.beszel.hub = {
       enable = true;
       port = config.beszel.hub.port;
@@ -44,5 +41,5 @@ if !stable then
       };
       # environmentFile = ....
     };
-  } else { };
+  };
 }
