@@ -64,7 +64,7 @@ in
           cp = "${lib.getExe pkgs.xcp} -r";
           mv = "${lib.getExe' pkgs.coreutils "mv"} -vi";
           cd = "z"; # not using direct path because it is provided by zoxide
-          sman = lib.getExe pkgs.tldr;
+          sman = lib.getExe pkgs.tlrc;
           cat = lib.getExe pkgs.bat;
           ls = lib.getExe pkgs.eza;
           ll = "${lib.getExe pkgs.eza} -l";
@@ -228,7 +228,7 @@ in
                   echo "error: Aucune YubiKey détectée !" 1>&2
                   exit 1
               fi
-              
+
               if [[ -L "/home/${username}/.config/git/config" ]]; then
                 ${lib.getExe' pkgs.coreutils "cp"} --remove-destination "$(readlink -f /home/${username}/.config/git/config)" /home/${username}/.config/git/config
               fi
