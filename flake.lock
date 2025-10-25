@@ -27,6 +27,26 @@
         "type": "github"
       }
     },
+    "alesis_midi_converter": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1761387123,
+        "narHash": "sha256-z01jPq+J6pjgAT2PiYG7ykZG2IFbOlN2KxdBe2pIZ7M=",
+        "ref": "refs/heads/master",
+        "rev": "e634c8a738d47ba4de5ade74232a5f27a977e486",
+        "revCount": 5,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/eymeric/alesis_midi_converter.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://forge.onyx.ovh/eymeric/alesis_midi_converter.git"
+      }
+    },
     "apolline": {
       "inputs": {
         "flake-parts": [
@@ -567,6 +587,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "alesis_midi_converter": "alesis_midi_converter",
         "apolline": "apolline",
         "deploy-rs": "deploy-rs",
         "disko": "disko",

@@ -139,6 +139,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    alesis_midi_converter = {
+      url = "git+https://forge.onyx.ovh/eymeric/alesis_midi_converter.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
