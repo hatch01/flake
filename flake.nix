@@ -151,6 +151,7 @@
     flake-compat = {
       url = "github:edolstra/flake-compat";
     };
+        nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
   };
   outputs =
     { flake-parts, ... }@inputs:

@@ -48,6 +48,20 @@ in
       };
     };
 
+    programs.alvr = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    services.monado = {
+      enable = true;
+      defaultRuntime = true; # Register as default OpenXR runtime
+    };
+    systemd.user.services.monado.environment = {
+      STEAMVR_LH_ENABLE = "1";
+      XRT_COMPOSITOR_COMPUTE = "1";
+    };
+
     environment.sessionVariables = mkIf steam.protonup.enable {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
     };
