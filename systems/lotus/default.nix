@@ -44,13 +44,6 @@
     recursive = true;
   };
 
-  system.activationScripts.nixos-wsl-exec-compat = ''
-    mkdir -p /usr/bin
-    ln -sf ${pkgs.coreutils}/bin/uname /usr/bin/uname || true
-    ln -sf ${pkgs.coreutils}/bin/mkdir /usr/bin/mkdir || true
-    ln -sf ${pkgs.coreutils}/bin/cp /usr/bin/cp || true
-  '';
-
   age = {
     identityPaths = [ "/etc/age/key" ];
   };
