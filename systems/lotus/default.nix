@@ -31,6 +31,14 @@
   dev.androidtools.enable = false;
   vscode.enable = false;
 
+  hm.programs.git.signing.signer= "/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe";
+  wsl.extraBin = [
+    {
+      src = "/mnt/c/Program\\ Files\\ \\(x86\\)/GnuPG/bin/gpg.exe";
+      name = "gpg";
+    }
+  ];
+
   hm.home.file.".zed_server" = {
     source = "${pkgs.zed-editor.remote_server}/bin";
     recursive = true;

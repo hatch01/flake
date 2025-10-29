@@ -221,7 +221,6 @@
         file
         which
         tree
-        gnupg
         bat
         trash-cli
         btop # replacement of htop/nmon
