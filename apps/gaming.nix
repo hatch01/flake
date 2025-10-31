@@ -75,7 +75,7 @@ in
         dolphin-emu
       ]
       ++ optionals steam.protonup.enable [
-        protonup
+        protonup-ng
         protontricks
       ]
       ++ optionals minecraft.enable [ prismlauncher ]
