@@ -104,7 +104,7 @@ in
       kdePackages.partitionmanager
       gnome-disk-utility
       kdePackages.kpmcore
-      glxinfo
+      mesa-demos
       appimage-run
       firefox
       ungoogled-chromium
