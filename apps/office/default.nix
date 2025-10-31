@@ -33,7 +33,7 @@ in
         hunspellDicts.fr-any
       ]
       ++ optionals config.onlyofficeDesktopEditor.enable [
-        onlyoffice-bin
+        onlyoffice-desktopeditors
       ];
   };
 }
