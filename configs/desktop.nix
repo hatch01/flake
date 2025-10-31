@@ -92,6 +92,8 @@ in
   #   '';
   # };
 
+  programs.firefox.enable = true;
+
   environment = {
     systemPackages = with pkgs; [
       (catppuccin-kde.override {
@@ -106,7 +108,6 @@ in
       kdePackages.kpmcore
       mesa-demos
       appimage-run
-      firefox
       ungoogled-chromium
       tor-browser
       sqlitebrowser
