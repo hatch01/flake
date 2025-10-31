@@ -8,6 +8,7 @@
     stablePackages = [
       "nextcloud-client"
       "dolphin-emu"
+      "wivrm"
     ];
 
   in
