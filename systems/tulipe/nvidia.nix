@@ -16,12 +16,12 @@
     })
   ];
 
-  ollama.cudaEnabled = true;
+  # ollama.cudaEnabled = true;
 
-  nixpkgs.config.cudaSupport = true;
+  # nixpkgs.config.cudaSupport = true;
   environment.systemPackages = with pkgs; [
-    cudatoolkit
-    nvtopPackages.full
+    # cudatoolkit
+    # nvtopPackages.full
   ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
