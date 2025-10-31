@@ -52,6 +52,7 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.pre-commit-hooks-nix.follows = "";
       inputs.flake-compat.follows = "";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
 
     disko = {
@@ -143,6 +144,7 @@
       url = "git+https://forge.onyx.ovh/eymeric/alesis_midi_converter.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
 
     flake-utils = {
       url = "github:numtide/flake-utils";
@@ -151,7 +153,10 @@
     flake-compat = {
       url = "github:edolstra/flake-compat";
     };
-    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { flake-parts, ... }@inputs:
