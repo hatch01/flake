@@ -15,6 +15,7 @@ in
 {
   options = {
     gaming.enable = mkEnableOption "Enable Gaming";
+    gaming.vr.enable = mkEnableOption "Enable VR Gaming";
     remotePlay.enable = mkEnableOption "Enable Steam Remote Play";
     steam = {
       enable = mkEnableOption "Enable Steam";
@@ -48,28 +49,21 @@ in
       };
     };
 
-    programs.alvr = {
+    services.wivrn = mkIf gaming.vr.enable {
       enable = true;
       openFirewall = true;
-    };
-
-    services.monado = {
-      enable = true;
-      defaultRuntime = true; # Register as default OpenXR runtime
-    };
-    systemd.user.services.monado.environment = {
-      STEAMVR_LH_ENABLE = "1";
-      XRT_COMPOSITOR_COMPUTE = "1";
-    };
-
-    environment.sessionVariables = mkIf steam.protonup.enable {
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+      defaultRuntime = true;
+      # package = (pkgs.wivrn.override { cudaSupport = true; });
     };
 
     environment.systemPackages =
       with pkgs;
       with config;
       [ ]
+      ++ optionals gaming.vr.enable [
+        wlx-overlay-s
+        android-tools
+      ]
       ++ optionals gaming.enable [
         mangohud
         dolphin-emu
