@@ -53,7 +53,7 @@ in
       enable = true;
       openFirewall = true;
       defaultRuntime = true;
-      # package = (pkgs.wivrn.override { cudaSupport = true; });
+      package = (pkgs.wivrn.override { cudaSupport = true; });
     };
 
     environment.systemPackages =
