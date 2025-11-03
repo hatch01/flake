@@ -2,7 +2,7 @@
   lib,
   config,
   inputs,
-  pkgs,
+  system,
   mkSecret,
   base_domain_name,
   ...
@@ -44,7 +44,7 @@ in
         Restart = "on-failure";
         EnvironmentFile = config.age.secrets.apolline.path;
 
-        ExecStart = "${inputs.apolline.packages.${pkgs.system}.default}/bin/apolline";
+        ExecStart = "${inputs.apolline.packages.${system}.default}/bin/apolline";
         User = "apolline";
         Group = "apolline";
         WorkingDirectory = "/storage/apolline";

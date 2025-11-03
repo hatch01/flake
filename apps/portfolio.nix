@@ -2,7 +2,7 @@
   lib,
   config,
   inputs,
-  pkgs,
+  system,
   ...
 }:
 let
@@ -38,7 +38,7 @@ in
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Restart = "on-failure";
-        ExecStart = "${inputs.portfolio.packages.${pkgs.system}.default}/bin/portfolio";
+        ExecStart = "${inputs.portfolio.packages.${system}.default}/bin/portfolio";
         User = "portfolio";
         Group = "portfolio";
       };
