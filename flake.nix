@@ -129,12 +129,6 @@
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
 
-    foodi = {
-      url = "git+https://forge.onyx.ovh/eymeric/foodi.git";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";

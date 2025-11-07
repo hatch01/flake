@@ -5,7 +5,6 @@
 {
   imports = [
     ./impermanence.nix
-    ./foodi.nix
   ];
 
   nextcloud.enable = true;

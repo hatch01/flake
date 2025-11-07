@@ -224,29 +224,6 @@
         "type": "github"
       }
     },
-    "foodi": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1758803253,
-        "narHash": "sha256-YjA0c3DdUIb1CA2s8gbOUCd+I3b6qFfRiKTQwo0oluI=",
-        "ref": "refs/heads/main",
-        "rev": "b317024230801cf36085990e71598772ebe28d5d",
-        "revCount": 12,
-        "type": "git",
-        "url": "https://forge.onyx.ovh/eymeric/foodi.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://forge.onyx.ovh/eymeric/foodi.git"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -643,7 +620,6 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "flatpaks": "flatpaks",
-        "foodi": "foodi",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
