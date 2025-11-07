@@ -8,7 +8,7 @@
 }:
 let
   ardour_projet_path = "/home/${username}/Musique/ardour/drum";
-  frame_per_period = "256";
+  frame_per_period = "512";
 
   jack_bufsize = lib.getExe' pkgs.jack-example-tools "jack_bufsize";
   jack_lsp = lib.getExe' pkgs.jack-example-tools "jack_lsp";
