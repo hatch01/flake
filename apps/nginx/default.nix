@@ -100,14 +100,7 @@ in
           };
           ${config.gatus.domain} = {
             inherit (cfg) forceSSL enableACME;
-            locations = {
-              "/" = {
-                proxyPass = "http://192.168.1.202:${toString config.gatus.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
-              };
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
-            };
+            locations."/".proxyPass = "http://192.168.1.202:${toString config.gatus.port}";
           };
 
           ${config.cockpit.domain} = mkIf config.cockpit.enable {
