@@ -66,6 +66,7 @@ in
         qpwgraph
         helvum
         coppwr
+        musescore
       ];
   };
 }
