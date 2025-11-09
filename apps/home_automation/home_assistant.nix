@@ -29,17 +29,30 @@ in
 
   config = mkIf config.home_assistant.enable {
     virtualisation.oci-containers.containers.home_assistant = {
-      volumes = [ "/storage/home_assistant/:/config" ];
+      volumes = [
+        "/storage/home_assistant/:/config"
+        "/run/postgresql:/run/postgresql:ro"
+      ];
       environment.TZ = "Europe/Paris";
       image = "ghcr.io/home-assistant/home-assistant:stable";
       extraOptions = [
         "--network=host"
         "--add-host=host.docker.internal:host-gateway"
       ];
+      user = "2001:2001";
+
+    users.groups.homeassistant.gid = 2001;
+    users.users.homeassistant = {
+      uid = 2001;
+      group = "homeassistant";
+      isSystemUser = true;
     };
 
-    # PostgreSQL setup for Home Assistant (change the password as needed)
-    # CREATE USER homeassistant WITH PASSWORD 'homeassistant';
-    # CREATE DATABASE homeassistant_db WITH OWNER homeassistant ENCODING 'utf8' TEMPLATE template0;
+    postgres.initialScripts = [
+      ''
+        CREATE USER homeassistant;
+        CREATE DATABASE homeassistant_db WITH OWNER homeassistant ENCODING 'utf8' TEMPLATE template0;
+      ''
+    ];
   };
 }
