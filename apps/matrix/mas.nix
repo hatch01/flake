@@ -113,16 +113,7 @@ in
                   issuer = "https://${base_domain_name}/";
                 };
                 database = {
-                  host = "127.0.0.1";
-                  port = 5432;
-                  username = "mas";
-                  password = "mas";
-                  database = "mas";
-                  max_connections = 10;
-                  min_connections = 0;
-                  connect_timeout = 30;
-                  idle_timeout = 600;
-                  max_lifetime = 1800;
+                  uri = "postgresql://mas@localhost/mas?host=/run/postgresql";
                 };
                 email = {
                   from = "\"Authentication Service\" <root@localhost>";
@@ -205,7 +196,7 @@ in
 
     postgres.initialScripts = [
       ''
-        CREATE ROLE "mas" WITH LOGIN PASSWORD 'mas';
+        CREATE ROLE "mas";
         ALTER ROLE "mas" WITH LOGIN;
         CREATE DATABASE "mas" WITH OWNER "mas";
       ''

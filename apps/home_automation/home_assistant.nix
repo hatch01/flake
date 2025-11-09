@@ -38,11 +38,8 @@ in
       ];
     };
 
-    postgres.initialScripts = [
-      ''
-        CREATE USER homeassistant WITH PASSWORD 'homeassistant';
-        CREATE DATABASE homeassistant_db WITH OWNER homeassistant ENCODING 'utf8' TEMPLATE template0;
-      ''
-    ];
+    # PostgreSQL setup for Home Assistant (change the password as needed)
+    # CREATE USER homeassistant WITH PASSWORD 'homeassistant';
+    # CREATE DATABASE homeassistant_db WITH OWNER homeassistant ENCODING 'utf8' TEMPLATE template0;
   };
 }

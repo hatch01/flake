@@ -49,10 +49,9 @@ in
           stateDir = "/storage/wakapi";
 
           db = {
-            host = "localhost";
-            port = 5432;
+            host = "/run/postgresql";
+            port = 5432; # This value is completly bulshit because we use a unix socket
             user = "wakapi";
-            password = "wakapi";
             name = "wakapi";
             dialect = "postgres";
           };
@@ -68,7 +67,7 @@ in
     };
     postgres.initialScripts = [
       ''
-        CREATE USER "wakapi" WITH LOGIN PASSWORD 'wakapi';
+        CREATE USER "wakapi";
         CREATE DATABASE "wakapi" WITH OWNER "wakapi";
       ''
     ];
