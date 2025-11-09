@@ -79,13 +79,13 @@ in
         };
       };
     };
-    virtualisation.oci-containers.containers.influxdb = {
-      volumes = [ "/storage/home_assistant/influxdb/:/var/lib/influxdb2" ];
-      image = "influxdb:latest";
-      extraOptions = [
-        "--network=host"
-        "--add-host=host.docker.internal:host-gateway"
-      ];
+
+    virtualisation.oci-containers = {
+      containers.influxdb = {
+        volumes = [ "/storage/home_assistant/influxdb/:/var/lib/influxdb2" ];
+        image = "influxdb:latest";
+        ports = [ "127.0.0.1:${toString config.influxdb.port}:8086" ];
+      };
     };
 
     postgres.initialScripts = [

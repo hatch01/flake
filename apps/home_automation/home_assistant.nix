@@ -35,11 +35,9 @@ in
       ];
       environment.TZ = "Europe/Paris";
       image = "ghcr.io/home-assistant/home-assistant:stable";
-      extraOptions = [
-        "--network=host"
-        "--add-host=host.docker.internal:host-gateway"
-      ];
       user = "2001:2001";
+      networks = [ "host" ];
+    };
 
     users.groups.homeassistant.gid = 2001;
     users.users.homeassistant = {

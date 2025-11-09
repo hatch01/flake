@@ -33,12 +33,9 @@ in
       volumes = [ "/persistent/esphome:/config" ];
       environment.TZ = "Europe/Paris";
       image = "ghcr.io/esphome/esphome";
-      extraOptions = [
-        "--network=host"
-        "--device=/dev/ttyACM0"
-        "--device=/dev/ttyACM1"
-      ];
+      networks = [ "host" ];
     };
+
     # environment.persistence."/persistent" = {
     #   directories = [
     #     {
