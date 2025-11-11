@@ -258,6 +258,13 @@ in
             };
           };
 
+          "wikilynx.onyx.ovh" = {
+            inherit (cfg) forceSSL enableACME;
+            locations = {
+              "/".proxyPass = "http://192.168.1.199:8088";
+            };
+          };
+
           ${config.incus.domain} = mkIf config.incus.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
