@@ -131,6 +131,12 @@
     };
   };
 
+  nix.settings = {
+    # equals max 10 core for building
+    max-jobs = 2;
+    cores = 5;
+  };
+
   nix.optimise.automatic = true;
   nix.optimise.dates = [ "03:45" ]; # Optional; allows customizing optimisation schedule
 
