@@ -62,6 +62,7 @@ in
       });
 
     services = {
+      redis.package = pkgs.valkey;
       nextcloud = mkIf config.nextcloud.enable {
         hostName = config.nextcloud.domain;
         enable = true;
