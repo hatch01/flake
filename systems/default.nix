@@ -46,7 +46,11 @@ let
                     hash = "sha256-nGJYPEGoNI3RUtMA7A0pD+N/N/Qv+At5Q6CvcQiHl2s=";
                   })
 
-
+                  (fetchpatch2 {
+                   name = "fix-xvideo.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/461251.diff";
+                    hash = "sha256-x3iJ9339vmjW5nYwfeDxrD5jXLqEzZxCx+KloBKxyKk=";
+                  })
                   # (fetchpatch2 {
                   #   name = "cockpit.patch";
                   #   url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
