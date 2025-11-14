@@ -35,15 +35,20 @@ let
                     url = "https://github.com/NixOS/nixpkgs/pull/444409.diff";
                     hash = "sha256-m7WOd5Ski6pVnwHL/FGpJ+IdkW8aJkCYoZTQmotMwh0=";
                   })
-                  (fetchpatch2 {
-                    name = "beszel-disk.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/460730.diff";
-                    hash = "sha256-1oK/r3biTY3mNuoSRP90KB+MpE8lF2uj1FRhMf7HQtw=";
-                  })
+                  # (fetchpatch2 {
+                  #   name = "beszel-disk.patch";
+                  #   url = "https://github.com/NixOS/nixpkgs/pull/460730.diff";
+                  #   hash = "sha256-1oK/r3biTY3mNuoSRP90KB+MpE8lF2uj1FRhMf7HQtw=";
+                  # })
                   (fetchpatch2 {
                     name = "beszel-0.16.patch";
                     url = "https://github.com/NixOS/nixpkgs/pull/461325.diff";
                     hash = "sha256-nGJYPEGoNI3RUtMA7A0pD+N/N/Qv+At5Q6CvcQiHl2s=";
+                  })
+                  (fetchpatch2 {
+                    name = "beszel-systemd.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/461327.diff";
+                    hash = "sha256-fhaBPVl62tpssBYyn+DEQYoCkEjsv73Jnf52EqIEKQQ=";
                   })
 
                   (fetchpatch2 {
