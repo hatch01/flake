@@ -43,7 +43,7 @@ let
                   (fetchpatch2 {
                     name = "beszel-0.16.patch";
                     url = "https://github.com/NixOS/nixpkgs/pull/461325.diff";
-                    hash = "sha256-nGJYPEGoNI3RUtMA7A0pD+N/N/Qv+At5Q6CvcQiHl2s=";
+                    hash = "sha256-naXzFcrvLJwZ34seGvTQYfX+wNq/6KJV0KGZkyhE8ns=";
                   })
                   (fetchpatch2 {
                     name = "beszel-systemd.patch";
