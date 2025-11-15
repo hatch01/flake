@@ -157,6 +157,10 @@ in
                   name = "pimprenelles";
                   url = "https://www.pimprenelles.bio";
                 })
+                (mkGatusCheck {
+                  name = "robolyon";
+                  url = "https://nas.robolyon.com";
+                })
               ];
             };
             passAsFile = [ "value" ];
