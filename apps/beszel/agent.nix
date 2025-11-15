@@ -29,13 +29,18 @@ in
     services.beszel.agent = {
       enable = true;
       openFirewall = false;
-      smartmon.enable = true;
-      # extraPath
       environment = {
         PORT = builtins.toString config.beszel.agent.port;
         KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlwZwhYxzn9RtjWNdPd5raNIa6eQzXCf9994GSRBGjK";
       };
-      # environmentFile
-    };
+    }
+    // (
+      if !stable then
+        {
+          smartmon.enable = true;
+        }
+      else
+        { }
+    );
   };
 }
