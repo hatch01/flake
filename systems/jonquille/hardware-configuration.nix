@@ -22,6 +22,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  zramSwap.enable = true;
   swapDevices = [ ];
   fileSystems."/persistent".neededForBoot = true;
 
