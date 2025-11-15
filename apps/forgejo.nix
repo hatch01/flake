@@ -3,6 +3,7 @@
   lib,
   pkgs,
   base_domain_name,
+  mkSecret,
   ...
 }:
 let
@@ -33,6 +34,8 @@ in
   imports = [ ];
 
   config = mkIf config.forgejo.enable {
+    age.secrets = mkSecret "forgejo_runner_token" { };
+
     # mkforce to fix conflict with other services
     services.openssh.settings.AcceptEnv = lib.mkForce "GIT_PROTOCOL LANG LC_*";
 
@@ -96,29 +99,41 @@ in
         stateDir = "/storage/forgejo";
       };
 
-      # gitea-actions-runner = {
-      #   package = pkgs.forgejo-actions-runner;
-      #   instances.onyx = {
-      #     enable = true;
-      #     name = "onyx";
-      #     url = "https://${config.forgejo.domain}";
-      #     token = "slamsla";
-      #     # tokenFile = secrets.get "forgejoRunnerSecret";
-      #     labels = [
-      #       "ubuntu-latest:docker://catthehacker/ubuntu:act-latest"
-      #     ];
+      gitea-actions-runner = {
+        package = pkgs.forgejo-runner;
+        instances.onyx = {
+          enable = true;
+          name = "onyx-runner";
+          url = "https://${config.forgejo.domain}/";
+          tokenFile = config.age.secrets.forgejo_runner_token.path;
+          labels = [
+            "docker:docker://node:24-alpine"
+            "alpine-latest:docker://node:24-alpine"
+            "ubuntu-latest:docker://catthehacker/ubuntu:act-latest"
+            "native:host"
+          ];
 
-      #     settings = {
-      #       log.level = "info";
-      #       container.network = "host";
-      #       runner = {
-      #         capacity = 4;
-      #         timeout = "2h";
-      #         insecure = false;
-      #       };
-      #     };
-      #   };
-      # };
+          settings = {
+            log.level = "info";
+            container.network = "host";
+            runner = {
+              capacity = 4;
+              timeout = "5h";
+              insecure = false;
+            };
+          };
+        };
+      };
+    };
+
+    # Takes the form of "gitea-runner-<instance>"
+    systemd.services.gitea-runner-onyx = {
+      # Prevents Forgejo runner deployments
+      # from being restarted on a system switch,
+      # thus breaking a deployment.
+      # You'll have to restart the runner manually
+      # or reboot the system after a deployment!
+      restartIfChanged = false;
     };
   };
 }

@@ -77,12 +77,8 @@ let
       "apolline"
       "node_red"
 
-      # # Generate random value (for example using openssl)
-      # TOKEN=$(openssl rand -hex 32)
-      # # Set token (using the occ console application)
-      # occ config:app:set serverinfo token --value "$TOKEN"
-      "nextcloud_prometheus"
-      "discord_prometheus"
+      # forgejo
+      "forgejo_runner_token"
     ]
     // defineSecrets "lavande" [
       "rootPassword"
