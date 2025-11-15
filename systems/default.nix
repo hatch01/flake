@@ -49,7 +49,7 @@ let
                   })
 
                   (fetchpatch2 {
-                   name = "fix-xvideo.patch";
+                    name = "fix-xvideo.patch";
                     url = "https://github.com/NixOS/nixpkgs/pull/461251.diff";
                     hash = "sha256-x3iJ9339vmjW5nYwfeDxrD5jXLqEzZxCx+KloBKxyKk=";
                   })
