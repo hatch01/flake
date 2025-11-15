@@ -29,7 +29,7 @@ in
     services.beszel.agent = {
       enable = true;
       openFirewall = false;
-      # smartmontools = true;
+      smartmon.enable = true;
       # extraPath
       environment = {
         PORT = builtins.toString config.beszel.agent.port;
