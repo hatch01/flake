@@ -97,6 +97,9 @@ in
         Restart = "always";
         StandardOutput = "journal+console";
         StandardError = "journal+console";
+        MemoryMax = "10G";
+        CPUQuota = "80%";
+        Nice = 10;
       };
       script = ''
         socat TCP4-LISTEN:${builtins.toString config.configUpdater.port},reuseaddr,fork SYSTEM:${lib.getExe (pkgs.writeShellScriptBin "route-hander" script)}
