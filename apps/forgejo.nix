@@ -83,7 +83,7 @@ in
           # Add support for actions, based on act: https://github.com/nektos/act
           actions = {
             ENABLED = true;
-            DEFAULT_ACTIONS_URL = "https://github.com";
+            DEFAULT_ACTIONS_URL = "https://${config.forgejo.domain}";
           };
           # Sending emails is completely optional
           # You can send a test email from the web UI at:
