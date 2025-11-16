@@ -1,0 +1,26 @@
+name: Format and Push Nix
+on:
+  push:
+    paths:
+      - "**/*.nix"
+  workflow_dispatch:
+
+jobs:
+  format:
+    runs-on: native
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Run nix fmt
+        run: nix fmt --accept-flake-config
+      - name: Commit and push changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git config user.name "Forgejo Actions"
+            git config user.email "actions@forge.onyx.ovh"
+            git add .
+            git commit -m "Format Nix code"
+            git push
+          fi
