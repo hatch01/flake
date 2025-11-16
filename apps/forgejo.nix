@@ -138,7 +138,10 @@ in
       # or reboot the system after a deployment!
       restartIfChanged = false;
 
-      path = with pkgs; [ nix openssh ];
+      path = with pkgs; [
+        nix
+        openssh
+      ];
 
       serviceConfig = {
         MemoryMax = "10G";
