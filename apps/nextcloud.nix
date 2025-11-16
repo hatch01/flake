@@ -273,6 +273,7 @@ in
       ];
     };
 
+    services.phpfpm.pools.nextcloud.user = "nextcloud";
     services.phpfpm.pools.nextcloud.phpEnv.PATH =
       mkForce "/run/wrappers/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/usr/bin:/bin:${
         lib.makeBinPath [ config.services.phpfpm.pools.nextcloud.phpPackage ]
