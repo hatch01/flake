@@ -96,6 +96,32 @@ in
             deck
             cookbook
             ;
+
+          assistant = pkgs.fetchNextcloudApp {
+            url = "https://github.com/nextcloud/assistant/archive/refs/tags/v2.9.0.tar.gz";
+            hash = "sha256-OHImheA26C+gA1IcXNrWM2V2ejEKe1riYXmw3FDEGsg=";
+            license = "agpl3Only";
+          };
+          translate2 = pkgs.fetchNextcloudApp {
+            url = "https://github.com/nextcloud/translate2/archive/refs/tags/v2.2.0.tar.gz";
+            hash = "sha256-m7S95+pjCwh2NPO66kFo/N6KUP6KooyYscVPQ8SWVYY=";
+            license = "agpl3Plus";
+          };
+          stt_whisper2 = pkgs.fetchNextcloudApp {
+            url = "https://github.com/nextcloud/stt_whisper2/archive/refs/tags/v2.3.0.tar.gz";
+            hash = "sha256-BNM8IKY7BZHzGCfObg3tkPrXiLe2bU7lTt2851WS2Ws=";
+            license = "agpl3Plus";
+          };
+          llm2 = pkgs.fetchNextcloudApp {
+            url = "https://github.com/nextcloud/llm2/archive/refs/tags/v2.4.2.tar.gz";
+            hash = "sha256-aLFh76wfFTfAReC+RqZm8P1EnAKmyoVYZqw4zcnbCNA=";
+            license = "agpl3Plus";
+          };
+          app_api = pkgs.fetchNextcloudApp {
+            url = "https://github.com/nextcloud/app_api/archive/refs/tags/v32.0.1.tar.gz";
+            hash = "sha256-NL/Jeej8S3heJ2WuAIEbDmdo8IhOfYeGqpL7kucCVZU=";
+            license = "agpl3Only";
+          };
         }
         // optionals config.authelia.enable {
           oidc_login = pkgs.fetchNextcloudApp {
