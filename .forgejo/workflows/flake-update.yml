@@ -3,7 +3,6 @@ on:
   # Nightly build at 4 AM
   schedule:
     - cron: "0 4 * * *"
-  push:
   workflow_dispatch:
 
 jobs:
