@@ -70,12 +70,7 @@ in
           group = config.users.users.nextcloud.name;
         };
       })
-      // optionalAttrs config.onlyofficeDocumentServer.enable (mkSecrets {
-        onlyofficeDocumentServerKey = {
-          # owner = config.users.users.onlyoffice.name;
-          # group = config.users.users.onlyoffice.name;
-        };
-      })
+      // optionalAttrs config.onlyofficeDocumentServer.enable (mkSecret "onlyofficeDocumentServerKey" { })
       // optionalAttrs config.nextcloud.app_api.enable (mkSecret "nextcloudHarpSharedKey" { });
 
     nextcloud.app_api.enable = mkDefault config.nextcloud.enable;
