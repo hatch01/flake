@@ -1,5 +1,6 @@
 {
   config,
+  mkSecret,
   mkSecrets,
   lib,
   pkgs,
@@ -14,6 +15,8 @@ let
     types
     optionalAttrs
     optionals
+    mkDefault
+    mkForce
     ;
 in
 {
@@ -27,6 +30,19 @@ in
       port = mkOption {
         type = types.int;
         default = 443;
+      };
+      app_api = {
+        enable = mkEnableOption "Nextcloud app_api (HaRP)";
+        exappsPort = mkOption {
+          type = types.int;
+          default = 8780;
+          description = "Port for ExApps HTTP frontend";
+        };
+        frpPort = mkOption {
+          type = types.int;
+          default = 8782;
+          description = "Port for FRP (TCP) frontend";
+        };
       };
     };
     onlyofficeDocumentServer = {
@@ -59,8 +75,10 @@ in
           # owner = config.users.users.onlyoffice.name;
           # group = config.users.users.onlyoffice.name;
         };
-      });
+      })
+      // optionalAttrs config.nextcloud.app_api.enable (mkSecret "nextcloudHarpSharedKey" { });
 
+    nextcloud.app_api.enable = mkDefault config.nextcloud.enable;
     services = {
       redis.package = pkgs.valkey;
       nextcloud = mkIf config.nextcloud.enable {
@@ -211,12 +229,58 @@ in
       #   port = config.onlyofficeDocumentServer.port;
       # };
     };
-    virtualisation.oci-containers.containers.onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
-      image = "onlyoffice/documentserver:latest";
-      ports = [ "${toString config.onlyofficeDocumentServer.port}:80" ];
-      environmentFiles = [
-        config.age.secrets.onlyofficeDocumentServerKey.path
+    virtualisation.oci-containers.containers = {
+      onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
+        image = "onlyoffice/documentserver:latest";
+        ports = [ "${toString config.onlyofficeDocumentServer.port}:80" ];
+        environmentFiles = [
+          config.age.secrets.onlyofficeDocumentServerKey.path
+        ];
+      };
+
+      app_api-harp = mkIf config.nextcloud.app_api.enable {
+        image = "ghcr.io/nextcloud/nextcloud-appapi-harp:release";
+        autoStart = true;
+        environment = {
+          HP_EXAPPS_ADDRESS = "0.0.0.0:${toString config.nextcloud.app_api.exappsPort}";
+          HP_FRP_ADDRESS = "0.0.0.0:${toString config.nextcloud.app_api.frpPort}";
+          NC_INSTANCE_URL = "https://${config.nextcloud.domain}";
+          HP_LOG_LEVEL = "info";
+          HP_VERBOSE_START = "1";
+        };
+        environmentFiles = [
+          config.age.secrets.nextcloudHarpSharedKey.path
+        ];
+        ports = [
+          "127.0.0.1:${toString config.nextcloud.app_api.exappsPort}:${toString config.nextcloud.app_api.exappsPort}"
+          "127.0.0.1:${toString config.nextcloud.app_api.frpPort}:${toString config.nextcloud.app_api.frpPort}"
+        ];
+        volumes = [
+          "/var/run/docker.sock:/var/run/docker.sock:ro"
+          "/var/lib/nextcloud-harp/certs:/certs:rw"
+        ];
+      };
+    };
+
+    # Create directory for HaRP certificates
+    systemd.tmpfiles.rules = mkIf config.nextcloud.app_api.enable [
+      "d /var/lib/nextcloud-harp 0755 root root -"
+      "d /var/lib/nextcloud-harp/certs 0755 root root -"
+    ];
+
+    # Persist HaRP certificates with impermanence
+    environment.persistence."/persistent" = mkIf config.nextcloud.app_api.enable {
+      directories = [
+        {
+          directory = "/var/lib/nextcloud-harp";
+          mode = "0755";
+        }
       ];
     };
+
+    services.phpfpm.pools.nextcloud.phpEnv.PATH =
+      mkForce "/run/wrappers/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/usr/bin:/bin:${
+        lib.makeBinPath [ config.services.phpfpm.pools.nextcloud.phpPackage ]
+      }";
   };
 }
