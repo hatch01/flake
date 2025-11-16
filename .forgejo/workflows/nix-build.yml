@@ -31,3 +31,12 @@ jobs:
           for config in $configs; do
             nix build --extra-experimental-features "nix-command flakes" --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.${config}.config.system.build.toplevel
           done
+      - name: Merge staging to main
+        if: github.ref == 'refs/heads/staging'
+        run: |
+          git config user.name "Flake Updater"
+          git config user.email "flake-updater@forge.onyx.ovh"
+          git fetch --all
+          git checkout main
+          git merge staging
+          git push origin main
