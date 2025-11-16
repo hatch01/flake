@@ -1,0 +1,33 @@
+name: Build all systems
+on:
+  push:
+    paths:
+      - "**/*.nix"
+      - "**/flake.lock"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: native
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Configure Nix
+        run: |
+          mkdir -p ~/.config/nix
+          echo "access-tokens = github.com=${{ secrets.GH_TOKEN }}" > ~/.config/nix/nix.conf
+      - name: Evaluate system names
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          names=$(nix --extra-experimental-features "nix-command flakes" eval --json .#nixosConfigurations --apply 'builtins.attrNames' --accept-flake-config)
+          json=$(echo "$names" | nix run n#jq -- '{include: map({name: .})}')
+          echo "$json" > matrix.json
+      - name: Build all systems
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          configs=$(cat matrix.json | nix run n#jq -- -r '.include[].name')
+          for config in $configs; do
+            nix build --extra-experimental-features "nix-command flakes" --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.${config}.config.system.build.toplevel
+          done

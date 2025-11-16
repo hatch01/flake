@@ -1,0 +1,38 @@
+name: Update flake inputs
+on:
+  # Nightly build at 4 AM
+  schedule:
+    - cron: "0 4 * * *"
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: native
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Configure git
+        run: |
+          git config user.name "Flake Updater"
+          git config user.email "flake-updater@forge.onyx.ovh"
+      - name: Setup SSH agent
+        run: |
+          echo "Running SSH agent..."
+          eval $(ssh-agent -s)
+          echo "Exporting SSH auth sock environment variable..."
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $FORGEJO_OUTPUT
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $FORGEJO_ENV
+          echo "${{ secrets.SSH_KEY }}" | ssh-add -
+      - name: Add known SSH hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "forge.onyx.ovh github.com" | xargs ssh-keyscan > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+      - name: Fetch flake inputs
+        env:
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: nix flake update --accept-flake-config --commit-lock-file
+      - name: Push flake update commit
+        run: git push --force origin HEAD:staging

@@ -126,6 +126,9 @@ in
       };
     };
 
+    nix.settings = {
+      trusted-users = [ "gitea-runner" ];
+    };
     # Takes the form of "gitea-runner-<instance>"
     systemd.services.gitea-runner-onyx = {
       # Prevents Forgejo runner deployments
@@ -134,6 +137,14 @@ in
       # You'll have to restart the runner manually
       # or reboot the system after a deployment!
       restartIfChanged = false;
+
+      path = with pkgs; [ nix openssh ];
+
+      serviceConfig = {
+        MemoryMax = "10G";
+        CPUQuota = "80%";
+        Nice = 10;
+      };
     };
   };
 }

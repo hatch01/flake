@@ -1,0 +1,23 @@
+name: Check Flake
+on:
+  push:
+    paths:
+      - "**/*.nix"
+      - "**/flake.lock"
+  workflow_dispatch:
+
+jobs:
+  nix-flake-check:
+    runs-on: native
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Run nix flake check
+        run: nix flake check --no-update-lock-file --accept-flake-config
+      - name: Run nix fmt and fail if it did something
+        run: |
+          nix fmt --accept-flake-config
+          if ! git diff --exit-code; then
+            echo "nix fmt made changes. Please run 'nix fmt' and commit the results."
+            exit 1
+          fi
