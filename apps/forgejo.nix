@@ -136,7 +136,7 @@ in
       # thus breaking a deployment.
       # You'll have to restart the runner manually
       # or reboot the system after a deployment!
-      restartIfChanged = false;
+      # restartIfChanged = false;
 
       path = with pkgs; [
         nix
