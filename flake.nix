@@ -52,7 +52,6 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.pre-commit-hooks-nix.follows = "";
       inputs.flake-compat.follows = "";
-      inputs.rust-overlay.follows = "rust-overlay";
     };
 
     disko = {
@@ -152,10 +151,6 @@
     };
     flake-compat = {
       url = "github:edolstra/flake-compat";
-    };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs =
