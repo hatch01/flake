@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          ref: staging
       - name: Configure git
         run: |
           git config user.name "Flake Updater"
@@ -28,10 +30,18 @@ jobs:
           mkdir -p ~/.ssh
           echo "forge.onyx.ovh github.com" | xargs ssh-keyscan > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
+      - name: Fetch main branch
+        run: git fetch origin main
+        env:
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
+      - name: Rebase on main
+        run: git rebase origin/main
+        env:
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
       - name: Fetch flake inputs
         env:
           GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: nix flake update --accept-flake-config --commit-lock-file
       - name: Push flake update commit
-        run: git push --force origin HEAD:staging
+        run: git push --force origin staging
