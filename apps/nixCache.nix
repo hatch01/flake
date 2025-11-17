@@ -24,7 +24,7 @@ in
       };
       port = mkOption {
         type = types.int;
-        default = 5000;
+        default = 5001;
       };
     };
   };

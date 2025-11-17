@@ -41,7 +41,7 @@ let
       # Nextcloud
       "nextcloudAdmin"
       "nextcloudSecretFile"
-      "nextcloudHarpSharedKey"
+      "nextcloudDspPassword"
       "onlyofficeDocumentServerKey"
 
       # Homepage

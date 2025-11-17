@@ -32,16 +32,11 @@ in
         default = 443;
       };
       app_api = {
-        enable = mkEnableOption "Nextcloud app_api (HaRP)";
-        exappsPort = mkOption {
+        enable = mkEnableOption "Nextcloud app_api (DSP)";
+        dspPort = mkOption {
           type = types.int;
-          default = 8780;
-          description = "Port for ExApps HTTP frontend";
-        };
-        frpPort = mkOption {
-          type = types.int;
-          default = 8782;
-          description = "Port for FRP (TCP) frontend";
+          default = 2375;
+          description = "Port for Docker Socket Proxy";
         };
       };
     };
@@ -71,7 +66,7 @@ in
         };
       })
       // optionalAttrs config.onlyofficeDocumentServer.enable (mkSecret "onlyofficeDocumentServerKey" { })
-      // optionalAttrs config.nextcloud.app_api.enable (mkSecret "nextcloudHarpSharedKey" { });
+      // optionalAttrs config.nextcloud.app_api.enable (mkSecret "nextcloudDspPassword" { });
 
     nextcloud.app_api.enable = mkDefault config.nextcloud.enable;
     services = {
@@ -233,44 +228,22 @@ in
         ];
       };
 
-      app_api-harp = mkIf config.nextcloud.app_api.enable {
-        image = "ghcr.io/nextcloud/nextcloud-appapi-harp:release";
+      app_api-dsp = mkIf config.nextcloud.app_api.enable {
+        image = "ghcr.io/nextcloud/nextcloud-appapi-dsp:release";
         autoStart = true;
-        environment = {
-          HP_EXAPPS_ADDRESS = "0.0.0.0:${toString config.nextcloud.app_api.exappsPort}";
-          HP_FRP_ADDRESS = "0.0.0.0:${toString config.nextcloud.app_api.frpPort}";
-          NC_INSTANCE_URL = "https://${config.nextcloud.domain}";
-          HP_LOG_LEVEL = "info";
-          HP_VERBOSE_START = "1";
-        };
+        hostname = "nextcloud-appapi-dsp";
+        privileged = true;
+        environment = { };
         environmentFiles = [
-          config.age.secrets.nextcloudHarpSharedKey.path
+          config.age.secrets.nextcloudDspPassword.path
         ];
         ports = [
-          "127.0.0.1:${toString config.nextcloud.app_api.exappsPort}:${toString config.nextcloud.app_api.exappsPort}"
-          "127.0.0.1:${toString config.nextcloud.app_api.frpPort}:${toString config.nextcloud.app_api.frpPort}"
+          "127.0.0.1:${toString config.nextcloud.app_api.dspPort}:${toString config.nextcloud.app_api.dspPort}"
         ];
         volumes = [
           "/var/run/docker.sock:/var/run/docker.sock:ro"
-          "/var/lib/nextcloud-harp/certs:/certs:rw"
         ];
       };
-    };
-
-    # Create directory for HaRP certificates
-    systemd.tmpfiles.rules = mkIf config.nextcloud.app_api.enable [
-      "d /var/lib/nextcloud-harp 0755 root root -"
-      "d /var/lib/nextcloud-harp/certs 0755 root root -"
-    ];
-
-    # Persist HaRP certificates with impermanence
-    environment.persistence."/persistent" = mkIf config.nextcloud.app_api.enable {
-      directories = [
-        {
-          directory = "/var/lib/nextcloud-harp";
-          mode = "0755";
-        }
-      ];
     };
 
     services.phpfpm.pools.nextcloud.user = "nextcloud";

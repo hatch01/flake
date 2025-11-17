@@ -146,18 +146,7 @@ in
           };
 
           ${config.nextcloud.domain} = mkIf config.nextcloud.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
-            locations = mkIf config.nextcloud.app_api.enable {
-              "/exapps/" = {
-                proxyPass = "http://127.0.0.1:${toString config.nextcloud.app_api.exappsPort}";
-                extraConfig = ''
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
-                '';
-              };
-            };
+            inherit (cfg) forceSSL enableACME;
           };
 
           ${config.onlyofficeDocumentServer.domain} = mkIf config.onlyofficeDocumentServer.enable {
