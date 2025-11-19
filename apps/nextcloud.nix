@@ -53,7 +53,7 @@ in
     };
   };
 
-  config = {
+  config = mkIf config.nextcloud.enable {
     age.secrets =
       optionalAttrs config.nextcloud.enable (mkSecrets {
         nextcloudAdmin = {
@@ -71,7 +71,7 @@ in
     nextcloud.app_api.enable = mkDefault config.nextcloud.enable;
     services = {
       redis.package = pkgs.valkey;
-      nextcloud = mkIf config.nextcloud.enable {
+      nextcloud = {
         hostName = config.nextcloud.domain;
         enable = true;
         package = pkgs.nextcloud32;
