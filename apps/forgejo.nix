@@ -145,7 +145,7 @@ in
 
       serviceConfig = {
         MemoryMax = "10G";
-        CPUQuota = "80%";
+        CPUQuota = "50%";
         Nice = 10;
       };
     };
