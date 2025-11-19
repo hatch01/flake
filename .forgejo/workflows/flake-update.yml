@@ -18,6 +18,7 @@ jobs:
         run: |
           git config user.name "Flake Updater"
           git config user.email "flake-updater@forge.onyx.ovh"
+          git status
       - name: Setup SSH agent
         run: |
           echo "Running SSH agent..."
