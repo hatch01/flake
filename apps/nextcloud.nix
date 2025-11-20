@@ -125,11 +125,6 @@ in
           #   hash = "sha256-aLFh76wfFTfAReC+RqZm8P1EnAKmyoVYZqw4zcnbCNA=";
           #   license = "agpl3Plus";
           # };
-          app_api = pkgs.fetchNextcloudApp {
-            url = "https://github.com/nextcloud/app_api/archive/refs/tags/v32.0.1.tar.gz";
-            hash = "sha256-NL/Jeej8S3heJ2WuAIEbDmdo8IhOfYeGqpL7kucCVZU=";
-            license = "agpl3Only";
-          };
         }
         // optionals config.authelia.enable {
           oidc_login = pkgs.fetchNextcloudApp {
@@ -138,6 +133,13 @@ in
             sha256 = "sha256-RLYquOE83xquzv+s38bahOixQ+y4UI6OxP9HfO26faI=";
           };
         }
+        # // optionals config.nextcloud.app_api.enable {
+        #   app_api = pkgs.fetchNextcloudApp {
+        #     url = "https://github.com/nextcloud/app_api/archive/refs/tags/v32.0.1.tar.gz";
+        #     hash = "sha256-NL/Jeej8S3heJ2WuAIEbDmdo8IhOfYeGqpL7kucCVZU=";
+        #     license = "agpl3Only";
+        #   };
+        # }
         // optionals config.onlyofficeDocumentServer.enable {
           inherit (config.services.nextcloud.package.packages.apps)
             onlyoffice
@@ -145,7 +147,7 @@ in
         };
 
         extraAppsEnable = true;
-        appstoreEnable = true; # DO NOT ENABLE, it will break the declarative config for apps
+        # appstoreEnable = true; # DO NOT ENABLE, it will break the declarative config for apps
 
         settings = {
           mail_from_address = "nextcloud";

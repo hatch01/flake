@@ -8,6 +8,7 @@
   ];
 
   nextcloud.enable = true;
+  nextcloud.app_api.enable = false;
   onlyofficeDocumentServer.enable = true;
   homepage.enable = true;
   authelia.enable = true;
