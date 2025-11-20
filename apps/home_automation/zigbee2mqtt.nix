@@ -91,6 +91,7 @@ in
           "0x70b3d52b600a4e24".friendly_name = "Lave linge";
           "0xb40ecfd1a9b30000".friendly_name = "Lumiere cuisine";
           "0x404ccafffe57de0c".friendly_name = "Porte immeuble";
+          "0x70b3d52b600a3c0f".friendly_name = "Imprimante 3d";
         };
       };
     };
