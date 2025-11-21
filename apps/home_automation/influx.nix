@@ -82,7 +82,7 @@ in
 
     virtualisation.oci-containers = {
       containers.influxdb = {
-        volumes = [ "/storage/home_assistant/influxdb/:/var/lib/influxdb2" ];
+        volumes = [ "/storage/influxdb/:/var/lib/influxdb2" ];
         image = "influxdb:latest";
         ports = [ "127.0.0.1:${toString config.influxdb.port}:8086" ];
       };
