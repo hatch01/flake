@@ -33,8 +33,13 @@ in
         "/storage/home_assistant/:/config"
         "/run/postgresql:/run/postgresql:ro"
       ];
-      environment.TZ = "Europe/Paris";
+      environment = {
+        TZ = "Europe/Paris";
+        PUID = "2001";
+        PGID = "2001";
+      };
       image = "ghcr.io/home-assistant/home-assistant:stable";
+      # lscr.io/linuxserver/homeassistant:latest
       user = "2001:2001";
       networks = [ "host" ];
     };
