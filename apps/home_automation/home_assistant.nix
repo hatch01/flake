@@ -40,7 +40,6 @@ in
       };
       # image = "ghcr.io/home-assistant/home-assistant:stable";
       image = "lscr.io/linuxserver/homeassistant:latest";
-      # user = "2001:2001";
       networks = [ "host" ];
     };
 
