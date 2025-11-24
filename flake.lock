@@ -552,14 +552,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1763984163,
-        "narHash": "sha256-vo6eGG7S/hByyZlSw+mWETJ7OfC0kROQjLf3R0TNfKU=",
-        "path": "/home/eymeric/code_bidouille/projet/nixos-pikvm",
-        "type": "path"
+        "lastModified": 1763984145,
+        "narHash": "sha256-QwgaS2G4U+YZ5XBgh8iiE2UkQoZx47rizWTqw15ZXwA=",
+        "ref": "refs/heads/main",
+        "rev": "9339d40382172a34f44709b6fc29782252a2efba",
+        "revCount": 59,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
       },
       "original": {
-        "path": "/home/eymeric/code_bidouille/projet/nixos-pikvm",
-        "type": "path"
+        "type": "git",
+        "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
       }
     },
     "plasma-manager": {
