@@ -155,7 +155,7 @@ in
           mail_sendmailmode = "smtp";
           mail_domain = "onyx.ovh";
           mail_smtphost = "mtp.free.fr";
-          mail_smtpauth = 1;
+          mail_smtpauth = true;
           mail_smtpport = 587;
           mail_smtpname = "eymeric.monitoring";
           maintenance_window_start = 1;
