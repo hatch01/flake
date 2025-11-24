@@ -40,12 +40,7 @@ let
                   (fetchpatch2 {
                     name = "beszel-disk-systemd.patch";
                     url = "https://github.com/hatch01/nixpkgs/pull/2.diff";
-                    hash = "sha256-2w9LHL3eQTQrandBmE/HywfFaHJTHk7g/mr+PmCXl7A=";
-                  })
-                  (fetchpatch2 {
-                    name = "beszel-0.16.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/461325.diff";
-                    hash = "sha256-naXzFcrvLJwZ34seGvTQYfX+wNq/6KJV0KGZkyhE8ns=";
+                    hash = "sha256-EDXTveolGEmbd7YlKRLBfNEcbsv1il1CVBO48PTOOlk=";
                   })
 
                   # (fetchpatch2 {
