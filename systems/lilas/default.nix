@@ -8,7 +8,6 @@
 }:
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.pikvm.nixosModules.default
   ];
 
@@ -33,6 +32,7 @@
   services.kvmd = {
     enable = true;
     package = inputs.pikvm.packages.aarch64-linux.default;
+    hardwareVersion = "v2-hdmi-rpi4";
   };
 
   security.sudo-rs = {
