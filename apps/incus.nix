@@ -32,6 +32,50 @@ in
   config = mkIf config.incus.enable {
     networking.nftables.enable = true;
     networking.firewall.trustedInterfaces = [ "incusbr*" ];
+    
+    services.resolved = {
+      enable = true;
+      dnssec = "allow-downgrade";
+      domains = [ "~." ];
+      fallbackDns = [ "9.9.9.9#dns.quad9.net" "149.112.112.112#dns.quad9.net" ];
+      dnsovertls = "opportunistic";
+    };
+
+    # Systemd service to configure resolved for incusbr0
+    systemd.services.incus-dns-incusbr0 = {
+      description = "Incus per-link DNS configuration for incusbr0";
+      bindsTo = [ "sys-subsystem-net-devices-incusbr0.device" ];
+      after = [ "sys-subsystem-net-devices-incusbr0.device" ];
+      wantedBy = [ "sys-subsystem-net-devices-incusbr0.device" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = "yes";
+      };
+      script = ''
+        # Get the DNS addresses from the bridge
+        IPV4_ADDR=$(${config.virtualisation.incus.package}/bin/incus network get incusbr0 ipv4.address 2>/dev/null | cut -d'/' -f1 || echo "")
+        IPV6_ADDR=$(${config.virtualisation.incus.package}/bin/incus network get incusbr0 ipv6.address 2>/dev/null | cut -d'/' -f1 || echo "")
+        
+        # Configure resolved with the DNS addresses
+        if [ -n "$IPV4_ADDR" ]; then
+          ${config.systemd.package}/bin/resolvectl dns incusbr0 "$IPV4_ADDR" || true
+        fi
+        if [ -n "$IPV6_ADDR" ]; then
+          ${config.systemd.package}/bin/resolvectl dns incusbr0 "$IPV6_ADDR" || true
+        fi
+        
+        # Configure DNS domain
+        ${config.systemd.package}/bin/resolvectl domain incusbr0 '~incus' || true
+        
+        # Disable DNSSEC and DNS over TLS for the bridge
+        ${config.systemd.package}/bin/resolvectl dnssec incusbr0 off || true
+        ${config.systemd.package}/bin/resolvectl dnsovertls incusbr0 off || true
+      '';
+      preStop = ''
+        ${config.systemd.package}/bin/resolvectl revert incusbr0 || true
+      '';
+    };
+    
     virtualisation.incus = {
       enable = true;
       ui = {
@@ -49,6 +93,8 @@ in
             config = {
               "ipv4.address" = "auto";
               "ipv6.address" = "auto";
+              "dns.mode" = "dynamic";
+              "dns.domain" = "incus";
             };
             description = "";
             name = "incusbr0";
