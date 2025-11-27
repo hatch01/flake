@@ -37,7 +37,10 @@ in
       enable = true;
       dnssec = "false";
       # Don't set a default domain - let each interface handle its own
-      fallbackDns = [ "9.9.9.9#dns.quad9.net" "149.112.112.112#dns.quad9.net" ];
+      fallbackDns = [
+        "9.9.9.9#dns.quad9.net"
+        "149.112.112.112#dns.quad9.net"
+      ];
       dnsovertls = "false";
     };
 
