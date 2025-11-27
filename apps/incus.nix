@@ -36,14 +36,9 @@ in
     services.resolved = {
       enable = true;
       dnssec = "allow-downgrade";
-      domains = [ "~." ];
+      # Don't set a default domain - let each interface handle its own
       fallbackDns = [ "9.9.9.9#dns.quad9.net" "149.112.112.112#dns.quad9.net" ];
       dnsovertls = "opportunistic";
-      # Allow DNS stub listener so Incus DNS can forward queries
-      extraConfig = ''
-        DNSStubListener=yes
-        DNSStubListenerExtra=127.0.0.53
-      '';
     };
 
     # Systemd service to configure resolved for incusbr0
