@@ -32,13 +32,18 @@ in
   config = mkIf config.incus.enable {
     networking.nftables.enable = true;
     networking.firewall.trustedInterfaces = [ "incusbr*" ];
-    
+
     services.resolved = {
       enable = true;
       dnssec = "allow-downgrade";
       domains = [ "~." ];
       fallbackDns = [ "9.9.9.9#dns.quad9.net" "149.112.112.112#dns.quad9.net" ];
       dnsovertls = "opportunistic";
+      # Allow DNS stub listener so Incus DNS can forward queries
+      extraConfig = ''
+        DNSStubListener=yes
+        DNSStubListenerExtra=127.0.0.53
+      '';
     };
 
     # Systemd service to configure resolved for incusbr0
@@ -55,7 +60,7 @@ in
         # Get the DNS addresses from the bridge
         IPV4_ADDR=$(${config.virtualisation.incus.package}/bin/incus network get incusbr0 ipv4.address 2>/dev/null | cut -d'/' -f1 || echo "")
         IPV6_ADDR=$(${config.virtualisation.incus.package}/bin/incus network get incusbr0 ipv6.address 2>/dev/null | cut -d'/' -f1 || echo "")
-        
+
         # Configure resolved with the DNS addresses
         if [ -n "$IPV4_ADDR" ]; then
           ${config.systemd.package}/bin/resolvectl dns incusbr0 "$IPV4_ADDR" || true
@@ -63,10 +68,10 @@ in
         if [ -n "$IPV6_ADDR" ]; then
           ${config.systemd.package}/bin/resolvectl dns incusbr0 "$IPV6_ADDR" || true
         fi
-        
+
         # Configure DNS domain
         ${config.systemd.package}/bin/resolvectl domain incusbr0 '~incus' || true
-        
+
         # Disable DNSSEC and DNS over TLS for the bridge
         ${config.systemd.package}/bin/resolvectl dnssec incusbr0 off || true
         ${config.systemd.package}/bin/resolvectl dnsovertls incusbr0 off || true
@@ -75,7 +80,7 @@ in
         ${config.systemd.package}/bin/resolvectl revert incusbr0 || true
       '';
     };
-    
+
     virtualisation.incus = {
       enable = true;
       ui = {
@@ -93,8 +98,17 @@ in
             config = {
               "ipv4.address" = "auto";
               "ipv6.address" = "auto";
+              "ipv4.dhcp" = "true";
+              "ipv6.dhcp" = "true";
               "dns.mode" = "dynamic";
               "dns.domain" = "incus";
+              # Set upstream DNS servers for VMs/containers
+              "dns.zone.forward" = "true";
+              "dns.zone.reverse.ipv4" = "true";
+              "dns.zone.reverse.ipv6" = "true";
+              # Use Cloudflare DNS as upstream
+              "ipv4.dns" = "9.9.9.9,149.112.112.112";
+              "ipv6.dns" = "2620:fe::fe,2620:fe::9";
             };
             description = "";
             name = "incusbr0";
