@@ -122,7 +122,7 @@
       url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixos-hardware.follows = "nixos-hardware";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
