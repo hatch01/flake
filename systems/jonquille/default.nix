@@ -68,6 +68,7 @@
   boot.zfs.forceImportRoot = false;
   systemd.services.zfs-mount.enable = false;
   services.zfs.autoScrub.enable = true;
+  services.zfs.trim.enable = true;
 
   services.postgresql.dataDir = "/storage/postgresql/${config.services.postgresql.package.psqlSchema}";
 

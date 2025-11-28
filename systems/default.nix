@@ -38,6 +38,11 @@ let
                     hash = "sha256-2w9LHL3eQTQrandBmE/HywfFaHJTHk7g/mr+PmCXl7A=";
                   })
 
+                  (fetchpatch2 {
+                    name = "cockpit-zfs.patch";
+                    url = "https://github.com/NixOS/nixpkgs/pull/465963.diff";
+                    hash = "sha256-1GatRgEQxUbGeIwOxotC6PMSFZyguGqorWHsX0V3VOE=";
+                  })
                   # (fetchpatch2 {
                   #   name = "cockpit.patch";
                   #   url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
