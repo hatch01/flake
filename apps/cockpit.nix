@@ -59,10 +59,13 @@ in
         # cockpit-machines
         # cockpit-podman
         cockpit-zfs
-       smartmontools
-       (python3.withPackages (ps: [ ps.pyudev ps.libzfs ]))
-       zfs
-       lsdev
+        smartmontools
+        (python3.withPackages (ps: [
+          ps.pyudev
+          ps.libzfs
+        ]))
+        zfs
+        lsdev
       ];
 
     services.cockpit = {
