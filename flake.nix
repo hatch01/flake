@@ -118,7 +118,7 @@
     };
 
     pikvm = {
-      #url = "/home/eymeric/tmp/nixos-pikvm";
+      # url = "/home/eymeric/code_bidouille/projet/nixos-pikvm";
       url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixos-hardware.follows = "nixos-hardware";
