@@ -30,17 +30,12 @@ let
                     url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
                     hash = "sha256-BK/0R3y6KLrMpRgqYAQgmXBrq0DH6K3shHDn/ibzaA8=";
                   })
-                  (fetchpatch2 {
-                    name = "wsl2-ssh-agent.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/444409.diff";
-                    hash = "sha256-m7WOd5Ski6pVnwHL/FGpJ+IdkW8aJkCYoZTQmotMwh0=";
-                  })
 
                   # Beszel
                   (fetchpatch2 {
                     name = "beszel-disk-systemd.patch";
                     url = "https://github.com/hatch01/nixpkgs/pull/2.diff";
-                    hash = "sha256-EDXTveolGEmbd7YlKRLBfNEcbsv1il1CVBO48PTOOlk=";
+                    hash = "sha256-2w9LHL3eQTQrandBmE/HywfFaHJTHk7g/mr+PmCXl7A=";
                   })
 
                   # (fetchpatch2 {
