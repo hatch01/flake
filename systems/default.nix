@@ -38,7 +38,6 @@ let
                     hash = "sha256-2w9LHL3eQTQrandBmE/HywfFaHJTHk7g/mr+PmCXl7A=";
                   })
 
-
                   (fetchpatch2 {
                     name = "cockpit-zfs.patch";
                     url = "https://github.com/hatch01/nixpkgs/pull/4.diff";
