@@ -42,7 +42,7 @@ let
               (fetchpatch2 {
                 name = "cockpit-zfs.patch";
                 url = "https://github.com/hatch01/nixpkgs/pull/4.diff";
-                hash = "sha256-qNru3VSuT9nvfVr8T+4kpee15Ui+BzuP1JegyVYoguY=";
+                hash = "sha256-mrGc+46/ULIw1faNTCusYpyUbFuZAb6uS4sznKkgyyg=";
               })
               # Beszel
               (fetchpatch2 {
