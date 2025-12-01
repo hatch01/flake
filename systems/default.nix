@@ -30,19 +30,6 @@ let
                     url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
                     hash = "sha256-BK/0R3y6KLrMpRgqYAQgmXBrq0DH6K3shHDn/ibzaA8=";
                   })
-
-                  # Beszel
-                  (fetchpatch2 {
-                    name = "beszel-disk-systemd.patch";
-                    url = "https://github.com/hatch01/nixpkgs/pull/2.diff";
-                    hash = "sha256-2w9LHL3eQTQrandBmE/HywfFaHJTHk7g/mr+PmCXl7A=";
-                  })
-
-                  (fetchpatch2 {
-                    name = "cockpit-zfs.patch";
-                    url = "https://github.com/hatch01/nixpkgs/pull/4.diff";
-                    hash = "sha256-taGeP/AH4ZC5pjKi4jW+4TfCz/9Gfu/qbtHcBaPI6Ic=";
-                  })
                   # (fetchpatch2 {
                   #   name = "cockpit.patch";
                   #   url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
@@ -52,6 +39,17 @@ let
             )
             # Common patches for stable and unstable
             ++ [
+              (fetchpatch2 {
+                name = "cockpit-zfs.patch";
+                url = "https://github.com/hatch01/nixpkgs/pull/4.diff";
+                hash = "sha256-qNru3VSuT9nvfVr8T+4kpee15Ui+BzuP1JegyVYoguY=";
+              })
+              # Beszel
+              (fetchpatch2 {
+                name = "beszel-disk-systemd.patch";
+                url = "https://github.com/hatch01/nixpkgs/pull/2.diff";
+                hash = "sha256-2w9LHL3eQTQrandBmE/HywfFaHJTHk7g/mr+PmCXl7A=";
+              })
             ];
         };
         system = value.system;
