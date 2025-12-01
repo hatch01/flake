@@ -22,6 +22,7 @@
   container.enable = lib.mkForce false;
   gatus.enable = true;
   cockpit.enable = true;
+  cockpit.domain = "lilas:9090";
   networking.firewall.allowedTCPPorts = [
     config.gatus.port
     config.cockpit.port
