@@ -29,7 +29,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "nixpkgs/master";
-    nixpkgs-stable.url = "nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";
