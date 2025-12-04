@@ -74,6 +74,7 @@ let
       "authelia/authBackend"
       "authelia/oAuth2PrivateKey"
       "authelia/gitlabSecret"
+      "authelia/oAuth2HmacSecret"
 
       "apolline"
       "node_red"

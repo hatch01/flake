@@ -59,6 +59,7 @@ in
         "authelia/jwtKey" = cfg;
         "authelia/authBackend" = cfg;
         "authelia/oAuth2PrivateKey" = cfg;
+        "authelia/oAuth2HmacSecret" = cfg;
       };
     users = {
       users.authelia = {
@@ -91,17 +92,9 @@ in
           secrets = {
             storageEncryptionKeyFile = config.age.secrets."authelia/storageKey".path;
             jwtSecretFile = config.age.secrets."authelia/jwtKey".path;
+            oidcHmacSecretFile = config.age.secrets."authelia/oAuth2HmacSecret".path;
+            oidcIssuerPrivateKeyFile = config.age.secrets."authelia/oAuth2PrivateKey".path;
           };
-
-          settingsFiles = [
-            # neet to write this in plain text because nix to yaml is doing some weird stuff
-            # see https://github.com/NixOS/nixpkgs/pull/299309 for details
-            (builtins.toFile "authelia_id_provider_key.yaml" ''
-              identity_providers:
-                oidc:
-                  jwks:
-                  - key: {{ secret "/run/agenix/authelia/oAuth2PrivateKey" | mindent 10 "|" | msquote }}'')
-          ];
 
           settings = {
             theme = "auto";
