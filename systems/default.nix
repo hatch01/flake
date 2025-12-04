@@ -34,8 +34,7 @@ let
                     name = "video4loopbak.path";
                     url = "https://github.com/NixOS/nixpkgs/pull/467572.diff";
                     hash = "sha256-yCABe/4viBOXPuB1bDGszOD6GM1tUXzVG9RZvLc3lWY=";
-                   })
-
+                  })
 
                   # (fetchpatch2 {
                   #   name = "cockpit.patch";
