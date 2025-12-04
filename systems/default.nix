@@ -30,6 +30,13 @@ let
                     url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
                     hash = "sha256-BK/0R3y6KLrMpRgqYAQgmXBrq0DH6K3shHDn/ibzaA8=";
                   })
+                  (fetchpatch2 {
+                    name = "video4loopbak.path";
+                    url = "https://github.com/NixOS/nixpkgs/pull/467572.diff";
+                    hash = "sha256-yCABe/4viBOXPuB1bDGszOD6GM1tUXzVG9RZvLc3lWY=";
+                   })
+
+
                   # (fetchpatch2 {
                   #   name = "cockpit.patch";
                   #   url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
