@@ -108,15 +108,21 @@ in
               selection_criteria.user_verification = "preferred";
             };
 
+            regulation = {
+              max_retries = 3;
+              find_time = "2m";
+              ban_time = "5m";
+            };
+
             totp = {
               disable = false;
-              issuer = "authelia.com";
-              algorithm = "sha1";
+              issuer = base_domain_name;
+              algorithm = "sha512";
               digits = 6;
               period = 30;
               skew = 1;
               secret_size = 32;
-              allowed_algorithms = [ "SHA1" ];
+              allowed_algorithms = [ "SHA512" "SHA256" "SHA1" ];
               allowed_digits = [ 6 ];
               allowed_periods = [ 30 ];
               disable_reuse_security_policy = false;
