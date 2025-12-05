@@ -122,7 +122,11 @@ in
               period = 30;
               skew = 1;
               secret_size = 32;
-              allowed_algorithms = [ "SHA512" "SHA256" "SHA1" ];
+              allowed_algorithms = [
+                "SHA512"
+                "SHA256"
+                "SHA1"
+              ];
               allowed_digits = [ 6 ];
               allowed_periods = [ 30 ];
               disable_reuse_security_policy = false;
