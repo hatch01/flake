@@ -48,6 +48,7 @@ in
       parallel
       pbzip2
       caligula
+      zellij
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
