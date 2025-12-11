@@ -56,6 +56,12 @@
         signing = {
           signByDefault = lib.mkForce false;
         };
+        settings = {
+          user = {
+            email = lib.mkForce "eymeric.dechelette@worldline.com";
+            name = lib.mkForce "w191923";
+          };
+        };
       };
       zsh = {
         initContent = lib.mkAfter "eval $(${lib.getExe' pkgs.wsl2-ssh-agent "wsl2-ssh-agent"})";
