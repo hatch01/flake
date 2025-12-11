@@ -47,3 +47,10 @@ jobs:
         run: nix flake update --accept-flake-config --commit-lock-file
       - name: Push flake update commit
         run: git push --force origin staging
+      - name: Trigger build workflow
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            "https://forge.onyx.ovh/api/v1/repos/${{ forgejo.repository }}/actions/workflows/nix-build.yml/dispatches" \
+            -d '{"ref":"staging"}'
