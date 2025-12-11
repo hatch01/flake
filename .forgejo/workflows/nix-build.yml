@@ -1,14 +1,9 @@
 name: Build all systems
 on:
-  workflow_run:
-    workflows: ["Update flake inputs"]
-    types:
-      - completed
   push:
     paths:
       - "**/*.nix"
       - "**/flake.lock"
-  workflow_dispatch:
 
 jobs:
   build:
@@ -36,7 +31,7 @@ jobs:
             nix build --extra-experimental-features "nix-command flakes" --accept-flake-config -L --fallback --option trusted-users $(whoami) .#nixosConfigurations.${config}.config.system.build.toplevel
           done
       - name: Merge staging to main
-        if: github.ref == 'refs/heads/staging'
+        if: forgejo.ref == 'refs/heads/staging'
         run: |
           git config user.name "Flake Updater"
           git config user.email "flake-updater@forge.onyx.ovh"
