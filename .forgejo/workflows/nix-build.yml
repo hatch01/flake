@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - name: Configure Nix
         run: |
           mkdir -p ~/.config/nix
@@ -35,7 +37,6 @@ jobs:
         run: |
           git config user.name "Flake Updater"
           git config user.email "flake-updater@forge.onyx.ovh"
-          git fetch --all
-          git checkout main
+          git switch main
           git merge origin/staging
           git push origin main
