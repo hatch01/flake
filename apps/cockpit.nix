@@ -67,7 +67,6 @@ in
         "https://${config.cockpit.domain}"
         "wss://${config.cockpit.domain}"
       ];
-      plugins = with pkgs; [ cockpit-zfs ];
       settings = {
         "WebService" = {
           ProtocolHeader = "X-Forwarded-Proto";
@@ -77,6 +76,8 @@ in
         #     "action" = "none";
         #   };
       };
+    } // lib.optionalAttrs (!stable) {
+      plugins = [ pkgs.cockpit-zfs ];
     };
   };
 }

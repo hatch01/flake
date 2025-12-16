@@ -20,11 +20,6 @@ with pkgs;
 )
 # Common patches for stable and unstable
 ++ [
-  (fetchpatch2 {
-    name = "cockpit-zfs.patch";
-    url = "https://github.com/hatch01/nixpkgs/pull/5.diff";
-    hash = "sha256-h2gy/AJsMNIMBOQ+PJlajun//aPY+1oMJtNqzWd8iVw=";
-  })
   # Beszel
   (fetchpatch2 {
     name = "beszel-disk-systemd.patch";
