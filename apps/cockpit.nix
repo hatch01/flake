@@ -76,7 +76,8 @@ in
         #     "action" = "none";
         #   };
       };
-    } // lib.optionalAttrs (!stable) {
+    }
+    // lib.optionalAttrs (!stable) {
       plugins = [ pkgs.cockpit-zfs ];
     };
   };
