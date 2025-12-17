@@ -381,8 +381,8 @@ in
                     public = true;
                     authorization_policy = "two_factor";
                     redirect_uris = [
-                      "https://incus.onyx.ovh/oidc/callback"
-                      "https://${config.incus.domain}/iodc/callback"
+                      "https://${config.incus.domain}/oidc/callback"
+                      "https://${config.incus.domain}/oidc/callback"
                     ];
                     audience = [
                       "https://${config.incus.domain}"
