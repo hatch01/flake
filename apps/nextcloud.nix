@@ -210,7 +210,12 @@ in
           "opcache.enable" = "1";
           "opcache.revalidate_freq" = "0";
           "opcache.memory_consumption" = "1024";
-          "opcache.interned_strings_buffer" = "512";
+
+          # Stollen to SuperSandro
+          "opcache.jit" = "tracing";
+          "opcache.jit_buffer_size" = "100M";
+          # recommended by nextcloud admin overview
+          "opcache.interned_strings_buffer" = "16";
         };
       };
 
