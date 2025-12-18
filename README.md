@@ -1,5 +1,13 @@
 # install
 
+## remote install
+
+example:
+
+```console
+just remote-install cyclamen 2a01:4f9:c013:978b::1
+```
+
 ## formatting
 
 Get the format config:

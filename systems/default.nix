@@ -153,10 +153,10 @@ in
         inherit inputs;
       };
     };
-    lavande = {
-      system = "aarch64-linux";
+    cyclamen = {
+      system = "x86_64-linux";
       modules = server;
-      domain = "129.151.224.5";
+      domain = "2a01:4f9:c013:978b::1";
       specialArgs = {
         inherit inputs;
       };

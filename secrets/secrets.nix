@@ -1,11 +1,11 @@
 let
   keys = rec {
     tulipe = [ "age1aq7l5msnq4leddht4sr3sm56v9qu408r94txwyutvz690tlxmdjss9lm94" ];
-    lavande = [ "age17w7zsvgvdfr7tdkz9uwy2jhmjlt2273ktu6wtt976782nen0sfkql94ez6" ];
+    cyclamen = [ "age1uvmenjw9k5y6qtvlu2clxfxe6ma9a4ecwl2gv36tlc2n99jaq4cq6e5fnt" ];
     jonquille = [ "age1ags68rkarp5ewj8dqzq74l48v8q7zdzesed3vp498e352grl3dzsqq3mww" ];
     lilas = [ "age1xphfpwj7v5wwvnuhhqyvwlp7susnmmnx2ttccmn630wd9q8y0a2swy8ekj" ];
     lotus = [ "age1lcw62jx877aqxcwlu855q2x6sq35khqart0we3j6qy8595dmsp6s8xyxnc" ];
-    server = jonquille ++ lavande ++ lilas ++ lotus;
+    server = jonquille ++ cyclamen ++ lilas ++ lotus;
     desktop = tulipe;
     all = desktop ++ server;
   };
@@ -82,7 +82,7 @@ let
       # forgejo
       "forgejo_runner_token"
     ]
-    // defineSecrets "lavande" [
+    // defineSecrets "cyclamen" [
       "rootPassword"
     ];
 

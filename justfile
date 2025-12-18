@@ -37,3 +37,6 @@ forcast machine:
 sd machine:
     nix run nixpkgs#nixos-generators -- -f sd-aarch64 --flake .#{{machine}} --system aarch64-linux -o ./{{machine}}-sd-aarch64
     echo image in ./{{machine}}-sd-aarch64/sd-image/
+
+remote-install machine ip:
+	nix run --extra-experimental-features 'nix-command flakes' github:nix-community/nixos-anywhere -- --flake .#{{machine}} --target-host root@{{ip}}
