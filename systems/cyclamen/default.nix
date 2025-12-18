@@ -1,9 +1,10 @@
-{ mkSecrets, ... }:
+{ mkSecrets, lib, ... }:
 
 {
   imports = [ ];
 
   boot.loader.grub.enable = true;
+  container.enable = lib.mkForce false;
 
   age = {
     identityPaths = [ "/etc/age/key" ];
