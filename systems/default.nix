@@ -111,7 +111,6 @@ let
     with inputs;
     [
       vscode-server.nixosModules.default
-      inputs.proxmox-nixos.nixosModules.proxmox-ve
       ../configs/server.nix
     ]
     ++ nixos;

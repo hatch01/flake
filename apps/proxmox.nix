@@ -15,6 +15,8 @@ let
     ;
 in
 {
+  imports = [ inputs.proxmox-nixos.nixosModules.proxmox-ve ];
+
   options = {
     proxmox = {
       enable = mkEnableOption "Enable Proxmox";
