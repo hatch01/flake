@@ -173,10 +173,6 @@
     LC_TIME = "fr_FR.UTF-8";
   };
 
-  hm.home = {
-    inherit stateVersion username;
-  };
-
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -198,15 +194,18 @@
 
   hm = {
     programs.btop.settings.color_theme = "/home/${username}/.config/btop/themes/catppuccin_mocha.theme";
-    home.file.".config/btop/themes" = {
-      source =
-        pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "btop";
-          tag = "1.0.0";
-          sha256 = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
-        }
-        + "/themes";
+    home = {
+      inherit stateVersion username;
+      file.".config/btop/themes" = {
+        source =
+          pkgs.fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "btop";
+            tag = "1.0.0";
+            sha256 = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
+          }
+          + "/themes";
+      };
     };
   };
 
