@@ -122,7 +122,6 @@ let
       ../configs/desktop.nix
       lanzaboote.nixosModules.lanzaboote
       flatpaks.nixosModules.nix-flatpak
-      nixpkgs-xr.nixosModules.nixpkgs-xr
     ]
     ++ nixos;
 in

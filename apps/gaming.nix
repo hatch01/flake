@@ -49,13 +49,6 @@ in
       };
     };
 
-    services.wivrn = mkIf gaming.vr.enable {
-      enable = true;
-      openFirewall = true;
-      defaultRuntime = true;
-      package = (pkgs.wivrn.override { cudaSupport = true; });
-    };
-
     environment.systemPackages =
       with pkgs;
       with config;
