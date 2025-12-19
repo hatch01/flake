@@ -3,6 +3,8 @@
 {
   imports = [ ];
 
+  headscale.enable = true;
+
   boot.loader.grub.enable = true;
   container.enable = lib.mkForce false;
 

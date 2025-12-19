@@ -51,5 +51,6 @@
     ./wakapi.nix
     ./yubikey.nix
     ./vaultwarden.nix
+    ./headscale.nix
   ];
 }
