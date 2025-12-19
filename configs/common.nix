@@ -12,7 +12,6 @@
   imports = [
     (lib.mkAliasOptionModule [ "hm" ] [ "home-manager" "users" username ])
     ../apps
-    ../modules
   ];
 
   neovim.enable = true;
