@@ -60,7 +60,7 @@ let
           {
             config.networking = {
               hostName = name;
-              domain = value.domain or name;
+              domain = name;
             };
           }
         ];
@@ -85,16 +85,6 @@ let
         // (value.specialArgs or { });
       }
     ) systems;
-    deploy.nodes = builtins.mapAttrs (name: value: {
-      hostname = value.sshAddress or value.domain or name;
-      profiles.system = {
-        #look at how not to use ssh root login but pass via sudo
-        user = value.user or "root";
-        sshUser = value.sshUser or "root";
-        remoteBuild = value.remoteBuild or true; # think on it if it is a great option
-        path = inputs.deploy-rs.lib.${value.system}.activate.nixos inputs.self.nixosConfigurations.${name};
-      };
-    }) systems;
   };
 
   nixos = with inputs; [
@@ -129,44 +119,29 @@ in
     tulipe = {
       system = "x86_64-linux";
       modules = desktop;
-      domain = "127.0.0.1";
-      specialArgs = {
-        inherit inputs;
-      };
+      specialArgs = { inherit inputs; };
     };
     lotus = {
       system = "x86_64-linux";
       modules = server;
-      domain = "127.0.0.1";
-      specialArgs = {
-        inherit inputs;
-      };
+      specialArgs = { inherit inputs; };
     };
 
     jonquille = {
       system = "x86_64-linux";
       modules = server;
-      domain = base_domain_name;
-      specialArgs = {
-        inherit inputs;
-      };
+      specialArgs = { inherit inputs; };
     };
     cyclamen = {
       system = "x86_64-linux";
       modules = server;
-      domain = "2a01:4f9:c013:978b::1";
-      specialArgs = {
-        inherit inputs;
-      };
+      specialArgs = { inherit inputs; };
     };
     lilas = {
       system = "aarch64-linux";
       modules = server;
-      domain = "lilas";
       stable = true;
-      specialArgs = {
-        inherit inputs;
-      };
+      specialArgs = { inherit inputs; };
     };
   };
   # // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};

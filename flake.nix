@@ -78,12 +78,6 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.utils.follows = "flake-utils";
-    };
     impermanence.url = "github:nix-community/impermanence";
 
     vscode-server = {
@@ -153,8 +147,6 @@
         "aarch64-linux"
       ];
       imports = [
-        # inputs.pre-commit-hooks-nix.flakeModule
-        # inputs.treefmt-nix.flakeModule
         ./systems
       ];
 
@@ -164,7 +156,6 @@
           formatter = pkgs.nixfmt-tree;
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
-              pkgs.deploy-rs
               just
             ];
           };
