@@ -106,8 +106,10 @@ in
           };
 
           ${config.gatus.domain} = {
-            forceSSL = config.nginx.acme.enable && (config.gatus.enable || config.networking.hostName == "jonquille");
-            enableACME = config.nginx.acme.enable && (config.gatus.enable || config.networking.hostName == "jonquille");
+            forceSSL =
+              config.nginx.acme.enable && (config.gatus.enable || config.networking.hostName == "jonquille");
+            enableACME =
+              config.nginx.acme.enable && (config.gatus.enable || config.networking.hostName == "jonquille");
             locations."/".proxyPass = "http://192.168.1.202:${toString config.gatus.port}";
           };
 
