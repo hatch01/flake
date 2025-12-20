@@ -3,6 +3,7 @@
   lib,
   pkgs,
   base_domain_name,
+
   ...
 }:
 let
@@ -104,7 +105,8 @@ in
             };
           };
           ${config.gatus.domain} = {
-            inherit (cfg) forceSSL enableACME;
+            forceSSL = config.nginx.acme.enable && config.gatus.enable;
+            enableACME = config.nginx.acme.enable && config.gatus.enable;
             locations."/".proxyPass = "http://192.168.1.202:${toString config.gatus.port}";
           };
 
@@ -263,7 +265,7 @@ in
             };
           };
 
-          "wikilynx.onyx.ovh" = {
+          "wikilynx.onyx.ovh" = mkIf (config.networking.hostName == "jonquille") {
             inherit (cfg) forceSSL enableACME;
             locations = {
               "/".proxyPass = "http://192.168.1.199:8088";
@@ -381,6 +383,11 @@ in
           ${config.vaultwarden.domain} = mkIf config.vaultwarden.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
             locations."/".proxyPass = "http://[::1]:${toString config.vaultwarden.port}";
+          };
+
+          ${config.headscale.domain} = mkIf config.headscale.enable {
+            inherit (cfg) forceSSL extraConfig enableACME;
+            locations."/".proxyPass = "http://127.0.0.1:${toString config.headscale.port}";
           };
         };
     };
