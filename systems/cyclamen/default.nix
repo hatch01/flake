@@ -26,4 +26,7 @@
       };
     };
   };
+  users = {
+    groups.smtp = { };
+  };
 }
