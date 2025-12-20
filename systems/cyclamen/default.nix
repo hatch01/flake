@@ -4,6 +4,8 @@
   imports = [ ];
 
   headscale.enable = true;
+  nginx.enable = true;
+  nginx.acme.enable = true;
 
   boot.loader.grub.enable = true;
   container.enable = lib.mkForce false;

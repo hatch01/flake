@@ -9,7 +9,6 @@ let
     mkEnableOption
     mkOption
     mkIf
-    optionals
     ;
 in
 {
@@ -30,7 +29,6 @@ in
   config = mkIf config.headscale.enable {
     services.headscale = {
       enable = true;
-      address = "::1";
       port = config.headscale.port;
       settings = {
         server_url = "https://${config.headscale.domain}";
