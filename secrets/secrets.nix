@@ -24,6 +24,7 @@ let
       "restic_key"
       "influx_root_token"
       "wakapi_salt"
+      "kvmd"
     ]
     // defineSecrets "tulipe" [
       "userPassword"

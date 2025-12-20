@@ -39,6 +39,8 @@
     enable = true;
     package = inputs.pikvm.packages.aarch64-linux.default;
     hardwareVersion = "v2-hdmi-rpi4";
+    user = "admin";
+    passwordFile = config.age.secrets."server/kvmd".path;
   };
 
   security.sudo-rs = {
@@ -61,6 +63,9 @@
       "server/smtpPasswordEnv" = {
         group = "smtp";
         mode = "440";
+        root = true;
+      };
+      "server/kvmd" = {
         root = true;
       };
     };
