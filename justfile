@@ -40,3 +40,6 @@ sd machine:
 
 remote-install machine ip:
 	nix run --extra-experimental-features 'nix-command flakes' github:nix-community/nixos-anywhere -- --flake .#{{machine}} --target-host root@{{ip}}
+
+deploy machine ip=machine:
+    nixos-rebuild switch --flake .#{{machine}} --target-host root@{{ip}}
