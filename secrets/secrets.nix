@@ -76,6 +76,7 @@ let
     ]
     // defineSecrets "cyclamen" [
       "rootPassword"
+      "headscale_oidc"
     ];
 
   defineSecrets =
