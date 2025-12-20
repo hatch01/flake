@@ -6,11 +6,10 @@
 # https://github.com/nix-community/NixOS-WSL
 
 {
-  config,
-  lib,
   pkgs,
   username,
   inputs,
+  lib,
   ...
 }:
 
@@ -31,7 +30,6 @@
   dev.androidtools.enable = false;
   vscode.enable = false;
 
-  hm.programs.git.signing.signer = "/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe";
   wsl.extraBin = [
     {
       src = "/mnt/c/Program\\ Files\\ \\(x86\\)/GnuPG/bin/gpg.exe";
@@ -55,6 +53,7 @@
       git = {
         signing = {
           signByDefault = lib.mkForce false;
+          signer = "/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe";
         };
         settings = {
           user = {
