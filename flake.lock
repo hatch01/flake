@@ -198,22 +198,6 @@
         "type": "github"
       }
     },
-    "flatpaks": {
-      "locked": {
-        "lastModified": 1739444422,
-        "narHash": "sha256-iAVVHi7X3kWORftY+LVbRiStRnQEob2TULWyjMS6dWg=",
-        "owner": "gmodena",
-        "repo": "nix-flatpak",
-        "rev": "5e54c3ca05a7c7d968ae1ddeabe01d2a9bc1e177",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gmodena",
-        "ref": "latest",
-        "repo": "nix-flatpak",
-        "type": "github"
-      }
-    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -603,7 +587,6 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
-        "flatpaks": "flatpaks",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
@@ -619,8 +602,7 @@
         "plasma-manager": "plasma-manager",
         "portfolio": "portfolio",
         "proxmox-nixos": "proxmox-nixos",
-        "systems": "systems",
-        "vscode-server": "vscode-server"
+        "systems": "systems"
       }
     },
     "rust-overlay": {
@@ -656,29 +638,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "vscode-server": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1753541140,
-        "narHash": "sha256-foGgZu8+bCNIGeuDqQ84jNbmKZpd+JvnrL2WlyU4tuU=",
-        "owner": "hatch01",
-        "repo": "nixos-vscode-server",
-        "rev": "53add2c5963bae5263c017e9fc607a0b474a10ea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hatch01",
-        "repo": "nixos-vscode-server",
         "type": "github"
       }
     }

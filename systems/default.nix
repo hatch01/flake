@@ -17,41 +17,7 @@ let
         nixpkgsPatcher = {
           nixpkgs = if (value.stable or false) then inputs.nixpkgs-stable else inputs.nixpkgs;
           enable = true;
-          patches =
-            pkgs:
-            with pkgs;
-            (
-              if (value.stable or false) then
-                [ ]
-              else
-                [
-                  (fetchpatch2 {
-                    name = "openthread-border-router.patch";
-                    url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
-                    hash = "sha256-BK/0R3y6KLrMpRgqYAQgmXBrq0DH6K3shHDn/ibzaA8=";
-                  })
-
-                  # (fetchpatch2 {
-                  #   name = "cockpit.patch";
-                  #   url = "https://github.com/NixOS/nixpkgs/pull/447043.diff";
-                  #   hash = "sha256-vL4n6/DTr+or5GjAOxrUtEe9UtDXmhwXQ/cUlFfL/Tw=";
-                  # })
-                ]
-            )
-            # Common patches for stable and unstable
-            ++ [
-              (fetchpatch2 {
-                name = "cockpit-zfs.patch";
-                url = "https://github.com/hatch01/nixpkgs/pull/5.diff";
-                hash = "sha256-h2gy/AJsMNIMBOQ+PJlajun//aPY+1oMJtNqzWd8iVw=";
-              })
-              # Beszel
-              (fetchpatch2 {
-                name = "beszel-disk-systemd.patch";
-                url = "https://github.com/hatch01/nixpkgs/pull/2.diff";
-                hash = "sha256-2w9LHL3eQTQrandBmE/HywfFaHJTHk7g/mr+PmCXl7A=";
-              })
-            ];
+          patches = import ../overlays/patches.nix (value.stable or false);
         };
         system = value.system;
         modules = value.modules ++ [
@@ -92,27 +58,11 @@ let
     disko.nixosModules.disko
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
-    impermanence.nixosModules.impermanence # maybe optimize this because it is not used in all systems
     nix-index-database.nixosModules.nix-index
-    #nur.nixosModules.nur
+    impermanence.nixosModules.impermanence
   ];
-
-  server =
-    with inputs;
-    [
-      vscode-server.nixosModules.default
-      ../configs/server.nix
-    ]
-    ++ nixos;
-
-  desktop =
-    with inputs;
-    [
-      ../configs/desktop.nix
-      lanzaboote.nixosModules.lanzaboote
-      flatpaks.nixosModules.nix-flatpak
-    ]
-    ++ nixos;
+  server = [ ../configs/server.nix ] ++ nixos;
+  desktop = [ ../configs/desktop.nix ] ++ nixos;
 in
 {
   flake = mkSystem {
@@ -144,5 +94,4 @@ in
       specialArgs = { inherit inputs; };
     };
   };
-  # // {checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;};
 }

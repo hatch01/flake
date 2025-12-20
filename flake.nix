@@ -46,8 +46,6 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
-    #nur.url = "github:nix-community/NUR";
-
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -70,7 +68,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flatpaks.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
@@ -79,12 +76,6 @@
     };
 
     impermanence.url = "github:nix-community/impermanence";
-
-    vscode-server = {
-      url = "github:hatch01/nixos-vscode-server";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     proxmox-nixos = {
       url = "github:SaumonNet/proxmox-nixos";

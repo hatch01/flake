@@ -1,56 +1,56 @@
 { ... }:
 {
   imports = [
-    ./cloud-storage
-    ./dev
-    ./office
-    ./plasma
-    ./social
+    ./adguard.nix
+    ./apolline.nix
+    ./authelia.nix
+    ./beszel/agent.nix
+    ./beszel/hub.nix
+    ./bitcoin.nix
+    ./cloud-storage.nix
+    ./cockpit.nix
+    ./config_updater.nix
     ./container.nix
+    ./ddclient.nix
+    ./dev
     ./espanso.nix
+    ./fail2ban.nix
+    ./forgejo.nix
     ./gaming.nix
+    ./gatus.nix
     ./git.nix
+    ./headscale.nix
+    ./home_automation
     ./homebank.nix
+    ./homepage.nix
+    ./incus.nix
     ./kde-connect.nix
     ./keepassxc
     ./konsole.nix
+    ./librespeed.nix
+    ./matrix
     ./multimedia.nix
     ./neovim.nix
+    ./nextcloud.nix
+    ./nginx
     ./nix-related.nix
+    ./nixCache.nix
+    ./office
+    ./ollama.nix
+    ./plasma
+    ./portfolio.nix
+    ./postgres.nix
+    ./proxmox.nix
+    ./restic.nix
+    ./social
+    ./sslh.nix
     ./thunderbird.nix
     ./tools.nix
-    ./vm.nix
-    ./zsh.nix
-    ./ollama.nix
-    ./postgres.nix
-    # ./gitlab
-    ./homepage.nix
-    ./nextcloud.nix
-    ./authelia.nix
-    ./nginx
-    ./beszel
-    ./nixCache.nix
-    ./adguard.nix
-    ./fail2ban.nix
-    ./ddclient.nix
-    ./matrix
-    ./home_automation
-    ./watchtower.nix
-    ./bitcoin.nix
-    ./cockpit.nix
-    ./librespeed.nix
-    ./ghostty.nix
-    ./apolline.nix
-    ./forgejo.nix
-    ./config_updater.nix
-    ./gatus.nix
-    ./restic.nix
-    ./portfolio.nix
-    ./incus.nix
-    ./sslh.nix
-    ./wakapi.nix
-    ./yubikey.nix
     ./vaultwarden.nix
-    ./headscale.nix
+    ./vm.nix
+    ./wakapi.nix
+    ./watchtower.nix
+    ./yubikey.nix
+    ./zsh.nix
   ];
 }

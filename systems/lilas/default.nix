@@ -9,7 +9,12 @@
 {
   imports = [
     inputs.pikvm.nixosModules.default
-  ];
+  ]
+  ++ (map (name: ../../apps/${name}) [
+    "cockpit.nix"
+    "gatus.nix"
+    "container.nix"
+  ]);
 
   environment.systemPackages = with pkgs; [
     ffmpeg

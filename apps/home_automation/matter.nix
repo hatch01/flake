@@ -1,8 +1,6 @@
 {
   lib,
   config,
-  base_domain_name,
-  inputs,
   ...
 }:
 let

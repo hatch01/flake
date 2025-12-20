@@ -4,15 +4,16 @@
 {
   config,
   pkgs,
-  lib,
+  inputs,
   username,
   mkSecret,
   ...
 }:
 {
-  imports = [ ./batterie.nix ];
-
-  gaming.vr.enable = true;
+  imports = [
+    ./batterie.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
 
   systemd.services.nix-daemon.serviceConfig.Environment = [
     "NIX_FMOD_USERNAME=hatchchien@protonmail.com"

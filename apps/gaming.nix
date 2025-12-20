@@ -9,13 +9,11 @@ let
     optionals
     mkEnableOption
     mkDefault
-    mkIf
     ;
 in
 {
   options = {
     gaming.enable = mkEnableOption "Enable Gaming";
-    gaming.vr.enable = mkEnableOption "Enable VR Gaming";
     remotePlay.enable = mkEnableOption "Enable Steam Remote Play";
     steam = {
       enable = mkEnableOption "Enable Steam";
@@ -53,10 +51,6 @@ in
       with pkgs;
       with config;
       [ ]
-      ++ optionals gaming.vr.enable [
-        wlx-overlay-s
-        android-tools
-      ]
       ++ optionals gaming.enable [
         mangohud
         dolphin-emu

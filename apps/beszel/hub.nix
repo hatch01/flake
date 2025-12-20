@@ -1,9 +1,7 @@
 {
   config,
   lib,
-  mkSecret,
   base_domain_name,
-  stable,
   ...
 }:
 let

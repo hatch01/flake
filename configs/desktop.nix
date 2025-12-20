@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   lib,
-  username,
   ...
 }:
 let
@@ -33,7 +32,6 @@ in
   keepassxc.autostart = mkDefault true;
 
   social.enable = mkDefault true;
-  #vesktop.enable = false; default to the same value as social.enable
 
   espanso.enable = false;
   homebank.enable = mkDefault true;
@@ -63,20 +61,9 @@ in
   basic-tools.enable = mkDefault true;
   bitcoinClient.enable = mkDefault true;
   office.enable = mkDefault true;
-  ghostty.enable = mkDefault true;
   yubikey.enable = mkDefault true;
 
   home-manager.sharedModules = with inputs; [ plasma-manager.homeModules.plasma-manager ];
-
-  services.flatpak = {
-    enable = mkDefault true;
-    update.auto = {
-      enable = true;
-      onCalendar = "weekly"; # Default value
-    };
-    packages = [
-    ];
-  };
 
   programs.nix-ld.enable = true;
 

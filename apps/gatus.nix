@@ -51,7 +51,7 @@ in
     };
   };
 
-  imports = [ ];
+  imports = [ ./postgres.nix ];
 
   config = mkIf config.gatus.enable {
     services.postgresql.enable = true;
