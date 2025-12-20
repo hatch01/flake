@@ -60,16 +60,6 @@ let
       # dynDNS
       "dyndns"
 
-      # Gitlab
-      "gitlab/databasePasswordFile"
-      "gitlab/initialRootPasswordFile"
-      "gitlab/secretFile"
-      "gitlab/otpFile"
-      "gitlab/dbFile"
-      "gitlab/jwsFile"
-      "gitlab/openIdKey"
-      "gitlab/runnerRegistrationConfigFile"
-
       # Authelia
       "authelia/storageKey"
       "authelia/jwtKey"
