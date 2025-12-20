@@ -9,7 +9,6 @@
     ./bitcoin.nix
     ./cloud-storage.nix
     ./cockpit.nix
-    ./config_updater.nix
     ./container.nix
     ./ddclient.nix
     ./dev
