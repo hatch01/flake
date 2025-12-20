@@ -20,6 +20,7 @@
   gitConfig.enable = true;
   zshConfig.enable = true;
   beszel.agent.enable = true;
+  comin.enable = true;
 
   nix = {
     package = pkgs.nixVersions.git;
