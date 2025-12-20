@@ -47,8 +47,8 @@
           "vscode-extension-ms-vscode-cpptools"
 
           # intellij
-          "idea-ultimate"
-          "pycharm-professional"
+          "idea"
+          "pycharm"
           "clion"
           "rust-rover"
           "phpstorm"

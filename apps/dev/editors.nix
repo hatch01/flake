@@ -31,8 +31,8 @@ in
         kdePackages.kate
       ]
       ++ optionals config.jetbrains.enable [
-        jetbrains.idea-ultimate
-        jetbrains.pycharm-professional
+        jetbrains.idea
+        jetbrains.pycharm
         jetbrains.clion
         jetbrains.rust-rover
         jetbrains.phpstorm
