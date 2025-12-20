@@ -39,8 +39,7 @@
     enable = true;
     package = inputs.pikvm.packages.aarch64-linux.default;
     hardwareVersion = "v2-hdmi-rpi4";
-    user = "admin";
-    passwordFile = config.age.secrets."server/kvmd".path;
+    passwordFile = config.age.secrets.kvmd.path;
   };
 
   security.sudo-rs = {
@@ -65,9 +64,7 @@
         mode = "440";
         root = true;
       };
-      "server/kvmd" = {
-        root = true;
-      };
+      kvmd = { };
     };
   };
 

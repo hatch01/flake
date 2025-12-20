@@ -24,7 +24,6 @@ let
       "restic_key"
       "influx_root_token"
       "wakapi_salt"
-      "kvmd"
     ]
     // defineSecrets "tulipe" [
       "userPassword"
@@ -32,6 +31,8 @@ let
     ]
     // defineSecrets "lilas" [
       "rootPassword"
+      "kvmd"
+      "kvmdHttpHeader"
     ]
     // defineSecrets "lotus" [
       "rootPassword"

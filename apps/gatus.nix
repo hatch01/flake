@@ -3,6 +3,7 @@
   lib,
   pkgs,
   base_domain_name,
+  mkSecret,
   ...
 }:
 let
@@ -15,23 +16,24 @@ let
 
   interval = "30s";
   alerts = [ { type = "email"; } ];
+  default_group = "onyx";
+  default_conditions = [
+    "[STATUS] == 200"
+    "[RESPONSE_TIME] < 10000"
+  ];
 
   mkGatusCheck =
     {
       name,
       url,
       conditions ? [ ],
-      group ? "onyx",
+      group ? default_group,
     }:
     {
       inherit interval alerts group;
       name = name;
       url = url;
-      conditions = [
-        "[STATUS] == 200"
-        "[RESPONSE_TIME] < 10000"
-      ]
-      ++ conditions;
+      conditions = default_conditions ++ conditions;
     };
 in
 {
@@ -54,6 +56,9 @@ in
   imports = [ ./postgres.nix ];
 
   config = mkIf config.gatus.enable {
+    age.secrets = mkSecret "kvmdHttpHeader" { };
+    systemd.services.gatus.serviceConfig.EnvironmentFile = config.age.secrets.kvmdHttpHeader.path;
+
     services.postgresql.enable = true;
     services.gatus = {
       enable = true;
@@ -138,6 +143,20 @@ in
                   name = "VaultWarden";
                   url = "https://${config.vaultwarden.domain}/api/alive";
                 })
+
+                {
+                  inherit interval alerts;
+                  group = default_group;
+                  name = "pikvm";
+                  url = "https://lilas/api/info";
+                  client.insecure = true;
+                  headers = {
+                    "Authorization" = "\${KVMD_HTTP_HEADER}";
+                  };
+                  conditions = default_conditions ++ [
+                    "[BODY].ok == true"
+                  ];
+                }
 
                 (mkGatusCheck {
                   name = "polypresence back";
