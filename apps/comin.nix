@@ -20,11 +20,13 @@ in
   config = mkIf config.comin.enable {
     services.comin = {
       enable = true;
-      remotes = [{
-        name = "origin";
-        url = "https://${config.forgejo.domain}/eymeric/flake.git";
-        branches.main.name = "main";
-      }];
+      remotes = [
+        {
+          name = "origin";
+          url = "https://${config.forgejo.domain}/eymeric/flake.git";
+          branches.main.name = "main";
+        }
+      ];
     };
   };
 }
