@@ -35,6 +35,7 @@ in
         statix
         deadnix
         glab
+        flyctl
       ];
 
     hm.home.file.".zfunc/_poetry" = {
