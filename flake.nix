@@ -36,8 +36,7 @@
       inputs.flake-compat.follows = "flake-compat";
     };
 
-    # nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixos-hardware.url = "github:hatch01/nixos-hardware";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     systems.url = "github:nix-systems/default";
 
