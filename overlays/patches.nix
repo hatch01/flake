@@ -8,7 +8,7 @@ with pkgs;
       (fetchpatch2 {
         name = "openthread-border-router.patch";
         url = "https://github.com/NixOS/nixpkgs/pull/332296.diff";
-        hash = "sha256-BK/0R3y6KLrMpRgqYAQgmXBrq0DH6K3shHDn/ibzaA8=";
+        hash = "sha256-mEBNk6cS8lxksaBfccY7ISbh+LeN45Tw3+AK7MYEHEI=";
       })
 
       # (fetchpatch2 {
