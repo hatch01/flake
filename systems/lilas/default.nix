@@ -9,12 +9,7 @@
 {
   imports = [
     inputs.pikvm.nixosModules.default
-  ]
-  ++ (map (name: ../../apps/${name}) [
-    "cockpit.nix"
-    "gatus.nix"
-    "container.nix"
-  ]);
+  ];
 
   environment.systemPackages = with pkgs; [
     ffmpeg
@@ -25,11 +20,9 @@
   ];
 
   container.enable = lib.mkForce false;
-  gatus.enable = true;
   cockpit.enable = true;
   cockpit.domain = "lilas:9090";
   networking.firewall.allowedTCPPorts = [
-    config.gatus.port
     config.cockpit.port
   ];
 

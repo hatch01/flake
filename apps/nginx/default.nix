@@ -105,12 +105,9 @@ in
             };
           };
 
-          ${config.gatus.domain} = {
-            forceSSL =
-              config.nginx.acme.enable && (config.gatus.enable || config.networking.hostName == "jonquille");
-            enableACME =
-              config.nginx.acme.enable && (config.gatus.enable || config.networking.hostName == "jonquille");
-            locations."/".proxyPass = "http://192.168.1.202:${toString config.gatus.port}";
+          ${config.gatus.domain} = mkIf config.gatus.enable {
+            inherit (cfg) forceSSL enableACME;
+            locations."/".proxyPass = "http://127.0.0.1:${toString config.gatus.port}";
           };
 
           ${config.cockpit.domain} = mkIf config.cockpit.enable {

@@ -32,7 +32,6 @@ let
     // defineSecrets "lilas" [
       "rootPassword"
       "kvmd"
-      "kvmdHttpHeader"
     ]
     // defineSecrets "lotus" [
       "rootPassword"
@@ -77,6 +76,7 @@ let
     // defineSecrets "cyclamen" [
       "rootPassword"
       "headscale_oidc"
+      "kvmdHttpHeader"
     ];
 
   defineSecrets =
