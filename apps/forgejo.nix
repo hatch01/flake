@@ -37,7 +37,11 @@ in
     age.secrets = mkSecret "forgejo_runner_token" { };
 
     # mkforce to fix conflict with other services
-    services.openssh.settings.AcceptEnv = lib.mkForce [ "GIT_PROTOCOL" "LANG" "LC_*" ];
+    services.openssh.settings.AcceptEnv = lib.mkForce [
+      "GIT_PROTOCOL"
+      "LANG"
+      "LC_*"
+    ];
 
     services = {
       forgejo = {
