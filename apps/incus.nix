@@ -31,7 +31,10 @@ in
 
   config = mkIf config.incus.enable {
     networking.nftables.enable = true;
-    networking.firewall.trustedInterfaces = [ "incusbr*" "tailscale0" ];
+    networking.firewall.trustedInterfaces = [
+      "incusbr*"
+      "tailscale0"
+    ];
 
     services.resolved = {
       enable = true;
