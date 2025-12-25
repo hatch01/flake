@@ -74,7 +74,12 @@ in
               (mkRule [ tulipe lavande lotus ] [ lilas ] [ 80 443 config.cockpit.port ]) # allow access to pikvm (80,443) and cockpit admin panel
               (mkRule [ jonquille ] [ "*" ] [ config.beszel.agent.port ]) # allow jonquille to monitor all devices
               (mkRule [ lavande jonquille lotus tulipe ] [ pimprenelles ] [ 22 8080 8081 8000 3306 5900 ]) # allow access to pimprenelles
-              (mkRule [ jonquille lavande tulipe lotus /*papa*/ ] [ homeassistant ] [ 22 8123 ]) # allow access to homeassistant
+              (mkRule [
+                jonquille
+                lavande
+                tulipe
+                lotus # papa
+              ] [ homeassistant ] [ 22 8123 ]) # allow access to homeassistant
             ];
           };
 
