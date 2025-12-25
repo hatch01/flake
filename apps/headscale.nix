@@ -3,6 +3,7 @@
   config,
   base_domain_name,
   mkSecret,
+  pkgs,
   ...
 }:
 let
@@ -48,10 +49,34 @@ in
           ];
         };
 
-        ip_prefixes = [
-          "100.64.0.0/10"
-          "fd7a:115c:a1e0::/48"
-        ];
+        policy.path =
+          let
+            mkRule = src: dst: ports: {
+              action = "accept";
+              inherit src;
+              dst = map (d: "${d}:${lib.concatStringsSep "," (map toString ports)}") dst;
+            };
+
+            tulipe = "100.64.0.1";
+            cyclamen = "100.64.0.2";
+            lavande = "100.64.0.3";
+            jonquille = "100.64.0.4";
+            lilas = "100.64.0.5";
+            homeassistant = "100.64.0.6";
+            pimprenelles = "100.64.0.7";
+            polytech = "100.64.0.8";
+            lotus = "100.64.0.9";
+          in
+          pkgs.writers.writeJSON "policy.json" {
+            acls = [
+              # mkRule source destination ports
+              (mkRule [ tulipe lavande lotus ] [ cyclamen jonquille lilas polytech ] [ 22 ]) # allow remote ssh on servers
+              (mkRule [ tulipe lavande lotus ] [ lilas ] [ 80 443 config.cockpit.port ]) # allow access to pikvm (80,443) and cockpit admin panel
+              (mkRule [ jonquille ] [ "*" ] [ config.beszel.agent.port ]) # allow jonquille to monitor all devices
+              (mkRule [ lavande jonquille lotus tulipe ] [ pimprenelles ] [ 22 8080 8081 8000 3306 5900 ]) # allow access to pimprenelles
+              (mkRule [ jonquille lavande tulipe lotus /*papa*/ ] [ homeassistant ] [ 22 8123 ]) # allow access to homeassistant
+            ];
+          };
 
         oidc = {
           issuer = "https://${config.authelia.domain}";
