@@ -72,6 +72,7 @@ in
               # mkRule source destination ports
               (mkRule [ tulipe lavande lotus jonquille ] [ cyclamen jonquille lilas polytech ] [ 22 ]) # allow remote ssh on servers
               (mkRule [ tulipe lavande lotus ] [ lilas ] [ 80 443 config.cockpit.port ]) # allow access to pikvm (80,443) and cockpit admin panel
+              (mkRule [ cyclamen ] [ lilas ] [ 443 ]) # pikvm monitoring
               (mkRule [ cyclamen ] [ "*" ] [ config.beszel.agent.port ]) # allow jonquille to monitor all devices
               (mkRule [ lavande jonquille lotus tulipe ] [ pimprenelles ] [ 22 8080 8081 8000 3306 5900 ]) # allow access to pimprenelles
               (mkRule [
