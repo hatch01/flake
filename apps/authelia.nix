@@ -400,7 +400,7 @@ in
                     token_endpoint_auth_method = "none";
                   }
                 ]
-                ++ optionals config.beszel.hub.enable [
+                ++ [
                   {
                     client_id = "beszel";
                     client_name = "Beszel";

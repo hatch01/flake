@@ -32,7 +32,7 @@ in
     services.beszel.hub = {
       enable = true;
       port = config.beszel.hub.port;
-      dataDir = "/storage/beszel";
+      # dataDir = "/storage/beszel";
       environment = {
         USER_CREATION = "true";
         DISABLE_PASSWORD_AUTH = "true";
