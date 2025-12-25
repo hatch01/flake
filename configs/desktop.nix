@@ -81,6 +81,8 @@ in
 
   programs.firefox.enable = true;
 
+  networking.networkmanager.plugins = [ pkgs.networkmanager-openconnect ];
+
   environment = {
     systemPackages = with pkgs; [
       (catppuccin-kde.override {
