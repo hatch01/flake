@@ -29,6 +29,14 @@ in
   };
 
   config = mkIf config.headscale.enable {
+    programs.bash.shellInit = ''
+      eval "$(headscale completion bash)"
+    '';
+
+    hm.programs.zsh.initContent = ''
+      eval "$(headscale completion zsh)"
+    '';
+
     age.secrets = mkSecret "headscale_oidc" {
       owner = "headscale";
       group = "headscale";
