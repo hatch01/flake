@@ -229,8 +229,6 @@ in
         localVariables = {
           POWERLEVEL9K_MODE = "nerdfont-v3"; # maybe better to ask p10k configure for the right value
           #config du prompt
-          POWERLEVEL9K_CUSTOM_USER = "echo $USER";
-          POWERLEVEL9K_CUSTOM_USER_ICON_BACKGROUND = 234;
           POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS = [
             "status"
             "background_jobs"
@@ -239,7 +237,7 @@ in
           ];
           POWERLEVEL9K_LEFT_PROMPT_ELEMENTS = [
             "os_icon"
-            "custom_user"
+            "context"
             "dir"
             "dir_writable"
             "virtualenv"
