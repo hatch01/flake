@@ -65,7 +65,8 @@ in
             homeassistant = "100.64.0.6";
             pimprenelles = "100.64.0.7";
             polytech = "100.64.0.8";
-            lotus = "100.64.0.9";
+            papa = "100.64.0.9";
+            lotus = "100.64.0.10";
           in
           pkgs.writers.writeJSON "policy.json" {
             acls = [
@@ -75,12 +76,7 @@ in
               (mkRule [ cyclamen ] [ lilas ] [ 443 ]) # pikvm monitoring
               (mkRule [ cyclamen ] [ "*" ] [ config.beszel.agent.port ]) # allow jonquille to monitor all devices
               (mkRule [ lavande jonquille lotus tulipe ] [ pimprenelles ] [ 22 8080 8081 8000 3306 5900 ]) # allow access to pimprenelles
-              (mkRule [
-                jonquille
-                lavande
-                tulipe
-                lotus # papa
-              ] [ homeassistant ] [ 22 8123 ]) # allow access to homeassistant
+              (mkRule [ jonquille lavande tulipe lotus papa ] [ homeassistant ] [ 22 8123 ]) # allow access to homeassistant
             ];
           };
 
