@@ -331,25 +331,6 @@ in
                     response_types = [ "code" ];
                   }
                 ]
-                ++ optionals config.proxmox.enable [
-                  {
-                    client_name = "Proxmox";
-                    client_id = "proxmox";
-                    client_secret = "$pbkdf2-sha512$310000$e/dFI8VC5Zerk6OiaJgp3A$N1PK2UNbf3XAnlF0aIufRZJB//X6vkn.VjwiGerc3bmyI.TkzPHWWm40r2cTGXU3/hTxRcApEJk5uK4tTDGuIA";
-                    public = false;
-                    authorization_policy = "two_factor";
-                    require_pkce = true;
-                    pkce_challenge_method = "S256";
-                    userinfo_signed_response_alg = "none";
-                    token_endpoint_auth_method = "client_secret_basic";
-                    redirect_uris = [ "https://${config.proxmox.domain}" ];
-                    scopes = [
-                      "openid"
-                      "profile"
-                      "email"
-                    ];
-                  }
-                ]
                 ++ optionals config.influxdb.grafana.enable [
                   {
                     client_id = "grafana";

@@ -32,7 +32,7 @@ analyze:
 	find -name "*.nix" | xargs -I{} nil diagnostics {}
 
 forcast machine:
-  nix-forecast -c ".#nixosConfigurations.{{machine}}" -b https://cache.onyx.ovh -b https://cache.nixos.org -b https://cuda-maintainers.cachix.org -b https://cache.saumon.network/proxmox-nixos
+  nix-forecast -c ".#nixosConfigurations.{{machine}}" -b https://cache.onyx.ovh -b https://cache.nixos.org -b https://cuda-maintainers.cachix.org
 
 sd machine:
     nix run nixpkgs#nixos-generators -- -f sd-aarch64 --flake .#{{machine}} --system aarch64-linux -o ./{{machine}}-sd-aarch64

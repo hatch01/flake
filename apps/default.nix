@@ -40,7 +40,6 @@
     ./plasma
     ./portfolio.nix
     ./postgres.nix
-    ./proxmox.nix
     ./restic.nix
     ./social
     ./sslh.nix
