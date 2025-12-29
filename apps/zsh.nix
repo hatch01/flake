@@ -246,6 +246,11 @@ in
         zsh-defer source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
         zsh-defer source ${pkgs.zsh-autopair}/share/zsh/zsh-autopair/autopair.zsh
 
+        if [ ! -d "''${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin" ]; then
+          git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git "''${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin"
+        fi
+        zsh-defer source ''${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+
         if [ -n "$ZSH_PROFILE_STARTUP" ]
         then
           zprof
