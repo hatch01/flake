@@ -27,36 +27,36 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "nixpkgs/master";
-    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
+    nixpkgs.url = "git+https://forge.onyx.ovh/github_mirror/nixpkgs?shallow=1&ref=nixos-unstable";
+    nixpkgs-unstable.url = "git+https://forge.onyx.ovh/github_mirror/nixpkgs?shallow=1&ref=master";
+    nixpkgs-stable.url = "git+https://forge.onyx.ovh/github_mirror/nixpkgs?shallow=1&ref=nixos-25.11";
     nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/main";
+      url = "git+https://forge.onyx.ovh/github_mirror/NixOS-WSL?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "flake-compat";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware.url = "git+https://forge.onyx.ovh/github_mirror/nixos-hardware?shallow=1";
 
-    systems.url = "github:nix-systems/default";
+    systems.url = "git+https://forge.onyx.ovh/github_mirror/nix-systems?shallow=1";
 
     flake-parts = {
-      url = "github:hercules-ci/flake-parts";
+      url = "git+https://forge.onyx.ovh/github_mirror/flake-parts?shallow=1";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote";
+      url = "git+https://forge.onyx.ovh/github_mirror/lanzaboote?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
-      url = "github:nix-community/disko";
+      url = "git+https://forge.onyx.ovh/github_mirror/disko?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     agenix = {
-      url = "github:hatch01/agenix";
+      url = "git+https://forge.onyx.ovh/github_mirror/agenix?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
       inputs.home-manager.follows = "home-manager";
@@ -64,74 +64,66 @@
 
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "git+https://forge.onyx.ovh/github_mirror/home-manager?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     plasma-manager = {
-      url = "github:nix-community/plasma-manager";
+      url = "git+https://forge.onyx.ovh/github_mirror/plasma-manager?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
 
-    impermanence.url = "github:nix-community/impermanence";
-
-    proxmox-nixos = {
-      url = "github:SaumonNet/proxmox-nixos";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-      inputs.utils.follows = "flake-utils";
-    };
+    impermanence.url = "git+https://forge.onyx.ovh/github_mirror/impermanence?shallow=1";
 
     apolline = {
-      url = "git+ssh://git@github.com/hatch01/apolline";
+      url = "git+ssh://forgejo@forge.onyx.ovh/eymeric/apolline.git";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     portfolio = {
-      url = "git+ssh://git@github.com/VirisOnGithub/portfolio";
+      url = "git+ssh://forgejo@forge.onyx.ovh/github_mirror/portfolio?shallow=1";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix4nvchad = {
-      url = "github:nix-community/nix4nvchad";
+      url = "git+https://forge.onyx.ovh/github_mirror/nix4nvchad?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
 
     pikvm = {
       # url = "/home/eymeric/code_bidouille/projet/nixos-pikvm";
-      url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git";
+      url = "git+https://forge.onyx.ovh/eymeric/nixos-pikvm.git?shallow=1";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixos-hardware.follows = "nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
+    nixpkgs-patcher.url = "git+https://forge.onyx.ovh/github_mirror/nixpkgs-patcher?shallow=1";
 
     nix-index-database = {
-      url = "github:nix-community/nix-index-database";
+      url = "git+https://forge.onyx.ovh/github_mirror/nix-index-database?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     alesis_midi_converter = {
-      url = "git+https://forge.onyx.ovh/eymeric/alesis_midi_converter.git";
+      url = "git+https://forge.onyx.ovh/eymeric/alesis_midi_converter.git?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     comin = {
-      url = "github:nlewo/comin";
+      url = "git+https://forge.onyx.ovh/github_mirror/comin?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     flake-utils = {
-      url = "github:numtide/flake-utils";
+      url = "git+https://forge.onyx.ovh/github_mirror/flake-utils?shallow=1";
       inputs.systems.follows = "systems";
     };
     flake-compat = {
-      url = "github:edolstra/flake-compat";
+      url = "git+https://forge.onyx.ovh/github_mirror/flake-compat?shallow=1";
     };
   };
   outputs =

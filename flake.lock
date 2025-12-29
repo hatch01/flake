@@ -16,15 +16,16 @@
       "locked": {
         "lastModified": 1762744251,
         "narHash": "sha256-mNn5as7zXFke6oIBJc0JbwZtpS7pYZr03OOFEbAR5v4=",
-        "owner": "hatch01",
-        "repo": "agenix",
+        "ref": "refs/heads/main",
         "rev": "eac7c09943f230daa270986ca4d8f3bf72fb7a47",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/agenix"
       },
       "original": {
-        "owner": "hatch01",
-        "repo": "agenix",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/agenix"
       }
     },
     "alesis_midi_converter": {
@@ -38,11 +39,12 @@
         "narHash": "sha256-z01jPq+J6pjgAT2PiYG7ykZG2IFbOlN2KxdBe2pIZ7M=",
         "ref": "refs/heads/master",
         "rev": "e634c8a738d47ba4de5ade74232a5f27a977e486",
-        "revCount": 5,
+        "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/alesis_midi_converter.git"
       },
       "original": {
+        "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/alesis_midi_converter.git"
       }
@@ -63,11 +65,11 @@
         "rev": "ca0541492b2dc94d2df7979d8de467ec6dbb3094",
         "revCount": 48,
         "type": "git",
-        "url": "ssh://git@github.com/hatch01/apolline"
+        "url": "ssh://forgejo@forge.onyx.ovh/eymeric/apolline.git"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/hatch01/apolline"
+        "url": "ssh://forgejo@forge.onyx.ovh/eymeric/apolline.git"
       }
     },
     "comin": {
@@ -80,24 +82,25 @@
       "locked": {
         "lastModified": 1766910546,
         "narHash": "sha256-HTstecKBtvIb6B0RtjThZ7xuGEptBBrnUW+jD3Y3skI=",
-        "owner": "nlewo",
-        "repo": "comin",
+        "ref": "refs/heads/main",
         "rev": "f58a534b012e58144da3463f832bb672a857acf8",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/comin"
       },
       "original": {
-        "owner": "nlewo",
-        "repo": "comin",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/comin"
       }
     },
     "crane": {
       "locked": {
-        "lastModified": 1766194365,
-        "narHash": "sha256-4AFsUZ0kl6MXSm4BaQgItD0VGlEKR3iq7gIaL7TjBvc=",
+        "lastModified": 1766774972,
+        "narHash": "sha256-8qxEFpj4dVmIuPn9j9z6NTbU+hrcGjBOvaxTzre5HmM=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "7d8ec2c71771937ab99790b45e6d9b93d15d9379",
+        "rev": "01bc1d404a51a0a07e9d8759cd50a7903e218c82",
         "type": "github"
       },
       "original": {
@@ -137,15 +140,16 @@
       "locked": {
         "lastModified": 1766150702,
         "narHash": "sha256-P0kM+5o+DKnB6raXgFEk3azw8Wqg5FL6wyl9jD+G5a4=",
-        "owner": "nix-community",
-        "repo": "disko",
+        "ref": "refs/heads/master",
         "rev": "916506443ecd0d0b4a0f4cf9d40a3c22ce39b378",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/disko"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "disko",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/disko"
       }
     },
     "flake-compat": {
@@ -166,17 +170,18 @@
     },
     "flake-compat_2": {
       "locked": {
-        "lastModified": 1766929376,
-        "narHash": "sha256-Eyg78VjLzKNG2XkqLqylSvHGAwsP8gsvmUHtZxQwPq4=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "236f248441a986331cda53b039e7f9fd96e03635",
-        "type": "github"
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "ref": "refs/heads/master",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/flake-compat"
       },
       "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/flake-compat"
       }
     },
     "flake-compat_3": {
@@ -204,15 +209,16 @@
       "locked": {
         "lastModified": 1765835352,
         "narHash": "sha256-XswHlK/Qtjasvhd1nOa1e8MgZ8GS//jBoTqWtrS1Giw=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
+        "ref": "refs/heads/main",
         "rev": "a34fae9c08a15ad73f295041fec82323541400a9",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/flake-parts"
       },
       "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/flake-parts"
       }
     },
     "flake-utils": {
@@ -224,15 +230,16 @@
       "locked": {
         "lastModified": 1731533236,
         "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
+        "ref": "refs/heads/main",
         "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/flake-utils"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/flake-utils"
       }
     },
     "gitignore": {
@@ -264,32 +271,34 @@
         ]
       },
       "locked": {
-        "lastModified": 1766969492,
-        "narHash": "sha256-TbvCOhB4ziljUQUOkqYAtKM0H4XJTR/1UQEB2n+NL4s=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "9d32c214dbdd66fff881d0d3aad91bde282bd37b",
-        "type": "github"
+        "lastModified": 1766980997,
+        "narHash": "sha256-oegDNAvyQwaG3GqSi4U5jpKM7SYHGESGVIuKMRV/lbw=",
+        "ref": "refs/heads/master",
+        "rev": "7a7b43c7231a439d248179ba8d561dd6cd81799b",
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/home-manager"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/home-manager"
       }
     },
     "impermanence": {
       "locked": {
         "lastModified": 1737831083,
         "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
-        "owner": "nix-community",
-        "repo": "impermanence",
+        "ref": "refs/heads/master",
         "rev": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/impermanence"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "impermanence",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/impermanence"
       }
     },
     "lanzaboote": {
@@ -302,17 +311,18 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1766582277,
-        "narHash": "sha256-mUZRMKId7Uycwnt31RytPwhmY/8UTbk92ckZWHoS0Eg=",
-        "owner": "nix-community",
-        "repo": "lanzaboote",
-        "rev": "4c78502846c1ef668eedbd4f55d818ebac5388ac",
-        "type": "github"
+        "lastModified": 1767013031,
+        "narHash": "sha256-p8ANXBakAtfX/aEhLbU6w0tuQe3nrBvLdHbKirJP7ug=",
+        "ref": "refs/heads/master",
+        "rev": "c2a82339373daee8cbbcad5f51f22ae6b71069e0",
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/lanzaboote"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "lanzaboote",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/lanzaboote"
       }
     },
     "nix-index-database": {
@@ -324,15 +334,16 @@
       "locked": {
         "lastModified": 1765267181,
         "narHash": "sha256-d3NBA9zEtBu2JFMnTBqWj7Tmi7R5OikoU2ycrdhQEws=",
-        "owner": "nix-community",
-        "repo": "nix-index-database",
+        "ref": "refs/heads/main",
         "rev": "82befcf7dc77c909b0f2a09f5da910ec95c5b78f",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nix-index-database"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "nix-index-database",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nix-index-database"
       }
     },
     "nix4nvchad": {
@@ -348,30 +359,32 @@
       "locked": {
         "lastModified": 1766894340,
         "narHash": "sha256-1mDK1lMCSQMwtQe1CUJ/Q9SEIPLskS+xwRi9PonnOd8=",
-        "owner": "nix-community",
-        "repo": "nix4nvchad",
+        "ref": "refs/heads/main",
         "rev": "c685397b352ab74f8ada312b425d8d84e056b2b0",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nix4nvchad"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "nix4nvchad",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nix4nvchad"
       }
     },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1766568855,
         "narHash": "sha256-UXVtN77D7pzKmzOotFTStgZBqpOcf8cO95FcupWp4Zo=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
+        "ref": "refs/heads/master",
         "rev": "c5db9569ac9cc70929c268ac461f4003e3e5ca80",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixos-hardware"
       },
       "original": {
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixos-hardware"
       }
     },
     "nixos-wsl": {
@@ -386,91 +399,83 @@
       "locked": {
         "lastModified": 1765841014,
         "narHash": "sha256-55V0AJ36V5Egh4kMhWtDh117eE3GOjwq5LhwxDn9eHg=",
-        "owner": "nix-community",
-        "repo": "NixOS-WSL",
+        "ref": "refs/heads/main",
         "rev": "be4af8042e7a61fa12fda58fe9a3b3babdefe17b",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/NixOS-WSL"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "main",
-        "repo": "NixOS-WSL",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/NixOS-WSL"
       }
     },
     "nixpkgs": {
       "locked": {
         "lastModified": 1766902085,
         "narHash": "sha256-coBu0ONtFzlwwVBzmjacUQwj3G+lybcZ1oeNSQkgC0M=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c0b0e0fddf73fd517c3471e546c0df87a42d53f4",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
         "ref": "nixos-unstable",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs-libvncserver": {
-      "locked": {
-        "lastModified": 1750111231,
-        "narHash": "sha256-3a7Tha/RwYlzH/v3PJrG7+HjOj4c6YOv2K8sqdGsHVQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
-        "type": "github"
+        "rev": "c0b0e0fddf73fd517c3471e546c0df87a42d53f4",
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
       },
       "original": {
-        "id": "nixpkgs",
-        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
-        "type": "indirect"
+        "ref": "nixos-unstable",
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
       }
     },
     "nixpkgs-patcher": {
       "locked": {
         "lastModified": 1765447685,
         "narHash": "sha256-H2C5UgIo3nkB2aHnvePZxOMn1GeWM3RTXLjBUT1z/I0=",
-        "owner": "gepbird",
-        "repo": "nixpkgs-patcher",
+        "ref": "refs/heads/main",
         "rev": "fd95467b7f4452b95a0eb610fc96af572149c7d9",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixpkgs-patcher"
       },
       "original": {
-        "owner": "gepbird",
-        "repo": "nixpkgs-patcher",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixpkgs-patcher"
       }
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1766736597,
-        "narHash": "sha256-BASnpCLodmgiVn0M1MU2Pqyoz0aHwar/0qLkp7CjvSQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "f560ccec6b1116b22e6ed15f4c510997d99d5852",
-        "type": "github"
+        "lastModified": 1766885793,
+        "narHash": "sha256-P6RVkrM9JLCW6xBjSwHfgTOQ1JwBUma5xe5LI8xAPC0=",
+        "ref": "nixos-25.11",
+        "rev": "9ef261221d1e72399f2036786498d78c38185c46",
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
       },
       "original": {
-        "id": "nixpkgs",
         "ref": "nixos-25.11",
-        "type": "indirect"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
       }
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1766977237,
-        "narHash": "sha256-NWxfCtufOiAvvt5vViBv7+QcnnIq9p7NQM91bFJ+iBo=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2e53af4cffb02380954b172e41bbe0bedec45bad",
-        "type": "github"
+        "lastModified": 1767034498,
+        "narHash": "sha256-WLpY2OewSDek/toqmrEN3H2rMBHbMmlESsxeZ1IQfL4=",
+        "ref": "master",
+        "rev": "8a5613be5c32e5ca0b8a20afdf644c69c6080fc0",
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
       },
       "original": {
-        "id": "nixpkgs",
         "ref": "master",
-        "type": "indirect"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
       }
     },
     "nvchad-starter": {
@@ -503,15 +508,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1766347511,
-        "narHash": "sha256-ovrLijH1CmL+Qp2eXv6h5m8WyxK3Bt20On0M9+6OM4o=",
+        "lastModified": 1767007412,
+        "narHash": "sha256-Ld9H/MvSF0ujrK7TozXZ6HAhD+a6cTlAAqntFA/tMHw=",
         "ref": "refs/heads/main",
-        "rev": "953d70b6cccfb4711acf5e368d3ef466ca6e8e14",
-        "revCount": 80,
+        "rev": "8662e983147f7fd7a011f76fdb7e3c3b6fd87df5",
+        "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
       },
       "original": {
+        "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
       }
@@ -528,15 +534,16 @@
       "locked": {
         "lastModified": 1763909441,
         "narHash": "sha256-56LwV51TX/FhgX+5LCG6akQ5KrOWuKgcJa+eUsRMxsc=",
-        "owner": "nix-community",
-        "repo": "plasma-manager",
+        "ref": "refs/heads/trunk",
         "rev": "b24ed4b272256dfc1cc2291f89a9821d5f9e14b4",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/plasma-manager"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "plasma-manager",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/plasma-manager"
       }
     },
     "portfolio": {
@@ -549,17 +556,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1743060492,
-        "narHash": "sha256-GxB5gBjx6JkKSwFQa147GFIUkA1DkDSNYUxRaJZ11t8=",
+        "lastModified": 1767041346,
+        "narHash": "sha256-sU/1OUmSpUlGGwzXbDAdJPClH6d8jDZKb8yb3KGpzyA=",
         "ref": "refs/heads/master",
-        "rev": "e408c1ed7715cad33f14673e17eb8308fd9e5deb",
-        "revCount": 12,
+        "rev": "c42119cbdd198eeda8c1c7fef10452458ecdc03b",
+        "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/VirisOnGithub/portfolio"
+        "url": "ssh://forgejo@forge.onyx.ovh/github_mirror/portfolio"
       },
       "original": {
+        "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/VirisOnGithub/portfolio"
+        "url": "ssh://forgejo@forge.onyx.ovh/github_mirror/portfolio"
       }
     },
     "pre-commit": {
@@ -582,36 +590,6 @@
       "original": {
         "owner": "cachix",
         "repo": "pre-commit-hooks.nix",
-        "type": "github"
-      }
-    },
-    "proxmox-nixos": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "nixpkgs-libvncserver": "nixpkgs-libvncserver",
-        "nixpkgs-stable": [
-          "nixpkgs-stable"
-        ],
-        "nixpkgs-unstable": [
-          "nixpkgs-unstable"
-        ],
-        "utils": [
-          "flake-utils"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764188113,
-        "narHash": "sha256-Oq4aCjczgnFQqFNWZ6Ablg6x9579CO8tyBktYDYiZEs=",
-        "owner": "SaumonNet",
-        "repo": "proxmox-nixos",
-        "rev": "3be878a84866b9ef9214b8ea6f53630f47f4b192",
-        "type": "github"
-      },
-      "original": {
-        "owner": "SaumonNet",
-        "repo": "proxmox-nixos",
         "type": "github"
       }
     },
@@ -639,7 +617,6 @@
         "pikvm": "pikvm",
         "plasma-manager": "plasma-manager",
         "portfolio": "portfolio",
-        "proxmox-nixos": "proxmox-nixos",
         "systems": "systems"
       }
     },
@@ -651,11 +628,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766285238,
-        "narHash": "sha256-DqVXFZ4ToiFHgnxebMWVL70W+U+JOxpmfD37eWD/Qc8=",
+        "lastModified": 1766976750,
+        "narHash": "sha256-w+o3AIBI56tzfMJRqRXg9tSXnpQRN5hAT15o2t9rxYw=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "c4249d0c370d573d95e33b472014eae4f2507c2f",
+        "rev": "9fe44e7f05b734a64a01f92fc51ad064fb0a884f",
         "type": "github"
       },
       "original": {
@@ -668,15 +645,16 @@
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
+        "ref": "refs/heads/main",
         "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nix-systems"
       },
       "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nix-systems"
       }
     }
   },
