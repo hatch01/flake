@@ -24,7 +24,6 @@ in
     programs.zsh.enable = true;
     programs.pay-respects.enable = true;
     environment.systemPackages = with pkgs; [
-      zsh-nix-shell
       w3m
       ripgrep
       ripgrep-all
