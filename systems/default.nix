@@ -17,7 +17,27 @@ let
         nixpkgsPatcher = {
           nixpkgs = if (value.stable or false) then inputs.nixpkgs-stable else inputs.nixpkgs;
           enable = true;
-          patches = import ../overlays/patches.nix (value.stable or false);
+          patches =
+            pkgs:
+            let
+              rawPatches = import ../overlays/patches.nix;
+
+              mkFetchpatch2 =
+                patch:
+                pkgs.fetchpatch2 {
+                  name = patch.name;
+                  url =
+                    if builtins.hasAttr "pr" patch then
+                      "https://github.com/NixOS/nixpkgs/pull/${toString patch.pr}.diff"
+                    else
+                      patch.url;
+                  hash = patch.hash;
+                };
+
+              patches =
+                (if (value.stable or false) then rawPatches.stable else rawPatches.unstable) ++ rawPatches.common;
+            in
+            map (patch: mkFetchpatch2 patch) patches;
         };
         system = value.system;
         modules = value.modules ++ [
