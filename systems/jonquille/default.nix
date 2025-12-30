@@ -59,6 +59,31 @@
     };
   };
 
+  services.mail.sendmailSetuidWrapper.enable = true;
+
+  programs.msmtp = {
+    enable = true;
+    setSendmail = true;
+    defaults = {
+      aliases = "/etc/aliases";
+      port = 587;
+      auth = "plain";
+      tls = "on";
+      tls_starttls = "on";
+    };
+    accounts = {
+      default = {
+        host = "smtp.free.fr";
+        passwordeval = "cat ${config.age.secrets."server/smtpPassword".path}";
+        user = "eymeric.monitoring";
+        from = "eymeric.monitoring@free.fr";
+      };
+    };
+  };
+  environment.etc.aliases.text = ''
+    root: eymeric.monitoring@free.fr
+  '';
+
   services.fwupd.enable = true;
 
   # Bootloader.
@@ -71,6 +96,14 @@
   systemd.services.zfs-mount.enable = false;
   services.zfs.autoScrub.enable = true;
   services.zfs.trim.enable = true;
+  services.zfs.zed = {
+    enableMail = true;
+    settings = {
+      ZED_EMAIL_ADDR = [ "root" ];
+      # send notification if scrub succeeds
+      ZED_NOTIFY_VERBOSE = true;
+    };
+  };
 
   services.postgresql.dataDir = "/storage/postgresql/${config.services.postgresql.package.psqlSchema}";
 
