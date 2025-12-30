@@ -85,6 +85,7 @@ in
               (mkRule [ cyclamen ] [ "*" ] [ config.beszel.agent.port ]) # allow jonquille to monitor all devices
               (mkRule [ lavande jonquille lotus tulipe ] [ pimprenelles ] [ 22 8080 8081 8000 3306 5900 ]) # allow access to pimprenelles
               (mkRule [ jonquille lavande tulipe lotus papa ] [ homeassistant ] [ 22 8123 ]) # allow access to homeassistant
+              (mkRule [ tulipe ] [ jonquille] [ config.bitcoin.server.portRpc ]) # allow jonquille to use bitcoin controller
             ];
           };
 

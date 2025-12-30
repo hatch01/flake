@@ -59,7 +59,7 @@ in
   # heroic.enable = false # enabled by default if gaming.enable is true
 
   basic-tools.enable = mkDefault true;
-  bitcoinClient.enable = mkDefault true;
+  bitcoin.client.enable = mkDefault true;
   office.enable = mkDefault true;
   yubikey.enable = mkDefault true;
 
