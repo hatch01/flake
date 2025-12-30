@@ -15,5 +15,10 @@
       name = "beszel-disk-systemd";
       hash = "sha256-2w9LHL3eQTQrandBmE/HywfFaHJTHk7g/mr+PmCXl7A=";
     }
+    {
+      pr = 467484;
+      name = "sparrow";
+      hash = "sha256-Xhica/EuJIoub02lLCHE01FNHr7IlrM1T4Lyq+F3iQo=";
+    }
   ];
 }
