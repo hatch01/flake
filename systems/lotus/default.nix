@@ -62,13 +62,14 @@
           };
         };
       };
-      zsh = {
-        initContent = lib.mkAfter "eval $(${lib.getExe' pkgs.wsl2-ssh-agent "wsl2-ssh-agent"})";
-        shellAliases = {
-          zeditor = "export ZED_ALLOW_EMULATED_GPU=1; unset WAYLAND_DISPLAY; zeditor";
-          ssh = "ssh.exe";
-        };
-      };
+    };
+  };
+
+  programs.zsh = {
+    shellInit = "eval $(${lib.getExe' pkgs.wsl2-ssh-agent "wsl2-ssh-agent"})";
+    shellAliases = {
+      zeditor = "export ZED_ALLOW_EMULATED_GPU=1; unset WAYLAND_DISPLAY; zeditor";
+      ssh = "ssh.exe";
     };
   };
 
