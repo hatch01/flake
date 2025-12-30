@@ -58,8 +58,10 @@ in
         };
         advanced = {
           log_level = "warning";
+          last_seen = "ISO_8601_local";
         };
         availability.enabled = true;
+        device_options.homeassistant.last_seen.enabled_by_default = true;
         devices = {
           "0x00158d0005d263a7" = {
             friendly_name = "ZLinky";
