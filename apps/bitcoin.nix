@@ -5,7 +5,13 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkOption types mkIf mkMerge;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    types
+    mkIf
+    mkMerge
+    ;
 in
 {
   options = {
@@ -95,7 +101,6 @@ in
       };
 
       networking.firewall.allowedTCPPorts = [ config.bitcoin.server.port ];
-
 
       environment.persistence."/persistent".directories = [ config.services.bitcoind.bitcoin.dataDir ];
     })
