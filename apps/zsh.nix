@@ -45,6 +45,7 @@ in
       caligula
       zellij
       zsh-completions
+      jless
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
