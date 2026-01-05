@@ -46,5 +46,10 @@
       name = "epkowa-fix";
       hash = "sha256-YMTJyWYOpzbMyGisjX9BrimX30/ChD+wkc2bHacoS8A=";
     }
+    {
+      pr = 476347;
+      name = "vesktop-fix";
+      hash = "sha256-93dNk/7YGrVfgaIZCcDbjNJtyKX9gcv0GQDPgVq1Ji8=";
+    }
   ];
 }
