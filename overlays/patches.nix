@@ -20,5 +20,10 @@
       name = "sparrow";
       hash = "sha256-Xhica/EuJIoub02lLCHE01FNHr7IlrM1T4Lyq+F3iQo=";
     }
+    {
+      pr = 476595;
+      name = "silicon";
+      hash = "sha256-IYP/V3D6/T+in2aYYNvAI4tA7NErva0C+BmVk5b5cJg=";
+    }
   ];
 }
