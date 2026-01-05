@@ -60,7 +60,10 @@ in
           log_level = "warning";
           last_seen = "ISO_8601_local";
         };
-        availability.enabled = true;
+        availability = {
+          enabled = true;
+          active.timeout = 30;
+        };
         device_options.homeassistant.last_seen.enabled_by_default = true;
         devices = {
           "0x00158d0005d263a7" = {
