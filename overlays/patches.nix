@@ -22,8 +22,13 @@
     }
     {
       pr = 476595;
-      name = "silicon";
+      name = "silicon-fix";
       hash = "sha256-IYP/V3D6/T+in2aYYNvAI4tA7NErva0C+BmVk5b5cJg=";
+    }
+    {
+      pr = 476867;
+      name = "protoc-fix";
+      hash = "sha256-Do+0tzQzLTee5xfC+j868MH/8PqqmWKO4WSmb6AoMAw=";
     }
   ];
 }
