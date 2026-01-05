@@ -20,6 +20,7 @@
       name = "sparrow";
       hash = "sha256-Xhica/EuJIoub02lLCHE01FNHr7IlrM1T4Lyq+F3iQo=";
     }
+
     {
       pr = 476595;
       name = "silicon-fix";
@@ -34,6 +35,11 @@
       pr = 476895;
       name = "anytype-fix";
       hash = "sha256-lBarOU4UZVrcnQdh2CfUE5oJSBgn3kJZJKu44QfZpg8=";
+    }
+    {
+      pr = 477140;
+      name = "antares-fix";
+      hash = "sha256-E3VkbF0Q2Gj/9Mz+3A3R2l9VDto6VPM17bWcGtl1lhw=";
     }
   ];
 }
