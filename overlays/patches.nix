@@ -13,7 +13,7 @@
     {
       url = "https://github.com/hatch01/nixpkgs/pull/2.diff";
       name = "beszel-disk-systemd";
-      hash = "sha256-Z8psFwdWesixbXQRGPhpxh+441Z5eXKElnI89SRom7Q=";
+      hash = "sha256-IIt6kQycIldw5OiyN5Bqwk4ez2+U5gT+Hj0cXX5HxCY=";
     }
     {
       pr = 467484;
