@@ -41,5 +41,10 @@
       name = "antares-fix";
       hash = "sha256-E3VkbF0Q2Gj/9Mz+3A3R2l9VDto6VPM17bWcGtl1lhw=";
     }
+    {
+      pr = 476634;
+      name = "epkowa-fix";
+      hash = "sha256-YMTJyWYOpzbMyGisjX9BrimX30/ChD+wkc2bHacoS8A=";
+    }
   ];
 }
