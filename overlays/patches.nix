@@ -30,5 +30,10 @@
       name = "protoc-fix";
       hash = "sha256-Do+0tzQzLTee5xfC+j868MH/8PqqmWKO4WSmb6AoMAw=";
     }
+    {
+      pr = 476895;
+      name = "anytype-fix";
+      hash = "sha256-lBarOU4UZVrcnQdh2CfUE5oJSBgn3kJZJKu44QfZpg8=";
+    }
   ];
 }
