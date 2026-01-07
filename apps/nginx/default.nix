@@ -272,6 +272,13 @@ in
             };
           };
 
+          "preprod.polypresence.fr" = mkIf (config.networking.hostName == "jonquille") {
+            inherit (cfg) forceSSL enableACME;
+            locations = {
+              "/".proxyPass = "http://10.103.33.175:3000";
+            };
+          };
+
           ${config.incus.domain} = mkIf config.incus.enable {
             inherit (cfg) forceSSL enableACME;
             locations = {
