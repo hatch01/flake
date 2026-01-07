@@ -23,30 +23,31 @@ in
       mermaid-filter
       librsvg
     ];
-    hm = {
-      programs.zsh.initContent = ''
-        md2pdf(){
-          md2 pdf $@
-        }
+    programs.zsh.shellInit = ''
+      md2pdf(){
+        md2 pdf $@
+      }
 
-        md2(){
-          for param in "''${@:2}"
-            do
-                filename="''${param%.*}"
-                extension="''${param##*.}"
-                if [[ "$extension" == "md" ]]; then
-                echo converting $param to $filename.$1
-                    if [[ "$1" == "pdf" ]]; then
-                    MERMAID_FILTER_FORMAT=pdf pandoc ${pandocCommand} $param -o $filename.$1
-                    else
-                    pandoc ${pandocCommand} $param -o $filename.$1
-                    fi
-                else
-                echo "File $param is not a markdown file $extension"
-                fi
-          done
-        }
-      '';
+      md2(){
+        for param in "''${@:2}"
+          do
+              filename="''${param%.*}"
+              extension="''${param##*.}"
+              if [[ "$extension" == "md" ]]; then
+              echo converting $param to $filename.$1
+                  if [[ "$1" == "pdf" ]]; then
+                  MERMAID_FILTER_FORMAT=pdf pandoc ${pandocCommand} $param -o $filename.$1
+                  else
+                  pandoc ${pandocCommand} $param -o $filename.$1
+                  fi
+              else
+              echo "File $param is not a markdown file $extension"
+              fi
+        done
+      }
+    '';
+
+    hm = {
       home.file."Nextcloud/ecole/polytech/md_to_pdf.sh" = {
         text = ''
               wd="/home/eymeric/Nextcloud/ecole/polytech/"
