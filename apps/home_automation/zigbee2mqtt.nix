@@ -62,7 +62,7 @@ in
         };
         availability = {
           enabled = true;
-          active.timeout = 30;
+          active.timeout = 60;
         };
         device_options.homeassistant.last_seen.enabled_by_default = true;
         devices = {
