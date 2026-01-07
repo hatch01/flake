@@ -20,5 +20,10 @@
       name = "sparrow";
       hash = "sha256-Xhica/EuJIoub02lLCHE01FNHr7IlrM1T4Lyq+F3iQo=";
     }
+    {
+      pr = 477783;
+      name = "fzf-zsh";
+      hash = "sha256-jHzDaDYYbngT340Yh3T6NrSGgEcxRT0Mr57z6dZ4sAs=";
+    }
   ];
 }
