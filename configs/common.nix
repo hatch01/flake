@@ -241,7 +241,7 @@
         btop # replacement of htop/nmon
         iotop # io monitoring
         iftop # network monitoring
-        nixfmt-rfc-style
+        nixfmt
         alejandra
         nixd
         sqlite
