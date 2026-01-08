@@ -41,5 +41,19 @@ sd machine:
 remote-install machine ip:
 	nix run --extra-experimental-features 'nix-command flakes' github:nix-community/nixos-anywhere -- --flake .#{{machine}} --target-host root@{{ip}}
 
-deploy machine ip=machine:
-    nixos-rebuild switch --flake .#{{machine}} --target-host root@{{ip}}
+deploy machine="" ip="":
+    #!/usr/bin/env bash
+    if [ -z "{{machine}}" ]; then
+        echo "No machine specified, deploying to all configurations..."
+        configs=$(nix --extra-experimental-features "nix-command flakes" eval --json .#nixosConfigurations --apply 'builtins.attrNames' --accept-flake-config | nix run nixpkgs#jq -- -r '.[]')
+        for config in $configs; do
+            echo "Deploying to $config..."
+            nixos-rebuild switch --flake .#${config} --target-host root@${config} || echo "Failed to deploy to $config"
+        done
+    else
+        target_ip="{{ip}}"
+        if [ -z "$target_ip" ]; then
+            target_ip="{{machine}}"
+        fi
+        nixos-rebuild switch --flake .#{{machine}} --target-host root@${target_ip}
+    fi
