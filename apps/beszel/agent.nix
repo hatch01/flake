@@ -28,7 +28,7 @@ in
       enable = true;
       openFirewall = false;
       environment = {
-        PORT = builtins.toString config.beszel.agent.port;
+        PORT = toString config.beszel.agent.port;
         KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlwZwhYxzn9RtjWNdPd5raNIa6eQzXCf9994GSRBGjK";
       };
     }
