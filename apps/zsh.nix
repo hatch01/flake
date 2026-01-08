@@ -46,6 +46,7 @@ in
       zellij
       zsh-completions
       jless
+      fzf-zsh-plugin
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
