@@ -23,7 +23,7 @@
     {
       pr = 477783;
       name = "fzf-zsh";
-      hash = "sha256-jHzDaDYYbngT340Yh3T6NrSGgEcxRT0Mr57z6dZ4sAs=";
+      hash = "sha256-8dl4VTKRnkePAEPYhhDAy1ryGJFqXpEGkNTeEoeyg/8=";
     }
   ];
 }
