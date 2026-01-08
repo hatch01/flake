@@ -105,6 +105,7 @@ in
     cyclamen = {
       system = "x86_64-linux";
       modules = server;
+      stable = true;
       specialArgs = { inherit inputs; };
     };
     lilas = {
