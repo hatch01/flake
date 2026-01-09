@@ -24,6 +24,7 @@
   cockpit.enable = true;
   matrix.enable = true;
   matrix.enableElement = true;
+  matrix.elementCall.enable = true;
   watchtower.enable = true;
   ddclient.enable = false;
   home_automation.enable = true;

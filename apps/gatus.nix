@@ -144,6 +144,11 @@ in
                   url = "https://${config.vaultwarden.domain}/api/alive";
                 })
 
+                (mkGatusCheck {
+                  name = "lmatrix lk-jwt-service";
+                  url = "https://${config.matrix.domain}/livekit/jwt/healthz";
+                })
+
                 {
                   inherit interval alerts;
                   group = default_group;

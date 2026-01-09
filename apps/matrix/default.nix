@@ -23,6 +23,7 @@ in
     ./whatsapp.nix
     ./mas.nix
     ./instagram.nix
+    ./element-call.nix
   ];
 
   options = {
@@ -146,6 +147,19 @@ in
           ];
         }
       ];
+      settings.experimental_features = {
+        msc3266_enabled = true;
+        msc4222_enabled = true;
+      };
+      settings.max_event_delay_duration = "24h";
+      settings.rc_message = {
+        per_second = 0.5;
+        burst_count = 30;
+      };
+      settings.rc_delayed_event_mgmt = {
+        per_second = 1;
+        burst_count = 20;
+      };
     };
     environment.persistence."/persistent" = {
       directories = [

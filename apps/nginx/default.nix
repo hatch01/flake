@@ -61,6 +61,19 @@ in
                   };
                 };
               }
+              // (
+                if config.matrix.elementCall.enable then
+                  {
+                    "org.matrix.msc4143.rtc_foci" = [
+                      {
+                        type = "livekit";
+                        livekit_service_url = "https://${config.matrix.domain}/livekit/jwt";
+                      }
+                    ];
+                  }
+                else
+                  { }
+              )
             else
               { };
           mkWellKnown = data: ''
@@ -194,6 +207,16 @@ in
                 '';
               };
               "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
+
+              # MatrixRTC backend (Element Call) - subpaths on same domain
+              "^~ /livekit/jwt/" = mkIf config.matrix.elementCall.enable {
+                proxyPass = "http://localhost:${toString config.matrix.elementCall.jwtServicePort}/";
+              };
+
+              "^~ /livekit/sfu/" = mkIf config.matrix.elementCall.enable {
+                proxyPass = "http://localhost:${toString config.matrix.elementCall.livekitPort}/";
+                proxyWebsockets = true;
+              };
             };
           };
 

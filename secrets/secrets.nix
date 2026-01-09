@@ -52,6 +52,7 @@ let
       "matrix_shared_secret"
       "matrix_sliding_sync"
       "mas_config"
+      "livekit_api_key"
 
       # cache
       "cache-priv-key.pem"
