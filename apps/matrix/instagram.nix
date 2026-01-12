@@ -23,7 +23,17 @@ in
           enable = true;
           registerToSynapse = true;
           settings = {
-            network.displayname_template = "{{or .DisplayName .Username \"Unknown user\"}} (Insta)";
+            network = {
+              device_name = "mautrix-instagram";
+              disappear_view_once = false;
+              displayname_template = "{{or .DisplayName .Username \"Unknown user\"}} (Insta)";
+              location_format = "'https://www.google.com/maps/place/%[1]s,%[2]s'";
+              note_to_self_avatar = "mxc://maunium.net/REBIVrqjZwmaWpssCZpBlmlL";
+              number_in_topic = true;
+              sync_contacts_on_startup = true;
+              use_contact_avatars = false;
+              use_outdated_profiles = false;
+            };
             bridge = {
               permissions = {
                 "*" = "relay";
@@ -39,11 +49,13 @@ in
               address = "http://localhost:${toString config.matrix.port}";
               domain = base_domain_name;
             };
-            appservice = {
-              database = {
-                type = "postgres";
-                uri = "postgresql:///mautrix-meta?host=/run/postgresql";
-              };
+            database = {
+              type = "postgres";
+              uri = "postgresql:///mautrix-meta?host=/run/postgresql";
+              max_conn_idle_time = null;
+              max_conn_lifetime = null;
+              max_idle_conns = 1;
+              max_open_conns = 5;
             };
           };
           environmentFile = config.age.secrets.matrix_shared_secret.path;
