@@ -3,6 +3,30 @@
   ...
 }:
 {
+  # Snapper configuration for /persistent backups
+  services.snapper = {
+    snapshotInterval = "hourly";
+    cleanupInterval = "1d";
+
+    configs = {
+      persistent = {
+        SUBVOLUME = "/persistent";
+
+        # Unneeded as we use root
+        # ALLOW_GROUPS = [ "wheel" ];
+
+        # Rétention : 7 snapshots quotidiens
+        TIMELINE_CREATE = true;
+        TIMELINE_CLEANUP = true;
+        TIMELINE_LIMIT_HOURLY = "0";
+        TIMELINE_LIMIT_DAILY = "7";
+        TIMELINE_LIMIT_WEEKLY = "0";
+        TIMELINE_LIMIT_MONTHLY = "0";
+        TIMELINE_LIMIT_YEARLY = "0";
+      };
+    };
+  };
+
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir /btrfs_tmp
     mount /dev/disk/by-partlabel/disk-main-root /btrfs_tmp
