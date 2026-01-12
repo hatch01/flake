@@ -46,6 +46,9 @@
                       # neededForBoot = true;
                       mountpoint = "/persistent";
                     };
+                    "/persistent/.snapshots" = {
+                      mountpoint = "/persistent/.snapshots";
+                    };
                   };
                   mountpoint = "/partition-root";
                 };
