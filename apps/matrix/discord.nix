@@ -17,6 +17,12 @@ in
   };
 
   config = mkIf config.matrix.discord.enable {
+
+    # Should not be needed but without this the folder rights are too restrictive and matrix-synapse fail to go inside to read the registration file
+    systemd.tmpfiles.rules = [
+      "d /var/lib/mautrix-discord 0775 mautrix-discord mautrix-discord -"
+    ];
+
     services.mautrix-discord = {
       enable = true;
       registerToSynapse = true;
