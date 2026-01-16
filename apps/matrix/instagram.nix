@@ -23,6 +23,11 @@ in
           enable = true;
           registerToSynapse = true;
           settings = {
+            analytics = {
+              token = null;
+              url = "https://api.segment.io/v1/track";
+              user_id = null;
+            };
             network = {
               device_name = "mautrix-instagram";
               disappear_view_once = false;
