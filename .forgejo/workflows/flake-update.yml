@@ -1,4 +1,5 @@
 name: Update flake inputs
+enable-email-notifications: true
 on:
   # Nightly build at 4 AM
   schedule:
