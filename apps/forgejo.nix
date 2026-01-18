@@ -90,6 +90,11 @@ in
             ENABLED = true;
             DEFAULT_ACTIONS_URL = "https://${config.forgejo.domain}";
           };
+
+          indexer = {
+            REPO_INDEXER_ENABLED = true;
+          };
+
           # You can send a test email from the web UI at:
           # Profile Picture > Site Administration > Configuration >  Mailer Configuration
           mailer = {
