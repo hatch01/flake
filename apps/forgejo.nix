@@ -82,6 +82,7 @@ in
             SHOW_REGISTRATION_BUTTON = false;
             ENABLE_INTERNAL_SIGNIN = false;
             ENABLE_BASIC_AUTHENTICATION = false;
+            ENABLE_NOTIFY_MAIL = true;
           };
 
           # Add support for actions, based on act: https://github.com/nektos/act
@@ -89,7 +90,6 @@ in
             ENABLED = true;
             DEFAULT_ACTIONS_URL = "https://${config.forgejo.domain}";
           };
-          # Sending emails is completely optional
           # You can send a test email from the web UI at:
           # Profile Picture > Site Administration > Configuration >  Mailer Configuration
           mailer = {
