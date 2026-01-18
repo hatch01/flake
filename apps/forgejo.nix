@@ -94,8 +94,10 @@ in
           # Profile Picture > Site Administration > Configuration >  Mailer Configuration
           mailer = {
             ENABLED = true;
-            SMTP_ADDR = "smtp.free.fr";
             FROM = "noreply@${config.forgejo.domain}";
+            PROTOCOL = "smtp";
+            SMTP_ADDR = "smtp.free.fr";
+            SMTP_PORT = 587;
             USER = "eymeric.monitoring";
           };
         };
