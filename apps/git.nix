@@ -56,7 +56,8 @@ in
           };
           signing = {
             signByDefault = true;
-            key = "";
+            key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+QyzHE8xVIWrDHZTf0M8mmFNC1tcbIOt+PafD8H4S7";
+            format = "ssh";
           };
         };
         gh = {
