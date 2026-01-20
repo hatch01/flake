@@ -51,5 +51,6 @@
     ./watchtower.nix
     ./yubikey.nix
     ./zsh.nix
+    ./bitwarden.nix
   ];
 }

@@ -30,6 +30,7 @@ in
   # keepass
   keepassxc.enable = mkDefault true;
   keepassxc.autostart = mkDefault true;
+  bitwarden.enable = mkDefault true;
 
   social.enable = mkDefault true;
 
@@ -106,7 +107,6 @@ in
       wl-clipboard
       pwvucontrol
       gnupg
-      bitwarden-desktop
     ];
   };
 }
