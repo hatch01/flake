@@ -106,6 +106,7 @@ in
       wl-clipboard
       pwvucontrol
       gnupg
+      bitwarden-desktop
     ];
   };
 }

@@ -21,7 +21,7 @@ in
     hm = {
       programs.plasma = {
         configFile = {
-          "kwalletrc"."org.freedesktop.secrets"."apiEnabled".value = false;
+          # "kwalletrc"."org.freedesktop.secrets"."apiEnabled".value = false;
 
           # keepassxc
           "keepassxc/keepassxc.ini"."SSHAgent"."Enabled".value = false;
