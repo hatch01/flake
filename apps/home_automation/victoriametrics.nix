@@ -3,6 +3,7 @@
   lib,
   mkSecret,
   base_domain_name,
+  pkgs,
   ...
 }:
 let
@@ -19,13 +20,6 @@ in
   ];
 
   options = {
-    influxdb = {
-      enable = mkEnableOption "TimescaleDB";
-      port = mkOption {
-        type = types.int;
-        default = 8086;
-      };
-
       grafana = {
         enable = mkEnableOption "Grafana";
         port = mkOption {
@@ -37,26 +31,31 @@ in
           default = "grafana.${base_domain_name}";
         };
       };
+
+    victoriametrics = {
+      enable = mkEnableOption "VictoriaMetrics";
+      port = mkOption {
+        type = types.int;
+        default = 8428;
+      };
     };
   };
 
-  config = mkIf config.influxdb.enable {
+  config = mkIf config.victoriametrics.enable {
     age.secrets = mkSecret "authelia/gitlabSecret" {
       owner = "grafana";
     };
 
-    services.grafana = mkIf config.influxdb.grafana.enable {
+    services.grafana = mkIf config.grafana.enable {
       enable = true;
       dataDir = "/persistent/grafana";
+      declarativePlugins = with pkgs.grafanaPlugins; [ victoriametrics-metrics-datasource ];
       settings = {
         server = {
-          # Listening Address
           http_addr = "::1";
-          # and Port
-          http_port = config.influxdb.grafana.port;
-          # Grafana needs to know on which domain and URL it's running
-          domain = config.influxdb.grafana.domain;
-          root_url = "https://${config.influxdb.grafana.domain}";
+          http_port = config.grafana.port;
+          domain = config.grafana.domain;
+          root_url = "https://${config.grafana.domain}";
           serve_from_sub_path = true;
         };
         "auth.generic_oauth" = {
@@ -80,12 +79,16 @@ in
       };
     };
 
-    virtualisation.oci-containers = {
-      containers.influxdb = {
-        volumes = [ "/storage/influxdb/:/var/lib/influxdb2" ];
-        image = "influxdb:latest";
-        ports = [ "127.0.0.1:${toString config.influxdb.port}:8086" ];
-      };
+    services.victoriametrics = mkIf config.victoriametrics.enable {
+      enable = true;
+      retentionPeriod = "5y";
+      listenAddress = "127.0.0.1:${toString config.victoriametrics.port}";
+    };
+
+    # Bind mount /storage/victoriametrics vers /var/lib/victoriametrics
+    fileSystems."/var/lib/victoriametrics" = mkIf config.victoriametrics.enable {
+      device = "/storage/victoriametrics";
+      options = [ "bind" ];
     };
 
     postgres.initialScripts = [

@@ -129,7 +129,7 @@ in
                 })
                 (mkGatusCheck {
                   name = "grafana";
-                  url = "https://${config.influxdb.grafana.domain}/api/health";
+                  url = "https://${config.grafana.domain}/api/health";
                   conditions = [
                     "[BODY].database == ok"
                   ];

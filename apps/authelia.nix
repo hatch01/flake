@@ -331,7 +331,7 @@ in
                     response_types = [ "code" ];
                   }
                 ]
-                ++ optionals config.influxdb.grafana.enable [
+                ++ optionals config.grafana.enable [
                   {
                     client_id = "grafana";
                     claims_policy = "grafana";
@@ -341,7 +341,7 @@ in
                     authorization_policy = "two_factor";
                     require_pkce = true;
                     pkce_challenge_method = "S256";
-                    redirect_uris = [ "https://${config.influxdb.grafana.domain}/login/generic_oauth" ];
+                    redirect_uris = [ "https://${config.grafana.domain}/login/generic_oauth" ];
                     scopes = [
                       "openid"
                       "profile"

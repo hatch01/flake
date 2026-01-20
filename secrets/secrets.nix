@@ -22,7 +22,6 @@ let
       "smtpPasswordEnv"
       "cockpit_private_key"
       "restic_key"
-      "influx_root_token"
       "wakapi_salt"
     ]
     // defineSecrets "tulipe" [

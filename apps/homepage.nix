@@ -158,8 +158,8 @@ in
                 "Grafana" = {
                   icon = "grafana.png";
                   description = "Grafana c'est vraiment cool";
-                  href = "https://${config.influxdb.grafana.domain}";
-                  siteMonitor = "https://${config.influxdb.grafana.domain}";
+                  href = "https://${config.grafana.domain}";
+                  siteMonitor = "https://${config.grafana.domain}";
                 };
               }
               {

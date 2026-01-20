@@ -316,9 +316,9 @@ in
             };
           };
 
-          ${config.influxdb.grafana.domain} = mkIf config.influxdb.grafana.enable {
+          ${config.grafana.domain} = mkIf config.grafana.enable {
             inherit (cfg) forceSSL extraConfig enableACME;
-            locations."/".proxyPass = "http://[::1]:${toString config.influxdb.grafana.port}";
+            locations."/".proxyPass = "http://[::1]:${toString config.grafana.port}";
           };
 
           ${config.nodered.domain} = mkIf config.nodered.enable {
