@@ -181,25 +181,6 @@ in
             ssh "$server"
           fi
         }
-
-        upkey() {
-          SERIAL=$(ykman list -s 2>/dev/null | head -1)
-          if [ -z "$SERIAL" ]; then
-              echo "error: Aucune YubiKey détectée !" 1>&2
-              exit 1
-          fi
-          if [[ -L "/home/${username}/.config/git/config" ]]; then
-            ${lib.getExe' pkgs.coreutils "cp"} --remove-destination "$(readlink -f /home/${username}/.config/git/config)" /home/${username}/.config/git/config
-          fi
-          if [ "$SERIAL" = "18682465" ]; then
-              git config --global user.signingkey 2062A09259B7F6043C1AE8BA9AEBA130F4A6B1A7
-          elif [ "$SERIAL" = "18682488" ]; then
-              git config --global user.signingkey EB3D34C78AEFF9626C4A4255E836B5CC4E27C9B0
-          else
-              echo "error: YubiKey non reconnue : $SERIAL" 1>&2
-              return 1
-          fi
-        }
       '';
 
       ohMyZsh = {

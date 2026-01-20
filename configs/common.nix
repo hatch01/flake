@@ -288,10 +288,7 @@
         # -f ~/.ssh/id_ed25519_sk_rk_yubi1 \
         # -C "eymericdechelette@gmail.com"
 
-        # yubikey portable
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMgBUUYGMNyWrI7PcaLamr+m/qN7MHr2EVo9Bg1PgOTk openpgp:0x1A89806C"
-        # yubikey maison
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEZabbXZ/GH1oT/Eb//vSdGZhpZm5DkIeqtpzz87wIyd openpgp:0xEA67B583"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+QyzHE8xVIWrDHZTf0M8mmFNC1tcbIOt+PafD8H4S7"
       ];
     };
     ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
