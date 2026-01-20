@@ -20,17 +20,17 @@ in
   ];
 
   options = {
-      grafana = {
-        enable = mkEnableOption "Grafana";
-        port = mkOption {
-          type = types.int;
-          default = 3002;
-        };
-        domain = mkOption {
-          type = types.str;
-          default = "grafana.${base_domain_name}";
-        };
+    grafana = {
+      enable = mkEnableOption "Grafana";
+      port = mkOption {
+        type = types.int;
+        default = 3002;
       };
+      domain = mkOption {
+        type = types.str;
+        default = "grafana.${base_domain_name}";
+      };
+    };
 
     victoriametrics = {
       enable = mkEnableOption "VictoriaMetrics";
