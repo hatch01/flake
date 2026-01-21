@@ -77,12 +77,12 @@
     impermanence.url = "git+https://forge.onyx.ovh/github_mirror/impermanence?shallow=1";
 
     apolline = {
-      url = "git+ssh://forgejo@forge.onyx.ovh/eymeric/apolline.git";
+      url = "git+ssh://forgejo@forge.onyx.ovh:443/eymeric/apolline.git";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     portfolio = {
-      url = "git+ssh://forgejo@forge.onyx.ovh/github_mirror/portfolio?shallow=1";
+      url = "git+ssh://forgejo@forge.onyx.ovh:443/github_mirror/portfolio?shallow=1";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };

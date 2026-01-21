@@ -65,11 +65,11 @@
         "rev": "ca0541492b2dc94d2df7979d8de467ec6dbb3094",
         "revCount": 48,
         "type": "git",
-        "url": "ssh://forgejo@forge.onyx.ovh/eymeric/apolline.git"
+        "url": "ssh://forgejo@forge.onyx.ovh:443/eymeric/apolline.git"
       },
       "original": {
         "type": "git",
-        "url": "ssh://forgejo@forge.onyx.ovh/eymeric/apolline.git"
+        "url": "ssh://forgejo@forge.onyx.ovh:443/eymeric/apolline.git"
       }
     },
     "comin": {
@@ -603,12 +603,12 @@
         "rev": "c42119cbdd198eeda8c1c7fef10452458ecdc03b",
         "shallow": true,
         "type": "git",
-        "url": "ssh://forgejo@forge.onyx.ovh/github_mirror/portfolio"
+        "url": "ssh://forgejo@forge.onyx.ovh:443/github_mirror/portfolio"
       },
       "original": {
         "shallow": true,
         "type": "git",
-        "url": "ssh://forgejo@forge.onyx.ovh/github_mirror/portfolio"
+        "url": "ssh://forgejo@forge.onyx.ovh:443/github_mirror/portfolio"
       }
     },
     "pre-commit": {
