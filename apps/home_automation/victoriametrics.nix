@@ -85,8 +85,8 @@ in
       listenAddress = "127.0.0.1:${toString config.victoriametrics.port}";
     };
 
-    # Bind mount /storage/victoriametrics vers /var/lib/victoriametrics
-    fileSystems."/var/lib/victoriametrics" = mkIf config.victoriametrics.enable {
+    # Bind mount to the private path used by DynamicUser
+    fileSystems."/var/lib/private/victoriametrics" = mkIf config.victoriametrics.enable {
       device = "/storage/victoriametrics";
       options = [ "bind" ];
     };
