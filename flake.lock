@@ -14,10 +14,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1762744251,
-        "narHash": "sha256-mNn5as7zXFke6oIBJc0JbwZtpS7pYZr03OOFEbAR5v4=",
+        "lastModified": 1762618334,
+        "narHash": "sha256-wyT7Pl6tMFbFrs8Lk/TlEs81N6L+VSybPfiIgzU8lbQ=",
         "ref": "refs/heads/main",
-        "rev": "eac7c09943f230daa270986ca4d8f3bf72fb7a47",
+        "rev": "fcdea223397448d35d9b31f798479227e80183f6",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/agenix"

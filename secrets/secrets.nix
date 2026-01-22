@@ -86,6 +86,7 @@ let
         name = "${if name != "" then "${name}/" else ""}${secret}.age";
         value = {
           publicKeys = keys.${if name != "" then name else "all"};
+          armor = true;
         };
       }) secrets
     );
