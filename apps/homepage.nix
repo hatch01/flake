@@ -155,14 +155,6 @@ in
                 };
               }
               {
-                "Grafana" = {
-                  icon = "grafana.png";
-                  description = "Grafana c'est vraiment cool";
-                  href = "https://${config.grafana.domain}";
-                  siteMonitor = "https://${config.grafana.domain}";
-                };
-              }
-              {
                 "Esp Home" = {
                   icon = "esphome.png";
                   description = "Esp Home c'est vraiment cool";

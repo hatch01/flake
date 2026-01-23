@@ -128,13 +128,6 @@ in
                   url = "https://${config.nodered.domain}/health";
                 })
                 (mkGatusCheck {
-                  name = "grafana";
-                  url = "https://${config.grafana.domain}/api/health";
-                  conditions = [
-                    "[BODY].database == ok"
-                  ];
-                })
-                (mkGatusCheck {
                   name = "adguard";
                   url = "https://${config.adguard.domain}/";
                 })

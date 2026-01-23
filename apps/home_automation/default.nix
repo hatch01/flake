@@ -13,7 +13,6 @@ in
   imports = [
     ./home_assistant.nix
     ./zigbee2mqtt.nix
-    ./victoriametrics.nix
     ./nodered.nix
     ./matter.nix
     ./openthread.nix
@@ -27,8 +26,6 @@ in
   config = mkIf config.home_automation.enable {
     home_assistant.enable = true;
     zigbee2mqtt.enable = true;
-    grafana.enable = true;
-    victoriametrics.enable = true;
     nodered.enable = true;
     openthread.enable = true;
     matter.enable = true;
