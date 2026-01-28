@@ -17,9 +17,9 @@
 
   common = [
     {
-      url = "https://github.com/hatch01/nixpkgs/pull/2.diff";
-      name = "beszel-disk-systemd";
-      hash = "sha256-AE4wxo0FtIZworvbYaUOnoo5uHhwbauRedrk+aolKt4=";
+      pr = 461327;
+      name = "beszel-systemd";
+      hash = "sha256-SiBVBP8XrKrAn6ZhSVdjanS+AoDkK1GNgl9/XdCqHYE=";
     }
     {
       pr = 467484;
