@@ -37,6 +37,7 @@ in
       environment.systemPackages = with pkgs; [
         pcsclite
         sparrow
+        satochip-utils
       ];
       # hm.home = {
       #   file.".sparrow/config".text = builtins.toJSON {

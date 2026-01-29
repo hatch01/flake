@@ -26,5 +26,10 @@
       name = "sparrow";
       hash = "sha256-Xhica/EuJIoub02lLCHE01FNHr7IlrM1T4Lyq+F3iQo=";
     }
+    {
+      pr = 402608;
+      name = "satochip-utils";
+      hash = "sha256-5BHyBQDvM7uFCeav5g4OxBUPnozEE3plJXlv7zplNBs=";
+    }
   ];
 }

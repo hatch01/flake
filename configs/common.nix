@@ -125,6 +125,7 @@
         "olm-3.2.16"
         "mbedtls-2.28.10"
         "jitsi-meet-1.0.8792"
+        "python3.13-ecdsa-0.19.1"
       ];
     };
 
