@@ -31,12 +31,6 @@ in
   };
 
   config = mkIf config.wakapi.enable {
-    age.secrets = mkSecret "server/wakapi_salt" {
-      group = "wakapi";
-      owner = "wakapi";
-      root = true;
-    };
-
     services = {
       wakapi = {
         enable = true;
@@ -62,7 +56,6 @@ in
             enabled = false;
           };
         };
-        passwordSaltFile = config.age.secrets."server/wakapi_salt".path;
       };
     };
     postgres.initialScripts = [
