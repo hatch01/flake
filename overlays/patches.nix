@@ -13,14 +13,14 @@
       name = "openthread-border-router";
       hash = "sha256-77CKiXwLAK4hgXPMN1lxYcLiWk44Rvs0Tion+t9fB6o=";
     }
-  ];
-
-  common = [
     {
       pr = 461327;
       name = "beszel-systemd";
       hash = "sha256-SiBVBP8XrKrAn6ZhSVdjanS+AoDkK1GNgl9/XdCqHYE=";
     }
+  ];
+
+  common = [
     {
       pr = 467484;
       name = "sparrow";
