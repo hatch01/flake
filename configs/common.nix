@@ -241,6 +241,7 @@
         trash-cli
         btop # replacement of htop/nmon
         iotop # io monitoring
+        nmon
         iftop # network monitoring
         nixfmt
         alejandra
