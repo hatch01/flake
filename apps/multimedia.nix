@@ -42,7 +42,6 @@ in
         vlc
         spotify
         yt-dlp
-        vdhcoapp
       ]
       ++ optionals multimedia.editing.enable [
         # editing
