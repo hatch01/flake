@@ -28,6 +28,11 @@
       name = "fix-kdenlive";
       hash = "sha256-j8zMp+fyPPfgF7iUA+qreq9qM/j1R6jEjzKmj8VukKI=";
     }
+    {
+      pr = 486802;
+      name = "fix: cockpit-zfs";
+      hash = "sha256-LvQSSbfH34hjaagCSq1G8v/ix5LdhygDY+8Ukfz+txY=";
+    }
   ];
 
   common = [
