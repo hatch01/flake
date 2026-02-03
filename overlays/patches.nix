@@ -18,6 +18,11 @@
       name = "beszel-systemd";
       hash = "sha256-SiBVBP8XrKrAn6ZhSVdjanS+AoDkK1GNgl9/XdCqHYE=";
     }
+    {
+      pr = 486501;
+      name = "pyzfs-fix";
+      hash = "sha256-pmNtOe1gTQ9WsdNgOHGUN89b/0dD5nS5XCu7LLgWW+0=";
+    }
   ];
 
   common = [
