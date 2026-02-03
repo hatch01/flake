@@ -129,8 +129,8 @@ in
         // optionals config.authelia.enable {
           oidc_login = pkgs.fetchNextcloudApp {
             license = "agpl3Plus";
-            url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.2.5/oidc_login.tar.gz";
-            sha256 = "sha256-Qtqcw1OspTHg0QRIgDMxNru6ZGL8y5XhJ5gdgqn6/Wc=";
+            url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.3.0/oidc_login.tar.gz";
+            sha256 = "sha256-AU938duXaI625chqgnnqnvOB0bMgRM3ZQVilstb4yRI=";
           };
         }
         # // optionals config.nextcloud.app_api.enable {
