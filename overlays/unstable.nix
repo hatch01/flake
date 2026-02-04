@@ -6,6 +6,7 @@
       config = prev.config;
     };
     unstablePackages = [
+      "beszel"
     ];
   in
   builtins.listToAttrs (
