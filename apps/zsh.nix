@@ -181,6 +181,90 @@ in
             ssh "$server"
           fi
         }
+        
+        smount() {
+          local remote_user="www"
+          local OPTIND opt
+          
+          # Parse les options
+          while getopts "u:" opt; do
+            case $opt in
+              u) remote_user="$OPTARG" ;;
+              *) echo "Usage: smount [-u user] server" >&2; return 1 ;;
+            esac
+          done
+          shift $((OPTIND - 1))
+          
+          local server="$1"
+          if [[ -z "$server" ]]; then
+            echo "Usage: smount [-u user] server" >&2
+            return 1
+          fi
+          
+          # Extrait les infos de la config SSH
+          local ssh_user=$(ssh -G "$server" | awk '/^user / {print $2}')
+          local ssh_host=$(ssh -G "$server" | awk '/^hostname / {print $2}')
+          local proxy_jump=$(ssh -G "$server" | awk '/^proxyjump / {print $2}')
+          
+          local mount_point="/tmp/$server"
+          mkdir -p "$mount_point"
+          
+          # Check si déjà monté
+          if mountpoint -q "$mount_point" 2>/dev/null; then
+            echo "✓ Already mounted at $mount_point"
+            return 0
+          fi
+          
+          # Construit la commande sftp_server
+          local sftp_cmd
+          if [[ "$remote_user" == "$ssh_user" ]]; then
+            # Même user, pas de sudo
+            sftp_cmd="/usr/libexec/openssh/sftp-server"
+            echo "📁 Mounting $server as $remote_user (no sudo)..."
+          else
+            # User différent, utilise sudo
+            sftp_cmd="sudo -u $remote_user /usr/libexec/openssh/sftp-server"
+            echo "📁 Mounting $server as $remote_user (with sudo)..."
+          fi
+          
+          # Monte avec ProxyCommand si nécessaire
+          if [[ -n "$proxy_jump" ]]; then
+            sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
+              -o ProxyCommand="ssh -W %h:%p $proxy_jump" \
+              -o sftp_server="$sftp_cmd" \
+              -o reconnect \
+              -o ServerAliveInterval=15
+          else
+            sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
+              -o sftp_server="$sftp_cmd" \
+              -o reconnect \
+              -o ServerAliveInterval=15
+          fi
+          
+          if [[ $? -eq 0 ]]; then
+            echo "✓ Mounted at $mount_point"
+          else
+            echo "✗ Failed to mount" >&2
+            return 1
+          fi
+        }
+
+        sumount() {
+          local server="$1"
+          if [[ -z "$server" ]]; then
+            echo "Usage: sumount server" >&2
+            return 1
+          fi
+          
+          local mount_point="/tmp/$server"
+          if mountpoint -q "$mount_point" 2>/dev/null; then
+            fusermount -u "$mount_point" 2>/dev/null || umount "$mount_point"
+            echo "✓ Unmounted $mount_point"
+          else
+            echo "⚠ Not mounted: $mount_point"
+          fi
+        }
+
       '';
 
       ohMyZsh = {
