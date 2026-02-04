@@ -78,7 +78,12 @@ in
       };
     }
     // lib.optionalAttrs (!stable) {
-      plugins = [ pkgs.cockpit-zfs ];
+      plugins = with pkgs; [
+        cockpit-zfs
+        cockpit-files
+        cockpit-podman
+        cockpit-machines
+      ];
     };
   };
 }
