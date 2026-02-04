@@ -181,7 +181,7 @@ in
             ssh "$server"
           fi
         }
-        
+
         smount() {
           local remote_user="www"
           local OPTIND opt
