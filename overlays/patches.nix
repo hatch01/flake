@@ -16,7 +16,7 @@
     {
       pr = 461327;
       name = "beszel-systemd";
-      hash = "sha256-SiBVBP8XrKrAn6ZhSVdjanS+AoDkK1GNgl9/XdCqHYE=";
+      hash = "sha256-+VR8VMHhrSMZaQVQ1TJKGqsnMZVS9MtnGedHt03W/To=";
     }
     {
       pr = 486501;
