@@ -19,11 +19,6 @@
       hash = "sha256-+VR8VMHhrSMZaQVQ1TJKGqsnMZVS9MtnGedHt03W/To=";
     }
     {
-      pr = 486501;
-      name = "pyzfs-fix";
-      hash = "sha256-pmNtOe1gTQ9WsdNgOHGUN89b/0dD5nS5XCu7LLgWW+0=";
-    }
-    {
       pr = 486634;
       name = "fix-kdenlive";
       hash = "sha256-j8zMp+fyPPfgF7iUA+qreq9qM/j1R6jEjzKmj8VukKI=";
