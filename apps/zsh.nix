@@ -47,6 +47,7 @@ in
       zsh-completions
       jless
       fzf-zsh-plugin
+      sshfs
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
@@ -159,24 +160,27 @@ in
           fi
         }
 
-        s() {
-          local server
+        # Helper function to select SSH host with fzf
+        _select_ssh_host() {
           local query="$1"
           local hosts
           hosts=$(grep -E '^Host ' ~/.ssh/config | awk '{print $2}')
 
           if [[ -n $query ]]; then
-            server=$(echo "$hosts" | grep -i "$query")
-            count=$(echo "$server" | wc -l)
+            local server=$(echo "$hosts" | grep -i "$query")
+            local count=$(echo "$server" | wc -l)
             if [[ $count -eq 1 ]]; then
-              ssh "$server"
-              return
+              echo "$server"
+              return 0
             fi
-            server=$(echo "$hosts" | fzf --query="$query")
+            echo "$hosts" | fzf --query="$query"
           else
-            server=$(echo "$hosts" | fzf)
+            echo "$hosts" | fzf
           fi
+        }
 
+        s() {
+          local server=$(_select_ssh_host "$1")
           if [[ -n $server ]]; then
             ssh "$server"
           fi
@@ -185,77 +189,106 @@ in
         smount() {
           local remote_user="www"
           local OPTIND opt
-          
+
           # Parse les options
           while getopts "u:" opt; do
             case $opt in
               u) remote_user="$OPTARG" ;;
-              *) echo "Usage: smount [-u user] server" >&2; return 1 ;;
+              *) echo "Usage: smount [-u user] [server]" >&2; return 1 ;;
             esac
           done
           shift $((OPTIND - 1))
-          
-          local server="$1"
+
+          # Toujours passer par fzf pour matcher le serveur
+          local query="$1"
+          local server=$(_select_ssh_host "$query")
           if [[ -z "$server" ]]; then
-            echo "Usage: smount [-u user] server" >&2
+            echo "No server selected" >&2
             return 1
           fi
-          
-          # Extrait les infos de la config SSH
-          local ssh_user=$(ssh -G "$server" | awk '/^user / {print $2}')
-          local ssh_host=$(ssh -G "$server" | awk '/^hostname / {print $2}')
-          local proxy_jump=$(ssh -G "$server" | awk '/^proxyjump / {print $2}')
-          
-          local mount_point="/tmp/$server"
+
+          # Extrait les infos de la config SSH (supprime stderr)
+          local ssh_config=$(ssh -G "$server" 2>/dev/null)
+          local ssh_user=$(echo "$ssh_config" | awk '/^user / {print $2}')
+          local ssh_host=$(echo "$ssh_config" | awk '/^hostname / {print $2}')
+          local proxy_jump=$(echo "$ssh_config" | awk '/^proxyjump / {print $2}')
+
+          # Utilise uniquement le dernier segment après le dernier /
+          local server_name="''${ssh_host##*/}"
+          local mount_point="/tmp/$server_name"
           mkdir -p "$mount_point"
-          
+
           # Check si déjà monté
           if mountpoint -q "$mount_point" 2>/dev/null; then
             echo "✓ Already mounted at $mount_point"
+            cd "$mount_point"
             return 0
           fi
-          
+
           # Construit la commande sftp_server
           local sftp_cmd
           if [[ "$remote_user" == "$ssh_user" ]]; then
-            # Même user, pas de sudo
             sftp_cmd="/usr/libexec/openssh/sftp-server"
-            echo "📁 Mounting $server as $remote_user (no sudo)..."
+            echo "📁 Mounting $server_name as $remote_user (no sudo)..."
           else
-            # User différent, utilise sudo
             sftp_cmd="sudo -u $remote_user /usr/libexec/openssh/sftp-server"
-            echo "📁 Mounting $server as $remote_user (with sudo)..."
+            echo "📁 Mounting $server_name as $remote_user (with sudo)..."
           fi
-          
+
           # Monte avec ProxyCommand si nécessaire
+          local mount_result
           if [[ -n "$proxy_jump" ]]; then
+            echo "🔧 Using ProxyJump: $proxy_jump"
             sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
               -o ProxyCommand="ssh -W %h:%p $proxy_jump" \
               -o sftp_server="$sftp_cmd" \
               -o reconnect \
               -o ServerAliveInterval=15
+            mount_result=$?
           else
             sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
               -o sftp_server="$sftp_cmd" \
               -o reconnect \
               -o ServerAliveInterval=15
+            mount_result=$?
           fi
-          
-          if [[ $? -eq 0 ]]; then
+
+          if [[ $mount_result -eq 0 ]]; then
             echo "✓ Mounted at $mount_point"
+            cd "$mount_point"
           else
             echo "✗ Failed to mount" >&2
+            echo ""
+            echo "💡 Debug: Try this command manually:"
+            if [[ -n "$proxy_jump" ]]; then
+              echo "   sshfs $ssh_user@$ssh_host:/ $mount_point \\"
+              echo "     -o ProxyCommand=\"ssh -W %h:%p $proxy_jump\" \\"
+              echo "     -o sftp_server=\"$sftp_cmd\" -v"
+            else
+              echo "   sshfs $ssh_user@$ssh_host:/ $mount_point \\"
+              echo "     -o sftp_server=\"$sftp_cmd\" -v"
+            fi
             return 1
           fi
         }
 
         sumount() {
           local server="$1"
+
+          # Si pas de serveur spécifié, utilise fzf sur les montages existants
           if [[ -z "$server" ]]; then
-            echo "Usage: sumount server" >&2
-            return 1
+            local mounted=$(find /tmp -maxdepth 1 -type d -exec mountpoint -q {} \; -print 2>/dev/null | xargs -n1 basename)
+            if [[ -z "$mounted" ]]; then
+              echo "No mounted servers found in /tmp" >&2
+              return 1
+            fi
+            server=$(echo "$mounted" | fzf --prompt="Select server to unmount: ")
+            if [[ -z "$server" ]]; then
+              echo "No server selected" >&2
+              return 1
+            fi
           fi
-          
+
           local mount_point="/tmp/$server"
           if mountpoint -q "$mount_point" 2>/dev/null; then
             fusermount -u "$mount_point" 2>/dev/null || umount "$mount_point"
