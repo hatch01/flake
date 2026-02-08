@@ -271,10 +271,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1770318660,
-        "narHash": "sha256-yFVde8QZK7Dc0Xa8eQDsmxLX4NJNfL1NKfctSyiQgMY=",
+        "lastModified": 1770491427,
+        "narHash": "sha256-8b+0vixdqGnIIcgsPhjdX7EGPdzcVQqYxF+ujjex654=",
         "ref": "refs/heads/master",
-        "rev": "471e6a065f9efed51488d7c51a9abbd387df91b8",
+        "rev": "cbd8a72e5fe6af19d40e2741dc440d9227836860",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/home-manager"
@@ -422,10 +422,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1769217863,
-        "narHash": "sha256-RY9kJDXD6+2Td/59LkZ0PFSereCXHdBX9wIkbYjRKCY=",
+        "lastModified": 1770494267,
+        "narHash": "sha256-LBKeSntmhCBj0tHFVFGfT4+KBmKi57gAnr240/F1Qkc=",
         "ref": "refs/heads/main",
-        "rev": "38a5250e57f583662eac3b944830e4b9e169e965",
+        "rev": "843582709028607bf112d7cdc99af825e224a29b",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/NixOS-WSL"
@@ -470,10 +470,10 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1770136044,
-        "narHash": "sha256-tlFqNG/uzz2++aAmn4v8J0vAkV3z7XngeIIB3rM3650=",
+        "lastModified": 1770464364,
+        "narHash": "sha256-z5NJPSBwsLf/OfD8WTmh79tlSU8XgIbwmk6qB1/TFzY=",
         "ref": "nixos-25.11",
-        "rev": "e576e3c9cf9bad747afcddd9e34f51d18c855b4e",
+        "rev": "23d72dabcb3b12469f57b37170fcbc1789bd7457",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
@@ -487,10 +487,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1770424534,
-        "narHash": "sha256-MtkHTPCT1nkwQ8IL0GDU+HCl3LMSPEUDOytmN7HzOuY=",
+        "lastModified": 1770512572,
+        "narHash": "sha256-0M6zgRGIcwI4x40kpOPG8ygfX59D5ENe3zGaBMu1gbg=",
         "ref": "master",
-        "rev": "655aeff3ad77f266ad10a14b9f3cf682117ad8fc",
+        "rev": "7b21157c6c4529fcaa01bc37b5d43cdf7cd614e0",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
