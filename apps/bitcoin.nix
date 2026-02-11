@@ -87,7 +87,7 @@ in
     (mkIf config.bitcoin.server.enable {
       services.bitcoind.bitcoin = {
         enable = true;
-        prune = 100 * 1024; # use 10GB
+        prune = 200 * 1024; # use 200GB
         port = config.bitcoin.server.port;
         dbCache = 10 * 1024;
         rpc = {
