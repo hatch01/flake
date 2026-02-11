@@ -48,6 +48,7 @@ in
       jless
       fzf-zsh-plugin
       sshfs
+      gitoxide
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
