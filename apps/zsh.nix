@@ -49,6 +49,7 @@ in
       fzf-zsh-plugin
       sshfs
       gitoxide
+      btdu
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
