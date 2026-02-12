@@ -142,6 +142,14 @@ in
                   url = "https://${config.matrix.domain}/livekit/jwt/healthz";
                 })
 
+                (mkGatusCheck {
+                  name = "matrix authentication service";
+                  url = "https://${config.matrix.mas.domain}/health";
+                  conditions = [
+                    "[BODY] == ok"
+                  ];
+                })
+
                 {
                   inherit interval alerts;
                   group = default_group;

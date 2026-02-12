@@ -225,6 +225,7 @@ in
             locations = {
               "/".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
               "/assets/".root = "${pkgs.matrix-authentication-service}/share/matrix-authentication-service/";
+              "/health".proxyPass = "http://localhost:${toString config.matrix.mas.port2}";
             };
           };
 
