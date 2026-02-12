@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf optionals;
 in
 {
   options = {
@@ -35,7 +35,9 @@ in
         ];
         exclude = [
           "/storage/postgresql"
-          "/storage/influxdb"
+        ]
+        ++ optionals config.bitcoin.server.enable [
+          "/storage/bitcoin"
         ];
         passwordFile = config.age.secrets."server/restic_key".path;
         repository = "sftp://homeassistant/backup/backup_eymeric";
