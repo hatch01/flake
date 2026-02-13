@@ -18,11 +18,6 @@
       name = "beszel-systemd";
       hash = "sha256-+VR8VMHhrSMZaQVQ1TJKGqsnMZVS9MtnGedHt03W/To=";
     }
-    {
-      pr = 486802;
-      name = "fix: cockpit-zfs";
-      hash = "sha256-LvQSSbfH34hjaagCSq1G8v/ix5LdhygDY+8Ukfz+txY=";
-    }
   ];
 
   common = [
