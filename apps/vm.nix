@@ -39,8 +39,8 @@ in
     virtualisation = {
       virtualbox = {
         host = {
-          enable = true;
-          enableExtensionPack = true;
+          # enable = true;
+          # enableExtensionPack = true;
         };
       };
 
