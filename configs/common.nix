@@ -118,7 +118,7 @@
           "anytype-heart"
           "nrf-udev"
           "iscan-ds"
-          "Oracle_VirtualBox_Extension_Pack"
+          "virtualbox-extpack"
         ];
 
       permittedInsecurePackages = [
