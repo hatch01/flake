@@ -68,6 +68,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager-stable = {
+      url = "git+https://forge.onyx.ovh/github_mirror/home-manager?shallow=1&ref=release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
     plasma-manager = {
       url = "git+https://forge.onyx.ovh/github_mirror/plasma-manager?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";

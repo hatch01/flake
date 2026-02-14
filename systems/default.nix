@@ -13,9 +13,12 @@ let
   mkSystem = systems: {
     nixosConfigurations = builtins.mapAttrs (
       name: value:
+      let
+        isStable = value.stable or false;
+      in
       inputs.nixpkgs-patcher.lib.nixosSystem {
         nixpkgsPatcher = {
-          nixpkgs = if (value.stable or false) then inputs.nixpkgs-stable else inputs.nixpkgs;
+          nixpkgs = if isStable then inputs.nixpkgs-stable else inputs.nixpkgs;
           enable = true;
           patches =
             pkgs:
@@ -34,13 +37,12 @@ let
                   hash = patch.hash;
                 };
 
-              patches =
-                (if (value.stable or false) then rawPatches.stable else rawPatches.unstable) ++ rawPatches.common;
+              patches = (if isStable then rawPatches.stable else rawPatches.unstable) ++ rawPatches.common;
             in
             map (patch: mkFetchpatch2 patch) patches;
         };
         system = value.system;
-        modules = value.modules ++ [
+        modules = (value.modules isStable) ++ [
           ./${name}
           ./${name}/hardware-configuration.nix
           {
@@ -65,7 +67,7 @@ let
             }
           );
           mkSecret = secretName: other: mkSecrets { ${secretName} = other; };
-          stable = value.stable or false;
+          stable = isStable;
           system = value.system;
         }
         // (value.specialArgs or { });
@@ -73,16 +75,18 @@ let
     ) systems;
   };
 
-  nixos = with inputs; [
-    ../configs/common.nix
-    disko.nixosModules.disko
-    home-manager.nixosModules.home-manager
-    agenix.nixosModules.default
-    nix-index-database.nixosModules.nix-index
-    impermanence.nixosModules.impermanence
-  ];
-  server = [ ../configs/server.nix ] ++ nixos;
-  desktop = [ ../configs/desktop.nix ] ++ nixos;
+  nixos =
+    stable: with inputs; [
+      ../configs/common.nix
+      disko.nixosModules.disko
+      (if stable then home-manager-stable else home-manager).nixosModules.home-manager
+      agenix.nixosModules.default
+      nix-index-database.nixosModules.nix-index
+      impermanence.nixosModules.impermanence
+    ];
+
+  server = stable: [ ../configs/server.nix ] ++ (nixos stable);
+  desktop = stable: [ ../configs/desktop.nix ] ++ (nixos stable);
 in
 {
   flake = mkSystem {
