@@ -2,7 +2,7 @@
   nixpkgs-stable: final: prev:
   let
     stable = import nixpkgs-stable {
-      system = prev.system;
+      system = prev.stdenv.hostPlatform.system;
       config = prev.config;
     };
     stablePackages = [

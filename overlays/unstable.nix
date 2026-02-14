@@ -2,7 +2,7 @@
   nixpkgs-unstable: final: prev:
   let
     unstable = import nixpkgs-unstable {
-      system = prev.system;
+      system = prev.stdenv.hostPlatform.system;
       config = prev.config;
     };
     unstablePackages = [
