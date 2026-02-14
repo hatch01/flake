@@ -18,6 +18,11 @@
       name = "beszel-systemd";
       hash = "sha256-+VR8VMHhrSMZaQVQ1TJKGqsnMZVS9MtnGedHt03W/To=";
     }
+    {
+      pr = 490123;
+      name = "nvidia-fix";
+      hash = "sha256-HKcg4GqLK8r+Ff+4zQk7mrPFKB/h977BkNAXDNqEV/A=";
+    }
   ];
 
   common = [
