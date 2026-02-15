@@ -4,6 +4,7 @@
 {
   config,
   mkSecrets,
+  pkgs,
   ...
 }:
 {
@@ -100,26 +101,24 @@
   };
 
   # Notifications email pour les scrubs btrfs
-  systemd.services."btrfs-scrub-notify@" = {
-    description = "Send email notification for btrfs scrub on %i";
+  systemd.services."btrfs-scrub-storage-notify" = {
+    description = "Send email notification for btrfs scrub on /storage";
     serviceConfig.Type = "oneshot";
-    scriptArgs = "%i";
+    path = [ pkgs.btrfs-progs ];
     script = ''
-      MOUNT_POINT="$1"
-
-      if systemctl is-failed "btrfs-scrub@$1.service" >/dev/null 2>&1; then
+      if systemctl is-failed "btrfs-scrub-storage.service" >/dev/null 2>&1; then
         STATUS="FAILED"
       else
         STATUS="SUCCESS"
       fi
 
-      SCRUB_STATUS=$(btrfs scrub status "$MOUNT_POINT" 2>&1 || echo "Unable to get scrub status")
+      SCRUB_STATUS=$(btrfs scrub status /storage 2>&1 || echo "Unable to get scrub status")
 
       {
         echo "To: root"
-        echo "Subject: btrfs scrub $STATUS on $MOUNT_POINT"
+        echo "Subject: btrfs scrub $STATUS on /storage"
         echo ""
-        echo "btrfs scrub on $MOUNT_POINT completed with status: $STATUS"
+        echo "btrfs scrub on /storage completed with status: $STATUS"
         echo ""
         echo "Details:"
         echo "$SCRUB_STATUS"
@@ -127,10 +126,10 @@
     '';
   };
 
-  systemd.services."btrfs-scrub@" = {
-    serviceConfig = {
-      OnSuccess = "btrfs-scrub-notify@%i.service";
-      OnFailure = "btrfs-scrub-notify@%i.service";
+  systemd.services."btrfs-scrub-storage" = {
+    unitConfig = {
+      OnSuccess = "btrfs-scrub-storage-notify.service";
+      OnFailure = "btrfs-scrub-storage-notify.service";
     };
   };
 
