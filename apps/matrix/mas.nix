@@ -54,6 +54,8 @@ in
       enable = true;
       description = "Matrix Authentication Service";
       wantedBy = [ "multi-user.target" ];
+      after = [ "postgresql.service" ];
+      requires = [ "postgresql.service" ];
       serviceConfig = {
         Restart = "on-failure";
         EnvironmentFile = config.age.secrets.mas_config.path;
