@@ -92,18 +92,45 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # zfs
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportRoot = false;
-  systemd.services.zfs-mount.enable = false;
-  services.zfs.autoScrub.enable = true;
-  services.zfs.trim.enable = true;
-  services.zfs.zed = {
-    enableMail = true;
-    settings = {
-      ZED_EMAIL_ADDR = [ "root" ];
-      # send notification if scrub succeeds
-      ZED_NOTIFY_VERBOSE = true;
+  # btrfs
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/storage" ];
+    interval = "weekly";
+  };
+
+  # Notifications email pour les scrubs btrfs
+  systemd.services."btrfs-scrub-notify@" = {
+    description = "Send email notification for btrfs scrub on %i";
+    serviceConfig.Type = "oneshot";
+    scriptArgs = "%i";
+    script = ''
+      MOUNT_POINT="$1"
+
+      if systemctl is-failed "btrfs-scrub@$1.service" >/dev/null 2>&1; then
+        STATUS="FAILED"
+      else
+        STATUS="SUCCESS"
+      fi
+
+      SCRUB_STATUS=$(btrfs scrub status "$MOUNT_POINT" 2>&1 || echo "Unable to get scrub status")
+
+      {
+        echo "To: root"
+        echo "Subject: btrfs scrub $STATUS on $MOUNT_POINT"
+        echo ""
+        echo "btrfs scrub on $MOUNT_POINT completed with status: $STATUS"
+        echo ""
+        echo "Details:"
+        echo "$SCRUB_STATUS"
+      } | ${config.programs.msmtp.package}/bin/msmtp -t
+    '';
+  };
+
+  systemd.services."btrfs-scrub@" = {
+    serviceConfig = {
+      OnSuccess = "btrfs-scrub-notify@%i.service";
+      OnFailure = "btrfs-scrub-notify@%i.service";
     };
   };
 
@@ -127,7 +154,6 @@
   # Enable networking
   networking = {
     networkmanager.enable = true;
-    hostId = "271e1c23";
   };
 
   # Set your time zone.

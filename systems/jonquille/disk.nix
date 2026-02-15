@@ -1,8 +1,8 @@
 {
   disko.devices =
     let
-      rootDisk = "/dev/sda";
-      dataDisk1 = "/dev/sdb";
+      rootDisk = "/dev/sdb";
+      dataDisk1 = "/dev/sda";
       dataDisk2 = "/dev/sdc";
     in
     {
@@ -62,12 +62,11 @@
           content = {
             type = "gpt";
             partitions = {
-              zfs = {
+              mirror = {
+                size = "500G";
+              };
+              striped = {
                 size = "100%";
-                content = {
-                  type = "zfs";
-                  pool = "storage";
-                };
               };
             };
           };
@@ -78,26 +77,52 @@
           content = {
             type = "gpt";
             partitions = {
-              zfs = {
+              mirror = {
+                size = "500G";
+                content = {
+                  type = "btrfs";
+                  extraArgs = [
+                    "-f"
+                    "-d"
+                    "raid1"
+                    "/dev/disk/by-partlabel/disk-data1-mirror"
+                  ];
+                  subvolumes = {
+                    "/storage" = {
+                      mountpoint = "/storage";
+                      mountOptions = [
+                        "noatime"
+                        "compress=zstd:3"
+                      ];
+                    };
+                  };
+                };
+              };
+              striped = {
                 size = "100%";
                 content = {
-                  type = "zfs";
-                  pool = "storage";
+                  type = "btrfs";
+                  extraArgs = [
+                    "-f"
+                    "-d"
+                    "raid0"
+                    "-m"
+                    "raid1"
+                    "/dev/disk/by-partlabel/disk-data1-striped"
+                  ];
+                  subvolumes = {
+                    "/bitcoin" = {
+                      mountpoint = "/storage/bitcoin";
+                      mountOptions = [
+                        "noatime"
+                        "nodatacow"
+                      ];
+                    };
+                  };
                 };
               };
             };
           };
-        };
-      };
-      zpool = {
-        storage = {
-          type = "zpool";
-          mode = "mirror";
-          # rootFsOptions = {
-          # compression = "zstd";
-          # "com.sun:auto-snapshot" = "false";
-          # };
-          mountpoint = "/storage";
         };
       };
     };

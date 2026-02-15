@@ -61,8 +61,6 @@
     };
   };
 
-  # Disable ZFS to avoid the build error
-  # boot.supportedFilesystems.zfs = lib.mkForce false;
   boot.loader.timeout = 1;
   boot.supportedFilesystems = lib.mkForce [
     "ext4"

@@ -79,7 +79,6 @@ in
     }
     // lib.optionalAttrs (!stable) {
       plugins = with pkgs; [
-        cockpit-zfs
         cockpit-files
         cockpit-podman
         cockpit-machines
