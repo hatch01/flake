@@ -21,7 +21,7 @@
     {
       pr = 490123;
       name = "nvidia-fix";
-      hash = "sha256-HKcg4GqLK8r+Ff+4zQk7mrPFKB/h977BkNAXDNqEV/A=";
+      hash = "sha256-zFEes9QKD5dTP/wa5ovtQRRYERtX1s4Ed3TRosevYoY=";
     }
   ];
 
