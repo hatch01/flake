@@ -19,7 +19,7 @@ in
       enable = mkEnableOption "enable openthread";
       restPort = mkOption {
         type = types.int;
-        default = 8089;
+        default = 8081;
         description = "The port on which openthread will listen";
       };
       webPort = mkOption {

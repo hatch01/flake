@@ -20,7 +20,7 @@ in
       port = mkOption {
         # currently unused because settings are completly in secret
         type = lib.types.int;
-        default = 8081;
+        default = 8089;
         description = "The port on which the MAS will listen";
       };
       port2 = mkOption {
