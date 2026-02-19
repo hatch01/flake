@@ -57,7 +57,7 @@ in
         ardour
         hydrogen
         drumgizmo
-        calf
+        lsp-plugins
         qsynth
         fluidsynth
         carla
