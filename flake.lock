@@ -138,10 +138,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1771355198,
-        "narHash": "sha256-89m5VKxIs8QNiIvLsxHu5NpyhDsoXTtoN801IAurnW4=",
+        "lastModified": 1771469470,
+        "narHash": "sha256-GnqdqhrguKNN3HtVfl6z+zbV9R9jhHFm3Z8nu7R6ml0=",
         "ref": "refs/heads/master",
-        "rev": "92fceb111901a6f13e81199be4fab95fce86a5c9",
+        "rev": "4707eec8d1d2db5182ea06ed48c820a86a42dc13",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/disko"
@@ -271,10 +271,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1771422582,
-        "narHash": "sha256-xK5kl3OBZaF1VwziVMX+SZ2LT9Fbu5o8vRDt78uR7no=",
+        "lastModified": 1771531206,
+        "narHash": "sha256-1R3Wx6KUkMb4x4E5UOhW9p6rqiexzSGGWxZqSHqW5n0=",
         "ref": "refs/heads/master",
-        "rev": "b3ccd4bb262f4e6d3248b46cede92b90c4a42094",
+        "rev": "91be7cce763fa4022c7cf025a71b0c366d1b6e77",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/home-manager"
@@ -358,10 +358,10 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1771322141,
-        "narHash": "sha256-7NF2aiWw7cL+KAdOgSXEV9fg4Y6SH8NmEgSBYIdKfcw=",
+        "lastModified": 1771492583,
+        "narHash": "sha256-nQzvnU4BGu8dA6BsPPCqmVcab/3ebVmHtX3ZWbW3Hxc=",
         "ref": "refs/heads/master",
-        "rev": "89594c01208e1e0218050d63a3570a3e1b4447ac",
+        "rev": "5e9380994665ef66c87ab8e22c913ff837174ce4",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/lanzaboote"
@@ -404,10 +404,10 @@
         "nvchad-starter": "nvchad-starter"
       },
       "locked": {
-        "lastModified": 1771327689,
-        "narHash": "sha256-kEJmArYB/J8MTfyo69nSMNFjVyxPnyOqvGTsKZTm8qI=",
+        "lastModified": 1771479716,
+        "narHash": "sha256-px2OOCb6VDEGNSVpFEbVLnocz34qrfAarx28lTzrWsw=",
         "ref": "refs/heads/main",
-        "rev": "2f6e5b7e50807eb68c145eb656faf99e36a6cb4d",
+        "rev": "5098052557a36a148c84740733c4ac5b1bc566a5",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nix4nvchad"
@@ -492,10 +492,10 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1771208521,
-        "narHash": "sha256-X01Q3DgSpjeBpapoGA4rzKOn25qdKxbPnxHeMLNoHTU=",
+        "lastModified": 1771419570,
+        "narHash": "sha256-bxAlQgre3pcQcaRUm/8A0v/X8d2nhfraWSFqVmMcBcU=",
         "ref": "nixos-25.11",
-        "rev": "fa56d7d6de78f5a7f997b0ea2bc6efd5868ad9e8",
+        "rev": "6d41bc27aaf7b6a3ba6b169db3bd5d6159cfaa47",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
@@ -509,10 +509,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1771453574,
-        "narHash": "sha256-AY8N88W9Fg4sb8aKLRaL1NmtlsnRfx7Xl7BjycAQutY=",
+        "lastModified": 1771541567,
+        "narHash": "sha256-FW9Q7BERi+z+lcHhgtPFMnkaPjSR8DjIitDcRRw8+So=",
         "ref": "master",
-        "rev": "56400700e9bf11604ca3b0911bcb8285de5ae492",
+        "rev": "7e90f7312e76a19dd2f3f351475a5639e26f88bf",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
