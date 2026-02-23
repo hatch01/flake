@@ -16,6 +16,7 @@ in
   config = mkIf config.plasma.enable {
     services = {
       displayManager = {
+        plasma-login-manager.enable = true;
         defaultSession = "plasma";
         autoLogin = {
           enable = true;
@@ -27,9 +28,6 @@ in
         xkb = {
           layout = "fr";
           variant = "";
-        };
-        displayManager = {
-          lightdm.enable = true;
         };
       };
       desktopManager.plasma6.enable = true;
