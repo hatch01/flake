@@ -29,7 +29,7 @@
     {
       pr = 467484;
       name = "sparrow";
-      hash = "sha256-Aw8z+d/VCejGj0CumPlGCejtQsC72+EdfATnnlVrHWA=";
+      hash = "sha256-r3tmo6i9Fqrx2LXySniNINtU6jNBjZZeacU5nr+Ir/U=";
     }
     {
       pr = 402608;
