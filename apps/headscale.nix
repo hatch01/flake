@@ -75,6 +75,7 @@ in
             polytech = "100.64.0.8";
             papa = "100.64.0.9";
             lotus = "100.64.0.10";
+            alexandre = "100.64.0.11";
           in
           pkgs.writers.writeJSON "policy.json" {
             acls = [
@@ -86,6 +87,7 @@ in
               (mkRule [ lavande jonquille lotus tulipe ] [ pimprenelles ] [ 22 8080 8081 8000 3306 5900 ]) # allow access to pimprenelles
               (mkRule [ jonquille lavande tulipe lotus papa ] [ homeassistant ] [ 22 8123 ]) # allow access to homeassistant
               (mkRule [ tulipe ] [ jonquille ] [ config.bitcoin.server.portRpc ]) # allow jonquille to use bitcoin controller
+              (mkRule [ alexandre ] [ polytech ] [ 22 ])
             ];
           };
 
