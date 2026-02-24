@@ -75,7 +75,7 @@ in
             polytech = "100.64.0.8";
             papa = "100.64.0.9";
             lotus = "100.64.0.10";
-            alexandre = "100.64.0.11";
+            alexandre = "100.64.0.12";
           in
           pkgs.writers.writeJSON "policy.json" {
             acls = [
