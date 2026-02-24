@@ -23,6 +23,11 @@
       name = "nvidia-fix";
       hash = "sha256-zFEes9QKD5dTP/wa5ovtQRRYERtX1s4Ed3TRosevYoY=";
     }
+    {
+      pr = 493404;
+      name = "python313Packages.sphinx-prompt: fix build";
+      hash = "sha256-m/Qp5Z7Cg/2v1W8maP6Bft/cCB3+ymfUUnqA3RekVa8=";
+    }
   ];
 
   common = [
