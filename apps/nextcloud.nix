@@ -95,10 +95,8 @@ in
             mail
             cospend
             end_to_end_encryption
-            # forms
             groupfolders
-            # maps
-            # music
+            music
             notes
             previewgenerator
             deck
@@ -127,11 +125,9 @@ in
           # };
         }
         // optionals config.authelia.enable {
-          oidc_login = pkgs.fetchNextcloudApp {
-            license = "agpl3Plus";
-            url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.3.0/oidc_login.tar.gz";
-            sha256 = "sha256-AU938duXaI625chqgnnqnvOB0bMgRM3ZQVilstb4yRI=";
-          };
+          inherit (config.services.nextcloud.package.packages.apps)
+            oidc_login
+            ;
         }
         # // optionals config.nextcloud.app_api.enable {
         #   app_api = pkgs.fetchNextcloudApp {
