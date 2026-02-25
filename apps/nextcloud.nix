@@ -98,7 +98,7 @@ in
             # forms
             groupfolders
             # maps
-            music
+            # music
             notes
             previewgenerator
             deck
