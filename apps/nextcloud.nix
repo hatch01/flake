@@ -96,7 +96,7 @@ in
             cospend
             end_to_end_encryption
             groupfolders
-            music
+            # music
             notes
             previewgenerator
             deck
@@ -138,7 +138,7 @@ in
         # }
         // optionals config.onlyofficeDocumentServer.enable {
           inherit (config.services.nextcloud.package.packages.apps)
-            onlyoffice
+            # onlyoffice
             ;
         };
 
