@@ -28,6 +28,11 @@
       name = "python313Packages.sphinx-prompt: fix build";
       hash = "sha256-m/Qp5Z7Cg/2v1W8maP6Bft/cCB3+ymfUUnqA3RekVa8=";
     }
+    {
+      pr = 493406;
+      name = "python313Packages.sphinx-tabs: 3.4.7 -> 3.4.7-unstable-2026-01-24";
+      hash = "sha256-8pzmRnEmWokanWHKrpvIaKbxjQ3+Tld/4RiEdXD08uo=";
+    }
   ];
 
   common = [
