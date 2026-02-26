@@ -38,6 +38,11 @@
       name = "utsushi: remove boost_system from autoconfig";
       hash = "sha256-n5Bq8wUf3pQe0vT681rfaP6jBhsltl6Bc/o6uCef9cg=";
     }
+    {
+      pr = 493933;
+      name = "nextcloudPackages: update";
+      hash = "sha256-SoPsESUudB6K/B2g7+5t1lHE2mLVx7fa3EafGJPv3/k=";
+    }
   ];
 
   common = [
