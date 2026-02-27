@@ -238,7 +238,7 @@
         which
         tree
         bat
-        trash-cli
+        rip2
         btop # replacement of htop/nmon
         iotop # io monitoring
         nmon

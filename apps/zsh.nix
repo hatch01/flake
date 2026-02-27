@@ -70,7 +70,7 @@ in
         ls = lib.getExe pkgs.eza;
         ll = "${lib.getExe pkgs.eza} -l";
         l = "${lib.getExe pkgs.eza} -la";
-        rm = "${lib.getExe' pkgs.trash-cli "trash-put"}";
+        rm = "${lib.getExe pkgs.rip2} --graveyard ~/.local/share/Trash";
         sgit = "sudo -E ${lib.getExe pkgs.git}";
         se = "sudo -E";
         slazygit = "sudo -E ${lib.getExe pkgs.lazygit}";
@@ -90,6 +90,7 @@ in
         ) "${lib.getExe pkgs.scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
         vi = "nvim";
         vim = "nvim";
+        rip = "rip --graveyard ~/.local/share/Trash";
       };
       promptInit = ''
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
