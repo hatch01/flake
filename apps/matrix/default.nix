@@ -127,43 +127,46 @@ in
         "oidc"
       ];
 
-      settings.app_service_config_files = [ puppetFile ];
       extraConfigFiles = [ masFile ];
 
-      settings.server_name = base_domain_name;
-      settings.public_baseurl = "https://${config.matrix.domain}";
-      settings.listeners = [
-        {
-          port = config.matrix.port;
-          bind_addresses = [ "::1" ];
-          type = "http";
-          tls = false;
-          x_forwarded = true;
-          resources = [
-            {
-              names = [
-                "client"
-                "federation"
-              ];
-              compress = true;
-            }
-          ];
-        }
-      ];
-      settings.experimental_features = {
-        msc3266_enabled = true;
-        msc4222_enabled = true;
+      settings = {
+        app_service_config_files = [ puppetFile ];
+
+        server_name = base_domain_name;
+        public_baseurl = "https://${config.matrix.domain}";
+        listeners = [
+          {
+            port = config.matrix.port;
+            bind_addresses = [ "::1" ];
+            type = "http";
+            tls = false;
+            x_forwarded = true;
+            resources = [
+              {
+                names = [
+                  "client"
+                  "federation"
+                ];
+                compress = true;
+              }
+            ];
+          }
+        ];
+        experimental_features = {
+          msc3266_enabled = true;
+          msc4222_enabled = true;
+        };
+        max_event_delay_duration = "24h";
+        rc_message = {
+          per_second = 0.5;
+          burst_count = 30;
+        };
+        rc_delayed_event_mgmt = {
+          per_second = 1;
+          burst_count = 20;
+        };
+        signing_key = config.age.secrets.matrix_signing_key.path;
       };
-      settings.max_event_delay_duration = "24h";
-      settings.rc_message = {
-        per_second = 0.5;
-        burst_count = 30;
-      };
-      settings.rc_delayed_event_mgmt = {
-        per_second = 1;
-        burst_count = 20;
-      };
-      settings.signing_key = config.age.secrets.matrix_signing_key.path;
     };
     environment.persistence."/persistent" = {
       directories = [
