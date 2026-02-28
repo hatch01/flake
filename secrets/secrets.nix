@@ -50,6 +50,7 @@ let
       # Matrix
       "matrix_shared_secret"
       "matrix_sliding_sync"
+      "matrix_signing_key"
       "mas_config"
       "livekit_api_key"
 

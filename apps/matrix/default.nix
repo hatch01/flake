@@ -53,6 +53,9 @@ in
       "matrix_shared_secret" = {
         owner = "matrix-synapse";
       };
+      "matrix_signing_key" = {
+        owner = "matrix-synapse";
+      };
     };
 
     systemd.services.matrix-synapse = {
@@ -160,6 +163,7 @@ in
         per_second = 1;
         burst_count = 20;
       };
+      settings.signing_key = config.age.secrets.matrix_signing_key.path;
     };
     environment.persistence."/persistent" = {
       directories = [
