@@ -165,7 +165,7 @@ in
           per_second = 1;
           burst_count = 20;
         };
-        signing_key = config.age.secrets.matrix_signing_key.path;
+        signing_key_path = config.age.secrets.matrix_signing_key.path;
       };
     };
     environment.persistence."/persistent" = {
