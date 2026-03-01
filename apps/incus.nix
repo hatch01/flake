@@ -123,9 +123,9 @@ in
               "dns.mode" = "dynamic";
               "dns.domain" = "incus";
               # Set upstream DNS servers for VMs/containers
-              "dns.zone.forward" = "true";
-              "dns.zone.reverse.ipv4" = "true";
-              "dns.zone.reverse.ipv6" = "true";
+              # "dns.zone.forward" = "true";
+              # "dns.zone.reverse.ipv4" = "true";
+              # "dns.zone.reverse.ipv6" = "true";
               # Use Cloudflare DNS as upstream
               # "ipv4.dns" = "9.9.9.9,149.112.112.112";
               # "ipv6.dns" = "2620:fe::fe,2620:fe::9";
