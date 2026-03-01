@@ -56,8 +56,8 @@ in
 
     programs.zsh = {
       enable = true;
-      autosuggestions.enable = true;
-      enableCompletion = true;
+      autosuggestions.enable = false;
+      enableCompletion = false;
       enableBashCompletion = true;
       shellAliases = {
         du = lib.getExe pkgs.dust;
@@ -326,21 +326,45 @@ in
         [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
         # enable zoxide
         eval "$(${lib.getExe pkgs.zoxide} init zsh)"
-        # enable nix-index
-        source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
 
-        # enable poetry completions
+        # ── fpath additions (must come before compinit) ──────────────────────
+        # poetry completions
         fpath+=~/.zfunc
 
-        # enable uv completions
-        eval "$(${lib.getExe pkgs.uv} generate-shell-completion zsh)"
-        eval "$(${lib.getExe' pkgs.uv "uvx"} --generate-shell-completion zsh)"
+        # Cache uv/uvx completion files into a fpath directory.
+        # Using fpath files (instead of `eval`/`source`) means compinit picks
+        # them up naturally — no `compdef` call needed after compinit.
+        # The stamp file holds the current uv store path; it changes on every
+        # `nix` upgrade, which is the only time the completions need regenerating.
+        _uv_comp_dir="$HOME/.zsh/completions"
+        _uv_store_path="${lib.getExe pkgs.uv}"
+        _uv_comp_stamp="$_uv_comp_dir/.stamp"
+        if [[ "$(cat "$_uv_comp_stamp" 2>/dev/null)" != "$_uv_store_path" ]]; then
+          mkdir -p "$_uv_comp_dir"
+          ${lib.getExe pkgs.uv} generate-shell-completion zsh >| "$_uv_comp_dir/_uv"
+          ${lib.getExe' pkgs.uv "uvx"} --generate-shell-completion zsh >| "$_uv_comp_dir/_uvx"
+          echo "$_uv_store_path" >| "$_uv_comp_stamp"
+        fi
+        fpath=("$_uv_comp_dir" $fpath)
 
+        # ── completion init ───────────────────────────────────────────────────
+        # zstyle must be set before compinit.
         zstyle ':completion::complete:*' use-cache on
         zstyle ':completion::complete:*' cache-path ~/.zsh/cache
 
+        # fpath is already populated by /etc/zshenv via the NIX_PROFILES loop.
+        # -C: skip security audit and dump regeneration entirely.
+        # The dump is regenerated automatically on every nixos-rebuild (Nix store
+        # paths in fpath change → dump is absent/stale on first shell after rebuild).
+        # For a manual regen (e.g. after `nix profile install`), run: zinit
         autoload -Uz compinit
-        compinit -u
+        compinit -C
+
+        zinit() { autoload -Uz compinit && compinit -u && echo "compinit done" }
+
+        # ── things that call compdef (must come after compinit) ───────────────
+        # nix-index command-not-found handler registers a compdef internally.
+        source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
 
         source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
         source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
