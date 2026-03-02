@@ -50,6 +50,7 @@ in
       sshfs
       gitoxide
       btdu
+      snitch
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
