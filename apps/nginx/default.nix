@@ -51,6 +51,15 @@ in
             if config.matrix.enable then
               {
                 "m.homeserver".base_url = "https://${config.matrix.domain}";
+                "org.matrix.msc2965.authentication" = {
+                  "issuer" = "https://${base_domain_name}";
+                  "account" = "https://${config.matrix.mas.domain}/account";
+                };
+                oidc_static_clients = {
+                  "https://${base_domain_name}" = {
+                    client_id = "0000000000000000000SYNAPSE";
+                  };
+                };
               }
               // (
                 if config.matrix.elementCall.enable then
