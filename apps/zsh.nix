@@ -3,11 +3,13 @@
   pkgs,
   lib,
   username,
+  stable,
   ...
 }:
 let
   inherit (lib)
     mkEnableOption
+    optionals
     mkIf
     ;
 in
@@ -50,8 +52,9 @@ in
       sshfs
       gitoxide
       btdu
+    ] ++ optionals (!stable) (with pkgs; [
       snitch
-    ];
+    ]);
 
     environment.pathsToLink = [ "/share/zsh" ];
 
