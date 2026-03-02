@@ -228,7 +228,7 @@
         openvpn
         nix-index
         nix-output-monitor
-        nvd
+        dix
         openssl
         pv # monitor the progress of data through a pipe
         hyfetch
