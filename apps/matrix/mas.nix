@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  mkSecret,
+  mkSecrets,
   base_domain_name,
   ...
 }:
@@ -37,7 +37,14 @@ in
   };
 
   config = mkIf config.matrix.mas.enable {
-    age.secrets = mkSecret "mas_config" { };
+    age.secrets = mkSecrets {
+      "mas_config" = { };
+      "mas_matrix_secret" = {
+        owner = "mas";
+        group = "matrix-synapse";
+        mode = "0440";
+      };
+    };
 
     users = {
       groups.mas = { };
@@ -147,18 +154,11 @@ in
                   enabled = false;
                 };
                 matrix = {
+                  kind = "synapse";
                   homeserver = base_domain_name;
                   endpoint = "http://[::1]:${toString config.matrix.port}/";
-                  secret = "$matrix_secret";
+                  secret_file = config.age.secrets.mas_matrix_secret.path;
                 };
-
-                clients = [
-                  {
-                    client_id = "0000000000000000000SYNAPSE";
-                    client_auth_method = "client_secret_basic";
-                    client_secret = "$client_secret";
-                  }
-                ];
 
                 upstream_oauth2 = {
                   providers = [
