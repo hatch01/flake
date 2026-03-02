@@ -249,13 +249,6 @@ in
             };
 
             identity_providers.oidc = {
-              # enable to make it working so using settingsFiles (look above)
-              # jwks = [
-              #   {
-              #     key_id = "main";
-              #     key = ''{{ secret "${config.age.secrets."authelia/oAuth2PrivateKey".path}" | mindent 10 "|" | msquote }}'';
-              #   }
-              # ];
               clients =
                 [ ]
                 ++ optionals config.nextcloud.enable [
