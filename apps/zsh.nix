@@ -21,40 +21,46 @@ in
     users.users.root.shell = pkgs.zsh;
     users.users.${username}.shell = pkgs.zsh;
     programs.pay-respects.enable = true;
-    environment.systemPackages = with pkgs; [
-      w3m
-      ripgrep
-      ripgrep-all
-      zoxide
-      eza
-      procs
-      tokei
-      bandwhich
-      dust
-      duf
-      sd
-      hyperfine
-      fd
-      grex
-      detox
-      xcp
-      silicon
-      ouch
-      nix-tree
-      bottom
-      parallel
-      pbzip2
-      caligula
-      zellij
-      zsh-completions
-      jless
-      fzf-zsh-plugin
-      sshfs
-      gitoxide
-      btdu
-    ] ++ optionals (!stable) (with pkgs; [
-      snitch
-    ]);
+    environment.systemPackages =
+      with pkgs;
+      [
+        w3m
+        ripgrep
+        ripgrep-all
+        zoxide
+        eza
+        procs
+        tokei
+        bandwhich
+        dust
+        duf
+        sd
+        hyperfine
+        fd
+        grex
+        detox
+        xcp
+        silicon
+        ouch
+        nix-tree
+        bottom
+        parallel
+        pbzip2
+        caligula
+        zellij
+        zsh-completions
+        jless
+        fzf-zsh-plugin
+        sshfs
+        gitoxide
+        btdu
+      ]
+      ++ optionals (!stable) (
+        with pkgs;
+        [
+          snitch
+        ]
+      );
 
     environment.pathsToLink = [ "/share/zsh" ];
 
