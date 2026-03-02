@@ -14,7 +14,6 @@ let
     types
     ;
   puppetFile = "/var/lib/matrix-synapse/puppet.yaml";
-  masFile = "/var/lib/matrix-synapse/matrix-authentication-service.yaml";
 in
 {
   imports = [
@@ -99,7 +98,7 @@ in
 
         matrix_authentication_service = {
           enabled = true;
-          endpoint = "http://[::1]:${toString config.matrix.mas.port}/";
+          endpoint = "http://127.0.0.1:${toString config.matrix.mas.port}/";
           secret_path = config.age.secrets.mas_matrix_secret.path;
         };
 
