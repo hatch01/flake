@@ -8,7 +8,7 @@
 }:
 let
   ardour_projet_path = "/home/${username}/Musique/ardour/drum";
-  frame_per_period = "256";
+  frame_per_period = 32;
 
   jack_bufsize = lib.getExe' pkgs.jack-example-tools "jack_bufsize";
   jack_lsp = lib.getExe' pkgs.jack-example-tools "jack_lsp";
@@ -43,9 +43,9 @@ let
     done
 
     # Change JACK buffer size
-    echo "Attempting to set JACK buffer size to ${frame_per_period} ..." >&2
-    if ${jack_bufsize} ${frame_per_period} 2>&1; then
-      echo 'JACK buffer size set to ${frame_per_period}' >&2
+    echo "Attempting to set JACK buffer size to ${toString frame_per_period} ..." >&2
+    if ${jack_bufsize} ${toString frame_per_period} 2>&1; then
+      echo 'JACK buffer size set to ${toString frame_per_period}' >&2
     else
       echo "jack_bufsize failed with exit code $?" >&2
     fi
@@ -116,9 +116,9 @@ in
   services.pipewire.extraConfig.pipewire."92-low-latency" = {
     "context.properties" = {
       "default.clock.rate" = 48000;
-      "default.clock.quantum" = 32;
-      "default.clock.min-quantum" = 32;
-      "default.clock.max-quantum" = 32;
+      "default.clock.quantum" = frame_per_period;
+      "default.clock.min-quantum" = frame_per_period;
+      "default.clock.max-quantum" = frame_per_period;
     };
   };
 
