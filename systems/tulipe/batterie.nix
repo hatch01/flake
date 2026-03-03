@@ -96,18 +96,6 @@ let
     echo "Setup complete!" >&2
   '';
 
-  udevTriggerScript = pkgs.writeShellScript "batterie-udev-trigger" ''
-    set -uexo pipefail
-    echo "Alesis device connected, triggering systemd service" | systemd-cat
-    systemctl --user --machine=${username}@.host restart batterie-setup.service
-  '';
-
-  udevCleanupScript = pkgs.writeShellScript "batterie-udev-cleanup" ''
-    set -uexo pipefail
-    echo "Alesis device removed, stopping systemd service" | systemd-cat
-    systemctl --user --machine=${username}@.host stop batterie-setup.service
-  '';
-
 in
 {
   security.rtkit.enable = true;
@@ -135,9 +123,30 @@ in
   };
 
   services.udev.extraRules = ''
-    ATTR{idVendor}=="13b2", ATTR{idProduct}=="009f", ACTION=="add", RUN+="${udevTriggerScript}"
-    ENV{ID_VENDOR_ID}=="13b2", ENV{ID_MODEL_ID}=="009f", ACTION=="remove", RUN+="${udevCleanupScript}"
+    # Trigger system service when Alesis Turbo drum kit is connected
+    ATTR{idVendor}=="13b2", ATTR{idProduct}=="009f", ACTION=="add", RUN+="${pkgs.systemd}/bin/systemctl start batterie-udev-trigger@${username}.service"
+    # Stop user service when device is removed
+    ENV{ID_VENDOR_ID}=="13b2", ENV{ID_MODEL_ID}=="009f", ACTION=="remove", RUN+="${pkgs.systemd}/bin/systemctl start batterie-udev-cleanup@${username}.service"
   '';
+
+  # System-level services that properly transition to user context.
+  # We use 'su' instead of 'systemctl --machine' to avoid PAM session issues
+  # that occur in recent systemd versions when udev tries to create user sessions.
+  systemd.services."batterie-udev-trigger@" = {
+    description = "Trigger batterie-setup for user %i";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.su}/bin/su -s ${pkgs.bash}/bin/bash %i -c 'XDG_RUNTIME_DIR=/run/user/$(id -u) ${pkgs.systemd}/bin/systemctl --user restart batterie-setup.service'";
+    };
+  };
+
+  systemd.services."batterie-udev-cleanup@" = {
+    description = "Stop batterie-setup for user %i";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.su}/bin/su -s ${pkgs.bash}/bin/bash %i -c 'XDG_RUNTIME_DIR=/run/user/$(id -u) ${pkgs.systemd}/bin/systemctl --user stop batterie-setup.service'";
+    };
+  };
 
   systemd.user.services.batterie-setup = {
     description = "Setup Ardour and MIDI for Alesis drum kit";
