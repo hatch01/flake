@@ -110,6 +110,30 @@ let
 
 in
 {
+  security.rtkit.enable = true;
+  security.pam.loginLimits = [
+    {
+      domain = "@audio";
+      item = "rtprio";
+      type = "-";
+      value = "95";
+    }
+    {
+      domain = "@audio";
+      item = "memlock";
+      type = "-";
+      value = "unlimited";
+    }
+  ];
+  services.pipewire.extraConfig.pipewire."92-low-latency" = {
+    "context.properties" = {
+      "default.clock.rate" = 48000;
+      "default.clock.quantum" = 32;
+      "default.clock.min-quantum" = 32;
+      "default.clock.max-quantum" = 32;
+    };
+  };
+
   services.udev.extraRules = ''
     ATTR{idVendor}=="13b2", ATTR{idProduct}=="009f", ACTION=="add", RUN+="${udevTriggerScript}"
     ENV{ID_VENDOR_ID}=="13b2", ENV{ID_MODEL_ID}=="009f", ACTION=="remove", RUN+="${udevCleanupScript}"

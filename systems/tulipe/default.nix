@@ -117,15 +117,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
     jack.enable = true;
-    extraConfig.jack = {
-      "20-hide-buffer" = {
-        "jack.properties" = {
-          "jack.period-size" = 512;
-        };
-      };
-    };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
