@@ -26,7 +26,7 @@ in
       ++ optionals (system == "x86_64-linux") [ pkgs.arduino-ide ];
     services.udev.packages = [
       pkgs.platformio-core
-      pkgs.openocd
+      # pkgs.openocd
     ];
   };
 }
