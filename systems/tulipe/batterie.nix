@@ -8,7 +8,8 @@
 }:
 let
   ardour_projet_path = "/home/${username}/Musique/ardour/drum";
-  frame_per_period = 256;
+  frame_per_period = 256; # Buffer size for low-latency monitoring
+  # Buffer size 256 @ 48kHz = ~5.3ms latency
 
   jack_bufsize = lib.getExe' pkgs.jack-example-tools "jack_bufsize";
   jack_lsp = lib.getExe' pkgs.jack-example-tools "jack_lsp";
@@ -42,7 +43,7 @@ let
       ${sleep} 0.5
     done
 
-    # Change JACK buffer size
+    # Change JACK buffer size for low latency
     echo "Attempting to set JACK buffer size to ${toString frame_per_period} ..." >&2
     if ${jack_bufsize} ${toString frame_per_period} 2>&1; then
       echo 'JACK buffer size set to ${toString frame_per_period}' >&2
@@ -98,21 +99,18 @@ let
 
 in
 {
-  security.rtkit.enable = true;
-  security.pam.loginLimits = [
-    {
-      domain = "@audio";
-      item = "rtprio";
-      type = "-";
-      value = "95";
-    }
-    {
-      domain = "@audio";
-      item = "memlock";
-      type = "-";
-      value = "unlimited";
-    }
+  imports = [
+    inputs.musnix.nixosModules.musnix
   ];
+
+  # Enable musnix for real-time audio support
+  musnix.enable = true;
+  musnix.soundcardPciId = "07:00.6";
+  musnix.rtirq.enable = true;
+
+  # Enable rtkit for realtime scheduling
+  security.rtkit.enable = true;
+
   services.pipewire.extraConfig.pipewire."92-low-latency" = {
     "context.properties" = {
       "default.clock.rate" = 48000;

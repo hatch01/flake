@@ -373,6 +373,26 @@
         "url": "https://forge.onyx.ovh/github_mirror/lanzaboote"
       }
     },
+    "musnix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1767232402,
+        "narHash": "sha256-li+h6crnhc5Zqs+M6pn7D7M0W9M63ECNennDjRgzioE=",
+        "owner": "musnix",
+        "repo": "musnix",
+        "rev": "d65f98e0b1f792365f1705653d7b2d266ceeff6e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "musnix",
+        "repo": "musnix",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -687,6 +707,7 @@
         "home-manager-stable": "home-manager-stable",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
+        "musnix": "musnix",
         "nix-index-database": "nix-index-database",
         "nix4nvchad": "nix4nvchad",
         "nixos-hardware": "nixos-hardware",

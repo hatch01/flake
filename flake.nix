@@ -118,6 +118,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    musnix = {
+      url = "github:musnix/musnix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     comin = {
       url = "git+https://forge.onyx.ovh/github_mirror/comin?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -40,6 +40,7 @@
         "input"
         "docker"
         "dialout"
+        "audio"
       ];
       hashedPasswordFile = config.age.secrets.userPassword.path;
     };
@@ -47,7 +48,7 @@
   services.logind.settings.Login.HandleLidSwitch = "ignore";
 
   # Bootloader.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
   boot.binfmt = {
@@ -110,7 +111,6 @@
   # Configure console keymap
   console.keyMap = "fr";
 
-  security.rtkit.enable = true;
   security.tpm2.enable = true;
   services.pipewire = {
     enable = true;
