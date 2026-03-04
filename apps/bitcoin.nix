@@ -103,6 +103,11 @@ in
       };
 
       networking.firewall.allowedTCPPorts = [ config.bitcoin.server.port ];
+
+      systemd.services.bitcoind-bitcoin = {
+        after = [ "tailscaled.service" ];
+        requires = [ "tailscaled.service" ];
+      };
     })
   ];
 }
