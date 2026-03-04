@@ -107,15 +107,17 @@ in
   musnix.enable = true;
   musnix.soundcardPciId = "07:00.6";
   musnix.rtirq.enable = true;
-  musnix.kernel.packages = pkgs.linuxPackagesFor (pkgs.linux_latest.override {
-    structuredExtraConfig = with lib.kernel; {
-      EXPERT = yes;
-      PREEMPT_RT = yes;
-      RT_GROUP_SCHED = no;
-      PREEMPT_VOLUNTARY = lib.mkForce no;
-    };
-    ignoreConfigErrors = true;
-  });
+  musnix.kernel.packages = pkgs.linuxPackagesFor (
+    pkgs.linux_latest.override {
+      structuredExtraConfig = with lib.kernel; {
+        EXPERT = yes;
+        PREEMPT_RT = yes;
+        RT_GROUP_SCHED = no;
+        PREEMPT_VOLUNTARY = lib.mkForce no;
+      };
+      ignoreConfigErrors = true;
+    }
+  );
   musnix.kernel.realtime = true;
 
   # Enable rtkit for realtime scheduling
