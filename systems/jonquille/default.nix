@@ -151,8 +151,11 @@
   };
 
   # Enable networking
-  networking = {
-    networkmanager.enable = true;
+  systemd.network.enable = true;
+  systemd.network.networks."50-enp1s0" = {
+    matchConfig.Name = "enp1s0";
+    networkConfig.DHCP = "yes";
+    linkConfig.RequiredForOnline = "yes";
   };
 
   # Set your time zone.
