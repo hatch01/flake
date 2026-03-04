@@ -43,6 +43,7 @@ let
       "nextcloudSecretFile"
       "nextcloudDspPassword"
       "onlyofficeDocumentServerKey"
+      "onlyofficeNonce"
 
       # Homepage
       "homepage"

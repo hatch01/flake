@@ -65,7 +65,14 @@ in
           group = config.users.users.nextcloud.name;
         };
       })
-      // optionalAttrs config.onlyofficeDocumentServer.enable (mkSecret "onlyofficeDocumentServerKey" { })
+      // optionalAttrs config.onlyofficeDocumentServer.enable (mkSecrets {
+        "onlyofficeDocumentServerKey" = { };
+        "onlyofficeNonce" = {
+          group = "nginx";
+          mode = "0440";
+
+        };
+      })
       // optionalAttrs config.nextcloud.app_api.enable (mkSecret "nextcloudDspPassword" { });
 
     nextcloud.app_api.enable = mkDefault config.nextcloud.enable;
@@ -215,21 +222,22 @@ in
         };
       };
 
-      # onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
-      #   enable = true;
-      #   hostname = config.onlyofficeDocumentServer.domain;
-      #   jwtSecretFile = config.age.secrets.onlyofficeDocumentServerKey.path;
-      #   port = config.onlyofficeDocumentServer.port;
-      # };
+      onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
+        enable = true;
+        hostname = config.onlyofficeDocumentServer.domain;
+        jwtSecretFile = config.age.secrets.onlyofficeDocumentServerKey.path;
+        port = config.onlyofficeDocumentServer.port;
+        securityNonceFile = config.age.secrets.onlyofficeNonce.path;
+      };
     };
     virtualisation.oci-containers.containers = {
-      onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
-        image = "onlyoffice/documentserver:latest";
-        ports = [ "${toString config.onlyofficeDocumentServer.port}:80" ];
-        environmentFiles = [
-          config.age.secrets.onlyofficeDocumentServerKey.path
-        ];
-      };
+      # onlyoffice = mkIf config.onlyofficeDocumentServer.enable {
+      #   image = "onlyoffice/documentserver:latest";
+      #   ports = [ "${toString config.onlyofficeDocumentServer.port}:80" ];
+      #   environmentFiles = [
+      #     config.age.secrets.onlyofficeDocumentServerKey.path
+      #   ];
+      # };
 
       app_api-dsp = mkIf config.nextcloud.app_api.enable {
         image = "ghcr.io/nextcloud/nextcloud-appapi-dsp:release";
