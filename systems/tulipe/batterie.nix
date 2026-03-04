@@ -120,6 +120,10 @@ in
 
   # Enable rtkit for realtime scheduling
   security.rtkit.enable = true;
+  security.rtkit.args = [
+    "--our-realtime-priority=89"
+    "--max-realtime-priority=88"
+  ];
 
   services.pipewire.extraConfig.pipewire."92-low-latency" = {
     "context.properties" = {
