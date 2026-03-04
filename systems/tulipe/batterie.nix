@@ -137,20 +137,19 @@ in
   };
 
   systemd.user.services.pipewire = {
-  serviceConfig = {
-    LimitRTPRIO = 95;
-    LimitMEMLOCK = "infinity";
-    LimitNICE = 40;  # allows nice -19
+    serviceConfig = {
+      LimitRTPRIO = 95;
+      LimitMEMLOCK = "infinity";
+      LimitNICE = 40; # allows nice -19
+    };
   };
-};
 
-systemd.user.services.pipewire-pulse = {
-  serviceConfig = {
-    LimitRTPRIO = 95;
-    LimitMEMLOCK = "infinity";
+  systemd.user.services.pipewire-pulse = {
+    serviceConfig = {
+      LimitRTPRIO = 95;
+      LimitMEMLOCK = "infinity";
+    };
   };
-};
-
 
   services.udev.extraRules = ''
     # Trigger system service when Alesis Turbo drum kit is connected
