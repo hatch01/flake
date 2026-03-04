@@ -64,7 +64,6 @@
   };
   services.fwupd.enable = true;
 
-  programs.ccache.enable = true;
   # Enable CUPS to print documents.
   services.printing.enable = true;
   hardware.sane.enable = true; # enables support for SANE scanners
