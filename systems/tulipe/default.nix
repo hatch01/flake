@@ -48,7 +48,6 @@
   services.logind.settings.Login.HandleLidSwitch = "ignore";
 
   # Bootloader.
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
   boot.binfmt = {
