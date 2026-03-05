@@ -1,11 +1,5 @@
 {
-  stable = [
-    {
-      pr = 477783;
-      name = "fzf-zsh";
-      hash = "sha256-bYftpEQrSz7I1ozexiVjdOrUuwJxEOsoPFo1tiWi078=";
-    }
-  ];
+  stable = [];
 
   unstable = [
     {
