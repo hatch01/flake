@@ -1,5 +1,5 @@
 {
-  stable = [];
+  stable = [ ];
 
   unstable = [
     {
