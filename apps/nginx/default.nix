@@ -164,10 +164,10 @@ in
             inherit (cfg) forceSSL enableACME;
           };
 
-          # ${config.onlyofficeDocumentServer.domain} = mkIf config.onlyofficeDocumentServer.enable {
-          #   inherit (cfg) forceSSL extraConfig enableACME;
+          ${config.onlyofficeDocumentServer.domain} = mkIf config.onlyofficeDocumentServer.enable {
+            inherit (cfg) forceSSL extraConfig enableACME;
           #   locations."/".proxyPass = "http://[::1]:${toString config.onlyofficeDocumentServer.port}";
-          # };
+          };
 
           ${config.forgejo.domain} = mkIf config.forgejo.enable {
             inherit (cfg) forceSSL enableACME;

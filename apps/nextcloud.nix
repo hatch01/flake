@@ -66,8 +66,11 @@ in
         };
       })
       // optionalAttrs config.onlyofficeDocumentServer.enable (mkSecrets {
-        "onlyofficeDocumentServerKey" = { };
+        "onlyofficeDocumentServerKey" = {
+          owner = "onlyoffice";
+        };
         "onlyofficeNonce" = {
+          owner = "onlyoffice";
           group = "nginx";
           mode = "0440";
 
