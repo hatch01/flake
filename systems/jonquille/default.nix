@@ -152,6 +152,8 @@
 
   # Enable networking
   systemd.network.enable = true;
+  networking.interfaces.enp1s0.useDHCP = true;
+  networking.useNetworkd = true;
   systemd.network.networks."50-enp1s0" = {
     matchConfig.Name = "enp1s0";
     networkConfig.DHCP = "yes";
