@@ -63,7 +63,7 @@ in
         carla
         qjackctl
         qpwgraph
-        helvum
+        crosspipe
         coppwr
         musescore
       ];
