@@ -3,7 +3,7 @@
   lib,
   pkgs,
   base_domain_name,
-  mkSecret,
+  mkSecrets,
   ...
 }:
 let
@@ -15,7 +15,13 @@ let
     ;
 
   interval = "30s";
-  alerts = [ { type = "email"; } ];
+  alerts = [
+    { type = "email"; }
+    {
+      type = "discord";
+      send-on-resolved = true;
+    }
+  ];
   default_group = "onyx";
   default_conditions = [
     "[STATUS] == 200"
@@ -56,8 +62,14 @@ in
   imports = [ ./postgres.nix ];
 
   config = mkIf config.gatus.enable {
-    age.secrets = mkSecret "kvmdHttpHeader" { };
-    systemd.services.gatus.serviceConfig.EnvironmentFile = config.age.secrets.kvmdHttpHeader.path;
+    age.secrets = mkSecrets {
+      "kvmdHttpHeader" = { };
+      "gatusEnv" = { };
+    };
+    systemd.services.gatus.serviceConfig.EnvironmentFile = [
+      config.age.secrets.kvmdHttpHeader.path
+      config.age.secrets.gatusEnv.path
+    ];
 
     services.postgresql.enable = true;
     services.gatus = {
@@ -195,6 +207,8 @@ in
             json2yaml "$valuePath" "$out"
               echo "
             alerting:
+              discord:
+                webhook-url: \"\$WEBHOOK_URL\"
               email:
                 client:
                   insecure: true

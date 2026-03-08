@@ -80,6 +80,7 @@ let
       "rootPassword"
       "headscale_oidc"
       "kvmdHttpHeader"
+      "gatusEnv"
     ];
 
   defineSecrets =
