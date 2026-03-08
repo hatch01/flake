@@ -184,7 +184,10 @@ in
               networks = [
                 {
                   name = "internal";
-                  networks = [ "127.0.0.1/32" ];
+                  networks = [
+                    "127.0.0.1/32"
+                    "77.42.31.199" # Ip of cyclamen which host gatus
+                  ];
                 }
               ];
               rules = [
