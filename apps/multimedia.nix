@@ -66,6 +66,7 @@ in
         crosspipe
         coppwr
         musescore
+        demucs-rs
       ];
   };
 }
