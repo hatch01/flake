@@ -105,7 +105,7 @@ in
       promptInit = ''
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         export POWERLEVEL9K_MODE="nerdfont-v3"
-        export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs time battery)
+        export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time battery)
         export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir dir_writable virtualenv anaconda pyenv root_indicator vcs)
         export POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
         export POWERLEVEL9K_PROMPT_ON_NEWLINE=true
