@@ -119,7 +119,7 @@
     };
 
     musnix = {
-      url = "github:musnix/musnix";
+      url = "git+https://forge.onyx.ovh/github_mirror/musnix?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -382,15 +382,16 @@
       "locked": {
         "lastModified": 1773094728,
         "narHash": "sha256-lKS43JoXvQr4yc/B+x6jXZ7gme8O7RWIml3DXxvy4SA=",
-        "owner": "musnix",
-        "repo": "musnix",
+        "ref": "refs/heads/master",
         "rev": "2015a0bc8f83aad36237a4284c96e411f191260f",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/musnix"
       },
       "original": {
-        "owner": "musnix",
-        "repo": "musnix",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/musnix"
       }
     },
     "nix-index-database": {
