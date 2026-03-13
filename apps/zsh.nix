@@ -54,6 +54,7 @@ in
         sshfs
         gitoxide
         btdu
+        yazi
       ]
       ++ optionals (!stable) (
         with pkgs;
