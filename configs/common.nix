@@ -280,16 +280,6 @@
     root = {
       hashedPasswordFile = config.age.secrets.rootPassword.path;
       openssh.authorizedKeys.keys = [
-        # cockpit ssh key
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMD71+kkmmNCsDAtsdB4w3sicLzdJnELExqEIhz3TGEC root@jonquille"
-
-        # ssh-keygen -t ed25519-sk \
-        # -O resident \
-        # -O verify-required \
-        # -O application=ssh:yubi1 \
-        # -f ~/.ssh/id_ed25519_sk_rk_yubi1 \
-        # -C "eymericdechelette@gmail.com"
-
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+QyzHE8xVIWrDHZTf0M8mmFNC1tcbIOt+PafD8H4S7"
       ];
     };
