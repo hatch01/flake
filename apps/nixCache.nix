@@ -30,21 +30,15 @@ in
   };
 
   config = mkIf config.nixCache.enable {
-    users = {
-      users.nix-serve = {
-        isSystemUser = true;
-        group = "nix-serve";
-      };
-      groups.nix-serve = { };
-    };
-
     age.secrets = mkSecret "cache-priv-key.pem" {
-      owner = "nix-serve";
+      owner = "harmonia";
     };
-    services.nix-serve = {
+    services.harmonia = {
       enable = true;
-      port = config.nixCache.port;
-      secretKeyFile = config.age.secrets."cache-priv-key.pem".path;
+      signKeyPaths = [ config.age.secrets."cache-priv-key.pem".path ];
+      settings = {
+        bind = "[::]:${toString config.nixCache.port}";
+      };
     };
   };
 }
