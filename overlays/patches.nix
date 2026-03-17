@@ -7,6 +7,11 @@
       name = "openthread-border-router";
       hash = "sha256-77CKiXwLAK4hgXPMN1lxYcLiWk44Rvs0Tion+t9fB6o=";
     }
+    {
+      pr = 499297;
+      name = "hatchupdate";
+      hash = "sha256-ctLJd5XO/hgcZMPLXdiwwZrH7m77COzt+zAHIeBj/YE=";
+    }
   ];
 
   common = [
