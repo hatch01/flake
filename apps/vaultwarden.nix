@@ -28,7 +28,7 @@ in
       config = {
         DOMAIN = "https://${config.vaultwarden.domain}";
         SIGNUPS_ALLOWED = false;
-        ROCKET_ADDRESS = "::1";
+        ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = config.vaultwarden.port;
         SMTP_HOST = "smtp.free.fr";
         SMTP_USERNAME = "eymeric.monitoring";

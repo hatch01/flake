@@ -32,7 +32,7 @@ in
   config = mkIf config.librespeed.enable {
     virtualisation.oci-containers.containers.speedtest = {
       ports = [
-        "[::1]:${toString config.librespeed.port}:8080"
+        "127.0.0.1:${toString config.librespeed.port}:8080"
       ];
       image = "ghcr.io/librespeed/speedtest";
     };

@@ -8,7 +8,9 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  mkVhostLogs = name:
+
+  mkVhostLogs =
+    name:
     let
       safeName = builtins.replaceStrings [ "." ] [ "_" ] name;
     in
@@ -16,6 +18,138 @@ let
       access_log /var/log/nginx/${safeName}_access.log combined buffer=64k flush=5m;
       error_log /var/log/nginx/${safeName}_error.log;
     '';
+
+  # Resolve a dotted path like "beszel.hub" into config.beszel.hub
+  resolvePath = path: lib.foldl' (acc: part: acc.${part}) config (lib.splitString "." path);
+
+  authRequestConf = builtins.readFile ./auth-authrequest.conf;
+
+  autheliaProxy = {
+    proxyPass = "${
+      if config.authelia.enable then
+        "http://[::1]:${toString config.authelia.port}"
+      else
+        "https://${toString config.authelia.domain}"
+    }/api/authz/auth-request";
+    recommendedProxySettings = false;
+    extraConfig = builtins.readFile ./auth-location.conf;
+  };
+
+  # mkVhost "serviceName" { ... }
+  #
+  # Auto-resolves config.<serviceName>.{enable,domain,port}
+  # Generates: ACME, forceSSL, per-vhost logs, proxyPass to port
+  #
+  # Options:
+  #   cache              - bool, add proxy_cache (default: false)
+  #   authelia           - bool, add authelia auth-request on "/" and authz location (default: false)
+  #   extraConfig        - string, additional nginx server-level config (default: "")
+  #   locations          - attrset, deep-merged with the default locations (default: {})
+  #   noDefaultLocations - bool, omit default "/" location entirely (default: false)
+  #   Any other key is passed through to the virtualHost (e.g. root)
+  mkVhost =
+    serviceName:
+    {
+      cache ? false,
+      authelia ? false,
+      extraConfig ? "",
+      locations ? { },
+      noDefaultLocations ? false,
+      ...
+    }@overrides:
+    let
+      svc = resolvePath serviceName;
+      domain = svc.domain;
+      enable = svc.enable;
+      port = svc.port;
+
+      # Server-level extraConfig
+      serverExtraParts =
+        lib.optional cache "proxy_cache cache;" ++ lib.optional (extraConfig != "") extraConfig;
+      fullExtraConfig = lib.concatStringsSep "\n" (serverExtraParts ++ [ (mkVhostLogs domain) ]);
+
+      # User-provided "/" location overrides
+      userRootLoc = locations."/" or { };
+
+      # Concatenate extraConfig parts for "/" location: authelia first, then user's
+      rootLocExtraConfig = lib.concatStringsSep "\n" (
+        lib.optional authelia authRequestConf
+        ++ lib.optional (userRootLoc ? extraConfig) userRootLoc.extraConfig
+      );
+
+      # Build the "/" location: defaults + user overrides + merged extraConfig
+      rootLocation = {
+        proxyPass = "http://127.0.0.1:${toString port}";
+      }
+      // userRootLoc
+      // lib.optionalAttrs (rootLocExtraConfig != "") { extraConfig = rootLocExtraConfig; };
+
+      # All other user locations (excluding "/")
+      otherUserLocations = builtins.removeAttrs locations [ "/" ];
+
+      # Authelia authz location
+      autheliaLocations = lib.optionalAttrs authelia {
+        "/internal/authelia/authz" = autheliaProxy;
+      };
+
+      defaultLocations = {
+        "/" = rootLocation;
+      }
+      // autheliaLocations
+      // otherUserLocations;
+
+      effectiveLocations =
+        if noDefaultLocations then autheliaLocations // locations else defaultLocations;
+
+      passthroughOverrides = builtins.removeAttrs overrides [
+        "cache"
+        "authelia"
+        "extraConfig"
+        "locations"
+        "noDefaultLocations"
+      ];
+    in
+    {
+      ${domain} = mkIf enable (
+        {
+          forceSSL = config.nginx.acme.enable;
+          enableACME = config.nginx.acme.enable;
+          extraConfig = fullExtraConfig;
+        }
+        // lib.optionalAttrs (effectiveLocations != { }) {
+          locations = effectiveLocations;
+        }
+        // passthroughOverrides
+      );
+    };
+
+  clientConfig =
+    lib.optionalAttrs config.matrix.enable {
+      "m.homeserver".base_url = "https://${config.matrix.domain}";
+      "org.matrix.msc2965.authentication" = {
+        "issuer" = "https://${base_domain_name}";
+        "account" = "https://${config.matrix.mas.domain}/account";
+      };
+      oidc_static_clients = {
+        "https://${base_domain_name}" = {
+          client_id = "0000000000000000000SYNAPSE";
+        };
+      };
+    }
+    // lib.optionalAttrs (config.matrix.enable && config.matrix.elementCall.enable) {
+      "org.matrix.msc4143.rtc_foci" = [
+        {
+          type = "livekit";
+          livekit_service_url = "https://${config.matrix.domain}/livekit/jwt";
+        }
+      ];
+    };
+
+  mkWellKnown = data: ''
+    default_type application/json;
+    add_header Access-Control-Allow-Origin *;
+    return 200 '${builtins.toJSON data}';
+  '';
 in
 {
   options = {
@@ -48,421 +182,196 @@ in
         };
       };
 
-      virtualHosts =
-        let
-          cfg = {
-            forceSSL = config.nginx.acme.enable;
-            useACMEHost = base_domain_name;
-            enableACME = config.nginx.acme.enable;
+      virtualHosts = lib.mkMerge [
+
+        (mkVhost "homepage" {
+          authelia = true;
+          locations = {
+            "= /.well-known/matrix/server".extraConfig = mkIf config.matrix.enable (mkWellKnown {
+              "m.server" = "${config.matrix.domain}:443";
+            });
+            "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
+            "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
+          };
+        })
+
+        (mkVhost "beszel.hub" { })
+
+        (mkVhost "gatus" { })
+
+        (mkVhost "cockpit" {
+          locations."/" = {
+            recommendedProxySettings = false;
             extraConfig = ''
-              proxy_cache cache;
+              # Required for web sockets to work
+              proxy_http_version 1.1;
+              proxy_buffering off;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              gzip off;
             '';
           };
-          clientConfig =
-            if config.matrix.enable then
-              {
-                "m.homeserver".base_url = "https://${config.matrix.domain}";
-                "org.matrix.msc2965.authentication" = {
-                  "issuer" = "https://${base_domain_name}";
-                  "account" = "https://${config.matrix.mas.domain}/account";
-                };
-                oidc_static_clients = {
-                  "https://${base_domain_name}" = {
-                    client_id = "0000000000000000000SYNAPSE";
-                  };
-                };
-              }
-              // (
-                if config.matrix.elementCall.enable then
-                  {
-                    "org.matrix.msc4143.rtc_foci" = [
-                      {
-                        type = "livekit";
-                        livekit_service_url = "https://${config.matrix.domain}/livekit/jwt";
-                      }
-                    ];
-                  }
-                else
-                  { }
-              )
-            else
-              { };
-          mkWellKnown = data: ''
-            default_type application/json;
-            add_header Access-Control-Allow-Origin *;
-            return 200 '${builtins.toJSON data}';
+        })
+
+        (mkVhost "adguard" {
+          authelia = true;
+          locations = {
+            # Homepage needs to access control/stats without authentication
+            "/control/stats".proxyPass = "https://[::1]:${toString config.adguard.port}";
+            # dns-query does not need any authentication
+            "/dns-query".proxyPass = "https://[::1]:${toString config.adguard.port}";
+          };
+        })
+
+        (mkVhost "nextcloud" { noDefaultLocations = true; })
+
+        (mkVhost "onlyofficeDocumentServer" {
+          cache = true;
+          noDefaultLocations = true;
+        })
+
+        (mkVhost "forgejo" {
+          cache = true;
+          extraConfig = ''
+            client_max_body_size 512M;
           '';
-          autheliaProxy = {
-            proxyPass = "${
-              if config.authelia.enable then
-                "http://[::1]:${toString config.authelia.port}"
-              else
-                "https://${toString config.authelia.domain}"
-            }/api/authz/auth-request";
-            recommendedProxySettings = false;
-            extraConfig = builtins.readFile ./auth-location.conf;
-          };
-        in
-        {
-          "${base_domain_name}" = mkIf config.homepage.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs base_domain_name;
-            locations = {
-              "/" = mkIf config.homepage.enable {
-                proxyPass = "http://127.0.0.1:${toString config.homepage.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
+        })
+
+        (mkVhost "matrix" {
+          cache = true;
+          noDefaultLocations = true;
+          root = mkIf config.matrix.enableElement (
+            pkgs.element-web.override {
+              conf = {
+                default_server_config = clientConfig;
               };
+            }
+          );
+          locations = {
+            "/".extraConfig = mkIf (!config.matrix.enableElement) ''
+              return 404;
+            '';
 
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
-
-              "= /.well-known/matrix/server".extraConfig = mkIf config.matrix.enable (mkWellKnown {
-                "m.server" = "${config.matrix.domain}:443";
-              });
-              "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
-              "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
+            "~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
+              priority = 100;
+              proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
             };
-          };
-          ${config.beszel.hub.domain} = mkIf config.beszel.hub.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.beszel.hub.domain;
-            locations = {
-              "/".proxyPass = "http://127.0.0.1:${toString config.beszel.hub.port}";
-            };
-          };
 
-          ${config.gatus.domain} = mkIf config.gatus.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.gatus.domain;
-            locations."/".proxyPass = "http://127.0.0.1:${toString config.gatus.port}";
-          };
-
-          ${config.cockpit.domain} = mkIf config.cockpit.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.cockpit.domain;
-            locations = {
-              "/" = {
-                recommendedProxySettings = false;
-                proxyPass = "http://[::1]:${toString config.cockpit.port}";
-                extraConfig = ''
-                                # Required for web sockets to work
-                                proxy_http_version 1.1;
-                                proxy_buffering off;
-                                proxy_set_header Upgrade $http_upgrade;
-                                proxy_set_header Connection "upgrade";
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
-                                gzip off;'';
-              };
-            };
-          };
-
-          ${config.adguard.domain} = mkIf config.adguard.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.adguard.domain;
-            locations = {
-              "/" = {
-                proxyPass = "https://[::1]:${toString config.adguard.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
-              };
-
-              # Homepage need to access control/stats without authentication
-              "/control/stats".proxyPass = "https://[::1]:${toString config.adguard.port}";
-              # dns-query does not need any authentication
-              "/dns-query".proxyPass = "https://[::1]:${toString config.adguard.port}";
-
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
-            };
-          };
-
-          ${config.nextcloud.domain} = mkIf config.nextcloud.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.nextcloud.domain;
-          };
-
-          ${config.onlyofficeDocumentServer.domain} = mkIf config.onlyofficeDocumentServer.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              cfg.extraConfig
-              (mkVhostLogs config.onlyofficeDocumentServer.domain)
-            ];
-            #   locations."/".proxyPass = "http://[::1]:${toString config.onlyofficeDocumentServer.port}";
-          };
-
-          ${config.forgejo.domain} = mkIf config.forgejo.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              cfg.extraConfig
-              ''
-                client_max_body_size 512M;
-              ''
-              (mkVhostLogs config.forgejo.domain)
-            ];
-            locations."/".proxyPass = "http://[::1]:${toString config.forgejo.port}";
-          };
-
-          ${config.matrix.domain} = mkIf config.matrix.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              cfg.extraConfig
-              (mkVhostLogs config.matrix.domain)
-            ];
-            root = mkIf config.matrix.enableElement (
-              pkgs.element-web.override {
-                conf = {
-                  default_server_config = clientConfig; # see `clientConfig` from the snippet above.
-                };
-              }
-            );
-            locations = {
-              "/".extraConfig = mkIf (!config.matrix.enableElement) ''
-                return 404;
+            "~ ^(/_matrix|/_synapse/client)" = {
+              proxyPass = "http://[::1]:${toString config.matrix.port}";
+              extraConfig = ''
+                client_max_body_size 10G;
               '';
-
-              # Forward to the auth service
-              "~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
-                priority = 100;
-                proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
-              };
-
-              "~ ^(/_matrix|/_synapse/client)" = {
-                proxyPass = "http://[::1]:${toString config.matrix.port}";
-                extraConfig = ''
-                  client_max_body_size 10G;
-                '';
-              };
-              "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
-
-              # MatrixRTC backend (Element Call) - subpaths on same domain
-              "^~ /livekit/jwt/" = mkIf config.matrix.elementCall.enable {
-                proxyPass = "http://localhost:${toString config.matrix.elementCall.jwtServicePort}/";
-              };
-
-              "^~ /livekit/sfu/" = mkIf config.matrix.elementCall.enable {
-                proxyPass = "http://localhost:${toString config.matrix.elementCall.livekitPort}/";
-                proxyWebsockets = true;
-              };
             };
-          };
+            "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
 
-          ${config.matrix.mas.domain} = mkIf config.matrix.mas.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              cfg.extraConfig
-              (mkVhostLogs config.matrix.mas.domain)
-            ];
-            locations = {
-              "/".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
-              "/assets/".root = "${pkgs.matrix-authentication-service}/share/matrix-authentication-service/";
-              "/health".proxyPass = "http://localhost:${toString config.matrix.mas.port2}";
+            "^~ /livekit/jwt/" = mkIf config.matrix.elementCall.enable {
+              proxyPass = "http://localhost:${toString config.matrix.elementCall.jwtServicePort}/";
             };
-          };
 
-          ${config.nixCache.domain} = mkIf config.nixCache.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.nixCache.domain;
-            locations."/".proxyPass = "http://127.0.0.1:${toString config.nixCache.port}";
-          };
-
-          ${config.home_assistant.domain} = mkIf config.home_assistant.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              "proxy_buffering off;"
-              (mkVhostLogs config.home_assistant.domain)
-            ];
-            locations."/" = {
-              proxyPass = "http://[::1]:${toString config.home_assistant.port}";
+            "^~ /livekit/sfu/" = mkIf config.matrix.elementCall.enable {
+              proxyPass = "http://localhost:${toString config.matrix.elementCall.livekitPort}/";
               proxyWebsockets = true;
             };
           };
+        })
 
-          ${config.authelia.domain} = mkIf config.authelia.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              cfg.extraConfig
-              (mkVhostLogs config.authelia.domain)
-            ];
-            locations =
-              let
-                authUrl = "http://[::1]:${toString config.authelia.port}";
-              in
-              {
-                "/".proxyPass = authUrl;
-                "/api/verify".proxyPass = authUrl;
-                "/api/authz".proxyPass = authUrl;
-              };
+        (mkVhost "matrix.mas" {
+          cache = true;
+          locations = {
+            "/assets/".root = "${pkgs.matrix-authentication-service}/share/matrix-authentication-service/";
+            "/health".proxyPass = "http://localhost:${toString config.matrix.mas.port2}";
           };
+        })
 
-          ${config.librespeed.domain} = mkIf config.librespeed.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.librespeed.domain;
-            locations = {
-              "/" = {
-                proxyPass = "http://[::1]:${toString config.librespeed.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
-              };
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
+        (mkVhost "nixCache" { })
+
+        (mkVhost "home_assistant" {
+          extraConfig = "proxy_buffering off;";
+          locations."/".proxyWebsockets = true;
+        })
+
+        (mkVhost "authelia" {
+          cache = true;
+          locations = {
+            "/api/verify".proxyPass = "http://[::1]:${toString config.authelia.port}";
+            "/api/authz".proxyPass = "http://[::1]:${toString config.authelia.port}";
+          };
+        })
+
+        (mkVhost "librespeed" { authelia = true; })
+
+        (mkVhost "apolline" { authelia = true; })
+
+        (mkVhost "portfolio" { })
+
+        (mkVhost "incus" {
+          locations."/".extraConfig = ''
+            # Required for web sockets to work
+            proxy_buffering off;
+            client_max_body_size 0;
+            send_timeout  3600s;
+            proxy_http_version 1.1;
+            proxy_connect_timeout  3600s;
+            proxy_read_timeout  3600s;
+            proxy_send_timeout  3600s;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+          '';
+        })
+
+        (mkVhost "nodered" {
+          cache = true;
+          authelia = true;
+          locations = {
+            "/".extraConfig = ''
+              proxy_buffering off;
+              proxy_http_version 1.1;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+            '';
+            "/health".proxyPass = "http://127.0.0.1:${toString config.nodered.port}/health";
+          };
+        })
+
+        (mkVhost "zigbee2mqtt" {
+          authelia = true;
+          locations."/".proxyWebsockets = true;
+        })
+
+        (mkVhost "esp_home" {
+          authelia = true;
+          locations."/".proxyWebsockets = true;
+        })
+
+        (mkVhost "wakapi" { })
+
+        (mkVhost "vaultwarden" { cache = true; })
+
+        (mkVhost "headscale" {
+          cache = true;
+          locations = {
+            "= /" = {
+              root = "/";
+              tryFiles = "${./headscale.html} =404";
+              extraConfig = ''
+                default_type text/html;
+              '';
+            };
+            "/" = {
+              proxyWebsockets = true;
+              extraConfig = ''
+                proxy_buffering off;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;
+              '';
             };
           };
-
-          ${config.apolline.domain} = mkIf config.apolline.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.apolline.domain;
-            locations = {
-              "/" = {
-                proxyPass = "http://[::1]:${toString config.apolline.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
-              };
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
-            };
-          };
-
-          ${config.portfolio.domain} = mkIf config.portfolio.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.portfolio.domain;
-            locations = {
-              "/".proxyPass = "http://[::1]:${toString config.portfolio.port}";
-            };
-          };
-
-          "wikilynx.onyx.ovh" = mkIf (config.networking.hostName == "jonquille") {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs "wikilynx.onyx.ovh";
-            locations = {
-              "/".proxyPass = "http://192.168.1.199:8088";
-            };
-          };
-
-          ${config.incus.domain} = mkIf config.incus.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.incus.domain;
-            locations = {
-              "/" = {
-                proxyPass = "https://[::1]:${toString config.incus.port}";
-                extraConfig = ''
-                  # Required for web sockets to work
-                  proxy_buffering off;
-                  client_max_body_size 0;
-                  send_timeout  3600s;
-                  proxy_http_version 1.1;
-                  proxy_connect_timeout  3600s;
-                  proxy_read_timeout  3600s;
-                  proxy_send_timeout  3600s;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection "upgrade";
-                '';
-              };
-            };
-          };
-
-          ${config.nodered.domain} = mkIf config.nodered.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              cfg.extraConfig
-              (mkVhostLogs config.nodered.domain)
-            ];
-            locations = {
-              "/" = {
-                proxyPass = "http://127.0.0.1:${toString config.nodered.port}";
-                extraConfig = lib.strings.concatStringsSep "\n" [
-                  ''
-                    proxy_buffering off;
-                    proxy_http_version 1.1;
-                    proxy_set_header Upgrade $http_upgrade;
-                    proxy_set_header Connection "upgrade";
-                  ''
-                  (builtins.readFile ./auth-authrequest.conf)
-                ];
-              };
-
-              "/health" = {
-                proxyPass = "http://127.0.0.1:${toString config.nodered.port}/health";
-                # extraConfig = ''
-                #   auth_request off;
-                # '';
-              };
-
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
-            };
-          };
-
-          ${config.zigbee2mqtt.domain} = mkIf config.zigbee2mqtt.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.zigbee2mqtt.domain;
-            locations = {
-              "/" = {
-                proxyPass = "http://[::1]:${toString config.zigbee2mqtt.port}";
-                proxyWebsockets = true;
-                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
-              };
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
-            };
-          };
-
-          ${config.esp_home.domain} = mkIf config.esp_home.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.esp_home.domain;
-            locations = {
-              "/" = {
-                proxyPass = "http://127.0.0.1:${toString config.esp_home.port}";
-                proxyWebsockets = true;
-                extraConfig = lib.strings.concatStringsSep "\n" [ (builtins.readFile ./auth-authrequest.conf) ];
-              };
-              # Corresponds to https://www.authelia.com/integration/proxies/nginx/#authelia-locationconf
-              "/internal/authelia/authz" = autheliaProxy;
-            };
-          };
-
-          ${config.wakapi.domain} = mkIf config.wakapi.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = mkVhostLogs config.wakapi.domain;
-            locations = {
-              "/".proxyPass = "http://[::1]:${toString config.wakapi.port}";
-            };
-          };
-
-          ${config.vaultwarden.domain} = mkIf config.vaultwarden.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              cfg.extraConfig
-              (mkVhostLogs config.vaultwarden.domain)
-            ];
-            locations."/".proxyPass = "http://[::1]:${toString config.vaultwarden.port}";
-          };
-
-          ${config.headscale.domain} = mkIf config.headscale.enable {
-            inherit (cfg) forceSSL enableACME;
-            extraConfig = lib.concatStringsSep "\n" [
-              cfg.extraConfig
-              (mkVhostLogs config.headscale.domain)
-            ];
-            locations = {
-              "= /" = {
-                root = "/";
-                tryFiles = "${./headscale.html} =404";
-                extraConfig = ''
-                  default_type text/html;
-                '';
-              };
-              "/" = {
-                proxyPass = "http://127.0.0.1:${toString config.headscale.port}";
-                proxyWebsockets = true;
-                extraConfig = ''
-                  proxy_buffering off;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
-                  add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;
-                '';
-              };
-            };
-          };
-        };
+        })
+      ];
     };
     networking.firewall.allowedTCPPorts = [
       80
