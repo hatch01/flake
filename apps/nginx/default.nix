@@ -30,6 +30,9 @@ in
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
+      commonHttpConfig = ''
+        access_log /var/log/nginx/access.log combined buffer=64k flush=5m;
+      '';
       proxyCachePath = {
         "" = {
           enable = true;
@@ -230,7 +233,7 @@ in
           };
 
           ${config.nixCache.domain} = mkIf config.nixCache.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
+            inherit (cfg) forceSSL enableACME;
             locations."/".proxyPass = "http://127.0.0.1:${toString config.nixCache.port}";
           };
 
