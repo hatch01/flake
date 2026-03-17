@@ -217,10 +217,11 @@ in
         (mkVhost "adguard" {
           authelia = true;
           locations = {
+            "/".proxyPass = "https://127.0.0.1:${toString config.adguard.port}";
             # Homepage needs to access control/stats without authentication
-            "/control/stats".proxyPass = "https://[::1]:${toString config.adguard.port}";
+            "/control/stats".proxyPass = "https://127.0.0.1:${toString config.adguard.port}";
             # dns-query does not need any authentication
-            "/dns-query".proxyPass = "https://[::1]:${toString config.adguard.port}";
+            "/dns-query".proxyPass = "https://127.0.0.1:${toString config.adguard.port}";
           };
         })
 
