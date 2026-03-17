@@ -293,13 +293,7 @@ in
           locations."/".proxyWebsockets = true;
         })
 
-        (mkVhost "authelia" {
-          cache = true;
-          locations = {
-            "/api/verify".proxyPass = "http://[::1]:${toString config.authelia.port}";
-            "/api/authz".proxyPass = "http://[::1]:${toString config.authelia.port}";
-          };
-        })
+        (mkVhost "authelia" { cache = true; })
 
         (mkVhost "librespeed" { authelia = true; })
 
