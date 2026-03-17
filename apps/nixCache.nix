@@ -3,6 +3,7 @@
   lib,
   mkSecret,
   base_domain_name,
+  stable,
   ...
 }:
 let
@@ -12,6 +13,14 @@ let
     mkIf
     types
     ;
+
+  harmoniaConfig = {
+    enable = true;
+    signKeyPaths = [ config.age.secrets."cache-priv-key.pem".path ];
+    settings = {
+      bind = "[::]:${toString config.nixCache.port}";
+    };
+  };
 in
 {
   options = {
@@ -33,12 +42,6 @@ in
     age.secrets = mkSecret "cache-priv-key.pem" {
       owner = "harmonia";
     };
-    services.harmonia.cache = {
-      enable = true;
-      signKeyPaths = [ config.age.secrets."cache-priv-key.pem".path ];
-      settings = {
-        bind = "[::]:${toString config.nixCache.port}";
-      };
-    };
+    services.harmonia = if stable then harmoniaConfig else { cache = harmoniaConfig; };
   };
 }
