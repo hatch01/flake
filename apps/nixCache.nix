@@ -33,7 +33,7 @@ in
     age.secrets = mkSecret "cache-priv-key.pem" {
       owner = "harmonia";
     };
-    services.harmonia = {
+    services.harmonia.cache = {
       enable = true;
       signKeyPaths = [ config.age.secrets."cache-priv-key.pem".path ];
       settings = {
