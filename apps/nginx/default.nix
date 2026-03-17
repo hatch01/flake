@@ -8,6 +8,14 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
+  mkVhostLogs = name:
+    let
+      safeName = builtins.replaceStrings [ "." ] [ "_" ] name;
+    in
+    ''
+      access_log /var/log/nginx/${safeName}_access.log combined buffer=64k flush=5m;
+      error_log /var/log/nginx/${safeName}_error.log;
+    '';
 in
 {
   options = {
@@ -31,7 +39,7 @@ in
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
       commonHttpConfig = ''
-        access_log /var/log/nginx/access.log combined buffer=64k flush=5m;
+        access_log off;
       '';
       proxyCachePath = {
         "" = {
@@ -98,6 +106,7 @@ in
         {
           "${base_domain_name}" = mkIf config.homepage.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs base_domain_name;
             locations = {
               "/" = mkIf config.homepage.enable {
                 proxyPass = "http://127.0.0.1:${toString config.homepage.port}";
@@ -116,6 +125,7 @@ in
           };
           ${config.beszel.hub.domain} = mkIf config.beszel.hub.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.beszel.hub.domain;
             locations = {
               "/".proxyPass = "http://127.0.0.1:${toString config.beszel.hub.port}";
             };
@@ -123,11 +133,13 @@ in
 
           ${config.gatus.domain} = mkIf config.gatus.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.gatus.domain;
             locations."/".proxyPass = "http://127.0.0.1:${toString config.gatus.port}";
           };
 
           ${config.cockpit.domain} = mkIf config.cockpit.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.cockpit.domain;
             locations = {
               "/" = {
                 recommendedProxySettings = false;
@@ -147,6 +159,7 @@ in
 
           ${config.adguard.domain} = mkIf config.adguard.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.adguard.domain;
             locations = {
               "/" = {
                 proxyPass = "https://[::1]:${toString config.adguard.port}";
@@ -165,10 +178,15 @@ in
 
           ${config.nextcloud.domain} = mkIf config.nextcloud.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.nextcloud.domain;
           };
 
           ${config.onlyofficeDocumentServer.domain} = mkIf config.onlyofficeDocumentServer.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
+            inherit (cfg) forceSSL enableACME;
+            extraConfig = lib.concatStringsSep "\n" [
+              cfg.extraConfig
+              (mkVhostLogs config.onlyofficeDocumentServer.domain)
+            ];
             #   locations."/".proxyPass = "http://[::1]:${toString config.onlyofficeDocumentServer.port}";
           };
 
@@ -179,12 +197,17 @@ in
               ''
                 client_max_body_size 512M;
               ''
+              (mkVhostLogs config.forgejo.domain)
             ];
             locations."/".proxyPass = "http://[::1]:${toString config.forgejo.port}";
           };
 
           ${config.matrix.domain} = mkIf config.matrix.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
+            inherit (cfg) forceSSL enableACME;
+            extraConfig = lib.concatStringsSep "\n" [
+              cfg.extraConfig
+              (mkVhostLogs config.matrix.domain)
+            ];
             root = mkIf config.matrix.enableElement (
               pkgs.element-web.override {
                 conf = {
@@ -224,7 +247,11 @@ in
           };
 
           ${config.matrix.mas.domain} = mkIf config.matrix.mas.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
+            inherit (cfg) forceSSL enableACME;
+            extraConfig = lib.concatStringsSep "\n" [
+              cfg.extraConfig
+              (mkVhostLogs config.matrix.mas.domain)
+            ];
             locations = {
               "/".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
               "/assets/".root = "${pkgs.matrix-authentication-service}/share/matrix-authentication-service/";
@@ -234,14 +261,16 @@ in
 
           ${config.nixCache.domain} = mkIf config.nixCache.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.nixCache.domain;
             locations."/".proxyPass = "http://127.0.0.1:${toString config.nixCache.port}";
           };
 
           ${config.home_assistant.domain} = mkIf config.home_assistant.enable {
             inherit (cfg) forceSSL enableACME;
-            extraConfig = ''
-              proxy_buffering off;
-            '';
+            extraConfig = lib.concatStringsSep "\n" [
+              "proxy_buffering off;"
+              (mkVhostLogs config.home_assistant.domain)
+            ];
             locations."/" = {
               proxyPass = "http://[::1]:${toString config.home_assistant.port}";
               proxyWebsockets = true;
@@ -249,7 +278,11 @@ in
           };
 
           ${config.authelia.domain} = mkIf config.authelia.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
+            inherit (cfg) forceSSL enableACME;
+            extraConfig = lib.concatStringsSep "\n" [
+              cfg.extraConfig
+              (mkVhostLogs config.authelia.domain)
+            ];
             locations =
               let
                 authUrl = "http://[::1]:${toString config.authelia.port}";
@@ -263,6 +296,7 @@ in
 
           ${config.librespeed.domain} = mkIf config.librespeed.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.librespeed.domain;
             locations = {
               "/" = {
                 proxyPass = "http://[::1]:${toString config.librespeed.port}";
@@ -275,6 +309,7 @@ in
 
           ${config.apolline.domain} = mkIf config.apolline.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.apolline.domain;
             locations = {
               "/" = {
                 proxyPass = "http://[::1]:${toString config.apolline.port}";
@@ -287,6 +322,7 @@ in
 
           ${config.portfolio.domain} = mkIf config.portfolio.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.portfolio.domain;
             locations = {
               "/".proxyPass = "http://[::1]:${toString config.portfolio.port}";
             };
@@ -294,6 +330,7 @@ in
 
           "wikilynx.onyx.ovh" = mkIf (config.networking.hostName == "jonquille") {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs "wikilynx.onyx.ovh";
             locations = {
               "/".proxyPass = "http://192.168.1.199:8088";
             };
@@ -301,6 +338,7 @@ in
 
           ${config.incus.domain} = mkIf config.incus.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.incus.domain;
             locations = {
               "/" = {
                 proxyPass = "https://[::1]:${toString config.incus.port}";
@@ -321,7 +359,11 @@ in
           };
 
           ${config.nodered.domain} = mkIf config.nodered.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
+            inherit (cfg) forceSSL enableACME;
+            extraConfig = lib.concatStringsSep "\n" [
+              cfg.extraConfig
+              (mkVhostLogs config.nodered.domain)
+            ];
             locations = {
               "/" = {
                 proxyPass = "http://127.0.0.1:${toString config.nodered.port}";
@@ -350,6 +392,7 @@ in
 
           ${config.zigbee2mqtt.domain} = mkIf config.zigbee2mqtt.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.zigbee2mqtt.domain;
             locations = {
               "/" = {
                 proxyPass = "http://[::1]:${toString config.zigbee2mqtt.port}";
@@ -363,6 +406,7 @@ in
 
           ${config.esp_home.domain} = mkIf config.esp_home.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.esp_home.domain;
             locations = {
               "/" = {
                 proxyPass = "http://127.0.0.1:${toString config.esp_home.port}";
@@ -376,18 +420,27 @@ in
 
           ${config.wakapi.domain} = mkIf config.wakapi.enable {
             inherit (cfg) forceSSL enableACME;
+            extraConfig = mkVhostLogs config.wakapi.domain;
             locations = {
               "/".proxyPass = "http://[::1]:${toString config.wakapi.port}";
             };
           };
 
           ${config.vaultwarden.domain} = mkIf config.vaultwarden.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
+            inherit (cfg) forceSSL enableACME;
+            extraConfig = lib.concatStringsSep "\n" [
+              cfg.extraConfig
+              (mkVhostLogs config.vaultwarden.domain)
+            ];
             locations."/".proxyPass = "http://[::1]:${toString config.vaultwarden.port}";
           };
 
           ${config.headscale.domain} = mkIf config.headscale.enable {
-            inherit (cfg) forceSSL extraConfig enableACME;
+            inherit (cfg) forceSSL enableACME;
+            extraConfig = lib.concatStringsSep "\n" [
+              cfg.extraConfig
+              (mkVhostLogs config.headscale.domain)
+            ];
             locations = {
               "= /" = {
                 root = "/";
