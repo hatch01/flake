@@ -273,6 +273,44 @@
     ];
   };
 
+  age = {
+    secrets = mkSecrets {
+      "smtpPassword" = {
+        group = "smtp";
+        mode = "440";
+        root = true;
+      };
+      "smtpPasswordEnv" = {
+        group = "smtp";
+        mode = "440";
+        root = true;
+      };
+    };
+  };
+
+  programs.msmtp = {
+    enable = true;
+    setSendmail = true;
+    defaults = {
+      aliases = "/etc/aliases";
+      port = 587;
+      auth = "plain";
+      tls = "on";
+      tls_starttls = "on";
+    };
+    accounts = {
+      default = {
+        host = "smtp.free.fr";
+        passwordeval = "cat ${config.age.secrets."smtpPassword".path}";
+        user = "eymeric.monitoring";
+        from = "eymeric.monitoring@free.fr";
+      };
+    };
+  };
+  environment.etc.aliases.text = ''
+    root: eymeric.monitoring@free.fr
+  '';
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 

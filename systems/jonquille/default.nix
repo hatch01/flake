@@ -45,47 +45,9 @@
   boot.loader.timeout = 1;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  age = {
-    identityPaths = [ "/persistent/key" ];
-
-    secrets = mkSecrets {
-      "server/smtpPassword" = {
-        group = "smtp";
-        mode = "440";
-        root = true;
-      };
-      "server/smtpPasswordEnv" = {
-        group = "smtp";
-        mode = "440";
-        root = true;
-      };
-    };
-  };
+  age.identityPaths = [ "/persistent/key" ];
 
   services.mail.sendmailSetuidWrapper.enable = true;
-
-  programs.msmtp = {
-    enable = true;
-    setSendmail = true;
-    defaults = {
-      aliases = "/etc/aliases";
-      port = 587;
-      auth = "plain";
-      tls = "on";
-      tls_starttls = "on";
-    };
-    accounts = {
-      default = {
-        host = "smtp.free.fr";
-        passwordeval = "cat ${config.age.secrets."server/smtpPassword".path}";
-        user = "eymeric.monitoring";
-        from = "eymeric.monitoring@free.fr";
-      };
-    };
-  };
-  environment.etc.aliases.text = ''
-    root: eymeric.monitoring@free.fr
-  '';
 
   services.fwupd.enable = true;
 

@@ -106,7 +106,7 @@ in
             USER = "eymeric.monitoring";
           };
         };
-        secrets.mailer.PASSWD = config.age.secrets."server/smtpPassword".path;
+        secrets.mailer.PASSWD = config.age.secrets."smtpPassword".path;
         stateDir = "/storage/forgejo";
       };
 

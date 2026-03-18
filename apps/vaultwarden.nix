@@ -38,7 +38,7 @@ in
       };
       backupDir = "/storage/vaultwarden_backup";
       # dbBackend = "postgresql";
-      environmentFile = config.age.secrets."server/smtpPasswordEnv".path;
+      environmentFile = config.age.secrets."smtpPasswordEnv".path;
     };
 
     environment.persistence."/persistent" = {

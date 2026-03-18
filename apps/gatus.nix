@@ -74,7 +74,7 @@ in
     services.postgresql.enable = true;
     services.gatus = {
       enable = true;
-      environmentFile = config.age.secrets."server/smtpPasswordEnv".path;
+      environmentFile = config.age.secrets."smtpPasswordEnv".path;
 
       # convert to yaml code stollen in nixpkgs repo
       configFile = pkgs.callPackage (
