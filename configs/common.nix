@@ -141,6 +141,16 @@
       githubToken = {
         root = true;
       };
+      smtpPassword = {
+        group = "smtp";
+        mode = "440";
+        root = true;
+      };
+      smtpPasswordEnv = {
+        group = "smtp";
+        mode = "440";
+        root = true;
+      };
     };
   };
 
@@ -271,21 +281,6 @@
         commands = [ "SETENV: ALL" ];
       }
     ];
-  };
-
-  age = {
-    secrets = mkSecrets {
-      "smtpPassword" = {
-        group = "smtp";
-        mode = "440";
-        root = true;
-      };
-      "smtpPasswordEnv" = {
-        group = "smtp";
-        mode = "440";
-        root = true;
-      };
-    };
   };
 
   programs.msmtp = {
