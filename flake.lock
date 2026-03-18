@@ -531,10 +531,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1773733548,
-        "narHash": "sha256-DgPMxLHcbEMrofdpsGL+DWbvI4T7LXNSBERI1lWE9fw=",
+        "lastModified": 1773788365,
+        "narHash": "sha256-dD/GSEVJ0/hZq7/WayCGbdKrwAbwTnl2h3FdOIl8dP4=",
         "ref": "master",
-        "rev": "4b2d0bea11edcfc5bb84d454ee018e5b2547013b",
+        "rev": "745da47169ec3a17edb6ad6bc7fcb013fdf098a4",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
