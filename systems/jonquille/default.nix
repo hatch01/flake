@@ -5,6 +5,7 @@
   config,
   mkSecrets,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -84,7 +85,7 @@
         echo ""
         echo "Details:"
         echo "$SCRUB_STATUS"
-      } | ${config.programs.msmtp.package}/bin/msmtp -t
+      } | ${lib.getExe config.programs.msmtp.package} -t
     '';
   };
 
