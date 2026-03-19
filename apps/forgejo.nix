@@ -81,7 +81,7 @@ in
           #     --key      <client_id> \
           #     --secret   <secret> \
           #     --auto-discover-url https://auth.${base_domain_name}/.well-known/openid-configuration \
-          #     --scopes='openid email profile groups'
+          #     --scopes='openid email profile'
           # This is automatically done via the preStart systemd hook below.
 
           authelia = {
@@ -175,7 +175,7 @@ in
             --key      forgejo \
             --secret   "$(tr -d '\n' < ${config.age.secrets."authelia/forgejoKey".path})" \
             --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration" \
-            --scopes='openid email profile groups'
+            --scopes='openid email profile'
         else
           echo "No SSO configuration found, creating one"
           $auth add-oauth \
@@ -184,7 +184,7 @@ in
             --key      forgejo \
             --secret   "$(tr -d '\n' < ${config.age.secrets."authelia/forgejoKey".path})" \
             --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration" \
-            --scopes='openid email profile groups'
+            --scopes='openid email profile'
         fi
       '';
 
