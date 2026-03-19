@@ -153,6 +153,9 @@
       };
     };
   };
+  users = {
+    groups.smtp = { };
+  };
 
   programs.direnv = {
     enable = true;

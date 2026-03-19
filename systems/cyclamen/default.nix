@@ -13,7 +13,5 @@
   container.enable = lib.mkForce false;
 
   age.identityPaths = [ "/etc/age/key" ];
-  users = {
-    groups.smtp = { };
-  };
+
 }
