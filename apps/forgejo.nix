@@ -174,8 +174,7 @@ in
             --provider openidConnect \
             --key      forgejo \
             --secret   "$(tr -d '\n' < ${config.age.secrets."authelia/forgejoKey".path})" \
-            --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration" \
-            --scopes='openid email profile'
+            --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration"
         else
           echo "No SSO configuration found, creating one"
           $auth add-oauth \
@@ -183,8 +182,7 @@ in
             --provider openidConnect \
             --key      forgejo \
             --secret   "$(tr -d '\n' < ${config.age.secrets."authelia/forgejoKey".path})" \
-            --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration" \
-            --scopes='openid email profile'
+            --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration"
         fi
       '';
 
