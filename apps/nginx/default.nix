@@ -245,6 +245,7 @@ in
           root = mkIf config.matrix.enableElement (
             pkgs.element-web.override {
               conf = {
+                default_server_name = config.matrix.domain;
                 default_server_config = clientConfig;
               };
             }
