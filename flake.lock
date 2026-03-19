@@ -466,10 +466,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1773603777,
-        "narHash": "sha256-oXSEbMR/IuHYk9nvrbRhaYBxVK5s63DH2UGOZT2ok48=",
+        "lastModified": 1773872301,
+        "narHash": "sha256-07nheyIU5rwljPDL8TFoUuIWiX7u+nAfI0z/nvtTrk4=",
         "ref": "refs/heads/main",
-        "rev": "0efe7af73d6e4a8d447a22936c5526d73822b0a7",
+        "rev": "e58c9f4b3233d63abe4dfc4f7d69704900428348",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/NixOS-WSL"
@@ -514,10 +514,10 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1773705440,
-        "narHash": "sha256-xB30bbAp0e7ogSEYyc126mAJMt4FRFh8wtm6ADE1xuM=",
+        "lastModified": 1773814637,
+        "narHash": "sha256-GNU+ooRmrHLfjlMsKdn0prEKVa0faVanm0jrgu1J/gY=",
         "ref": "nixos-25.11",
-        "rev": "48652e9d5aea46e555b3df87354280d4f29cd3a3",
+        "rev": "fea3b367d61c1a6592bc47c72f40a9f3e6a53e96",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
@@ -531,10 +531,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1773820565,
-        "narHash": "sha256-5f4sViBOh/8gm0KapPC9k+hjLbfvApQK+YoLiiaJHtg=",
+        "lastModified": 1773879145,
+        "narHash": "sha256-dPjQByaWIW1jVp5jhbmMBPWiS8VWKD1Xuvf5YrTpplQ=",
         "ref": "master",
-        "rev": "b83b79c9a2f43f00273390d31e4b143645645eb5",
+        "rev": "76040dbcaa8171e46dec06d55b80a45c695668ab",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nixpkgs"
