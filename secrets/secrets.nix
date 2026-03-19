@@ -69,6 +69,7 @@ let
       "authelia/oAuth2PrivateKey"
       "authelia/gitlabSecret"
       "authelia/oAuth2HmacSecret"
+      "authelia/forgejoKey"
 
       "apolline"
       "node_red"

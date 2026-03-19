@@ -3,7 +3,7 @@
   lib,
   pkgs,
   base_domain_name,
-  mkSecret,
+  mkSecrets,
   ...
 }:
 let
@@ -34,7 +34,10 @@ in
   imports = [ ];
 
   config = mkIf config.forgejo.enable {
-    age.secrets = mkSecret "forgejo_runner_token" { };
+    age.secrets = mkSecrets {
+      "forgejo_runner_token" = { };
+      "authelia/forgejoKey" = { };
+    };
 
     # mkforce to fix conflict with other services
     services.openssh.settings.AcceptEnv = lib.mkForce [
@@ -70,6 +73,16 @@ in
             # providers are configured in the admin panel
             ENABLED = true;
           };
+
+          # Authelia must be manually registered with:
+          # forgejo admin auth add-oauth \
+          #     --name     authelia \
+          #     --provider openidConnect \
+          #     --key      <client_id> \
+          #     --secret   <secret> \
+          #     --auto-discover-url https://auth.${base_domain_name}/.well-known/openid-configuration \
+          #     --scopes='openid email profile groups'
+          # This is automatically done via the preStart systemd hook below.
 
           authelia = {
             ENABLE_OPENID_SIGNIN = true;
@@ -140,7 +153,41 @@ in
     nix.settings = {
       trusted-users = [ "gitea-runner" ];
     };
-    # Takes the form of "gitea-runner-<instance>"
+    systemd.services.forgejo.preStart =
+      let
+        forgejoBin = lib.getExe config.services.forgejo.package;
+      in
+      ''
+        auth="${forgejoBin} admin auth"
+
+        echo "Trying to find existing SSO configuration"
+        set +e -o pipefail
+        id="$($auth list | grep "authelia.*OAuth2" | cut -d'	' -f1)"
+        found=$?
+        set -e +o pipefail
+
+        if [[ $found = 0 ]]; then
+          echo "Found SSO configuration at id=$id, updating it"
+          $auth update-oauth \
+            --id       "$id" \
+            --name     authelia \
+            --provider openidConnect \
+            --key      forgejo \
+            --secret   "$(tr -d '\n' < ${config.age.secrets."authelia/forgejoKey".path})" \
+            --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration" \
+            --scopes='openid email profile groups'
+        else
+          echo "No SSO configuration found, creating one"
+          $auth add-oauth \
+            --name     authelia \
+            --provider openidConnect \
+            --key      forgejo \
+            --secret   "$(tr -d '\n' < ${config.age.secrets."authelia/forgejoKey".path})" \
+            --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration" \
+            --scopes='openid email profile groups'
+        fi
+      '';
+
     systemd.services.gitea-runner-onyx = {
       # Prevents Forgejo runner deployments
       # from being restarted on a system switch,
