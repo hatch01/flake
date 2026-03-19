@@ -36,7 +36,10 @@ in
   config = mkIf config.forgejo.enable {
     age.secrets = mkSecrets {
       "forgejo_runner_token" = { };
-      "authelia/forgejoKey" = { };
+      "authelia/forgejoKey" = {
+        owner = "forgejo";
+        group = "forgejo";
+      };
     };
 
     # mkforce to fix conflict with other services
@@ -173,7 +176,7 @@ in
             --name     authelia \
             --provider openidConnect \
             --key      forgejo \
-            --secret   "$(tr -d '\n' < ${config.age.secrets."authelia/forgejoKey".path})" \
+            --secret   "$(< ${config.age.secrets."authelia/forgejoKey".path})" \
             --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration"
         else
           echo "No SSO configuration found, creating one"
@@ -181,7 +184,7 @@ in
             --name     authelia \
             --provider openidConnect \
             --key      forgejo \
-            --secret   "$(tr -d '\n' < ${config.age.secrets."authelia/forgejoKey".path})" \
+            --secret   "$(< ${config.age.secrets."authelia/forgejoKey".path})" \
             --auto-discover-url "https://${config.authelia.domain}/.well-known/openid-configuration"
         fi
       '';
