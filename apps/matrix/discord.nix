@@ -43,7 +43,10 @@ in
           address = "http://localhost:${toString config.matrix.port}";
           domain = base_domain_name;
         };
-        encryption.msc4190 = true;
+        encryption = {
+          require = false;
+          msc4190 = true;
+        };
         appservice = {
           database = {
             type = "postgres";

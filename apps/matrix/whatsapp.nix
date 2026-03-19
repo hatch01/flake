@@ -57,7 +57,10 @@ in
           address = "http://localhost:${toString config.matrix.port}";
           domain = base_domain_name;
         };
-        encryption.msc4190 = true;
+        encryption = {
+          require = false;
+          msc4190 = true;
+        };
         database = {
           type = "postgres";
           uri = "postgresql:///mautrix-whatsapp?host=/run/postgresql";

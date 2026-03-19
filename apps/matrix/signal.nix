@@ -49,7 +49,10 @@ in
           address = "http://localhost:${toString config.matrix.port}";
           domain = base_domain_name;
         };
-        encryption.msc4190 = true;
+        encryption = {
+          require = false;
+          msc4190 = true;
+        };
         double_puppet = {
           secrets = {
             "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
