@@ -32,9 +32,6 @@ in
             "${base_domain_name}" = "user";
             "@root:${base_domain_name}" = "admin";
           };
-          login_shared_secret_map = {
-            "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
-          };
           sync_direct_chat_list = true;
         };
         network = {
@@ -53,6 +50,11 @@ in
           domain = base_domain_name;
         };
         encryption.msc4190 = true;
+        double_puppet = {
+          secrets = {
+            "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
+          };
+        };
         database = {
           type = "postgres";
           uri = "postgresql:///mautrix-signal?host=/run/postgresql";

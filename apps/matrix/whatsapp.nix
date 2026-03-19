@@ -35,10 +35,12 @@ in
             "${base_domain_name}" = "user";
             "@root:${base_domain_name}" = "admin";
           };
-          login_shared_secret_map = {
+          sync_direct_chat_list = true;
+        };
+        double_puppet = {
+          secrets = {
             "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
           };
-          sync_direct_chat_list = true;
         };
         network = {
           device_name = "mautrix-whatsapp";
