@@ -3,9 +3,9 @@
 
   unstable = [
     {
-      pr = 332296;
+      pr = 502388;
       name = "openthread-border-router";
-      hash = "sha256-77CKiXwLAK4hgXPMN1lxYcLiWk44Rvs0Tion+t9fB6o=";
+      hash = "sha256-qApRsA2jUW87xkJRLxvniGZBLIb3ukNn/fLU8LGb454=";
     }
     {
       pr = 499297;
