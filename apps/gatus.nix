@@ -193,6 +193,7 @@ in
                 (mkGatusCheck {
                   name = "pimprenelles";
                   url = "https://www.pimprenelles.bio";
+                  group = "pimprenelles";
                 })
                 (mkGatusCheck {
                   name = "robolyon";
@@ -222,7 +223,9 @@ in
                 username: eymeric.monitoring
                 overrides:
                   - group: clement
-                    to: clement.reniers00@gmail.com" >> "$out"
+                    to: clement.reniers00@gmail.com
+                  - group: pimprenelles
+                    to: snoel@outlook.fr" >> "$out"
           ''
       ) { };
     };
