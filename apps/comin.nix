@@ -14,31 +14,44 @@ let
   postDeploymentScript = pkgs.writers.writeBash "comin-post-deploy" ''
     set -euo pipefail
 
-    # Derive current and previous generation numbers from the profile symlinks.
     PROFILES_DIR="/nix/var/nix/profiles"
-    CURR_GEN=$(${lib.getExe' pkgs.coreutils "readlink"} "$PROFILES_DIR/system" | ${lib.getExe' pkgs.gnugrep "grep"} -oP 'system-\K[0-9]+(?=-link)' || true)
-    CURR_PROFILE="$PROFILES_DIR/system-''${CURR_GEN}-link"
 
-    # Find the previous generation: highest numbered profile below current
-    PREV_GEN=$(
-      ${lib.getExe' pkgs.coreutils "ls"} -d "$PROFILES_DIR"/system-*-link 2>/dev/null \
-        | ${lib.getExe' pkgs.gnugrep "grep"} -oP 'system-\K[0-9]+(?=-link)' \
-        | ${lib.getExe' pkgs.coreutils "sort"} -n \
-        | ${lib.getExe pkgs.gawk} -v cur="$CURR_GEN" '$1 < cur' \
-        | ${lib.getExe' pkgs.coreutils "tail"} -1 \
-        || true
-    )
+    GEN_JSON=$(${lib.getExe pkgs.nixos-rebuild} list-generations --json 2>/dev/null || true)
 
-    if [ -n "$PREV_GEN" ]; then
+    CURR_GEN=$(echo "$GEN_JSON" \
+      | ${lib.getExe pkgs.jq} -r '.[] | select(.current == true) | .generation' \
+      | ${lib.getExe' pkgs.coreutils "head"} -n1)
+
+    PREV_GEN=$(echo "$GEN_JSON" \
+      | ${lib.getExe pkgs.jq} -r '.[] | select(.current == false) | .generation' \
+      | ${lib.getExe' pkgs.coreutils "head"} -n1)
+
+    if [ -n "$CURR_GEN" ] && [ "$CURR_GEN" != "null" ]; then
+      CURR_PROFILE="$PROFILES_DIR/system-''${CURR_GEN}-link"
+    else
+      CURR_PROFILE=""
+    fi
+
+    if [ -n "$PREV_GEN" ] && [ "$PREV_GEN" != "null" ]; then
       PREV_PROFILE="$PROFILES_DIR/system-''${PREV_GEN}-link"
     else
       PREV_PROFILE=""
     fi
 
-    if [ -n "$PREV_PROFILE" ] && [ -e "$PREV_PROFILE" ]; then
-      DIFF=$(${lib.getExe pkgs.dix} "$PREV_PROFILE" "$CURR_PROFILE" 2>&1 || true)
-    else
+    if [ -z "$CURR_PROFILE" ] || [ ! -e "$CURR_PROFILE" ]; then
+      DIFF="(could not determine current generation/profile)"
+    elif [ -z "$PREV_PROFILE" ] || [ ! -e "$PREV_PROFILE" ]; then
       DIFF="(no previous generation to diff against)"
+    else
+      CURR_TARGET=$(${lib.getExe' pkgs.coreutils "readlink"} -f "$CURR_PROFILE" || true)
+      PREV_TARGET=$(${lib.getExe' pkgs.coreutils "readlink"} -f "$PREV_PROFILE" || true)
+
+      if [ -n "$CURR_TARGET" ] && [ -n "$PREV_TARGET" ] && [ "$CURR_TARGET" = "$PREV_TARGET" ]; then
+        DIFF="(no effective change: current and previous generations point to same system path)"
+      else
+        DIFF=$(${lib.getExe pkgs.dix} "$PREV_PROFILE" "$CURR_PROFILE" 2>&1 || true)
+        [ -n "$DIFF" ] || DIFF="(no diff output)"
+      fi
     fi
 
     {
