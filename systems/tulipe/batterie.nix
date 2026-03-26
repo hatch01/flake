@@ -106,7 +106,7 @@ in
   # Enable musnix for real-time audio support
   musnix.enable = true;
   musnix.soundcardPciId = "07:00.6";
-  musnix.rtirq.enable = true;
+  # musnix.rtirq.enable = true;
   musnix.kernel.packages = pkgs.linuxPackages_latest;
   musnix.kernel.realtime = true;
 
