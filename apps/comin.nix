@@ -15,6 +15,8 @@ let
     set -euo pipefail
 
     PROFILES_DIR="/nix/var/nix/profiles"
+    COMIN_STATE_DIR="/var/lib/comin"
+    LAST_MAILED_GEN_FILE="$COMIN_STATE_DIR/last-mailed-generation"
 
     GEN_JSON=$(${lib.getExe pkgs.nixos-rebuild} list-generations --json 2>/dev/null || true)
 
@@ -38,8 +40,15 @@ let
       PREV_PROFILE=""
     fi
 
+    LAST_MAILED_GEN=""
+    if [ -r "$LAST_MAILED_GEN_FILE" ]; then
+      LAST_MAILED_GEN=$(${lib.getExe' pkgs.coreutils "cat"} "$LAST_MAILED_GEN_FILE" 2>/dev/null || true)
+    fi
+
     if [ -z "$CURR_PROFILE" ] || [ ! -e "$CURR_PROFILE" ]; then
       DIFF="(could not determine current generation/profile)"
+    elif [ -n "$LAST_MAILED_GEN" ] && [ "$LAST_MAILED_GEN" = "$CURR_GEN" ]; then
+      DIFF="(generation unchanged since last notification; skipped diff)"
     elif [ -z "$PREV_PROFILE" ] || [ ! -e "$PREV_PROFILE" ]; then
       DIFF="(no previous generation to diff against)"
     else
@@ -51,6 +60,12 @@ let
       else
         DIFF=$(${lib.getExe pkgs.dix} "$PREV_PROFILE" "$CURR_PROFILE" 2>&1 || true)
         [ -n "$DIFF" ] || DIFF="(no diff output)"
+      fi
+    fi
+
+    if [ -n "$CURR_GEN" ] && [ "$CURR_GEN" != "null" ]; then
+      if [ -d "$COMIN_STATE_DIR" ] && [ -w "$COMIN_STATE_DIR" ]; then
+        printf '%s\n' "$CURR_GEN" > "$LAST_MAILED_GEN_FILE" || true
       fi
     fi
 
