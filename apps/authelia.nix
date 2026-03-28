@@ -252,6 +252,14 @@ in
             };
 
             identity_providers.oidc = {
+              claims_policies = {
+                matrix.id_token = [
+                  "email"
+                  "name"
+                  "groups"
+                  "preferred_username"
+                ];
+              };
               clients =
                 [ ]
                 ++ optionals config.nextcloud.enable [
@@ -316,6 +324,7 @@ in
                       "authorization_code"
                     ];
                     response_types = [ "code" ];
+                    claims_policy = "matrix";
                   }
                 ]
                 ++ optionals config.incus.enable [
