@@ -10,7 +10,7 @@
     {
       pr = 499297;
       name = "hatchupdate";
-      hash = "sha256-ctLJd5XO/hgcZMPLXdiwwZrH7m77COzt+zAHIeBj/YE=";
+      hash = "sha256-txQoGsOzimVsBlpJHo6xM6cttgSuQj34V/q/7u80svs=";
     }
   ];
 
