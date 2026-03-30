@@ -55,6 +55,7 @@ in
         gitoxide
         btdu
         yazi
+        doggo
       ]
       ++ optionals (!stable) (
         with pkgs;
@@ -102,6 +103,7 @@ in
         vi = "nvim";
         vim = "nvim";
         rip = "rip --graveyard ~/.local/share/Trash";
+        dig = lib.getExe pkgs.doggo;
       };
       promptInit = ''
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
