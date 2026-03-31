@@ -5,7 +5,7 @@ let
     jonquille = [ "age1ags68rkarp5ewj8dqzq74l48v8q7zdzesed3vp498e352grl3dzsqq3mww" ];
     lilas = [ "age1xphfpwj7v5wwvnuhhqyvwlp7susnmmnx2ttccmn630wd9q8y0a2swy8ekj" ];
     lotus = [ "age1lcw62jx877aqxcwlu855q2x6sq35khqart0we3j6qy8595dmsp6s8xyxnc" ];
-    server = jonquille ++ cyclamen ++ lilas ++ lotus;
+    server = jonquille ++ cyclamen ++ lilas;
     desktop = tulipe;
     all = desktop ++ server;
   };
