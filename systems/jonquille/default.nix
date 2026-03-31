@@ -29,7 +29,10 @@
   matrix.elementCall.enable = true;
   watchtower.enable = true;
   ddclient.enable = true;
-  ddclient.domains = [ "homeserver.${base_domain_name}" base_domain_name];
+  ddclient.domains = [
+    "homeserver.${base_domain_name}"
+    base_domain_name
+  ];
   home_automation.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
