@@ -97,6 +97,7 @@ in
           "0xb40ecfd1a9b30000".friendly_name = "Lumiere cuisine";
           "0x70b3d52b600a3c0f".friendly_name = "Imprimante 3d";
           "0xe498bb2a3b66e43b".friendly_name = "Présence chambre Eymeric";
+          "0xa4c1380b4ad8ffff".friendly_name = "Serveur Kevin";
         };
       };
     };
