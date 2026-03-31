@@ -32,6 +32,11 @@ in
           ssl = true;
         }
         {
+          addr = "[::1]";
+          port = 4443;
+          ssl = true;
+        }
+        {
           addr = "0.0.0.0";
           port = 80;
           ssl = false;
