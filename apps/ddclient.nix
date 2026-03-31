@@ -5,37 +5,29 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf mkOption;
 in
 {
   options = {
     ddclient = {
       enable = mkEnableOption "enable ddclient";
+      domains = mkOption {
+        type = lib.types.listOf lib.types.str;
+        description = "Domains to update";
+      };
     };
   };
 
   config = mkIf config.ddclient.enable {
-    age.secrets = mkSecret "dyndns" { };
+    age.secrets = mkSecret "server/dyndns" { root = true; };
 
     services.ddclient = {
       enable = true;
-      protocol = "dyndns2";
+      protocol = "ovh";
       server = "www.ovh.com";
       username = "onyx.ovh-ddclient";
-      passwordFile = config.age.secrets.dyndns.path;
-      usev4 = "web";
-      ssl = false;
-      domains = [
-        config.adguard.domain
-        config.forgejo.domain
-        config.authelia.domain
-        config.nextcloud.domain
-        config.matrix.domain
-        config.homepage.domain
-        config.nixCache.domain
-        config.home_assistant.domain
-        config.onlyofficeDocumentServer.domain
-      ];
+      passwordFile = config.age.secrets."server/dyndns".path;
+      domains = config.ddclient.domains;
     };
   };
 }

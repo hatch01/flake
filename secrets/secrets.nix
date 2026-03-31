@@ -23,6 +23,9 @@ let
       "cockpit_private_key"
       "restic_key"
       "wakapi_salt"
+
+      # dynDNS
+      "dyndns"
     ]
     // defineSecrets "tulipe" [
       "userPassword"
@@ -58,9 +61,6 @@ let
 
       # cache
       "cache-priv-key.pem"
-
-      # dynDNS
-      "dyndns"
 
       # Authelia
       "authelia/storageKey"

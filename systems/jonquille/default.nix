@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   config,
-  mkSecrets,
+  base_domain_name,
   pkgs,
   lib,
   ...
@@ -28,7 +28,8 @@
   matrix.enableElement = true;
   matrix.elementCall.enable = true;
   watchtower.enable = true;
-  ddclient.enable = false;
+  ddclient.enable = true;
+  ddclient.domains = [ "homeserver.${base_domain_name}" base_domain_name];
   home_automation.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
