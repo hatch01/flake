@@ -202,7 +202,8 @@ in
                   url = "https://nas.robolyon.com";
                 })
 
-              ] ++ [
+              ]
+              ++ [
                 # nichihachi
                 (mkGatusCheck {
                   name = "Immich nichihachi";
