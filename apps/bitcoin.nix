@@ -95,9 +95,7 @@ in
           users.eymeric.passwordHMAC = "a389e7d06c32b0708df55f48b2443754$5ac271542e5ecf9136d13a60149ca4e2ce5e96a47c476fd075817298ac7c7c80";
         };
         extraConfig = ''
-          rpcbind=127.0.0.1
           rpcbind=100.64.0.4
-          rpcallowip=127.0.0.1
           rpcallowip=100.64.0.0/24
         '';
       };
