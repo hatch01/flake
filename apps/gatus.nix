@@ -176,6 +176,7 @@ in
                   ];
                 }
 
+                # polypresence
                 (mkGatusCheck {
                   name = "polypresence back";
                   url = "https://polypresence.fr/api/status";
@@ -190,6 +191,7 @@ in
                   group = "polypresence";
                 })
 
+                # pimprenelles
                 (mkGatusCheck {
                   name = "pimprenelles";
                   url = "https://www.pimprenelles.bio";
@@ -198,6 +200,29 @@ in
                 (mkGatusCheck {
                   name = "robolyon";
                   url = "https://nas.robolyon.com";
+                })
+
+              ] ++ [
+                # nichihachi
+                (mkGatusCheck {
+                  name = "Immich nichihachi";
+                  url = "https://immich.nichihachi.net";
+                  group = "nichihachi";
+                })
+                (mkGatusCheck {
+                  name = "Nextcloud nichihachi";
+                  url = "https://nextcloud.nichihachi.net";
+                  group = "nichihachi";
+                })
+                (mkGatusCheck {
+                  name = "VaultWarden nichihachi";
+                  url = "https://vw.nichihachi.net";
+                  group = "nichihachi";
+                })
+                (mkGatusCheck {
+                  name = "Grafana nichihachi";
+                  url = "https://grafana.nichihachi.net";
+                  group = "nichihachi";
                 })
               ];
             };
@@ -225,7 +250,9 @@ in
                   - group: clement
                     to: clement.reniers00@gmail.com
                   - group: pimprenelles
-                    to: snoel@outlook.fr" >> "$out"
+                    to: snoel@outlook.fr
+                  - group: nichihachi
+                    to: nichi.hc@proton.me" >> "$out"
           ''
       ) { };
     };
