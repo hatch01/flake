@@ -212,8 +212,12 @@ in
                 })
                 (mkGatusCheck {
                   name = "Nextcloud nichihachi";
-                  url = "https://nextcloud.nichihachi.net";
-                  group = "nichihachi";
+                  url = "https://nextcloud.nichihachi.net/status.php";
+                  conditions = [
+                    "[BODY].installed == true"
+                    "[BODY].maintenance == false"
+                    "[BODY].needsDbUpgrade == false"
+                  ];
                 })
                 (mkGatusCheck {
                   name = "VaultWarden nichihachi";
