@@ -149,6 +149,7 @@ in
             "Preview" = {
               "lastUsedExporter".value = "Pandoc";
               "lastUsedExporterParams".value = "\"${pandocCommand}\"";
+              "lastUsedExporterParams".escapeValue = false;
             };
             "Save" = {
               "autoSave".value = true;
@@ -161,6 +162,7 @@ in
               "lastUsedExporter".value = "Pandoc";
               "lastUsedExporterFormat".value = "OpenDocument Text";
               "lastUsedExporterParams".value = "\"${pandocCommand}\"";
+              "lastUsedExporterParams".escapeValue = false;
               "openOnExport".value = true;
               "smartTypographyEnabled".value = true;
             };
