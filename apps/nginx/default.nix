@@ -85,7 +85,7 @@ let
       // lib.optionalAttrs (rootLocExtraConfig != "") { extraConfig = rootLocExtraConfig; };
 
       # All other user locations (excluding "/")
-      otherUserLocations = builtins.removeAttrs locations [ "/" ];
+      otherUserLocations = lib.removeAttrs locations [ "/" ];
 
       # Authelia authz location
       autheliaLocations = lib.optionalAttrs authelia {
@@ -101,7 +101,7 @@ let
       effectiveLocations =
         if noDefaultLocations then autheliaLocations // locations else defaultLocations;
 
-      passthroughOverrides = builtins.removeAttrs overrides [
+      passthroughOverrides = lib.removeAttrs overrides [
         "cache"
         "authelia"
         "extraConfig"
