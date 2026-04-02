@@ -143,23 +143,24 @@ in
                   name = "adguard";
                   url = "https://${config.adguard.domain}/";
                 })
-
                 (mkGatusCheck {
                   name = "VaultWarden";
                   url = "https://${config.vaultwarden.domain}/api/alive";
                 })
-
                 (mkGatusCheck {
                   name = "lmatrix lk-jwt-service";
                   url = "https://${config.matrix.domain}/livekit/jwt/healthz";
                 })
-
                 (mkGatusCheck {
                   name = "matrix authentication service";
                   url = "https://${config.matrix.mas.domain}/health";
                   conditions = [
                     "[BODY] == ok"
                   ];
+                })
+                (mkGatusCheck {
+                  name = "ntfy";
+                  url = "https://${config.ntfy.domain}";
                 })
 
                 {
