@@ -107,6 +107,14 @@ in
                   };
                 }
                 {
+                  "ntfy" = {
+                    icon = "ntfy.png";
+                    description = "ntfy c'est vraiment cool";
+                    href = "https://${config.ntfy.domain}/";
+                    siteMonitor = "https://${config.ntfy.domain}/";
+                  };
+                }
+                {
                   "wakapi" = {
                     icon = "wakapi.png";
                     description = "Wakapi c'est vraiment cool";

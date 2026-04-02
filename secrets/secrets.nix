@@ -76,6 +76,9 @@ let
 
       # forgejo
       "forgejo_runner_token"
+
+      # ntfy
+      "ntfy_auth_users_env"
     ]
     // defineSecrets "cyclamen" [
       "rootPassword"

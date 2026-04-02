@@ -343,6 +343,10 @@ in
 
         (mkVhost "wakapi" { })
 
+        (mkVhost "ntfy" {
+          locations."/".proxyWebsockets = true;
+        })
+
         (mkVhost "vaultwarden" { cache = true; })
 
         (mkVhost "headscale" {

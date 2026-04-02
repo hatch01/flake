@@ -52,5 +52,6 @@
     ./yubikey.nix
     ./zsh.nix
     ./bitwarden.nix
+    ./ntfy.nix
   ];
 }

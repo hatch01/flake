@@ -46,6 +46,7 @@
   wakapi.enable = true;
   vaultwarden.enable = true;
   bitcoin.server.enable = true;
+  ntfy.enable = true;
 
   boot.loader.timeout = 1;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
