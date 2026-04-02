@@ -15,7 +15,7 @@ in
   config = mkIf config.gitConfig.enable {
     environment.systemPackages = with pkgs; [
       delta
-      nodePackages.ungit
+      ungit
       lazygit
     ];
     programs.git.enable = true;
