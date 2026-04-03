@@ -5,7 +5,7 @@
     {
       pr = 502388;
       name = "openthread-border-router";
-      hash = "sha256-rHmKM6m50yr59igql7ZmrK/Myn1Xn2TpaGKVfqb8ncw=";
+      hash = "sha256-FrWnzG6uM0Mo2Ns6CEWYS47wFHe9NfngBC41pRFZzFk=";
     }
     {
       pr = 499297;
