@@ -23,7 +23,7 @@
     {
       pr = 498241;
       name = "demucs-rs";
-      hash = "sha256-si8uHvpJpTNnJFemeI9wLs9WCN7UmZ7YbzNSkbCDRzk=";
+      hash = "sha256-ZnOGiBGar/5+EMARXV+cVIov+bwOsMUuEAC/0AHGILM=";
     }
   ];
 }
