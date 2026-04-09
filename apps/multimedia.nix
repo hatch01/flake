@@ -67,6 +67,7 @@ in
         coppwr
         musescore
         demucs-rs
+        surge-xt
       ];
   };
 }
