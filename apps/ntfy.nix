@@ -49,11 +49,11 @@ in
         #CREATE DATABASE ntfy OWNER "ntfy-sh";
         #GRANT ALL PRIVILEGES ON DATABASE ntfy TO "ntfy-sh";
 
-	#sudo -u postgres psql -d ntfy
-	#ALTER SCHEMA public OWNER TO "ntfy-sh";
-	#GRANT ALL ON SCHEMA public TO "ntfy-sh";
-	#GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "ntfy-sh";
-	#GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "ntfy-sh";
+        #sudo -u postgres psql -d ntfy
+        #ALTER SCHEMA public OWNER TO "ntfy-sh";
+        #GRANT ALL ON SCHEMA public TO "ntfy-sh";
+        #GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "ntfy-sh";
+        #GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "ntfy-sh";
         database-url = "postgres:///ntfy?host=/run/postgresql";
         auth-file = "";
         cache-file = "";
