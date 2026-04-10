@@ -20,5 +20,10 @@
       name = "satochip-utils";
       hash = "sha256-q41E9jstfiQePF7wgXT2m2W7moBKiW+woU1V0lcZYjs=";
     }
+    {
+      pr = 498241;
+      name = "demucs-rs";
+      hash = "sha256-ZnOGiBGar/5+EMARXV+cVIov+bwOsMUuEAC/0AHGILM=";
+    }
   ];
 }
