@@ -5,7 +5,7 @@
     {
       pr = 502388;
       name = "openthread-border-router";
-      hash = "sha256-FrWnzG6uM0Mo2Ns6CEWYS47wFHe9NfngBC41pRFZzFk=";
+      hash = "sha256-AYx7ZSgj3v23qwdL6ItmlKeKh9i6uXyP+4NflS82r08=";
     }
     {
       pr = 499297;
@@ -19,11 +19,6 @@
       pr = 402608;
       name = "satochip-utils";
       hash = "sha256-q41E9jstfiQePF7wgXT2m2W7moBKiW+woU1V0lcZYjs=";
-    }
-    {
-      pr = 498241;
-      name = "demucs-rs";
-      hash = "sha256-ZnOGiBGar/5+EMARXV+cVIov+bwOsMUuEAC/0AHGILM=";
     }
   ];
 }
