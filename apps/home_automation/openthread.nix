@@ -11,6 +11,7 @@ let
     mkOption
     mkIf
     types
+    optionals
     ;
 in
 {
@@ -33,6 +34,10 @@ in
       };
     };
   };
+
+  # use custom modules to allow usage of nftables instead of iptables
+  disabledModules = optionals (!stable) [ "services/home-automation/openthread-border-router.nix" ];
+  imports = optionals (!stable) [ ../../overlays/otbr.nix ];
 
   config =
     if !stable then
