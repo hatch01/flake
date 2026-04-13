@@ -133,7 +133,8 @@
     overlays = [
       ((import ../overlays/unstable.nix) inputs.nixpkgs-unstable)
       ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
-    ];
+    ]
+    ++ lib.optional (!stable) (import ../overlays/otbr-package.nix);
   };
 
   age = {
