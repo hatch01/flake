@@ -41,6 +41,10 @@ in
       # image = "ghcr.io/home-assistant/home-assistant:stable";
       image = "lscr.io/linuxserver/homeassistant:latest";
       networks = [ "host" ];
+      extraOptions = [
+        "--restart=always"
+      ];
+      autoRemoveOnStop = false;
     };
 
     users.groups.homeassistant.gid = 2001;
