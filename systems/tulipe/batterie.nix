@@ -26,6 +26,16 @@ let
   sleep = lib.getExe' pkgs.coreutils "sleep";
   systemd-inhibit = lib.getExe' pkgs.systemd "systemd-inhibit";
 
+  batterieDesktopItem = pkgs.makeDesktopItem {
+     name = "batterie-setup";
+     desktopName = "Batterie Setup";
+     comment = "Lance le setup Ardour/MIDI pour la batterie";
+     exec = "${pkgs.systemd}/bin/systemctl --user restart batterie-setup.service";
+     icon = "media-playback-start"; # ou le chemin vers une icône personnalisée
+     terminal = false;
+     categories = [ "AudioVideo" "Music" ];
+   };
+
   setupScript = pkgs.writeShellScript "batterie-setup" ''
     set -uexo pipefail
     echo "Batterie setup: Starting..." >&2
@@ -102,6 +112,8 @@ in
   imports = [
     inputs.musnix.nixosModules.musnix
   ];
+
+  environment.systemPackages = [ batterieDesktopItem ];
 
   # Enable musnix for real-time audio support
   musnix.enable = true;
