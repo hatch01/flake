@@ -186,8 +186,7 @@ in
     description = "Setup Ardour and MIDI for Alesis drum kit";
     serviceConfig = {
       Type = "forking";
-      ExecStart = setupScript;
-      ExecStartPre = "${systemd-inhibit} --what=sleep --why=\"Batterie active\" sleep infinity &";
+      ExecStart = "${systemd-inhibit} --what=sleep --why='Batterie active' ${setupScript}";
       Restart = "no";
       RemainAfterExit = true;
     };
