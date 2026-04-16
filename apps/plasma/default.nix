@@ -60,6 +60,9 @@ in
             cursor.theme = "catppuccin-mocha-dark-cursors";
             iconTheme = "breeze";
           };
+          configFile.kdeglobals.KDE.AutomaticLookAndFeel = true;
+          configFile.kdeglobals.KDE.DefaultDarkLookAndFeel = "Catppuccin-Mocha-Blue";
+          configFile.kdeglobals.KDE.DefaultLightLookAndFeel = "Catppuccin-Latte-Blue";
 
           fonts = {
             general = {
