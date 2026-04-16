@@ -27,14 +27,17 @@ let
   systemd-inhibit = lib.getExe' pkgs.systemd "systemd-inhibit";
 
   batterieDesktopItem = pkgs.makeDesktopItem {
-     name = "batterie-setup";
-     desktopName = "Batterie Setup";
-     comment = "Lance le setup Ardour/MIDI pour la batterie";
-     exec = "${pkgs.systemd}/bin/systemctl --user restart batterie-setup.service";
-     icon = "media-playback-start"; # ou le chemin vers une icône personnalisée
-     terminal = false;
-     categories = [ "AudioVideo" "Music" ];
-   };
+    name = "batterie-setup";
+    desktopName = "Batterie Setup";
+    comment = "Lance le setup Ardour/MIDI pour la batterie";
+    exec = "${pkgs.systemd}/bin/systemctl --user restart batterie-setup.service";
+    icon = "media-playback-start"; # ou le chemin vers une icône personnalisée
+    terminal = false;
+    categories = [
+      "AudioVideo"
+      "Music"
+    ];
+  };
 
   setupScript = pkgs.writeShellScript "batterie-setup" ''
     set -uexo pipefail
@@ -184,7 +187,7 @@ in
     serviceConfig = {
       Type = "forking";
       ExecStart = setupScript;
-      ExecStartPre="${systemd-inhibit} --what=sleep --why=\"Batterie active\" sleep infinity &";
+      ExecStartPre = "${systemd-inhibit} --what=sleep --why=\"Batterie active\" sleep infinity &";
       Restart = "no";
       RemainAfterExit = true;
     };
