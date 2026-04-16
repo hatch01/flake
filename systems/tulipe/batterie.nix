@@ -7,7 +7,6 @@
   ...
 }:
 let
-  ardour_projet_path = "/home/${username}/Musique/ardour/drum";
   frame_per_period = 256; # Buffer size for low-latency monitoring
   # Buffer size 256 @ 48kHz = ~5.3ms latency
 
@@ -52,7 +51,7 @@ let
     fi
 
     # Start Ardour session
-    ${ardour} ${ardour_projet_path} &
+    ${ardour} &
     echo "Ardour started with drum session" >&2
 
     # Wait for DrumGizmo to load in Ardour
