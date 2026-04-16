@@ -24,6 +24,7 @@ let
   grep = lib.getExe pkgs.gnugrep;
   head = lib.getExe' pkgs.coreutils "head";
   sleep = lib.getExe' pkgs.coreutils "sleep";
+  systemd-inhibit = lib.getExe' pkgs.systemd "systemd-inhibit";
 
   setupScript = pkgs.writeShellScript "batterie-setup" ''
     set -uexo pipefail
@@ -171,6 +172,7 @@ in
     serviceConfig = {
       Type = "forking";
       ExecStart = setupScript;
+      ExecStartPre="${systemd-inhibit} --what=sleep --why=\"Batterie active\" sleep infinity &";
       Restart = "no";
       RemainAfterExit = true;
     };
