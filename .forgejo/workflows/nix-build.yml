@@ -40,5 +40,5 @@ jobs:
           git config user.name "Flake Updater"
           git config user.email "flake-updater@forge.onyx.ovh"
           git switch main
-          git merge origin/staging
+          git merge origin/staging --no-ff -m "Merge staging into main"
           git push origin main
