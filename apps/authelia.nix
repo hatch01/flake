@@ -399,6 +399,27 @@ in
                   userinfo_signed_response_alg = "none";
                   token_endpoint_auth_method = "client_secret_basic";
                 }
+              ]
+              ++ optionals config.home_assistant.enable [
+                {
+                  client_id = "homeassistant";
+                  client_name = "Home Assistant";
+                  client_secret = "$pbkdf2-sha512$310000$uasQPh3/FzsdDPmOS1ys2A$bIbNmhzrLh8N3Kfrja5MNw7asN.tVUulp2A1s9FDCsrNtIRnMydQnqPelaxrxtDD1IHv.rJqZUJsOFJWTQOp7g";
+                  public = false;
+                  require_pkce = true;
+                  pkce_challenge_method = "S256";
+                  authorization_policy = "two_factor";
+                  redirect_uris = [
+                    "https://${config.home_assistant.domain}/auth/oidc/callback"
+                  ];
+                  scopes = [
+                    "openid"
+                    "profile"
+                    "groups"
+                  ];
+                  access_token_signed_response_alg = "RS256";
+                  token_endpoint_auth_method = "client_secret_post";
+                }
               ];
           };
         };
