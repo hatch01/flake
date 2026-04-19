@@ -129,7 +129,7 @@ in
   security.rtkit.enable = true;
   security.rtkit.args = [
     "--our-realtime-priority=89"
-    "--max-realtime-priority=88"
+    "--max-realtime-priority=85"
   ];
 
   services.pipewire.extraConfig.pipewire."92-low-latency" = {
