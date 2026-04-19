@@ -14,7 +14,7 @@ let
   # Live audio utilities
   pw-metadata = lib.getExe' pkgs.pipewire "pw-metadata";
   systemctl = lib.getExe' pkgs.systemd "systemctl";
-  balooctl = lib.getExe' pkgs.kdePackages.baloo "balooctl";
+  balooctl = lib.getExe' pkgs.kdePackages.baloo "balooctl6";
   systemd-inhibit = lib.getExe' pkgs.systemd "systemd-inhibit";
 
   # ─── Timers à stopper avant le live ────────────────────────────────────────
@@ -84,10 +84,10 @@ let
     RT_OK=true
 
     # Kernel RT ?
-    if uname -r | grep -qiE "rt|preempt"; then
-      echo "  ✅ Kernel PREEMPT_RT : $(uname -r)"
+    if uname -a | grep -qiE "rt|preempt"; then
+      echo "  ✅ Kernel PREEMPT_RT : $(uname -a)"
     else
-      echo "  ⚠️  Kernel non-RT détecté : $(uname -r)"
+      echo "  ⚠️  Kernel non-RT détecté : $(uname -a)"
       RT_OK=false
     fi
 
@@ -116,23 +116,6 @@ let
       RT_OK=false
     fi
 
-    # PipeWire RT (data-loop.0) ?
-    PW_PID=$(pgrep -f "pipewire$" 2>/dev/null | head -1 || true)
-    if [ -n "$PW_PID" ]; then
-      DL_TID=$(cat /proc/"$PW_PID"/task/*/status 2>/dev/null \
-        | awk '/^Name:.*data-loop/{found=1} found && /^Pid:/{print $2; exit}')
-      if [ -n "$DL_TID" ]; then
-        SCHED=$(chrt -p "$DL_TID" 2>/dev/null | grep "stratégie\|policy" | grep -o "SCHED_[A-Z]*" | head -1)
-        if echo "$SCHED" | grep -q "FIFO"; then
-          PRIO=$(chrt -p "$DL_TID" 2>/dev/null | grep "priorité\|priority" | grep -o "[0-9]*$")
-          echo "  ✅ PipeWire data-loop : $SCHED prio $PRIO"
-        else
-          echo "  ⚠️  PipeWire data-loop : $SCHED (pas FIFO — rtkit n'a peut-être pas encore promu)"
-          RT_OK=false
-        fi
-      fi
-    fi
-
     echo ""
     if [ "$RT_OK" = true ]; then
       echo "✅ Système prêt pour le live !"
@@ -146,6 +129,8 @@ let
     echo ""
     echo "💡 Lance Ardour avec : PIPEWIRE_LATENCY=\"64/48000\" ardour"
     echo "💡 Fin de session : live-stop"
+    echo "⏸️  Appuyez sur Entrée pour fermer la console..."
+    read -r
   '';
 
   # ─── Script : fin de session live ──────────────────────────────────────────
@@ -191,6 +176,8 @@ let
 
     echo ""
     echo "✅ Système revenu en mode normal."
+    echo "⏸️  Appuyez sur Entrée pour fermer la console..."
+    read -r
   '';
 
   # ─── Desktop items ──────────────────────────────────────────────────────────
