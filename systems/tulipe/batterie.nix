@@ -83,12 +83,11 @@ let
       echo 'DrumGizmo MIDI input not found after 30 seconds' >&2
       echo "Available JACK ports:" >&2
       ${jack_lsp} -c 2>&1 || true
-      exit 1
     fi
 
     # Disconnect Alesis MIDI port from DrumGizmo if connected
     echo "Disconnecting Alesis from DrumGizmo..." >&2
-    ALESIS_PORT=$(${jack_lsp} | ${grep} -i "alesis.*capture" | ${head} -n1)
+    ALESIS_PORT=$(${jack_lsp} | ${grep} -i "alesis.*capture" | ${head} -n1 || true)
     if [ -n "$ALESIS_PORT" ]; then
       ${jack_disconnect} "$ALESIS_PORT" "$DRUMGIZMO_IN" 2>/dev/null && echo "Disconnected $ALESIS_PORT from $DRUMGIZMO_IN" >&2 || echo "Alesis was not connected to DrumGizmo" >&2
     else
@@ -101,11 +100,15 @@ let
       echo 'RtMidiOut Client:RtMidi output not found' >&2
       echo "Available JACK MIDI ports:" >&2
       ${jack_lsp} -t midi 2>&1 || true
-      exit 1
+    else
+      echo "Found RtMidiOut: $RTMIDI_OUT" >&2
     fi
-    echo "Found RtMidiOut: $RTMIDI_OUT" >&2
 
-    ${jack_connect} "$RTMIDI_OUT" "$DRUMGIZMO_IN" && echo "Connected $RTMIDI_OUT to $DRUMGIZMO_IN" >&2
+    if [ -n "$RTMIDI_OUT" ] && [ -n "$DRUMGIZMO_IN" ]; then
+      ${jack_connect} "$RTMIDI_OUT" "$DRUMGIZMO_IN" && echo "Connected $RTMIDI_OUT to $DRUMGIZMO_IN" >&2 || echo "Failed to connect $RTMIDI_OUT to $DRUMGIZMO_IN" >&2
+    else
+      echo "Skipping JACK connection (missing ports)" >&2
+    fi
 
     echo "Setup complete!" >&2
   '';
