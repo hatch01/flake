@@ -130,34 +130,6 @@ in
 
   # Enable rtkit for realtime scheduling
   security.rtkit.enable = true;
-  security.rtkit.args = [
-    "--our-realtime-priority=89"
-    "--max-realtime-priority=85"
-  ];
-
-  services.pipewire.extraConfig.pipewire."92-low-latency" = {
-    "context.properties" = {
-      "default.clock.rate" = 48000;
-      "default.clock.quantum" = frame_per_period;
-      "default.clock.min-quantum" = frame_per_period;
-      "default.clock.max-quantum" = frame_per_period;
-    };
-  };
-
-  systemd.user.services.pipewire = {
-    serviceConfig = {
-      LimitRTPRIO = 95;
-      LimitMEMLOCK = "infinity";
-      LimitNICE = 40; # allows nice -19
-    };
-  };
-
-  systemd.user.services.pipewire-pulse = {
-    serviceConfig = {
-      LimitRTPRIO = 95;
-      LimitMEMLOCK = "infinity";
-    };
-  };
 
   services.udev.extraRules = ''
     # Trigger system service when Alesis Turbo drum kit is connected
