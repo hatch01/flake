@@ -70,12 +70,12 @@ let
     echo "⏸️  Suspension de Baloo..."
     ${balooctl} suspend && echo "  ✅ Baloo suspendu" || echo "  ⚠️  Erreur balooctl"
 
-    # --- PipeWire : forcer 96kHz / 64 samples ---
+    # --- PipeWire : forcer 48kHz / 64 samples ---
     echo ""
-    echo "🔧 Réglage PipeWire basse latence (96kHz / 64 samples)..."
-    ${pw-metadata} -n settings 0 clock.force-rate 96000
+    echo "🔧 Réglage PipeWire basse latence (48kHz / 64 samples)..."
+    ${pw-metadata} -n settings 0 clock.force-rate 48000
     ${pw-metadata} -n settings 0 clock.force-quantum 64
-    echo "  ✅ clock.force-rate  = 96000"
+    echo "  ✅ clock.force-rate  = 48000"
     echo "  ✅ clock.force-quantum = 64  (0.67ms buffer)"
 
     # --- Vérification RT ---
@@ -144,7 +144,7 @@ let
     echo "🎚️  Configuration active :"
     ${pw-metadata} -n settings 2>/dev/null | grep -E "clock\.(force|rate|quantum)" | sed 's/^/  /'
     echo ""
-    echo "💡 Lance Ardour avec : PIPEWIRE_LATENCY=\"64/96000\" ardour"
+    echo "💡 Lance Ardour avec : PIPEWIRE_LATENCY=\"64/48000\" ardour"
     echo "💡 Fin de session : live-stop"
   '';
 
