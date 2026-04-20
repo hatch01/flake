@@ -251,176 +251,193 @@ in
               ];
             };
 
-            identity_providers.oidc.clients =
-              [ ]
-              ++ optionals config.nextcloud.enable [
-                {
-                  client_name = "NextCloud";
-                  client_id = "nextcloud";
-                  # the client secret is a random hash so don't worry about it
-                  client_secret = "$pbkdf2-sha512$310000$NqCsT52TLWKH2GOq1c7vyw$ObxsUBEcwK53BY8obKj7fjmk1xp4MnTYCc2kS9UKpKifVGOQczt4rQx0bWt5pInqpAKxGHXo/RGa7DolDugz2A";
-                  public = false;
-                  authorization_policy = "two_factor";
-                  require_pkce = true;
-                  pkce_challenge_method = "S256";
-                  redirect_uris = [ "https://${config.nextcloud.domain}/apps/oidc_login/oidc" ];
-                  scopes = [
-                    "openid"
-                    "profile"
-                    "email"
-                    "groups"
+            identity_providers.oidc = {
+              authorization_policies = {
+                home = {
+                  default_policy = "deny";
+                  rules = [
+                    {
+                      policy = "two_factor";
+                      subject = "group:home";
+                    }
+                    {
+                      policy = "two_factor";
+                      subject = "group:admin";
+                    }
                   ];
-                  userinfo_signed_response_alg = "none";
-                  token_endpoint_auth_method = "client_secret_basic";
-                }
-              ]
-              ++ optionals config.forgejo.enable [
-                {
-                  client_name = "ForgeJo";
-                  client_id = "forgejo";
-                  # the client secret is a random hash so don't worry about it
-                  client_secret = "$pbkdf2-sha512$310000$EZtlQ4D8vOBPYNwxDbNk.w$oD6J/PyDotGjOUjq2uLaDpdO.uAVX3LpSvQgxD.q.G9FS8JQ5CKhx3j8HPdJlV2Gt2Pmvo/P0dpsX01Cic3A/g";
-                  public = false;
-                  authorization_policy = "two_factor";
-                  redirect_uris = [ "https://${config.forgejo.domain}/user/oauth2/authelia/callback" ];
-                  scopes = [
-                    "openid"
-                    "email"
-                    "profile"
-                  ];
-                  userinfo_signed_response_alg = "none";
-                  token_endpoint_auth_method = "client_secret_basic";
-                }
-              ]
-              ++ optionals config.matrix.mas.enable [
-                {
-                  client_name = "Matrix";
-                  client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
-                  # the client secret is a random hash so don't worry about it
-                  client_secret = "$pbkdf2-sha512$310000$XVZ/KKrIuhfG7m/bnQXEHQ$/cHzLB6xyflth5HKJWR/Lc.//j4S/YiJ6lSaEH.rmskegD6c4zdgbni1Q.yfZrdRBg13.E8MGSyw4X1KpECv7Q";
-                  public = false;
-                  authorization_policy = "two_factor";
-                  redirect_uris = [
-                    "https://${config.matrix.mas.domain}/upstream/callback/01H8PKNWKKRPCBW4YGH1RWV279"
-                  ];
-                  scopes = [
-                    "openid"
-                    "groups"
-                    "profile"
-                    "email"
-                    "offline_access"
-                  ];
-                  grant_types = [
-                    "refresh_token"
-                    "authorization_code"
-                  ];
-                  response_types = [ "code" ];
-                }
-              ]
-              ++ optionals config.incus.enable [
-                {
-                  client_id = "incus";
-                  client_name = "Incus";
-                  public = true;
-                  authorization_policy = "two_factor";
-                  redirect_uris = [
-                    "https://${config.incus.domain}/oidc/callback"
-                    "https://${config.incus.domain}/oidc/callback"
-                  ];
-                  audience = [
-                    "https://${config.incus.domain}"
-                  ];
-                  scopes = [
-                    "openid"
-                    "offline_access"
-                  ];
-                  grant_types = [
-                    "refresh_token"
-                    "authorization_code"
-                  ];
-                  access_token_signed_response_alg = "RS256";
-                  userinfo_signed_response_alg = "none";
-                  token_endpoint_auth_method = "none";
-                }
-              ]
-              ++ [
-                {
-                  client_id = "beszel";
-                  client_name = "Beszel";
-                  client_secret = "$pbkdf2-sha512$310000$a5eI50mjNqSpsIt4zWbXPw$W9.fVZBp6QqyhVJMCQbRFbSuGGzHZf/.kWP0NcjtVORXGOs4BPbWPfW7x/kYyW8dk/Pj9kzb9j4sOZ6KV.9pZQ";
-                  public = false;
-                  authorization_policy = "two_factor";
-                  require_pkce = true;
-                  pkce_challenge_method = "S256";
-                  redirect_uris = [
-                    "https://${config.beszel.hub.domain}/api/oauth2-redirect"
-                  ];
-                  scopes = [
-                    "openid"
-                    "email"
-                    "profile"
-                  ];
-                  response_types = [
-                    "code"
-                  ];
-                  grant_types = [
-                    "authorization_code"
-                  ];
-                  access_token_signed_response_alg = "none";
-                  userinfo_signed_response_alg = "none";
-                  token_endpoint_auth_method = "client_secret_basic";
-                }
-              ]
-              ++ [
-                {
-                  client_id = "headscale";
-                  client_name = "Headscale";
-                  client_secret = "$pbkdf2-sha512$310000$DYe0qWxv1mEiA49L2IscnQ$d3PeqBhz2EkoQabGjAeUeg7ZLihCWh87kLYw/uPegR3Rdm/sdepPaS4yA1gK6RAmRqDafgu9oGcSNoicTemROg";
-                  public = false;
-                  authorization_policy = "two_factor";
-                  require_pkce = true;
-                  pkce_challenge_method = "S256";
-                  redirect_uris = [
-                    "https://${config.headscale.domain}/oidc/callback"
-                  ];
-                  scopes = [
-                    "openid"
-                    "email"
-                    "profile"
-                    "groups"
-                  ];
-                  response_types = [
-                    "code"
-                  ];
-                  grant_types = [
-                    "authorization_code"
-                  ];
-                  access_token_signed_response_alg = "none";
-                  userinfo_signed_response_alg = "none";
-                  token_endpoint_auth_method = "client_secret_basic";
-                }
-              ]
-              ++ optionals config.home_assistant.enable [
-                {
-                  client_id = "homeassistant";
-                  client_name = "Home Assistant";
-                  client_secret = "$pbkdf2-sha512$310000$uasQPh3/FzsdDPmOS1ys2A$bIbNmhzrLh8N3Kfrja5MNw7asN.tVUulp2A1s9FDCsrNtIRnMydQnqPelaxrxtDD1IHv.rJqZUJsOFJWTQOp7g";
-                  public = false;
-                  require_pkce = true;
-                  pkce_challenge_method = "S256";
-                  authorization_policy = "two_factor";
-                  redirect_uris = [
-                    "https://${config.home_assistant.domain}/auth/oidc/callback"
-                  ];
-                  scopes = [
-                    "openid"
-                    "profile"
-                    "groups"
-                  ];
-                  access_token_signed_response_alg = "RS256";
-                  token_endpoint_auth_method = "client_secret_post";
-                }
-              ];
+                };
+              };
+              clients =
+                [ ]
+                ++ optionals config.nextcloud.enable [
+                  {
+                    client_name = "NextCloud";
+                    client_id = "nextcloud";
+                    # the client secret is a random hash so don't worry about it
+                    client_secret = "$pbkdf2-sha512$310000$NqCsT52TLWKH2GOq1c7vyw$ObxsUBEcwK53BY8obKj7fjmk1xp4MnTYCc2kS9UKpKifVGOQczt4rQx0bWt5pInqpAKxGHXo/RGa7DolDugz2A";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    require_pkce = true;
+                    pkce_challenge_method = "S256";
+                    redirect_uris = [ "https://${config.nextcloud.domain}/apps/oidc_login/oidc" ];
+                    scopes = [
+                      "openid"
+                      "profile"
+                      "email"
+                      "groups"
+                    ];
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "client_secret_basic";
+                  }
+                ]
+                ++ optionals config.forgejo.enable [
+                  {
+                    client_name = "ForgeJo";
+                    client_id = "forgejo";
+                    # the client secret is a random hash so don't worry about it
+                    client_secret = "$pbkdf2-sha512$310000$EZtlQ4D8vOBPYNwxDbNk.w$oD6J/PyDotGjOUjq2uLaDpdO.uAVX3LpSvQgxD.q.G9FS8JQ5CKhx3j8HPdJlV2Gt2Pmvo/P0dpsX01Cic3A/g";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    redirect_uris = [ "https://${config.forgejo.domain}/user/oauth2/authelia/callback" ];
+                    scopes = [
+                      "openid"
+                      "email"
+                      "profile"
+                    ];
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "client_secret_basic";
+                  }
+                ]
+                ++ optionals config.matrix.mas.enable [
+                  {
+                    client_name = "Matrix";
+                    client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
+                    # the client secret is a random hash so don't worry about it
+                    client_secret = "$pbkdf2-sha512$310000$XVZ/KKrIuhfG7m/bnQXEHQ$/cHzLB6xyflth5HKJWR/Lc.//j4S/YiJ6lSaEH.rmskegD6c4zdgbni1Q.yfZrdRBg13.E8MGSyw4X1KpECv7Q";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    redirect_uris = [
+                      "https://${config.matrix.mas.domain}/upstream/callback/01H8PKNWKKRPCBW4YGH1RWV279"
+                    ];
+                    scopes = [
+                      "openid"
+                      "groups"
+                      "profile"
+                      "email"
+                      "offline_access"
+                    ];
+                    grant_types = [
+                      "refresh_token"
+                      "authorization_code"
+                    ];
+                    response_types = [ "code" ];
+                  }
+                ]
+                ++ optionals config.incus.enable [
+                  {
+                    client_id = "incus";
+                    client_name = "Incus";
+                    public = true;
+                    authorization_policy = "two_factor";
+                    redirect_uris = [
+                      "https://${config.incus.domain}/oidc/callback"
+                      "https://${config.incus.domain}/oidc/callback"
+                    ];
+                    audience = [
+                      "https://${config.incus.domain}"
+                    ];
+                    scopes = [
+                      "openid"
+                      "offline_access"
+                    ];
+                    grant_types = [
+                      "refresh_token"
+                      "authorization_code"
+                    ];
+                    access_token_signed_response_alg = "RS256";
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "none";
+                  }
+                ]
+                ++ [
+                  {
+                    client_id = "beszel";
+                    client_name = "Beszel";
+                    client_secret = "$pbkdf2-sha512$310000$a5eI50mjNqSpsIt4zWbXPw$W9.fVZBp6QqyhVJMCQbRFbSuGGzHZf/.kWP0NcjtVORXGOs4BPbWPfW7x/kYyW8dk/Pj9kzb9j4sOZ6KV.9pZQ";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    require_pkce = true;
+                    pkce_challenge_method = "S256";
+                    redirect_uris = [
+                      "https://${config.beszel.hub.domain}/api/oauth2-redirect"
+                    ];
+                    scopes = [
+                      "openid"
+                      "email"
+                      "profile"
+                    ];
+                    response_types = [
+                      "code"
+                    ];
+                    grant_types = [
+                      "authorization_code"
+                    ];
+                    access_token_signed_response_alg = "none";
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "client_secret_basic";
+                  }
+                ]
+                ++ [
+                  {
+                    client_id = "headscale";
+                    client_name = "Headscale";
+                    client_secret = "$pbkdf2-sha512$310000$DYe0qWxv1mEiA49L2IscnQ$d3PeqBhz2EkoQabGjAeUeg7ZLihCWh87kLYw/uPegR3Rdm/sdepPaS4yA1gK6RAmRqDafgu9oGcSNoicTemROg";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    require_pkce = true;
+                    pkce_challenge_method = "S256";
+                    redirect_uris = [
+                      "https://${config.headscale.domain}/oidc/callback"
+                    ];
+                    scopes = [
+                      "openid"
+                      "email"
+                      "profile"
+                      "groups"
+                    ];
+                    response_types = [
+                      "code"
+                    ];
+                    grant_types = [
+                      "authorization_code"
+                    ];
+                    access_token_signed_response_alg = "none";
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "client_secret_basic";
+                  }
+                ]
+                ++ optionals config.home_assistant.enable [
+                  {
+                    client_id = "homeassistant";
+                    client_name = "Home Assistant";
+                    client_secret = "$pbkdf2-sha512$310000$uasQPh3/FzsdDPmOS1ys2A$bIbNmhzrLh8N3Kfrja5MNw7asN.tVUulp2A1s9FDCsrNtIRnMydQnqPelaxrxtDD1IHv.rJqZUJsOFJWTQOp7g";
+                    public = false;
+                    require_pkce = true;
+                    pkce_challenge_method = "S256";
+                    authorization_policy = "home";
+                    redirect_uris = [
+                      "https://${config.home_assistant.domain}/auth/oidc/callback"
+                    ];
+                    scopes = [
+                      "openid"
+                      "profile"
+                      "groups"
+                    ];
+                    access_token_signed_response_alg = "RS256";
+                    token_endpoint_auth_method = "client_secret_post";
+                  }
+                ];
+            };
           };
         };
       };
