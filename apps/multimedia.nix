@@ -318,6 +318,7 @@ in
           musescore
           demucs-rs
           surge-xt
+          guitarix
         ];
       }
     );
