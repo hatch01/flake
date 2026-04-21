@@ -103,6 +103,7 @@ in
       networking.firewall.allowedTCPPorts = [ config.bitcoin.server.port ];
 
       systemd.services.bitcoind-bitcoin = {
+        serviceConfig.TimeoutStopSec = "600";
         after = [ "tailscaled.service" ];
         requires = [ "tailscaled.service" ];
       };
