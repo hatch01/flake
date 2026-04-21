@@ -15,7 +15,6 @@ let
   pw-metadata = lib.getExe' pkgs.pipewire "pw-metadata";
   systemctl = lib.getExe' pkgs.systemd "systemctl";
   balooctl = lib.getExe' pkgs.kdePackages.baloo "balooctl6";
-  systemd-inhibit = lib.getExe' pkgs.systemd "systemd-inhibit";
 
   # ─── Timers à stopper avant le live ────────────────────────────────────────
   liveBlockedSystemTimers = [
@@ -33,13 +32,6 @@ let
     set -euo pipefail
 
     echo "🎛️  === MODE LIVE AUDIO ==="
-    echo ""
-
-    # --- Inhibit sleep/idle ---
-    echo "🔒 Activation du verrou anti-sommeil/idle..."
-    ${systemd-inhibit} --what=sleep:idle --why="Live audio session in progress" --mode=block sleep 1000000 &
-    echo $! > /tmp/live-inhibit.pid
-    echo "  ✅ Inhibit PID: $(cat /tmp/live-inhibit.pid)"
     echo ""
 
     # --- Timers système ---
@@ -139,15 +131,6 @@ let
 
     echo "🔄 === FIN DE SESSION LIVE ==="
     echo ""
-
-    # --- Kill inhibit process ---
-    if [ -f /tmp/live-inhibit.pid ]; then
-      INHIBIT_PID=$(cat /tmp/live-inhibit.pid)
-      kill "$INHIBIT_PID" 2>/dev/null || true
-      rm /tmp/live-inhibit.pid
-      echo "🔓 Verrou anti-sommeil/idle levé"
-    fi
-
 
     # --- Relancer les timers ---
     echo "▶️  Relance des timers système..."
