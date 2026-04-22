@@ -10,6 +10,7 @@ let
     mkOption
     mkIf
     types
+    optionalAttrs
     ;
 in
 {
@@ -32,13 +33,8 @@ in
         KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlwZwhYxzn9RtjWNdPd5raNIa6eQzXCf9994GSRBGjK";
       };
     }
-    // (
-      if !stable then
-        {
-          smartmon.enable = true;
-        }
-      else
-        { }
-    );
+    // optionalAttrs (!stable) {
+      smartmon.enable = true;
+    };
   };
 }
