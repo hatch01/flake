@@ -327,6 +327,8 @@ in
           guitarix
           tonelib-gfx
           zlequalizer
+          zlcompressor
+          zlsplitter
         ];
       }
     ))
