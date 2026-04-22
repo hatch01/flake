@@ -120,6 +120,7 @@
           "nrf-udev"
           "iscan-ds"
           "virtualbox-extpack"
+          "tonelib-gfx"
         ];
 
       permittedInsecurePackages = [
