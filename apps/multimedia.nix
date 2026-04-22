@@ -326,6 +326,7 @@ in
           surge-xt
           guitarix
           tonelib-gfx
+          zlequalizer
         ];
       }
     ))
