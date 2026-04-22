@@ -18,11 +18,8 @@ let
       "wifi"
     ]
     // defineSecrets "server" [
-      "smtpPassword"
-      "smtpPasswordEnv"
       "cockpit_private_key"
       "restic_key"
-      "wakapi_salt"
 
       # dynDNS
       "dyndns"
