@@ -7,35 +7,41 @@
   ...
 }:
 let
-  inherit (lib) optionals mkEnableOption mkIf;
+  inherit (lib)
+    optionals
+    mkEnableOption
+    mkIf
+    mkMerge
+    ;
+
 in
 {
   imports = [
     inputs.musnix.nixosModules.musnix
   ];
+
   options = {
     multimedia.enable = mkEnableOption "Enable multimedia reading packages";
     multimedia.audio.enable = mkEnableOption "Enable multimedia audio packages";
     multimedia.editing.enable = mkEnableOption "Enable multimedia editing packages";
   };
 
-  config =
-    with config;
+  config = mkMerge [
     {
       # if we have editing tools, it is likely we also want to read multimedia
-      multimedia.enable = mkIf multimedia.editing.enable true;
+      multimedia.enable = mkIf config.multimedia.editing.enable true;
 
       environment.systemPackages =
         with pkgs;
         [ ]
-        ++ optionals multimedia.enable [
+        ++ optionals config.multimedia.enable [
           # reading
           ffmpeg-full
           vlc
           spotify
           yt-dlp
         ]
-        ++ optionals multimedia.editing.enable [
+        ++ optionals config.multimedia.editing.enable [
           # editing
           gimp3
           #blender
@@ -46,7 +52,7 @@ in
           inkscape-with-extensions
         ];
     }
-    // mkIf multimedia.audio.enable (
+    (mkIf config.multimedia.audio.enable (
       let
         # Live audio utilities
         pw-metadata = lib.getExe' pkgs.pipewire "pw-metadata";
@@ -321,5 +327,6 @@ in
           guitarix
         ];
       }
-    );
+    ))
+  ];
 }
