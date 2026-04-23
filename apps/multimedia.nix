@@ -325,6 +325,7 @@ in
           demucs-rs
           surge-xt
           guitarix
+          guitarix-vst
           tonelib-gfx
           zlequalizer
           zlcompressor

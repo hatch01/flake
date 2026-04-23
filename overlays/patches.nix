@@ -7,6 +7,11 @@
       name = "hatchupdate";
       hash = "sha256-txQoGsOzimVsBlpJHo6xM6cttgSuQj34V/q/7u80svs=";
     }
+    {
+      pr = 512511;
+      name = "guitarix-vst";
+      hash = "sha256-T38Roq3TE39znoz4mUS7XQCKfGo80CJkFgxOkHKEu8M=";
+    }
   ];
 
   common = [
