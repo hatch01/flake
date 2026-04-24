@@ -196,9 +196,23 @@ in
         }
 
         s() {
+          local no_www=0
+          local OPTIND opt
+
+          while getopts "w" opt; do
+            case $opt in
+              w) no_www=1 ;;
+              *) echo "Usage: s [-w] [server]" >&2; return 1 ;;
+            esac
+          done
+          shift $((OPTIND - 1))
           local server=$(_select_ssh_host "$1")
           if [[ -n $server ]]; then
-            ssh "$server"
+            if [[ $no_www -eq 1 ]]; then
+              ssh "$server"
+            else
+              ssh -t "$server" "sudo su - www"
+            fi
           fi
         }
 
