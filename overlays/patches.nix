@@ -10,7 +10,7 @@
     {
       pr = 512511;
       name = "guitarix-vst";
-      hash = "sha256-T38Roq3TE39znoz4mUS7XQCKfGo80CJkFgxOkHKEu8M=";
+      hash = "sha256-RPZ9/rbzgjdrADlyHRbNfO9yGwEMdBFqMPMJgg7PLjA=";
     }
   ];
 
