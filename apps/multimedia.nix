@@ -330,6 +330,9 @@ in
           zlcompressor
           zlsplitter
           dragonfly-reverb
+          neural-amp-modeler-lv2
+          kapitonov-plugins-pack
+          metersLv2
         ];
       }
     ))
