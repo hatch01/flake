@@ -39,6 +39,7 @@ let
   #
   # Auto-resolves config.<serviceName>.{enable,domain,port}
   # Generates: ACME, forceSSL, per-vhost logs, proxyPass to port
+  # Detects if service is protected by Anubis and routes through Unix socket
   #
   # Options:
   #   cache              - bool, add proxy_cache (default: false)
@@ -63,6 +64,14 @@ let
       enable = svc.enable;
       port = svc.port;
 
+      # Check if service is protected by Anubis
+      isProtectedByAnubis = config.anubis.enable && lib.elem serviceName config.anubis.services;
+      proxyPassTarget =
+        if isProtectedByAnubis then
+          "http://unix:/run/anubis/anubis-${serviceName}/anubis.sock"
+        else
+          "http://127.0.0.1:${toString port}";
+
       # Server-level extraConfig
       serverExtraParts =
         lib.optional cache "proxy_cache cache;" ++ lib.optional (extraConfig != "") extraConfig;
@@ -79,7 +88,7 @@ let
 
       # Build the "/" location: defaults + user overrides + merged extraConfig
       rootLocation = {
-        proxyPass = "http://127.0.0.1:${toString port}";
+        proxyPass = proxyPassTarget;
       }
       // userRootLoc
       // lib.optionalAttrs (rootLocExtraConfig != "") { extraConfig = rootLocExtraConfig; };

@@ -19,6 +19,8 @@
   homepage.enable = true;
   authelia.enable = true;
   # gitlab.enable = true;
+  anubis.enable = true;
+  anubis.services = [ "forgejo" ];
   forgejo.enable = true;
   nixCache.enable = true;
   adguard.enable = true;

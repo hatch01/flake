@@ -53,5 +53,6 @@
     ./zsh.nix
     ./bitwarden.nix
     ./ntfy.nix
+    ./anubis.nix
   ];
 }
