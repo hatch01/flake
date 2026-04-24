@@ -7,7 +7,7 @@ let
     lotus = [ "age1lcw62jx877aqxcwlu855q2x6sq35khqart0we3j6qy8595dmsp6s8xyxnc" ];
     server = jonquille ++ cyclamen ++ lilas;
     desktop = tulipe;
-    all = desktop ++ server;
+    all = desktop ++ server ++ lotus;
   };
 
   secrets =
