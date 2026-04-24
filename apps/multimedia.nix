@@ -330,6 +330,7 @@ in
           zlequalizer
           zlcompressor
           zlsplitter
+          dragonfly-reverb
         ];
       }
     ))
