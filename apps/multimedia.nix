@@ -326,7 +326,6 @@ in
           surge-xt
           guitarix
           guitarix-vst
-          tonelib-gfx
           zlequalizer
           zlcompressor
           zlsplitter
