@@ -24,7 +24,7 @@
     {
       pr = 402608;
       name = "satochip-utils";
-      hash = "sha256-q41E9jstfiQePF7wgXT2m2W7moBKiW+woU1V0lcZYjs=";
+      hash = "sha256-kCBwv8D0sY6c7MvmH6Aqmh2fDphbjW7egbWWCQ7G7Is=";
     }
   ];
 }
