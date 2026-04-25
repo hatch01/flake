@@ -1,5 +1,11 @@
 {
-  stable = [ ];
+  stable = [
+    {
+      pr = 512626;
+      name = "zellij";
+      hash = "sha256-jRTgCeyMZZwhZ96JhY3OlG3Nfe5NgjskMa6yIsjigu0=";
+    }
+  ];
 
   unstable = [
     {
