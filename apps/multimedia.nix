@@ -68,6 +68,9 @@ in
         ];
         liveBlockedSystemServices = [
           "comin.service"
+          "nix-daemon.service"
+          "avahi-daemon.service"
+          "NetworkManager.service"
         ];
 
         # ─── Script : démarrage mode live ──────────────────────────────────────────
@@ -90,7 +93,7 @@ in
 
           # --- Services auto (comin, etc.) ---
           echo ""
-          echo "⏸️  Arrêt des services de mise à jour..."
+          echo "⏸️  Arrêt des services système..."
           ${lib.concatMapStringsSep "\n" (s: ''
             if ${systemctl} is-active --quiet "${s}" 2>/dev/null; then
               sudo ${systemctl} stop "${s}"
