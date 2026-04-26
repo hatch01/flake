@@ -1,5 +1,11 @@
 {
-  stable = [ ];
+  stable = [
+    {
+      pr = 512626;
+      name = "zellij";
+      hash = "sha256-jRTgCeyMZZwhZ96JhY3OlG3Nfe5NgjskMa6yIsjigu0=";
+    }
+  ];
 
   unstable = [
     {
@@ -12,13 +18,23 @@
       name = "guitarix-vst";
       hash = "sha256-RPZ9/rbzgjdrADlyHRbNfO9yGwEMdBFqMPMJgg7PLjA=";
     }
+    {
+      pr = 513293;
+      name = "nextcloud-app-update";
+      hash = "sha256-TGvBhK9xIuFm+ErB51Sb+zySL1IoSTqPw16IXRC397E=";
+    }
+    {
+      pr = 511775;
+      name = "fix bitcoin build";
+      hash = "sha256-8jUVthhrtHOXKItpZg8WMWPlcdTRQGHptuWo5AqS1i4=";
+    }
   ];
 
   common = [
     {
       pr = 402608;
       name = "satochip-utils";
-      hash = "sha256-q41E9jstfiQePF7wgXT2m2W7moBKiW+woU1V0lcZYjs=";
+      hash = "sha256-kCBwv8D0sY6c7MvmH6Aqmh2fDphbjW7egbWWCQ7G7Is=";
     }
   ];
 }
