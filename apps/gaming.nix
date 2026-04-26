@@ -63,7 +63,7 @@ in
       ++ optionals steam.enable [ ludusavi ] # a backup tool for Steam games
       ++ optionals remotePlay.enable [ parsec-bin ]
       ++ optionals winetools.enable [
-        bottles
+        # bottles
         wine
       ]
       ++ optionals heroic.enable [ pkgs.heroic ];
