@@ -157,6 +157,8 @@ in
 
           xwayland.force_zero_scaling = true;
 
+          windowrule = "match:class ^(Ardour.*)$, match:float true, center on";
+
           # Startup Apps
           exec-once = [
           ];
