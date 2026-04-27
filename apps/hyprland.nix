@@ -155,6 +155,8 @@ in
             float_switch_override_focus = 0;
           };
 
+          xwayland.force_zero_scaling = true;
+
           # Startup Apps
           exec-once = [
           ];
