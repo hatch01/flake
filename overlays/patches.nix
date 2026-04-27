@@ -11,7 +11,7 @@
     {
       pr = 499297;
       name = "hatchupdate";
-      hash = "sha256-txQoGsOzimVsBlpJHo6xM6cttgSuQj34V/q/7u80svs=";
+      hash = "sha256-RdGRpZTCaOaN8ikGcBB5Kunyd0iKnx2Yjg6kDNCXIkc=";
     }
     {
       pr = 512511;
