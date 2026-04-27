@@ -54,5 +54,6 @@
     ./bitwarden.nix
     ./ntfy.nix
     ./anubis.nix
+    ./hyprland.nix
   ];
 }

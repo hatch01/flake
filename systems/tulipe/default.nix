@@ -15,6 +15,8 @@
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
+  hyprland.enable = true;
+
   systemd.services.nix-daemon.serviceConfig.Environment = [
     "NIX_FMOD_USERNAME=hatchchien@protonmail.com"
     "NIX_FMOD_PASSWORD=iJQvHRyGlFsCf85"
