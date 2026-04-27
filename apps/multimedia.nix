@@ -335,7 +335,7 @@ in
           dragonfly-reverb
           neural-amp-modeler-lv2
           kapitonov-plugins-pack
-          metersLv2
+          meters-lv2
         ];
       }
     ))
