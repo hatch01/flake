@@ -15,7 +15,6 @@ in
 
   config = mkIf config.hyprland.enable {
     environment.systemPackages = with pkgs; [
-      kitty
       fuzzel
       wlogout
       brightnessctl
@@ -34,6 +33,11 @@ in
         xwayland.enable = true;
         settings = {
           "$mainMod" = "SUPER";
+
+          monitor = [
+            "eDP-1, highres, auto, 1"
+            ", preferred, auto, 1"
+          ];
 
           bind = [
             "$mainMod, Return, exec, kitty"
@@ -61,8 +65,8 @@ in
             "$mainMod, c, exec, pavucontrol"
 
             # backlight
-            ",XF86MonBrightnessUp, exec, brightnessctl set +5%"
-            ",XF86MonBrightnessDown, exec, brightnessctl 5%-"
+            ",XF86MonBrightnessUp, exec, brightnessctl s +5%"
+            ",XF86MonBrightnessDown, exec, brightnessctl s 5%-"
 
             # Move focus
             "$mainMod, h, movefocus, l"
@@ -113,7 +117,7 @@ in
             "$mainMod SHIFT, agrave, movetoworkspacesilent, 10"
 
             # Kill
-            "CTRL ALT SHIFT, K, exec, hyprctl killi"
+            "CTRL ALT SHIFT, K, exec, hyprctl kill"
           ];
 
           animations.enabled = false;
@@ -124,8 +128,8 @@ in
           };
 
           general = {
-            gaps_in = 10;
-            gaps_out = 5;
+            gaps_in = 5;
+            gaps_out = 10;
             border_size = 2;
           };
 
@@ -157,8 +161,6 @@ in
 
           xwayland.force_zero_scaling = true;
 
-          windowrule = "match:class ^(Ardour.*)$, match:float true, center on";
-
           # Startup Apps
           exec-once = [
           ];
@@ -168,6 +170,21 @@ in
             "$mainMod, mouse:273, resizewindow"
             "$mainMod ALT, mouse:272, resizewindow"
           ];
+        };
+      };
+
+      programs.kitty = lib.mkForce {
+        enable = true;
+
+        settings = {
+          enable_audio_bell = false;
+          window_padding_width = 15;
+          themeFile = "Catppuccin-Latte";
+        };
+
+        font = {
+          name = "JetBrains Mono";
+          size = 12;
         };
       };
     };
