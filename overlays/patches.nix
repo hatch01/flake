@@ -13,11 +13,6 @@
       name = "guitarix-vst";
       hash = "sha256-RPZ9/rbzgjdrADlyHRbNfO9yGwEMdBFqMPMJgg7PLjA=";
     }
-    {
-      pr = 511775;
-      name = "fix bitcoin build";
-      hash = "sha256-8jUVthhrtHOXKItpZg8WMWPlcdTRQGHptuWo5AqS1i4=";
-    }
   ];
 
   common = [
