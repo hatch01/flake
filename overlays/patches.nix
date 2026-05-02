@@ -13,16 +13,6 @@
       name = "guitarix-vst";
       hash = "sha256-RPZ9/rbzgjdrADlyHRbNfO9yGwEMdBFqMPMJgg7PLjA=";
     }
-    {
-      pr = 513293;
-      name = "nextcloud-app-update";
-      hash = "sha256-TGvBhK9xIuFm+ErB51Sb+zySL1IoSTqPw16IXRC397E=";
-    }
-    {
-      pr = 511775;
-      name = "fix bitcoin build";
-      hash = "sha256-8jUVthhrtHOXKItpZg8WMWPlcdTRQGHptuWo5AqS1i4=";
-    }
   ];
 
   common = [
