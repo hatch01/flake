@@ -73,19 +73,8 @@ in
           };
 
           oauth2 = {
-            # providers are configured in the admin panel
             ENABLED = true;
           };
-
-          # Authelia must be manually registered with:
-          # forgejo admin auth add-oauth \
-          #     --name     authelia \
-          #     --provider openidConnect \
-          #     --key      <client_id> \
-          #     --secret   <secret> \
-          #     --auto-discover-url https://auth.${base_domain_name}/.well-known/openid-configuration \
-          #     --scopes='openid email profile'
-          # This is automatically done via the preStart systemd hook below.
 
           authelia = {
             ENABLE_OPENID_SIGNIN = true;
