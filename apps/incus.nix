@@ -170,6 +170,14 @@ in
         projects = [ ];
         cluster = null;
       };
-    };
+    }
+    // (
+      if (!stable) then
+        {
+          bucketSupport = false; # disable as this is unsecure https://github.com/NixOS/nixpkgs/pull/514811
+        }
+      else
+        { }
+    );
   };
 }
