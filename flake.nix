@@ -25,9 +25,8 @@
   };
 
   inputs = {
-    nixpkgs.url = "git+https://forge.onyx.ovh/github_mirror/nixpkgs?shallow=1&ref=nixos-unstable";
-    nixpkgs-unstable.url = "git+https://forge.onyx.ovh/github_mirror/nixpkgs?shallow=1&ref=master";
-    nixpkgs-stable.url = "git+https://forge.onyx.ovh/github_mirror/nixpkgs?shallow=1&ref=nixos-25.11";
+    nixpkgs.url = "git+https://forge.onyx.ovh/eymeric/nixpkgs-patched?shallow=1&ref=nixos-unstable";
+    nixpkgs-stable.url = "git+https://forge.onyx.ovh/eymeric/nixpkgs-patched?shallow=1&ref=nixos-stable";
     nixos-wsl = {
       url = "git+https://forge.onyx.ovh/github_mirror/NixOS-WSL?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -103,8 +102,6 @@
       inputs.nixos-hardware.follows = "nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixpkgs-patcher.url = "git+https://forge.onyx.ovh/github_mirror/nixpkgs-patcher?shallow=1";
 
     nix-index-database = {
       url = "git+https://forge.onyx.ovh/github_mirror/nix-index-database?shallow=1";
