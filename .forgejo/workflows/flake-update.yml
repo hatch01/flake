@@ -20,17 +20,32 @@ jobs:
           git config user.name "Flake Updater"
           git config user.email "flake-updater@forge.onyx.ovh"
           git status
-      - name: Setup SSH agent
+      - name: Setup SSH agent with multiple keys
         run: |
-          echo "Running SSH agent..."
+          echo "Starting SSH agent..."
           eval $(ssh-agent -s)
           echo "Exporting SSH auth sock environment variable..."
           echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $FORGEJO_OUTPUT
           echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $FORGEJO_ENV
-          echo "${{ secrets.SSH_KEY }}" | ssh-add -
+
+          # Add main SSH key for flake repository operations
+          echo "Adding main SSH key for flake repo..."
+          echo "${{ secrets.SSH_KEY }}" | ssh-add - 2>/dev/null || echo "Warning: Failed to add main SSH key"
+
+          # Add dedicated SSH key for nixpkgs-patched repository if available
+          if [ -n "${{ secrets.NIXPKGS_PATCHED_PUSH_KEY }}" ]; then
+            echo "Adding dedicated key for nixpkgs-patched repo..."
+            echo "${{ secrets.NIXPKGS_PATCHED_PUSH_KEY }}" | ssh-add - 2>/dev/null || echo "Warning: Failed to add nixpkgs-patched SSH key"
+          else
+            echo "Note: NIXPKGS_PATCHED_PUSH_KEY not configured, will attempt to use main SSH_KEY"
+          fi
+
+          # List added keys for debugging
+          ssh-add -l || echo "No keys in agent"
       - name: Add known SSH hosts
         run: |
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           echo "forge.onyx.ovh github.com" | xargs ssh-keyscan > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
       - name: Fetch main branch
@@ -46,5 +61,13 @@ jobs:
           GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: nix flake update --accept-flake-config --commit-lock-file
+      - name: Update nixpkgs patches
+        env:
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
+          FORCE_PUSH: "true"
+        run: |
+          ./scripts/update-nixpkgs-patches.sh || echo "Patches update failed or no changes needed"
       - name: Push flake update commit
         run: git push --force origin staging

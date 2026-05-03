@@ -129,11 +129,6 @@
         "python3.13-ecdsa-0.19.1"
       ];
     };
-
-    overlays = [
-      ((import ../overlays/unstable.nix) inputs.nixpkgs-unstable)
-      ((import ../overlays/stable.nix) inputs.nixpkgs-stable)
-    ];
   };
 
   age = {
