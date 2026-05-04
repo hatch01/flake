@@ -96,13 +96,17 @@ in
         ];
 
         # Helper function to generate systemctl commands for service management
-        manageServices = action: services: lib.concatMapStringsSep "\n" (s: ''
-          sudo ${systemctl} ${action} "${s}" 2>/dev/null && echo "  ✅ ${s}" || echo "  ⚠️  ${s}"
-        '') services;
+        manageServices =
+          action: services:
+          lib.concatMapStringsSep "\n" (s: ''
+            sudo ${systemctl} ${action} "${s}" 2>/dev/null && echo "  ✅ ${s}" || echo "  ⚠️  ${s}"
+          '') services;
 
-        manageUserServices = action: services: lib.concatMapStringsSep "\n" (s: ''
-          ${systemctl} --user ${action} "${s}" 2>/dev/null && echo "  ✅ ${s}" || echo "  ⚠️  ${s}"
-        '') services;
+        manageUserServices =
+          action: services:
+          lib.concatMapStringsSep "\n" (s: ''
+            ${systemctl} --user ${action} "${s}" 2>/dev/null && echo "  ✅ ${s}" || echo "  ⚠️  ${s}"
+          '') services;
 
         # ─── Script : démarrage mode live ──────────────────────────────────────────
         liveStartScript = pkgs.writeShellScriptBin "live-start" ''
