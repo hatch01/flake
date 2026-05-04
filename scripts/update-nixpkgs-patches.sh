@@ -128,13 +128,19 @@ DATE=$(date +%Y%m%d-%H%M%S)
 
 echo "Backing up branches before force push..."
 backup_branch="nixos-unstable-${DATE}"
-git fetch origin "nixos-unstable" >/dev/null 2>&1
-git push origin "FETCH_HEAD:refs/heads/$backup_branch" >/dev/null 2>&1 && echo "Backed up nixos-unstable as $backup_branch to origin"
-git push mirror "FETCH_HEAD:refs/heads/$backup_branch" >/dev/null 2>&1 && echo "Backed up nixos-unstable as $backup_branch to mirror"
+if git fetch origin "nixos-unstable" >/dev/null 2>&1; then
+	git push origin "FETCH_HEAD:refs/heads/$backup_branch" >/dev/null 2>&1 && echo "Backed up nixos-unstable as $backup_branch to origin" || echo "Failed to backup to origin"
+	git push mirror "FETCH_HEAD:refs/heads/$backup_branch" >/dev/null 2>&1 && echo "Backed up nixos-unstable as $backup_branch to mirror" || echo "Failed to backup to mirror"
+else
+	echo "Branch nixos-unstable does not exist yet on origin, skipping backup"
+fi
 backup_branch="nixos-stable-${DATE}"
-git fetch origin "nixos-stable" >/dev/null 2>&1
-git push origin "FETCH_HEAD:refs/heads/$backup_branch" >/dev/null 2>&1 && echo "Backed up nixos-stable as $backup_branch to origin"
-git push mirror "FETCH_HEAD:refs/heads/$backup_branch" >/dev/null 2>&1 && echo "Backed up nixos-stable as $backup_branch to mirror"
+if git fetch origin "nixos-stable" >/dev/null 2>&1; then
+	git push origin "FETCH_HEAD:refs/heads/$backup_branch" >/dev/null 2>&1 && echo "Backed up nixos-stable as $backup_branch to origin" || echo "Failed to backup to origin"
+	git push mirror "FETCH_HEAD:refs/heads/$backup_branch" >/dev/null 2>&1 && echo "Backed up nixos-stable as $backup_branch to mirror" || echo "Failed to backup to mirror"
+else
+	echo "Branch nixos-stable does not exist yet on origin, skipping backup"
+fi
 
 # Now force push the new patched branches
 echo "Force pushing updates ..."
