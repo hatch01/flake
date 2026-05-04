@@ -55,14 +55,14 @@ in
     (mkIf config.multimedia.audio.enable (
       let
         # Live audio utilities
-        pw-metadata = lib.getExe' pkgs.pipewire "pw-metadata";
         systemctl = lib.getExe' pkgs.systemd "systemctl";
         balooctl = lib.getExe' pkgs.kdePackages.baloo "balooctl6";
+        rfkill = lib.getExe' pkgs.util-linux "rfkill";
 
-        # ─── Timers à stopper avant le live ────────────────────────────────────────
+        # ─── Services à bloquer en mode live ──────────────────────────────────────
+        # Organize services by category for clarity
         liveBlockedSystemTimers = [
           "nh-clean.timer"
-          "nix-gc.timer"
           "nix-optimise.timer"
           "fstrim.timer"
         ];
@@ -71,7 +71,38 @@ in
           "nix-daemon.service"
           "avahi-daemon.service"
           "NetworkManager.service"
+          "docker.socket"
+          "docker.service"
+          "tailscaled.service"
+          "beszel-agent.service"
+          "ollama.service"
+          "cups.socket"
+          "cups.service"
+          "spice-vdagentd.service"
+          "wpa_supplicant.service"
+          "dnsproxy.service"
+          "geoclue.service"
+          "ModemManager.service"
+          "nscd.service"
         ];
+        liveBlockedUserServices = [
+          "pipewire.socket"
+          "pipewire.service"
+          "pipewire-pulse.socket"
+          "pipewire-pulse.service"
+          "wireplumber.service"
+          "speech-dispatcher.socket"
+          "speech-dispatcher.service"
+        ];
+
+        # Helper function to generate systemctl commands for service management
+        manageServices = action: services: lib.concatMapStringsSep "\n" (s: ''
+          sudo ${systemctl} ${action} "${s}" 2>/dev/null && echo "  ✅ ${s}" || echo "  ⚠️  ${s}"
+        '') services;
+
+        manageUserServices = action: services: lib.concatMapStringsSep "\n" (s: ''
+          ${systemctl} --user ${action} "${s}" 2>/dev/null && echo "  ✅ ${s}" || echo "  ⚠️  ${s}"
+        '') services;
 
         # ─── Script : démarrage mode live ──────────────────────────────────────────
         liveStartScript = pkgs.writeShellScriptBin "live-start" ''
@@ -80,41 +111,39 @@ in
           echo "🎛️  === MODE LIVE AUDIO ==="
           echo ""
 
+          # podman
+          podman stop -a || true
+          sudo podman stop -a || true
+
+          # kill
+          sudo pkill openrgb || true
+          pkill nextcloud || true
+
+          # disable bluetooth/wifi
+          ${rfkill} block bluetooth
+          sudo systemctl stop bluetooth.service
+          sudo pkill bluetoothd
+          ${rfkill} block wifi
+
           # --- Timers système ---
           echo "⏸️  Arrêt des timers système..."
-          ${lib.concatMapStringsSep "\n" (t: ''
-            if ${systemctl} is-active --quiet "${t}" 2>/dev/null; then
-              sudo ${systemctl} stop "${t}"
-              echo "  ✅ ${t}"
-            else
-              echo "  ⏭️  ${t} (déjà inactif)"
-            fi
-          '') liveBlockedSystemTimers}
+          ${manageServices "stop" liveBlockedSystemTimers}
 
           # --- Services auto (comin, etc.) ---
           echo ""
           echo "⏸️  Arrêt des services système..."
-          ${lib.concatMapStringsSep "\n" (s: ''
-            if ${systemctl} is-active --quiet "${s}" 2>/dev/null; then
-              sudo ${systemctl} stop "${s}"
-              echo "  ✅ ${s}"
-            else
-              echo "  ⏭️  ${s} (déjà inactif)"
-            fi
-          '') liveBlockedSystemServices}
+          ${systemctl} stop nix-gc.service # Stop appart to avoid starting at the end of the session
+          ${manageServices "stop" liveBlockedSystemServices}
 
           # --- Baloo (indexeur KDE) ---
           echo ""
           echo "⏸️  Suspension de Baloo..."
           ${balooctl} suspend && echo "  ✅ Baloo suspendu" || echo "  ⚠️  Erreur balooctl"
 
-          # --- PipeWire : forcer 48kHz / 64 samples ---
+          # --- PipeWire & User Services ---
           echo ""
-          echo "🔧 Réglage PipeWire basse latence (48kHz / 64 samples)..."
-          ${pw-metadata} -n settings 0 clock.force-rate 48000
-          ${pw-metadata} -n settings 0 clock.force-quantum 64
-          echo "  ✅ clock.force-rate  = 48000"
-          echo "  ✅ clock.force-quantum = 64  (0.67ms buffer)"
+          echo "⏸️  Arrêt des services utilisateur..."
+          ${manageUserServices "stop" liveBlockedUserServices}
 
           # --- Vérification RT ---
           echo ""
@@ -162,10 +191,6 @@ in
           fi
 
           echo ""
-          echo "🎚️  Configuration active :"
-          ${pw-metadata} -n settings 2>/dev/null | grep -E "clock\.(force|rate|quantum)" | sed 's/^/  /'
-          echo ""
-          echo "💡 Lance Ardour avec : PIPEWIRE_LATENCY=\"64/48000\" ardour"
           echo "💡 Fin de session : live-stop"
           echo "⏸️  Appuyez sur Entrée pour fermer la console..."
           read -r
@@ -178,30 +203,29 @@ in
           echo "🔄 === FIN DE SESSION LIVE ==="
           echo ""
 
+          # unlock wifi/bluetooth
+          ${rfkill} unblock bluetooth
+          ${rfkill} unblock wifi
+          sudo ${systemctl} start bluetooth.service
+          sudo systemctl restart NetworkManager.service
+
           # --- Relancer les timers ---
           echo "▶️  Relance des timers système..."
-          ${lib.concatMapStringsSep "\n" (t: ''
-            sudo ${systemctl} start "${t}" 2>/dev/null && echo "  ✅ ${t}" || echo "  ⚠️  ${t} (échec)"
-          '') liveBlockedSystemTimers}
+          ${manageServices "start" liveBlockedSystemTimers}
 
           echo ""
           echo "▶️  Relance des services..."
-          ${lib.concatMapStringsSep "\n" (s: ''
-            sudo ${systemctl} start "${s}" 2>/dev/null && echo "  ✅ ${s}" || echo "  ⏭️  ${s} (non trouvé ou déjà actif)"
-          '') liveBlockedSystemServices}
+          ${manageServices "start" liveBlockedSystemServices}
 
           # --- Baloo ---
           echo ""
           echo "▶️  Reprise de Baloo..."
           ${balooctl} resume && echo "  ✅ Baloo repris" || echo "  ⚠️  Erreur balooctl"
 
-          # --- PipeWire : retour aux réglages normaux ---
+          # --- PipeWire & User Services : retour aux réglages normaux ---
           echo ""
-          echo "🔧 Retour aux réglages PipeWire normaux..."
-          ${pw-metadata} -n settings 0 clock.force-rate 0
-          ${pw-metadata} -n settings 0 clock.force-quantum 0
-          echo "  ✅ Quantum dynamique rétabli"
-          echo "  ✅ Sample rate dynamique rétabli"
+          echo "▶️  Relance des services utilisateur..."
+          ${manageUserServices "start" liveBlockedUserServices}
 
           echo ""
           echo "✅ Système revenu en mode normal."
@@ -253,27 +277,6 @@ in
         ];
         users.users.${username} = {
           extraGroups = [ "audio" ];
-        };
-
-        services.pipewire = {
-          # Global low-latency defaults for native JACK clients
-          extraConfig.pipewire."92-low-latency" = {
-            "context.properties" = {
-              "default.clock.rate" = 48000; # Fixed rate avoids resampling latency
-              "default.clock.quantum" = 128; # ~5ms latency at 48kHz
-              "default.clock.min-quantum" = 64; # ~2.5ms latency at 48kHz
-              "default.clock.max-quantum" = 512;
-            };
-          };
-
-          # Crucial: Match low-latency for PulseAudio clients (browsers, Steam/Rocksmith)
-          extraConfig.pipewire-pulse."92-low-latency" = {
-            "pulse.properties" = {
-              "pulse.min.req" = "64/48000"; # Start with 64, not 32, for stability
-              "pulse.default.req" = "64/48000";
-              "pulse.max.req" = "128/48000";
-            };
-          };
         };
 
         boot.kernelParams = [
