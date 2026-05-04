@@ -88,7 +88,7 @@ in
       services.bitcoind.bitcoin = {
         enable = true;
         port = config.bitcoin.server.port;
-        dbCache = 10 * 1024;
+        # dbCache = 10 * 1024;
         dataDir = "/storage/bitcoin";
         rpc = {
           port = config.bitcoin.server.portRpc;
