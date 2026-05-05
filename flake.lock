@@ -442,18 +442,18 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1777917524,
-        "narHash": "sha256-k+LVe9YaO2BEPB9AaCtTtOMCeGi4dxDo6gt4Un3qoPY=",
-        "ref": "refs/heads/master",
-        "rev": "df7783100babf59001340a7a874ba3824e441ecb",
-        "shallow": true,
-        "type": "git",
-        "url": "https://forge.onyx.ovh/github_mirror/nixos-hardware"
+        "lastModified": 1778013299,
+        "narHash": "sha256-lkesY6x2X2qxlqLM7CT2iM/0rP2JB7fruPN3h8POXmI=",
+        "owner": "JamieMagee",
+        "repo": "nixos-hardware",
+        "rev": "ae243122dd698069960df976ff282b5e01eb2062",
+        "type": "github"
       },
       "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "https://forge.onyx.ovh/github_mirror/nixos-hardware"
+        "owner": "JamieMagee",
+        "ref": "raspberry-pi/fix-localversion-modDirVersion",
+        "repo": "nixos-hardware",
+        "type": "github"
       }
     },
     "nixos-wsl": {
