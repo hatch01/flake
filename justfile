@@ -42,8 +42,10 @@ install machine:
 analyze:
     find -name "*.nix" | xargs -I{} nil diagnostics {}
 
-forcast machine:
-    nix-forecast -c ".#nixosConfigurations.{{ machine }}" -b https://cache.onyx.ovh -b https://cache.nixos.org -b https://cuda-maintainers.cachix.org
+forecast machine:
+    #!/usr/bin/env bash
+    substituters=$(nix eval --impure --raw --expr 'let flake = import ./flake.nix; caches = flake.nixConfig.substituters; in builtins.concatStringsSep " " (map (c: "-b " + c) caches)')
+    nix-forecast -s -c ".#nixosConfigurations.{{ machine }}" $substituters
 
 sd machine:
     nix run nixpkgs#nixos-generators -- -f sd-aarch64 --flake .#{{ machine }} --system aarch64-linux -o ./{{ machine }}-sd-aarch64
