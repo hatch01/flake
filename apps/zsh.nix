@@ -330,6 +330,7 @@ in
           fi
         }
 
+       eval "$(${getExe zellij} setup --generate-auto-start zsh)"
       '';
 
       ohMyZsh = {
