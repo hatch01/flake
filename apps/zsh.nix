@@ -326,6 +326,8 @@ in
             echo "⚠ Not mounted: $mount_point"
           fi
         }
+
+        eval "$(${getExe zellij} setup --generate-auto-start zsh)"
       '';
 
       ohMyZsh = {
