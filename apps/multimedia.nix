@@ -343,6 +343,7 @@ in
           neural-amp-modeler-lv2
           kapitonov-plugins-pack
           meters-lv2
+          rakarrack
         ];
       }
     ))
