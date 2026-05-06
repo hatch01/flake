@@ -68,6 +68,14 @@ in
 
     environment.pathsToLink = [ "/share/zsh" ];
 
+    hm.programs.zellij = {
+      enable = true;
+      settings = {
+        show_startup_tips = false;
+        theme = "catppuccin-mocha";
+      };
+    };
+
     programs.zsh = {
       enable = true;
       autosuggestions.enable = false;
@@ -330,6 +338,8 @@ in
           fi
         }
 
+       export ZELLIJ_SHOW_STARTUP_TIPS=false
+       export ZELLIJ_AUTO_EXIT=true
        eval "$(${getExe zellij} setup --generate-auto-start zsh)"
       '';
 
