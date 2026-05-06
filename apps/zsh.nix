@@ -11,6 +11,8 @@ let
     mkEnableOption
     optionals
     mkIf
+    getExe
+    getExe'
     ;
 in
 {
@@ -71,42 +73,42 @@ in
       autosuggestions.enable = false;
       enableCompletion = false;
       enableBashCompletion = true;
-      shellAliases = {
-        du = lib.getExe pkgs.dust;
-        df = lib.getExe pkgs.duf;
-        cp = "${lib.getExe pkgs.xcp} -r";
-        mv = "${lib.getExe' pkgs.coreutils "mv"} -vi";
+      shellAliases = with pkgs; {
+        du = getExe dust;
+        df = getExe duf;
+        cp = "${getExe xcp} -r";
+        mv = "${getExe' coreutils "mv"} -vi";
         cd = "z"; # not using direct path because it is provided by zoxide
-        sman = lib.getExe pkgs.tlrc;
-        cat = lib.getExe pkgs.bat;
-        ls = lib.getExe pkgs.eza;
-        ll = "${lib.getExe pkgs.eza} -l";
-        l = "${lib.getExe pkgs.eza} -la";
-        rm = "${lib.getExe pkgs.rip2} --graveyard ~/.local/share/Trash";
-        sgit = "sudo -E ${lib.getExe pkgs.git}";
+        sman = getExe tlrc;
+        cat = getExe bat;
+        ls = getExe eza;
+        ll = "${getExe eza} -l";
+        l = "${getExe eza} -la";
+        rm = "${getExe rip2} --graveyard ~/.local/share/Trash";
+        sgit = "sudo -E ${getExe git}";
         se = "sudo -E";
-        slazygit = "sudo -E ${lib.getExe pkgs.lazygit}";
+        slazygit = "sudo -E ${getExe lazygit}";
         # nixos specific command
-        update-old = "sudo ${lib.getExe pkgs.nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
-        update = "${lib.getExe pkgs.nh} os switch /etc/nixos";
-        nix-history = "${lib.getExe pkgs.nix} profile history --profile /nix/var/nix/profiles/system";
+        update-old = "sudo ${getExe nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
+        update = "${getExe nh} os switch /etc/nixos";
+        nix-history = "${getExe nix} profile history --profile /nix/var/nix/profiles/system";
         yay = "upgrade";
         bro = "upgrade";
-        search = "${lib.getExe pkgs.nh} search";
-        clean = "${lib.getExe pkgs.nh} clean all";
-        stress = "for i in $(${lib.getExe' pkgs.coreutils "seq"} $(${lib.getExe pkgs.getconf} _NPROCESSORS_ONLN)); do ${lib.getExe' pkgs.coreutils "yes"} > /dev/null & done";
+        search = "${getExe nh} search";
+        clean = "${getExe nh} clean all";
+        stress = "for i in $(${getExe' coreutils "seq"} $(${getExe getconf} _NPROCESSORS_ONLN)); do ${getExe' coreutils "yes"} > /dev/null & done";
         bkill = "fzf-kill"; # not using direct path because it is provided by fzf-zsh-plugin
-        gitnix = "${lib.getExe pkgs.git} add . && ${lib.getExe pkgs.git} commit --amend --no-edit && ${lib.getExe pkgs.git} push --force";
-        ps = "${lib.getExe pkgs.procs}";
+        gitnix = "${getExe git} add . && ${getExe git} commit --amend --no-edit && ${getExe git} push --force";
+        ps = "${getExe procs}";
         webcam = lib.mkIf (config.dev.androidtools.enable or false
-        ) "${lib.getExe pkgs.scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
+        ) "${getExe scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
         vi = "nvim";
         vim = "nvim";
         rip = "rip --graveyard ~/.local/share/Trash";
-        dig = lib.getExe pkgs.doggo;
+        dig = getExe doggo;
       };
-      promptInit = ''
-        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      promptInit = with pkgs; ''
+        source ${zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         export POWERLEVEL9K_MODE="nerdfont-v3"
         export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time battery)
         export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir dir_writable virtualenv anaconda pyenv root_indicator vcs)
@@ -134,199 +136,199 @@ in
         typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
       '';
 
-      shellInit = ''
-        export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
-        nshell(){
-          local packages=("$@")
-          local package_list=()
+      shellInit = with pkgs; ''
+         export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
+         nshell(){
+           local packages=("$@")
+           local package_list=()
 
-          for pkg in "''${packages[@]}"; do
-            package_list+=("n#$pkg")
-          done
+           for pkg in "''${packages[@]}"; do
+             package_list+=("n#$pkg")
+           done
 
-          NIXPKGS_ALLOW_UNFREE=1 ${lib.getExe pkgs.nix} shell --impure "''${package_list[@]}"
-        }
+           NIXALLOW_UNFREE=1 ${getExe nix} shell --impure "''${package_list[@]}"
+         }
 
-        ccd() {
-          cd $1 && ${lib.getExe' pkgs.ncurses "clear"}
-        }
-        cp_song() {
-          ${lib.getExe pkgs.rsync} -var $1 $2
-        }
+         ccd() {
+           cd $1 && ${getExe' ncurses "clear"}
+         }
+         cp_song() {
+           ${getExe rsync} -var $1 $2
+         }
 
-        nix-quick(){
-          ${lib.getExe pkgs.nix} flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
-        }
-        flake-parts(){
-          ${lib.getExe pkgs.nix} flake init -t github:hercules-ci/flake-parts
-        }
-        sshrm(){
-          ARGS=$1
-          if [[ "$ARGS" =~ \@ ]]
-          then
-             	SRV=$(echo $ARGS | cut -d '@' -f2)
-          else
-             	SRV="$ARGS"
-          fi
-          ssh-keygen -R $SRV
-          read -p "Reconnect ? IT WILL RUN \"ssh $ARGS\" ? (y/N) " RECO
-          if [[ "$RECO" == "y" ]]
-          then
-         	    ssh "$ARGS"
-          fi
-        }
+         nix-quick(){
+           ${getExe nix} flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
+         }
+         flake-parts(){
+           ${getExe nix} flake init -t github:hercules-ci/flake-parts
+         }
+         sshrm(){
+           ARGS=$1
+           if [[ "$ARGS" =~ \@ ]]
+           then
+              	SRV=$(echo $ARGS | cut -d '@' -f2)
+           else
+              	SRV="$ARGS"
+           fi
+           ssh-keygen -R $SRV
+           read -p "Reconnect ? IT WILL RUN \"ssh $ARGS\" ? (y/N) " RECO
+           if [[ "$RECO" == "y" ]]
+           then
+          	    ssh "$ARGS"
+           fi
+         }
 
-        # Helper function to select SSH host with fzf
-        _select_ssh_host() {
-          local query="$1"
-          local hosts
-          hosts=$(grep -E '^Host ' ~/.ssh/config | awk '{print $2}')
+         # Helper function to select SSH host with fzf
+         _select_ssh_host() {
+           local query="$1"
+           local hosts
+           hosts=$(grep -E '^Host ' ~/.ssh/config | awk '{print $2}')
 
-          if [[ -n $query ]]; then
-            local server=$(echo "$hosts" | grep -i "$query")
-            local count=$(echo "$server" | wc -l)
-            if [[ $count -eq 1 ]]; then
-              echo "$server"
-              return 0
-            fi
-            echo "$hosts" | fzf --query="$query"
-          else
-            echo "$hosts" | fzf
-          fi
-        }
+           if [[ -n $query ]]; then
+             local server=$(echo "$hosts" | grep -i "$query")
+             local count=$(echo "$server" | wc -l)
+             if [[ $count -eq 1 ]]; then
+               echo "$server"
+               return 0
+             fi
+             echo "$hosts" | fzf --query="$query"
+           else
+             echo "$hosts" | fzf
+           fi
+         }
 
-        s() {
-          local no_www=0
-          local OPTIND opt
+         s() {
+           local no_www=0
+           local OPTIND opt
 
-          while getopts "w" opt; do
-            case $opt in
-              w) no_www=1 ;;
-              *) echo "Usage: s [-w] [server]" >&2; return 1 ;;
-            esac
-          done
-          shift $((OPTIND - 1))
-          local server=$(_select_ssh_host "$1")
-          if [[ -n $server ]]; then
-            if [[ $no_www -eq 1 ]]; then
-              ssh "$server"
-            else
-              ssh -t "$server" "sudo su - www"
-            fi
-          fi
-        }
+           while getopts "w" opt; do
+             case $opt in
+               w) no_www=1 ;;
+               *) echo "Usage: s [-w] [server]" >&2; return 1 ;;
+             esac
+           done
+           shift $((OPTIND - 1))
+           local server=$(_select_ssh_host "$1")
+           if [[ -n $server ]]; then
+             if [[ $no_www -eq 1 ]]; then
+               ssh "$server"
+             else
+               ssh -t "$server" "sudo su - www"
+             fi
+           fi
+         }
 
-        smount() {
-          local remote_user="www"
-          local OPTIND opt
+         smount() {
+           local remote_user="www"
+           local OPTIND opt
 
-          # Parse les options
-          while getopts "u:" opt; do
-            case $opt in
-              u) remote_user="$OPTARG" ;;
-              *) echo "Usage: smount [-u user] [server]" >&2; return 1 ;;
-            esac
-          done
-          shift $((OPTIND - 1))
+           # Parse les options
+           while getopts "u:" opt; do
+             case $opt in
+               u) remote_user="$OPTARG" ;;
+               *) echo "Usage: smount [-u user] [server]" >&2; return 1 ;;
+             esac
+           done
+           shift $((OPTIND - 1))
 
-          # Toujours passer par fzf pour matcher le serveur
-          local query="$1"
-          local server=$(_select_ssh_host "$query")
-          if [[ -z "$server" ]]; then
-            echo "No server selected" >&2
-            return 1
-          fi
+           # Toujours passer par fzf pour matcher le serveur
+           local query="$1"
+           local server=$(_select_ssh_host "$query")
+           if [[ -z "$server" ]]; then
+             echo "No server selected" >&2
+             return 1
+           fi
 
-          # Extrait les infos de la config SSH (supprime stderr)
-          local ssh_config=$(ssh -G "$server" 2>/dev/null)
-          local ssh_user=$(echo "$ssh_config" | awk '/^user / {print $2}')
-          local ssh_host=$(echo "$ssh_config" | awk '/^hostname / {print $2}')
-          local proxy_jump=$(echo "$ssh_config" | awk '/^proxyjump / {print $2}')
+           # Extrait les infos de la config SSH (supprime stderr)
+           local ssh_config=$(ssh -G "$server" 2>/dev/null)
+           local ssh_user=$(echo "$ssh_config" | awk '/^user / {print $2}')
+           local ssh_host=$(echo "$ssh_config" | awk '/^hostname / {print $2}')
+           local proxy_jump=$(echo "$ssh_config" | awk '/^proxyjump / {print $2}')
 
-          # Utilise uniquement le dernier segment après le dernier /
-          local server_name="''${ssh_host##*/}"
-          local mount_point="/tmp/$server_name"
-          mkdir -p "$mount_point"
+           # Utilise uniquement le dernier segment après le dernier /
+           local server_name="''${ssh_host##*/}"
+           local mount_point="/tmp/$server_name"
+           mkdir -p "$mount_point"
 
-          # Check si déjà monté
-          if mountpoint -q "$mount_point" 2>/dev/null; then
-            echo "✓ Already mounted at $mount_point"
-            cd "$mount_point"
-            return 0
-          fi
+           # Check si déjà monté
+           if mountpoint -q "$mount_point" 2>/dev/null; then
+             echo "✓ Already mounted at $mount_point"
+             cd "$mount_point"
+             return 0
+           fi
 
-          # Construit la commande sftp_server
-          local sftp_cmd
-          if [[ "$remote_user" == "$ssh_user" ]]; then
-            sftp_cmd="/usr/libexec/openssh/sftp-server"
-            echo "📁 Mounting $server_name as $remote_user (no sudo)..."
-          else
-            sftp_cmd="sudo -u $remote_user /usr/libexec/openssh/sftp-server"
-            echo "📁 Mounting $server_name as $remote_user (with sudo)..."
-          fi
+           # Construit la commande sftp_server
+           local sftp_cmd
+           if [[ "$remote_user" == "$ssh_user" ]]; then
+             sftp_cmd="/usr/libexec/openssh/sftp-server"
+             echo "📁 Mounting $server_name as $remote_user (no sudo)..."
+           else
+             sftp_cmd="sudo -u $remote_user /usr/libexec/openssh/sftp-server"
+             echo "📁 Mounting $server_name as $remote_user (with sudo)..."
+           fi
 
-          # Monte avec ProxyCommand si nécessaire
-          local mount_result
-          if [[ -n "$proxy_jump" ]]; then
-            echo "🔧 Using ProxyJump: $proxy_jump"
-            sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
-              -o ProxyCommand="ssh -W %h:%p $proxy_jump" \
-              -o sftp_server="$sftp_cmd" \
-              -o reconnect \
-              -o ServerAliveInterval=15
-            mount_result=$?
-          else
-            sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
-              -o sftp_server="$sftp_cmd" \
-              -o reconnect \
-              -o ServerAliveInterval=15
-            mount_result=$?
-          fi
+           # Monte avec ProxyCommand si nécessaire
+           local mount_result
+           if [[ -n "$proxy_jump" ]]; then
+             echo "🔧 Using ProxyJump: $proxy_jump"
+             sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
+               -o ProxyCommand="ssh -W %h:%p $proxy_jump" \
+               -o sftp_server="$sftp_cmd" \
+               -o reconnect \
+               -o ServerAliveInterval=15
+             mount_result=$?
+           else
+             sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
+               -o sftp_server="$sftp_cmd" \
+               -o reconnect \
+               -o ServerAliveInterval=15
+             mount_result=$?
+           fi
 
-          if [[ $mount_result -eq 0 ]]; then
-            echo "✓ Mounted at $mount_point"
-            cd "$mount_point"
-          else
-            echo "✗ Failed to mount" >&2
-            echo ""
-            echo "💡 Debug: Try this command manually:"
-            if [[ -n "$proxy_jump" ]]; then
-              echo "   sshfs $ssh_user@$ssh_host:/ $mount_point \\"
-              echo "     -o ProxyCommand=\"ssh -W %h:%p $proxy_jump\" \\"
-              echo "     -o sftp_server=\"$sftp_cmd\" -v"
-            else
-              echo "   sshfs $ssh_user@$ssh_host:/ $mount_point \\"
-              echo "     -o sftp_server=\"$sftp_cmd\" -v"
-            fi
-            return 1
-          fi
-        }
+           if [[ $mount_result -eq 0 ]]; then
+             echo "✓ Mounted at $mount_point"
+             cd "$mount_point"
+           else
+             echo "✗ Failed to mount" >&2
+             echo ""
+             echo "💡 Debug: Try this command manually:"
+             if [[ -n "$proxy_jump" ]]; then
+               echo "   sshfs $ssh_user@$ssh_host:/ $mount_point \\"
+               echo "     -o ProxyCommand=\"ssh -W %h:%p $proxy_jump\" \\"
+               echo "     -o sftp_server=\"$sftp_cmd\" -v"
+             else
+               echo "   sshfs $ssh_user@$ssh_host:/ $mount_point \\"
+               echo "     -o sftp_server=\"$sftp_cmd\" -v"
+             fi
+             return 1
+           fi
+         }
 
-        sumount() {
-          local server="$1"
+         sumount() {
+           local server="$1"
 
-          # Si pas de serveur spécifié, utilise fzf sur les montages existants
-          if [[ -z "$server" ]]; then
-            local mounted=$(find /tmp -maxdepth 1 -type d -exec mountpoint -q {} \; -print 2>/dev/null | xargs -n1 basename)
-            if [[ -z "$mounted" ]]; then
-              echo "No mounted servers found in /tmp" >&2
-              return 1
-            fi
-            server=$(echo "$mounted" | fzf --prompt="Select server to unmount: ")
-            if [[ -z "$server" ]]; then
-              echo "No server selected" >&2
-              return 1
-            fi
-          fi
+           # Si pas de serveur spécifié, utilise fzf sur les montages existants
+           if [[ -z "$server" ]]; then
+             local mounted=$(find /tmp -maxdepth 1 -type d -exec mountpoint -q {} \; -print 2>/dev/null | xargs -n1 basename)
+             if [[ -z "$mounted" ]]; then
+               echo "No mounted servers found in /tmp" >&2
+               return 1
+             fi
+             server=$(echo "$mounted" | fzf --prompt="Select server to unmount: ")
+             if [[ -z "$server" ]]; then
+               echo "No server selected" >&2
+               return 1
+             fi
+           fi
 
-          local mount_point="/tmp/$server"
-          if mountpoint -q "$mount_point" 2>/dev/null; then
-            fusermount -u "$mount_point" 2>/dev/null || umount "$mount_point"
-            echo "✓ Unmounted $mount_point"
-          else
-            echo "⚠ Not mounted: $mount_point"
-          fi
-        }
+           local mount_point="/tmp/$server"
+           if mountpoint -q "$mount_point" 2>/dev/null; then
+             fusermount -u "$mount_point" 2>/dev/null || umount "$mount_point"
+             echo "✓ Unmounted $mount_point"
+           else
+             echo "⚠ Not mounted: $mount_point"
+           fi
+         }
 
       '';
 
@@ -341,18 +343,18 @@ in
         ];
       };
 
-      interactiveShellInit = ''
+      interactiveShellInit = with pkgs; ''
         if [ -n "''${ZSH_PROFILE_STARTUP:+x}" ]
         then
           zmodload zsh/zprof
         fi
 
-        source ${pkgs.zsh-defer}/share/zsh-defer/zsh-defer.plugin.zsh
+        source ${zsh-defer}/share/zsh-defer/zsh-defer.plugin.zsh
 
         # enable fzf
         [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
         # enable zoxide
-        eval "$(${lib.getExe pkgs.zoxide} init zsh)"
+        eval "$(${getExe zoxide} init zsh)"
 
         # ── fpath additions (must come before compinit) ──────────────────────
         # poetry completions
@@ -364,12 +366,12 @@ in
         # The stamp file holds the current uv store path; it changes on every
         # `nix` upgrade, which is the only time the completions need regenerating.
         _uv_comp_dir="$HOME/.zsh/completions"
-        _uv_store_path="${lib.getExe pkgs.uv}"
+        _uv_store_path="${getExe uv}"
         _uv_comp_stamp="$_uv_comp_dir/.stamp"
         if [[ "$(cat "$_uv_comp_stamp" 2>/dev/null)" != "$_uv_store_path" ]]; then
           mkdir -p "$_uv_comp_dir"
-          ${lib.getExe pkgs.uv} generate-shell-completion zsh >| "$_uv_comp_dir/_uv"
-          ${lib.getExe' pkgs.uv "uvx"} --generate-shell-completion zsh >| "$_uv_comp_dir/_uvx"
+          ${getExe uv} generate-shell-completion zsh >| "$_uv_comp_dir/_uv"
+          ${getExe' uv "uvx"} --generate-shell-completion zsh >| "$_uv_comp_dir/_uvx"
           echo "$_uv_store_path" >| "$_uv_comp_stamp"
         fi
         fpath=("$_uv_comp_dir" $fpath)
@@ -391,15 +393,15 @@ in
 
         # ── things that call compdef (must come after compinit) ───────────────
         # nix-index command-not-found handler registers a compdef internally.
-        source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+        source ${nix-index}/etc/profile.d/command-not-found.sh
 
-        source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
-        source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-        zsh-defer source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-        zsh-defer source ${pkgs.zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
-        zsh-defer source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-        zsh-defer source ${pkgs.zsh-autopair}/share/zsh/zsh-autopair/autopair.zsh
-        zsh-defer source ${pkgs.fzf-zsh-plugin}/share/zsh/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+        source ${zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
+        source ${zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+        zsh-defer source ${zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        zsh-defer source ${zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
+        zsh-defer source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+        zsh-defer source ${zsh-autopair}/share/zsh/zsh-autopair/autopair.zsh
+        zsh-defer source ${fzf-zsh-plugin}/share/zsh/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
 
         if [ -n "$ZSH_PROFILE_STARTUP" ]
         then
