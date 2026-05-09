@@ -344,6 +344,7 @@ in
           kapitonov-plugins-pack
           meters-lv2
           rakarrack
+          x42-avldrums
         ];
       }
     ))
