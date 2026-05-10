@@ -116,11 +116,13 @@ in
         networks = [
           {
             config = {
-              "ipv4.address" = "auto";
-              "ipv6.address" = "auto";
+              "ipv4.address" = "10.20.0.1/24";
+              "ipv4.nat" = "true";
+              "ipv6.address" = "fd42:1234:1234::1/64";
+              "ipv6.nat" = "true";
               "ipv4.dhcp" = "true";
               "ipv6.dhcp" = "true";
-              "dns.mode" = "dynamic";
+              "dns.mode" = "managed";
               "dns.domain" = "incus";
               # Set upstream DNS servers for VMs/containers
               # "dns.zone.forward" = "true";
