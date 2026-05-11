@@ -218,7 +218,11 @@ in
       defaultListen =
         let
           http = config.nginx.ports.http;
-          https = if config.nginx.ports.httpsRedirect != null then config.nginx.ports.httpsRedirect else config.nginx.ports.https;
+          https =
+            if config.nginx.ports.httpsRedirect != null then
+              config.nginx.ports.httpsRedirect
+            else
+              config.nginx.ports.https;
         in
         [
           {
