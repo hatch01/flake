@@ -345,6 +345,7 @@ in
           meters-lv2
           rakarrack
           x42-avldrums
+          x42-plugins
         ];
       }
     ))
