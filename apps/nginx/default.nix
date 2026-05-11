@@ -7,7 +7,12 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
 
   mkVhostLogs =
     name:
@@ -161,9 +166,28 @@ let
   '';
 in
 {
+  imports = [
+    ./nichihachi-redirects.nix
+  ];
+
   options = {
     nginx.enable = mkEnableOption "Nginx";
     nginx.acme.enable = mkEnableOption "Enable ACME terms";
+    nginx.ports.https = mkOption {
+      type = types.int;
+      default = 443;
+      description = "Port for HTTPS traffic (ACME must be enabled)";
+    };
+    nginx.ports.http = mkOption {
+      type = types.int;
+      default = 80;
+      description = "Port for HTTP traffic";
+    };
+    nginx.ports.httpsRedirect = mkOption {
+      type = types.nullOr types.int;
+      default = null;
+      description = "Port for HTTPS traffic when nginx redirecting to itself (see nichihachi-redirects.nix)";
+    };
   };
 
   config = mkIf config.nginx.enable {
@@ -190,6 +214,34 @@ in
           keysZoneName = "cache";
         };
       };
+
+      defaultListen =
+        let
+          http = config.nginx.ports.http;
+          https = if config.nginx.ports.httpsRedirect != null then config.nginx.ports.httpsRedirect else config.nginx.ports.https;
+        in
+        [
+          {
+            addr = if https != 443 then "127.0.0.1" else "0.0.0.0";
+            port = https;
+            ssl = true;
+          }
+          {
+            addr = if https != 443 then "[::1]" else "[::]";
+            port = https;
+            ssl = true;
+          }
+          {
+            addr = if http != 80 then "127.0.0.1" else "0.0.0.0";
+            port = http;
+            ssl = false;
+          }
+          {
+            addr = if http != 80 then "[::1]" else "[::]";
+            port = http;
+            ssl = false;
+          }
+        ];
 
       virtualHosts = lib.mkMerge [
 

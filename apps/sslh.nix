@@ -24,25 +24,7 @@ in
   };
 
   config = mkIf config.sslh.enable {
-    services.nginx = mkIf config.nginx.enable {
-      defaultListen = [
-        {
-          addr = "127.0.0.1";
-          port = 4443;
-          ssl = true;
-        }
-        {
-          addr = "[::1]";
-          port = 4443;
-          ssl = true;
-        }
-        {
-          addr = "0.0.0.0";
-          port = 80;
-          ssl = false;
-        }
-      ];
-    };
+    nginx.ports.https = mkIf config.nginx.enable 4443;
     services.sslh = {
       enable = true;
       listenAddresses = [
@@ -62,7 +44,7 @@ in
           {
             name = "tls";
             host = "localhost";
-            port = "4443";
+            port = toString config.nginx.ports.https;
           }
         ];
       };
