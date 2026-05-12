@@ -170,6 +170,8 @@ in
             "$mainMod, mouse:273, resizewindow"
             "$mainMod ALT, mouse:272, resizewindow"
           ];
+
+          windowrule = [ "no_initial_focus on, match:xwayland true" ];
         };
       };
 
