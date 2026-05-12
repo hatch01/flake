@@ -5,10 +5,9 @@ on:
     paths:
       - "**/*.nix"
       - "**/flake.lock"
-  workflow_run:
-      workflows: ["Update flake inputs"]
-      types:
-        - completed
+  # Nightly build at 4 AM
+  schedule:
+    - cron: "0 2 * * *"
   workflow_dispatch:
 
 jobs:
