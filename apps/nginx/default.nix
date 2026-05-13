@@ -368,18 +368,21 @@ in
         (mkVhost "portfolio" { })
 
         (mkVhost "incus" {
-          locations."/".extraConfig = ''
-            # Required for web sockets to work
-            proxy_buffering off;
-            client_max_body_size 0;
-            send_timeout  3600s;
-            proxy_http_version 1.1;
-            proxy_connect_timeout  3600s;
-            proxy_read_timeout  3600s;
-            proxy_send_timeout  3600s;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-          '';
+          locations."/" = {
+            proxyPass = "https://127.0.0.1:${toString config.incus.port}";
+            extraConfig = ''
+              # Required for web sockets to work
+              proxy_buffering off;
+              client_max_body_size 0;
+              send_timeout  3600s;
+              proxy_http_version 1.1;
+              proxy_connect_timeout  3600s;
+              proxy_read_timeout  3600s;
+              proxy_send_timeout  3600s;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+            '';
+          };
         })
 
         (mkVhost "nodered" {
