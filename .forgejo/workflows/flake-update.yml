@@ -3,7 +3,7 @@ enable-email-notifications: true
 on:
   # Nightly build at 4 AM
   schedule:
-    - cron: "0 1 * * *"
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 jobs:
