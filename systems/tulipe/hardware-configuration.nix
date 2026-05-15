@@ -10,7 +10,6 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./nvidia.nix
     ./disk.nix
     { _module.args.disks = [ "/dev/nvme0n1" ]; }
   ];
@@ -25,14 +24,6 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  zramSwap.enable = true;
-
-  services.pulseaudio.enable = false;
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
-
-  # power management
-  powerManagement.enable = true;
 
   # fileSystems."/run/media/eymeric/stockage" = {
   #   device = "/dev/disk/by-uuid/9fee6e54-fb71-41b7-b8a1-965e1834e8d2";

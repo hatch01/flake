@@ -13,7 +13,17 @@
   imports = [
     ./batterie.nix
     inputs.lanzaboote.nixosModules.lanzaboote
+    ./nvidia.nix
   ];
+
+  zramSwap.enable = true;
+
+  services.pulseaudio.enable = false;
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+
+  # power management
+  powerManagement.enable = true;
 
   hyprland.enable = true;
 
