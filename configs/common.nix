@@ -185,6 +185,12 @@ in
     LC_TIME = "fr_FR.UTF-8";
   };
 
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "fr";
+    variant = "";
+  };
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
