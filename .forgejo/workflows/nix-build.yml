@@ -6,9 +6,9 @@ on:
       - "**/*.nix"
       - "**/flake.lock"
   workflow_run:
-      workflows: ["Update flake inputs"]
-      types:
-        - completed
+    workflows: ["Update flake inputs"]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
