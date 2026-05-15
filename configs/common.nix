@@ -200,7 +200,7 @@ in
   nix = {
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     # package = pkgs.lix;
-    optimise.automatic = true;
+    optimise.automatic = mkDefault true;
     extraOptions = ''
       !include ${config.age.secrets.githubToken.path}
     '';
@@ -273,14 +273,14 @@ in
       ];
   };
   services.tailscale = {
-    enable = true;
+    enable = mkDefault true;
     package = pkgs.tailscale.overrideAttrs (oa: {
       doCheck = false;
     });
   };
 
   security.sudo-rs = {
-    enable = true;
+    enable = mkDefault true;
     extraConfig = "Defaults targetpw";
     extraRules = [
       {
@@ -291,7 +291,7 @@ in
   };
 
   programs.msmtp = {
-    enable = true;
+    enable = mkDefault true;
     setSendmail = true;
     defaults = {
       aliases = "/etc/aliases";
@@ -314,7 +314,7 @@ in
   '';
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh.enable = mkDefault true;
 
   users.users = {
     root = {
