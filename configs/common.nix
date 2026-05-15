@@ -6,22 +6,24 @@
   stateVersion,
   inputs,
   mkSecrets,
-  stable,
   ...
 }:
+let
+  inherit (lib) mkDefault;
+in
 {
   imports = [
     (lib.mkAliasOptionModule [ "hm" ] [ "home-manager" "users" username ])
     ../apps
   ];
 
-  neovim.enable = true;
-  container.enable = true;
-  nix-related.enable = true;
-  gitConfig.enable = true;
-  zshConfig.enable = true;
-  beszel.agent.enable = true;
-  comin.enable = true;
+  neovim.enable = mkDefault true;
+  container.enable = mkDefault true;
+  nix-related.enable = mkDefault true;
+  gitConfig.enable = mkDefault true;
+  zshConfig.enable = mkDefault true;
+  beszel.agent.enable = mkDefault true;
+  comin.enable = mkDefault true;
 
   nix = {
     package = pkgs.nixVersions.git;
