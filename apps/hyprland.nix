@@ -174,21 +174,6 @@ in
           windowrule = [ "no_initial_focus on, match:xwayland true" ];
         };
       };
-
-      programs.kitty = lib.mkForce {
-        enable = true;
-
-        settings = {
-          enable_audio_bell = false;
-          window_padding_width = 15;
-          themeFile = "Catppuccin-Latte";
-        };
-
-        font = {
-          name = "JetBrains Mono";
-          size = 12;
-        };
-      };
     };
   };
 }
