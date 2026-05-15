@@ -83,8 +83,8 @@ in
       musnix.soundcardPciId = "07:00.6";
       musnix.kernel.packages = pkgs.linuxPackages_latest;
       musnix.kernel.realtime = true;
-      # musnix.rtirq.enable = true;
-      # musnix.rtirq.nameList = "xhci_hcd snd usb"; # because Bus -> xhci_hcd -> snd-usb-audio
+      musnix.rtirq.enable = true;
+      musnix.rtirq.nameList = "xhci_hcd snd usb"; # because Bus -> xhci_hcd -> snd-usb-audio
       security.rtkit.enable = true;
 
       environment.sessionVariables =
