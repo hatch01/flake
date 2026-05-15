@@ -14,6 +14,7 @@
     ./batterie.nix
     inputs.lanzaboote.nixosModules.lanzaboote
     ./nvidia.nix
+    ./polyjam.nix
   ];
 
   zramSwap.enable = true;
