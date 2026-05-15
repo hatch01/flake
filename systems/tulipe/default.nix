@@ -66,7 +66,6 @@
     emulatedSystems = [ "aarch64-linux" ];
   };
   boot.kernelModules = [ "v4l2loopback" ];
-  boot.kernelParams = [ "amd_iommu=on" ];
   system.nixos.tags = [ "tulipe" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
