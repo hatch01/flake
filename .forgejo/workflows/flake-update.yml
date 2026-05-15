@@ -63,3 +63,5 @@ jobs:
         run: nix shell nixpkgs#just nixpkgs#jq nixpkgs#curl nixpkgs#git --command just update
       - name: Push flake update commit
         run: git push --force origin staging
+  caller:
+    uses: ./.forgejo/workflows/nix-build.yml

@@ -5,10 +5,7 @@ on:
     paths:
       - "**/*.nix"
       - "**/flake.lock"
-  workflow_run:
-    workflows: ["Update flake inputs"]
-    types:
-      - completed
+  workflow_call:
   workflow_dispatch:
 
 jobs:
