@@ -125,6 +125,7 @@ in
         experimental_features = {
           msc3266_enabled = true;
           msc4222_enabled = true;
+          msc4108_enabled = true;
         };
         max_event_delay_duration = "24h";
         rc_message = {

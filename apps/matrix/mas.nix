@@ -119,7 +119,7 @@ in
                     "::1/128"
                   ];
                   public_base = "https://${config.matrix.mas.domain}/";
-                  issuer = "https://${base_domain_name}/";
+                  issuer = "https://${config.matrix.mas.domain}/";
                 };
                 database = {
                   uri = "postgresql://mas@localhost/mas?host=/run/postgresql";
@@ -149,6 +149,9 @@ in
                       key = "$vIIeN3Ao1A";
                     }
                   ];
+                };
+                experimental_features = {
+                  msc4108_enabled = true;
                 };
                 passwords = {
                   enabled = false;
