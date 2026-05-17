@@ -15,6 +15,8 @@ jobs:
         with:
           ref: staging
           fetch-depth: 0
+          persist-credentials: true
+          token: ${{ secrets.PAT_TOKEN }}
       - name: Configure git
         run: |
           git config user.name "Flake Updater"
@@ -63,5 +65,4 @@ jobs:
         run: nix shell nixpkgs#just nixpkgs#jq nixpkgs#curl nixpkgs#git --command just update
       - name: Push flake update commit
         run: git push --force origin staging
-  caller:
-    uses: ./.forgejo/workflows/nix-build.yml
+
