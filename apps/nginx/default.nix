@@ -141,11 +141,11 @@ let
     lib.optionalAttrs config.matrix.enable {
       "m.homeserver".base_url = "https://${config.matrix.domain}";
       "org.matrix.msc2965.authentication" = {
-        "issuer" = "https://${base_domain_name}";
+        "issuer" = "https://${config.matrix.mas.domain}/";
         "account" = "https://${config.matrix.mas.domain}/account";
       };
       oidc_static_clients = {
-        "https://${base_domain_name}" = {
+        "https://${config.matrix.mas.domain}/" = {
           client_id = "0000000000000000000SYNAPSE";
         };
       };
@@ -257,6 +257,14 @@ in
             });
             "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
             "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
+          }
+          // lib.optionalAttrs config.matrix.enable {
+            "^~ /_matrix/" = {
+              proxyPass = "http://[::1]:${toString config.matrix.port}";
+            };
+            "^~ /_synapse/" = {
+              proxyPass = "http://[::1]:${toString config.matrix.port}";
+            };
           };
         })
 
@@ -305,7 +313,6 @@ in
         })
 
         (mkVhost "matrix" {
-          cache = true;
           noDefaultLocations = true;
           root = mkIf config.matrix.enableElement (
             pkgs.element-web.override {
@@ -323,6 +330,20 @@ in
             "~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
               priority = 100;
               proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
+            };
+
+            "^~ /_synapse/client/rendezvous/" = {
+              proxyPass = "http://[::1]:${toString config.matrix.port}";
+              extraConfig = ''
+                proxy_http_version 1.1;
+                proxy_buffering off;
+                proxy_request_buffering off;
+                proxy_read_timeout 600s;
+                proxy_send_timeout 600s;
+                proxy_connect_timeout 60s;
+                proxy_set_header Accept-Encoding "";
+                gzip off;
+              '';
             };
 
             "~ ^(/_matrix|/_synapse/client)" = {
