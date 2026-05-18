@@ -28,6 +28,7 @@ in
 
     hm = {
       wayland.windowManager.hyprland = {
+        configType = "lua";
         enable = true;
         systemd.enable = false;
         xwayland.enable = true;
