@@ -3,6 +3,10 @@
   ];
 
   unstable = [
+    {
+      pr = 510662;
+      name = "mautrix-telegram";
+    }
   ];
 
   common = [

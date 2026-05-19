@@ -22,6 +22,7 @@ in
     ./whatsapp.nix
     ./mas.nix
     ./instagram.nix
+    ./telegram.nix
     ./element-call.nix
   ];
 
@@ -47,6 +48,7 @@ in
     matrix.discord.enable = true;
     matrix.mas.enable = true;
     matrix.instagram.enable = true;
+    matrix.telegram.enable = true;
 
     age.secrets = mkSecrets {
       "matrix_shared_secret" = {

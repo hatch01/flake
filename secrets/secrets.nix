@@ -55,6 +55,7 @@ let
       "mas_matrix_secret"
       "mas_config"
       "livekit_api_key"
+      "telegram_credentials"
 
       # cache
       "cache-priv-key.pem"
