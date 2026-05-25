@@ -103,7 +103,15 @@ in
         };
 
       environment.systemPackages = with pkgs; [
-        ardour
+        (ardour.overrideAttrs (old: {
+          patches = (old.patches or []) ++ [
+            (fetchpatch {
+              # enable midi control for plugin bypasses
+              url = "https://github.com/Ardour/ardour/pull/1111.patch";
+              hash = "sha256-UL1b9PagNv3DcJaqxaF4GZZ85bLhsT77W3lB1bfefD0=";
+            })
+          ];
+        }))
         hydrogen
         drumgizmo
         alsa-utils
