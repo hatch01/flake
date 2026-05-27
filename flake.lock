@@ -532,9 +532,9 @@
     "nixpkgs_3": {
       "locked": {
         "lastModified": 1779560665,
-        "narHash": "sha256-mQ8plj77DHESjAC5aikw6HT+NSktXfxB5YzSy1GF0Pg=",
+        "narHash": "sha256-5COwSV7rDMSQ5xGneM1WBaYCIlGeIJqmPnUHLno/Tbc=",
         "ref": "nixos-unstable",
-        "rev": "b0b8b2fb025e3f01bf78a43436a2111ba2d66e34",
+        "rev": "add720b1960d0affc0c23709e2d247f7da955cb2",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"

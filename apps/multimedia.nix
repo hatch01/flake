@@ -138,6 +138,7 @@ in
         rakarrack
         x42-avldrums
         x42-plugins
+        open-stage-control-headless
       ];
     }))
   ];
