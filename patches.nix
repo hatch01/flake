@@ -15,6 +15,10 @@
       pr = 523363;
       name = "fix ecdsa";
     }
+    {
+      pr = 522225;
+      name = "open-stage-control-headless: init at 1.30.3";
+    }
   ];
 
   common = [
