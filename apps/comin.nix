@@ -14,7 +14,7 @@ let
   postDeploymentScript = pkgs.writers.writeBash "comin-post-deploy" ''
     set -euo pipefail
 
-    PROFILES_DIR="/nix/var/nix/profiles"
+    PROFILES_DIR="/nix/var/nix/profiles/system-profiles"
     COMIN_STATE_DIR="/var/lib/comin"
     LAST_MAILED_GEN_FILE="$COMIN_STATE_DIR/last-mailed-generation"
 
@@ -29,13 +29,13 @@ let
       | ${lib.getExe' pkgs.coreutils "head"} -n1)
 
     if [ -n "$CURR_GEN" ] && [ "$CURR_GEN" != "null" ]; then
-      CURR_PROFILE="$PROFILES_DIR/system-''${CURR_GEN}-link"
+      CURR_PROFILE="$PROFILES_DIR/comin-''${CURR_GEN}-link"
     else
       CURR_PROFILE=""
     fi
 
     if [ -n "$PREV_GEN" ] && [ "$PREV_GEN" != "null" ]; then
-      PREV_PROFILE="$PROFILES_DIR/system-''${PREV_GEN}-link"
+      PREV_PROFILE="$PROFILES_DIR/comin-''${PREV_GEN}-link"
     else
       PREV_PROFILE=""
     fi
