@@ -102,7 +102,7 @@ in
 
           attachments = {
             ENABLED = true;
-            MAX_SIZE = 5*1024; # 5GB
+            MAX_SIZE = 5 * 1024; # 5GB
           };
 
           # You can send a test email from the web UI at:
