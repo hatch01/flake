@@ -308,7 +308,7 @@ in
         (mkVhost "forgejo" {
           cache = true;
           extraConfig = ''
-            client_max_body_size 512M;
+            client_max_body_size 5G;
           '';
         })
 

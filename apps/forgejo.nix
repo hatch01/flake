@@ -100,6 +100,11 @@ in
             REPO_INDEXER_ENABLED = true;
           };
 
+          attachments = {
+            ENABLED = true;
+            MAX_SIZE = 5*1024; # 5GB
+          };
+
           # You can send a test email from the web UI at:
           # Profile Picture > Site Administration > Configuration >  Mailer Configuration
           mailer = {
