@@ -69,6 +69,8 @@
           fonts.names = [ "JetBrainsMono Nerd Font" ];
           keybindings = lib.mkOptionDefault {
             "Mod4+Return" = "exec kitty";
+            "XF86MonBrightnessUp" = "exec ${lib.getExe pkgs.brightnessctl} set +5%";
+            "XF86MonBrightnessDown" = "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
           };
         };
       };
