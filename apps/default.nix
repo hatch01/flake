@@ -29,7 +29,7 @@
     ./konsole.nix
     ./librespeed.nix
     ./matrix
-    ./multimedia.nix
+    ./multimedia
     ./neovim.nix
     ./nextcloud.nix
     ./nginx

@@ -102,6 +102,11 @@ in
           CLAP_PATH = makePluginPath "clap";
         };
 
+      hm.home.file.".config/ardour9/scripts/midi_switch.lua" = {
+        source = ./midi_switch.lua;
+        force = true;
+      };
+
       environment.systemPackages = with pkgs; [
         (ardour.overrideAttrs (old: {
           patches = (old.patches or [ ]) ++ [
