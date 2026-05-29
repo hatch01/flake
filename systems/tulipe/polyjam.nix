@@ -50,10 +50,10 @@
             i3lock # default i3 screen locker
           ];
         };
-        libinput = {
-          enable = true;
-          touchpad.naturalScrolling = true;
-        };
+      };
+      services.libinput = {
+        enable = true;
+        touchpad.naturalScrolling = true;
       };
       services.displayManager = {
         defaultSession = "none+i3";
