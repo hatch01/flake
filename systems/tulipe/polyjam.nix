@@ -5,6 +5,7 @@
   stable,
   pkgs,
   lib,
+  mkSecrets,
   ...
 }:
 {
@@ -114,10 +115,28 @@
       # Enable networking
       networking.networkmanager.enable = true;
       networking.wireless.enable = true;
-      systemd.services.NetworkManager.wantedBy = lib.mkForce [ ]; # Don't start NetworkManager at boot, we will start it manually when we want to use it
-      systemd.services.wpa_supplicant.wantedBy = lib.mkForce [ ]; # Don't start wpa_supplicant at boot, we will start it manually when we want to use it
-      systemd.services."NetworkManager-wait-online".wantedBy = lib.mkForce [ ]; # Disable dependent service
-      systemd.services."NetworkManager-dispatcher".wantedBy = lib.mkForce [ ]; # Disable dependent service
+      # systemd.services.wpa_supplicant.wantedBy = lib.mkForce [ ]; # Don't start wpa_supplicant at boot, we will start it manually when we want to use it
+      # systemd.services."NetworkManager-wait-online".wantedBy = lib.mkForce [ ]; # Disable dependent service
+      # systemd.services."NetworkManager-dispatcher".wantedBy = lib.mkForce [ ]; # Disable dependent service
+
+      networking.firewall.enable = true;
+      networking.firewall.allowedTCPPorts = [ 8080 ]; # open stage control
+      networking.firewall.trustedInterfaces = [ "wlo1" ];
+
+      # Auto-start WiFi hotspot on boot
+      systemd.services.networkmanager-hotspot = {
+        description = "NetworkManager WiFi Hotspot";
+        after = [ "NetworkManager.service" ];
+        wants = [ "NetworkManager.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          EnvironmentFile = config.age.secrets."polyjam_wifi_password".path;
+          ExecStart = ''${pkgs.networkmanager}/bin/nmcli device wifi hotspot ifname wlo1 ssid polyjam password "$WIFI_PASS"'';
+          ExecStop = "${pkgs.networkmanager}/bin/nmcli connection down id polyjam";
+        };
+      };
 
       # Configure console keymap
       console.keyMap = "fr";
@@ -126,8 +145,11 @@
 
       age = {
         identityPaths = [ "/etc/age/key" ];
+        secrets = mkSecrets {
+          "userPassword" = { };
+          "polyjam_wifi_password" = { };
+        };
       };
-
     };
   };
 }

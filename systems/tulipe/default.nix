@@ -6,7 +6,7 @@
   pkgs,
   inputs,
   username,
-  mkSecret,
+  mkSecrets,
   ...
 }:
 {
@@ -40,7 +40,10 @@
   };
 
   age = {
-    secrets = mkSecret "userPassword" { };
+    secrets = mkSecrets {
+      "userPassword" = { };
+      "polyjam_wifi_password" = { };
+    };
   };
 
   users.users = {

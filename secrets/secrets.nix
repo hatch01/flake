@@ -27,6 +27,7 @@ let
     // defineSecrets "tulipe" [
       "userPassword"
       "rootPassword"
+      "polyjam_wifi_password"
     ]
     // defineSecrets "lilas" [
       "rootPassword"
