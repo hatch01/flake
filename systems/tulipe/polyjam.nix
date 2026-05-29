@@ -52,6 +52,21 @@
           ];
         };
       };
+
+      # Open Stage Control startup service
+      systemd.user.services.open-stage-control = {
+        description = "Open Stage Control OSC server";
+        after = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = ''${pkgs.kitty}/bin/kitty --class open-stage-control ${lib.getExe pkgs.open-stage-control-headless} --send "127.0.0.1:3819" --load /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour.json --custom-module /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour-plugins-module.js'';
+          Restart = "always";
+          RestartSec = 5;
+        };
+      };
+
       services.libinput = {
         enable = true;
         touchpad.naturalScrolling = true;
@@ -73,6 +88,9 @@
             "XF86MonBrightnessUp" = "exec ${lib.getExe pkgs.brightnessctl} set +5%";
             "XF86MonBrightnessDown" = "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
           };
+          assigns = {
+            "2" = [ { class = "open-stage-control"; } ];
+          };
         };
       };
 
@@ -90,6 +108,10 @@
           name = "JetBrains Mono";
           size = 12;
         };
+
+        extraConfig = ''
+          window_class open-stage-control
+        '';
       };
 
       nix.settings = {
