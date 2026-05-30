@@ -53,20 +53,6 @@
         };
       };
 
-      # Open Stage Control startup service
-      systemd.user.services.open-stage-control = {
-        description = "Open Stage Control OSC server";
-        after = [ "graphical-session.target" ];
-        partOf = [ "graphical-session.target" ];
-        wantedBy = [ "graphical-session.target" ];
-        serviceConfig = {
-          Type = "simple";
-          ExecStart = ''${pkgs.kitty}/bin/kitty --class open-stage-control ${lib.getExe pkgs.open-stage-control-headless} --send "127.0.0.1:3819" --load /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour.json --custom-module /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour-plugins-module.js'';
-          Restart = "always";
-          RestartSec = 5;
-        };
-      };
-
       services.libinput = {
         enable = true;
         touchpad.naturalScrolling = true;
@@ -89,8 +75,19 @@
             "XF86MonBrightnessDown" = "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
           };
           assigns = {
-            "2" = [ { class = "open-stage-control"; } ];
+            "1" = [ { class = "ardour"; } ];
+            "2" = [
+              { class = "open-stage-control"; }
+              { class = "nmcli-password"; }
+            ];
           };
+          startup = [
+            { command = "i3-msg workspace 1"; always = true; }
+            { command = "${lib.getExe pkgs.numlockx} on"; always = true; }
+            { command = "${lib.getExe pkgs.ardour} /home/eymeric/Nextcloud/music/batterie/polyjam/polyjam/polyjam.ardour"; always = true; }
+            { command = "${pkgs.kitty}/bin/kitty --class nmcli-password --hold bash -c '${lib.getExe pkgs.networkmanager} device wifi show-password'"; always = true; }
+            { command = "${pkgs.kitty}/bin/kitty --class open-stage-control ${lib.getExe pkgs.open-stage-control-headless} --send 127.0.0.1:3819 --load /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour.json --custom-module /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour-plugins-module.js"; always = true; }
+          ];
         };
       };
 
@@ -108,10 +105,6 @@
           name = "JetBrains Mono";
           size = 12;
         };
-
-        extraConfig = ''
-          window_class open-stage-control
-        '';
       };
 
       nix.settings = {
