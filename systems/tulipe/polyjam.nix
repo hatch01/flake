@@ -82,11 +82,26 @@
             ];
           };
           startup = [
-            { command = "i3-msg workspace 1"; always = true; }
-            { command = "${lib.getExe pkgs.numlockx} on"; always = true; }
-            { command = "${lib.getExe pkgs.ardour} /home/eymeric/Nextcloud/music/batterie/polyjam/polyjam/polyjam.ardour"; always = true; }
-            { command = "${pkgs.kitty}/bin/kitty --class nmcli-password --hold bash -c '${lib.getExe pkgs.networkmanager} device wifi show-password'"; always = true; }
-            { command = "${pkgs.kitty}/bin/kitty --class open-stage-control ${lib.getExe pkgs.open-stage-control-headless} --send 127.0.0.1:3819 --load /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour.json --custom-module /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour-plugins-module.js"; always = true; }
+            {
+              command = "i3-msg workspace 1";
+              always = true;
+            }
+            {
+              command = "${lib.getExe pkgs.numlockx} on";
+              always = true;
+            }
+            {
+              command = "${lib.getExe pkgs.ardour} /home/eymeric/Nextcloud/music/batterie/polyjam/polyjam/polyjam.ardour";
+              always = true;
+            }
+            {
+              command = "${pkgs.kitty}/bin/kitty --class nmcli-password --hold bash -c '${lib.getExe pkgs.networkmanager} device wifi show-password'";
+              always = true;
+            }
+            {
+              command = "${pkgs.kitty}/bin/kitty --class open-stage-control ${lib.getExe pkgs.open-stage-control-headless} --send 127.0.0.1:3819 --load /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour.json --custom-module /home/eymeric/Nextcloud/music/batterie/osc/ardour-control/ardour-plugins-module.js";
+              always = true;
+            }
           ];
         };
       };
