@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  stable,
   ...
 }:
 let
@@ -10,7 +9,6 @@ let
     mkOption
     mkIf
     types
-    optionalAttrs
     ;
 in
 {
@@ -27,14 +25,12 @@ in
   config = mkIf config.beszel.agent.enable {
     services.beszel.agent = {
       enable = true;
+      smartmon.enable = true;
       openFirewall = false;
       environment = {
         PORT = toString config.beszel.agent.port;
         KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlwZwhYxzn9RtjWNdPd5raNIa6eQzXCf9994GSRBGjK";
       };
-    }
-    // optionalAttrs (!stable) {
-      smartmon.enable = true;
     };
   };
 }

@@ -2,7 +2,6 @@
   lib,
   config,
   base_domain_name,
-  stable,
   ...
 }:
 let
@@ -39,32 +38,16 @@ in
 
     services.resolved = {
       enable = true;
-    }
-    // (
-      if stable then
-        {
-          dnssec = "false";
-          # Don't set a default domain - let each interface handle its own
-          fallbackDns = [
-            "9.9.9.9#dns.quad9.net"
-            "149.112.112.112#dns.quad9.net"
-          ];
-          dnsovertls = "false";
-        }
-      else
-        {
-          settings.Resolve = {
-            DNSOverTLS = false;
-            DNSSEC = false;
-            # Don't set a default domain - let each interface handle its own
-            FALLbackDNS = [
-              "9.9.9.9#dns.quad9.net"
-              "149.112.112.112#dns.quad9.net"
-            ];
-
-          };
-        }
-    );
+      settings.Resolve = {
+        DNSOverTLS = false;
+        DNSSEC = false;
+        # Don't set a default domain - let each interface handle its own
+        FALLbackDNS = [
+          "9.9.9.9#dns.quad9.net"
+          "149.112.112.112#dns.quad9.net"
+        ];
+      };
+    };
 
     # Systemd service to configure resolved for incusbr0
     systemd.services.incus-dns-incusbr0 = {

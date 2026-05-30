@@ -3,7 +3,6 @@
   lib,
   mkSecret,
   base_domain_name,
-  stable,
   ...
 }:
 let
@@ -42,6 +41,6 @@ in
     age.secrets = mkSecret "cache-priv-key.pem" {
       owner = "harmonia";
     };
-    services.harmonia = if stable then harmoniaConfig else { cache = harmoniaConfig; };
+    services.harmonia.cache = harmoniaConfig;
   };
 }

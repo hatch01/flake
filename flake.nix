@@ -66,7 +66,7 @@
     };
 
     home-manager-stable = {
-      url = "git+https://forge.onyx.ovh/github_mirror/home-manager?shallow=1&ref=release-25.11";
+      url = "git+https://forge.onyx.ovh/github_mirror/home-manager?shallow=1&ref=release-26.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 

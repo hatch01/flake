@@ -3,7 +3,6 @@
   config,
   base_domain_name,
   pkgs,
-  stable,
   ...
 }:
 let
@@ -11,7 +10,6 @@ let
     mkEnableOption
     mkOption
     mkIf
-    optionals
     ;
 in
 {
@@ -43,22 +41,14 @@ in
       groups.libvirtdbus = { };
     };
 
-    systemd.packages = mkIf (!stable) [ pkgs.libvirt-dbus ];
+    systemd.packages = [ pkgs.libvirt-dbus ];
 
-    environment.systemPackages =
-      with pkgs;
-      [
-        virt-manager
-        osinfo-db
-        osinfo-db-tools
-        libosinfo
-      ]
-      ++ optionals (!stable) [
-        # libvirt-dbus
-        # cockpit-files
-        # cockpit-machines
-        # cockpit-podman
-      ];
+    environment.systemPackages = with pkgs; [
+      virt-manager
+      osinfo-db
+      osinfo-db-tools
+      libosinfo
+    ];
 
     services.cockpit = {
       enable = true;
@@ -76,8 +66,6 @@ in
         #     "action" = "none";
         #   };
       };
-    }
-    // lib.optionalAttrs (!stable) {
       plugins = with pkgs; [
         cockpit-files
         cockpit-podman
