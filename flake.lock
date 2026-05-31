@@ -81,10 +81,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1780029372,
-        "narHash": "sha256-CQHDDdpM+f6DqZR4Z9cyp2TQ5RDj5AWPrr1M2nH3JU8=",
+        "lastModified": 1780200954,
+        "narHash": "sha256-3476T026t+XSpOvgBGzKSG6J4swuRLnPO9dR+OATtq8=",
         "ref": "refs/heads/main",
-        "rev": "d14e173ebe9ffe07b40ddd4b8890a033661e0a6b",
+        "rev": "4f14d338d755239c27131cbf6b466be4bbb20f91",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/comin"
@@ -401,10 +401,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1779604987,
-        "narHash": "sha256-ZQ5z+fVhxYKtIFwtqGp5O0PD84BM1riASvqDaN5Xs+s=",
+        "lastModified": 1780210899,
+        "narHash": "sha256-4axz3OBPTKa6LIkXV8n0lc63MQU+et2CB5DGobEAi6k=",
         "ref": "refs/heads/main",
-        "rev": "8fba98c80b48fa013820e0163c5096922fea4ddd",
+        "rev": "97df9dc0b7c924344b793a15c1e8e4522ebb854e",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nix-index-database"
@@ -592,10 +592,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1780220652,
-        "narHash": "sha256-rvlghs4PxfqF4Pr8f6KXD82xRXvtH1LqvxGsuFzH6Wc=",
+        "lastModified": 1780242749,
+        "narHash": "sha256-veqAWHlcHgrb+oGvRAfxFuIp936Mr9HxfAQPcpH9Lrs=",
         "ref": "refs/heads/main",
-        "rev": "bd39972de6f729731906c0c1238605a072f5081d",
+        "rev": "9da82e63d9d7d8a718ab9cff26524258a0e4d1a5",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
