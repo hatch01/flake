@@ -133,6 +133,7 @@ in
         surge-xt
         guitarix
         guitarix-vst
+        gxplugins-lv2
         zlequalizer
         zlcompressor
         zlsplitter
