@@ -19,6 +19,10 @@
       pr = 522225;
       name = "open-stage-control-headless: init at 1.30.3";
     }
+    {
+      pr = 526514;
+      name = "ratatouille-lv2: init at 0.9.11";
+    }
   ];
 
   common = [

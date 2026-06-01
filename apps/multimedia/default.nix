@@ -144,6 +144,7 @@ in
         rakarrack
         x42-avldrums
         x42-plugins
+        ratatouille-lv2
         open-stage-control-headless
       ];
     }))
