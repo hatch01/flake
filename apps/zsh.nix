@@ -320,7 +320,6 @@ in
             echo "⚠ Not mounted: $mount_point"
           fi
         }
-
       '';
 
       ohMyZsh = {

@@ -29,6 +29,7 @@ in
         neovide
         zed-editor
         kdePackages.kate
+        gemini-cli
       ]
       ++ optionals config.jetbrains.enable [
         jetbrains.idea
@@ -38,5 +39,6 @@ in
         jetbrains.phpstorm
         jetbrains.datagrip
       ];
+    programs.zsh.shellInit = "export GOOGLE_CLOUD_PROJECT=\"gbr-mts-ctoo-utils-dev\"";
   };
 }
