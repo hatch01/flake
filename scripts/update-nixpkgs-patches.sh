@@ -45,7 +45,11 @@ apply_patches() {
 			err_conflict_msg="Diff for PR #$pr_number has conflicts or issues"
 		elif [ "$branch_name" != "null" ]; then
 			echo "Attempting to apply branch $patch_data"
-			diff_url="https://github.com/$NIXPKGS_REPO/compare/master...hatch01:nixpkgs:$branch_name.patch"
+			local base_branch="nixos-unstable"
+			if [ "$branch" = "nixos-stable" ]; then
+				base_branch="$NIXPKGS_STABLE_VERSION"
+			fi
+			diff_url="https://github.com/$NIXPKGS_REPO/compare/${base_branch}...hatch01:nixpkgs:$branch_name.patch"
 			echo "Downloading branch $branch_name patch from: $diff_url"
 			fail_msg="Failed to download patch for branch $branch_name (branch may not exist or is inaccessible)"
 			apply_msg="Apply branch $branch_name: $patch_name"
