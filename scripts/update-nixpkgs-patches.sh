@@ -28,24 +28,43 @@ apply_patches() {
 
 	git switch "$branch" >/dev/null 2>&1
 
-	# Process each patch (now just PR numbers)
-	echo "$patches_json" | jq -c '.[]' | while IFS= read -r pr_data; do
-		echo "Attempting to apply PR $pr_data"
+	# Process each patch (PR numbers or branch names)
+	echo "$patches_json" | jq -c '.[]' | while IFS= read -r patch_data; do
+		pr_number=$(echo "$patch_data" | jq -r '.pr')
+		branch_name=$(echo "$patch_data" | jq -r '.branch')
+		patch_name=$(echo "$patch_data" | jq -r '.name')
 
-		pr_number=$(echo "$pr_data" | jq -r '.pr')
-		pr_name=$(echo "$pr_data" | jq -r '.name')
-
-		diff_url="https://github.com/$NIXPKGS_REPO/pull/$pr_number.diff"
-		echo "Downloading PR #$pr_number diff from: $diff_url"
+		if [ "$pr_number" != "null" ]; then
+			echo "Attempting to apply PR $patch_data"
+			diff_url="https://github.com/$NIXPKGS_REPO/pull/$pr_number.diff"
+			echo "Downloading PR #$pr_number diff from: $diff_url"
+			fail_msg="Failed to download diff for PR #$pr_number (PR may not exist or is inaccessible)"
+			apply_msg="Apply PR #$pr_number: $patch_name"
+			success_msg="Diff check passed for PR #$pr_number, applying..."
+			err_apply_msg="Failed to apply diff for PR #$pr_number"
+			err_conflict_msg="Diff for PR #$pr_number has conflicts or issues"
+		elif [ "$branch_name" != "null" ]; then
+			echo "Attempting to apply branch $patch_data"
+			diff_url="https://github.com/$NIXPKGS_REPO/compare/master...hatch01:nixpkgs:$branch_name.patch"
+			echo "Downloading branch $branch_name patch from: $diff_url"
+			fail_msg="Failed to download patch for branch $branch_name (branch may not exist or is inaccessible)"
+			apply_msg="Apply branch $branch_name: $patch_name"
+			success_msg="Patch check passed for branch $branch_name, applying..."
+			err_apply_msg="Failed to apply patch for branch $branch_name"
+			err_conflict_msg="Patch for branch $branch_name has conflicts or issues"
+		else
+			echo "Error: patch data has neither 'pr' nor 'branch' field: $patch_data"
+			exit 1
+		fi
 
 		diff_output=$(curl -sL -f "$diff_url" 2>/dev/null)
 		if [ -z "$diff_output" ]; then
-			echo "Failed to download diff for PR #$pr_number (PR may not exist or is inaccessible)"
+			echo "$fail_msg"
 			exit 1
 		fi
 
 		if echo "$diff_output" | git apply --check 2>/dev/null 2>&1; then
-			echo "Diff check passed for PR #$pr_number, applying..."
+			echo "$success_msg"
 			if echo "$diff_output" | git apply 2>/dev/null 2>&1; then
 				git add . >/dev/null 2>&1
 
@@ -53,13 +72,13 @@ apply_patches() {
 				commit_date=$(git log -1 --format=%aI HEAD)
 				GIT_AUTHOR_DATE="$commit_date" \
 				GIT_COMMITTER_DATE="$commit_date" \
-				git commit --no-gpg-sign -m "Apply PR #$pr_number: $pr_name" --no-edit >/dev/null 2>&1 || true
+				git commit --no-gpg-sign -m "$apply_msg" --no-edit >/dev/null 2>&1 || true
 			else
-				echo "Failed to apply diff for PR #$pr_number"
+				echo "$err_apply_msg"
 				exit 1
 			fi
 		else
-			echo "Diff for PR #$pr_number has conflicts or issues"
+			echo "$err_conflict_msg"
 			exit 1
 		fi
 	done

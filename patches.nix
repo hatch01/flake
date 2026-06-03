@@ -4,8 +4,8 @@
 
   unstable = [
     {
-      pr = 527617;
       # pr = 510662;
+      branch = "mautrix-telegram-go";
       name = "mautrix-telegram";
     }
     {
@@ -21,7 +21,8 @@
       name = "nebula-de-esser: init at 3.2.0";
     }
     {
-      pr = 527621;
+      # pr = 527621;
+      branch = "matrix-authentification-service-unstable";
       name = "matrix-authentification-service module";
     }
   ];
