@@ -145,6 +145,7 @@ in
         x42-avldrums
         x42-plugins
         ratatouille-lv2
+        distrho-ports
         open-stage-control-headless
       ];
     }))
