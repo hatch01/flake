@@ -156,8 +156,6 @@ in
 
     systemd.services.matrix-authentication-service = {
       serviceConfig.EnvironmentFile = config.age.secrets.mas_config.path;
-      serviceConfig.User = "mas";
-      serviceConfig.Group = "mas";
       preStart = ''
         ${pkgs.coreutils}/bin/mkdir -p '${dataDir}'
         test -f '${settingsFile}' && ${pkgs.coreutils}/bin/rm -f '${settingsFile}'
