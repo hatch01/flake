@@ -146,6 +146,7 @@ in
         x42-plugins
         ratatouille-lv2
         distrho-ports
+        airwindows-lv2
         open-stage-control-headless
       ];
     }))
