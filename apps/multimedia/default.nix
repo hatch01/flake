@@ -147,6 +147,7 @@ in
         ratatouille-lv2
         distrho-ports
         airwindows-lv2
+        nebula-de-esser
         open-stage-control-headless
       ];
     }))

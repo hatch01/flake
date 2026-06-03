@@ -23,6 +23,10 @@
       pr = 526514;
       name = "ratatouille-lv2: init at 0.9.11";
     }
+    {
+      pr = 527579;
+      name = "nebula-de-esser: init at 3.2.0";
+    }
   ];
 
   common = [
