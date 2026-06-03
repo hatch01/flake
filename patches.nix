@@ -4,7 +4,8 @@
 
   unstable = [
     {
-      pr = 510662;
+      pr = 527617;
+      # pr = 510662;
       name = "mautrix-telegram";
     }
     {
