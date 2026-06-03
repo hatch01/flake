@@ -113,7 +113,7 @@ in
             (fetchpatch {
               # enable midi control for plugin bypasses
               url = "https://github.com/Ardour/ardour/pull/1111.patch";
-              hash = "sha256-ZWGjueJlveMDOMtBIwQVg0elQL1WatjOB9UkdpyQYOo=";
+              hash = "sha256-9lwRUtS+FvHvhkwu9++mKB22BiBM4fyxvoQIasuTSsU=";
             })
           ];
         }))
