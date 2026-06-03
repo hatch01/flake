@@ -28,6 +28,10 @@
       pr = 527579;
       name = "nebula-de-esser: init at 3.2.0";
     }
+    {
+      pr = 527621;
+      name = "matrix-authentification-service module";
+    }
   ];
 
   common = [
