@@ -94,6 +94,29 @@ in
                       {
                         id = "01H8PKNWKKRPCBW4YGH1RWV279";
                         client_secret = "$provider_client_secret";
+                        human_name = "Authelia";
+                        issuer = "https://${config.authelia.domain}";
+                        client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
+                        token_endpoint_auth_method = "client_secret_basic";
+                        scope = "openid profile email";
+                        discovery_mode = "insecure";
+                        fetch_userinfo = true;
+                        claims_imports = {
+                          localpart = {
+                            action = "require";
+                            template = "{{ user.preferred_username }}";
+                          };
+                          displayname = {
+                            action = "suggest";
+                            template = "{{ user.name }}";
+                          };
+                          email = {
+                            action = "suggest";
+                            template = "{{ user.email }}";
+                            set_email_verification = "always";
+                          };
+                        };
+
                       }
                     ];
                   };
@@ -177,36 +200,6 @@ in
             homeserver = base_domain_name;
             endpoint = "http://[::1]:${toString config.matrix.port}/";
             secret_file = config.age.secrets.mas_matrix_secret.path;
-          };
-
-          upstream_oauth2 = {
-            providers = [
-              {
-                id = "01H8PKNWKKRPCBW4YGH1RWV279";
-                human_name = "Authelia";
-                issuer = "https://${config.authelia.domain}";
-                client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
-                token_endpoint_auth_method = "client_secret_basic";
-                scope = "openid profile email";
-                discovery_mode = "insecure";
-                fetch_userinfo = true;
-                claims_imports = {
-                  localpart = {
-                    action = "require";
-                    template = "{{ user.preferred_username }}";
-                  };
-                  displayname = {
-                    action = "suggest";
-                    template = "{{ user.name }}";
-                  };
-                  email = {
-                    action = "suggest";
-                    template = "{{ user.email }}";
-                    set_email_verification = "always";
-                  };
-                };
-              }
-            ];
           };
         };
       };
