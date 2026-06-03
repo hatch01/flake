@@ -4,16 +4,9 @@
 
   unstable = [
     {
-      pr = 510662;
+      # pr = 510662;
+      branch = "mautrix-telegram-go";
       name = "mautrix-telegram";
-    }
-    {
-      pr = 522784;
-      name = "termite: remove broken package with no live upstream";
-    }
-    {
-      pr = 523363;
-      name = "fix ecdsa";
     }
     {
       pr = 522225;
@@ -22,6 +15,15 @@
     {
       pr = 526514;
       name = "ratatouille-lv2: init at 0.9.11";
+    }
+    {
+      pr = 527579;
+      name = "nebula-de-esser: init at 3.2.0";
+    }
+    {
+      # pr = 527621;
+      branch = "matrix-authentification-service-unstable";
+      name = "matrix-authentification-service module";
     }
   ];
 

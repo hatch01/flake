@@ -1,5 +1,6 @@
 {
   config,
+  options,
   lib,
   pkgs,
   mkSecrets,
@@ -9,7 +10,7 @@
 let
   inherit (lib) mkEnableOption mkIf mkOption;
   dataDir = "/var/lib/matrix-authentication-service";
-  settingsFile = "${dataDir}/settings.yaml";
+  settingsFile = "${dataDir}/secrets.yaml";
 in
 {
   imports = [ ];
@@ -18,7 +19,6 @@ in
     matrix.mas = {
       enable = mkEnableOption "enable matrix";
       port = mkOption {
-        # currently unused because settings are completly in secret
         type = lib.types.int;
         default = 8089;
         description = "The port on which the MAS will listen";
@@ -36,176 +36,174 @@ in
     };
   };
 
-  config = mkIf config.matrix.mas.enable {
-    age.secrets = mkSecrets {
-      "mas_config" = { };
-      "mas_matrix_secret" = {
-        owner = "mas";
-        group = "matrix-synapse";
-        mode = "0440";
+  config = mkIf config.matrix.mas.enable (
+    {
+      age.secrets = mkSecrets {
+        "mas_config" = { };
+        "mas_matrix_secret" = {
+          owner = "mas";
+          group = "matrix-synapse";
+          mode = "0440";
+        };
       };
-    };
 
-    users = {
-      groups.mas = { };
-      users.mas = {
-        isSystemUser = true;
-        group = "mas";
-        home = dataDir;
-        createHome = true;
-        description = "Matrix Authentication Service";
+      users = {
+        groups.mas = { };
+        users.mas = {
+          isSystemUser = true;
+          group = "mas";
+          home = dataDir;
+          createHome = true;
+          description = "Matrix Authentication Service";
+        };
       };
-    };
 
-    systemd.services.matrix-authentication-service = {
-      enable = true;
-      description = "Matrix Authentication Service";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "postgresql.service" ];
-      requires = [ "postgresql.service" ];
-      serviceConfig = {
-        Restart = "on-failure";
-        EnvironmentFile = config.age.secrets.mas_config.path;
-        ExecStart = "${pkgs.matrix-authentication-service}/bin/mas-cli -c ${settingsFile} server";
-        User = "mas";
-        Group = "mas";
-        WorkingDirectory = "${dataDir}";
+      systemd.services.matrix-authentication-service = {
+        serviceConfig.EnvironmentFile = config.age.secrets.mas_config.path;
+        serviceConfig.User = lib.mkForce "mas";
+        preStart = ''
+          ${pkgs.coreutils}/bin/mkdir -p '${dataDir}'
+          test -f '${settingsFile}' && ${pkgs.coreutils}/bin/rm -f '${settingsFile}'
+          ${pkgs.envsubst}/bin/envsubst \
+            -o '${settingsFile}' \
+            -i '${
+              (pkgs.writeText "mas-secrets.yaml" (
+                lib.generators.toYAML { } {
+                  secrets = {
+                    encryption = "$encryption";
+                    keys = [
+                      {
+                        kid = "ERoVDasMln";
+                        key = "$ERoVDasMln";
+                      }
+                      {
+                        kid = "Say3DRq9iv";
+                        key = "$Say3DRq9iv";
+                      }
+                      {
+                        kid = "g38dzwm5Ug";
+                        key = "$g38dzwm5Ug";
+                      }
+                      {
+                        kid = "vIIeN3Ao1A";
+                        key = "$vIIeN3Ao1A";
+                      }
+                    ];
+                  };
+                  upstream_oauth2 = {
+                    providers = [
+                      {
+                        id = "01H8PKNWKKRPCBW4YGH1RWV279";
+                        client_secret = "$provider_client_secret";
+                        human_name = "Authelia";
+                        issuer = "https://${config.authelia.domain}";
+                        client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
+                        token_endpoint_auth_method = "client_secret_basic";
+                        scope = "openid profile email";
+                        discovery_mode = "insecure";
+                        fetch_userinfo = true;
+                        claims_imports = {
+                          localpart = {
+                            action = "require";
+                            template = "{{ user.preferred_username }}";
+                          };
+                          displayname = {
+                            action = "suggest";
+                            template = "{{ user.name }}";
+                          };
+                          email = {
+                            action = "suggest";
+                            template = "{{ user.email }}";
+                            set_email_verification = "always";
+                          };
+                        };
+
+                      }
+                    ];
+                  };
+                }
+              ))
+            }'
+          ${pkgs.coreutils}/bin/chmod 600 '${settingsFile}'
+        '';
       };
-      preStart = ''
-        ${pkgs.coreutils}/bin/mkdir -p '${dataDir}'
-        test -f '${settingsFile}' && ${pkgs.coreutils}/bin/rm -f '${settingsFile}'
-        ${pkgs.envsubst}/bin/envsubst \
-          -o '${settingsFile}' \
-          -i '${
-            (pkgs.writeText "mas-settings.yaml" (
-              lib.generators.toYAML { } {
-                http = {
-                  listeners = [
-                    {
-                      name = "web";
-                      resources = [
-                        { name = "discovery"; }
-                        { name = "human"; }
-                        { name = "oauth"; }
-                        { name = "compat"; }
-                        { name = "graphql"; }
-                        { name = "assets"; }
-                      ];
-                      binds = [
-                        { address = "[::]:${toString config.matrix.mas.port}"; }
-                      ];
-                      proxy_protocol = false;
-                    }
-                    {
-                      name = "internal";
-                      resources = [
-                        { name = "health"; }
-                      ];
-                      binds = [
-                        {
-                          host = "localhost";
-                          port = config.matrix.mas.port2;
-                        }
-                      ];
-                      proxy_protocol = false;
-                    }
-                  ];
-                  trusted_proxies = [
-                    "192.168.0.0/16"
-                    "172.16.0.0/12"
-                    "10.0.0.0/10"
-                    "127.0.0.1/8"
-                    "fd00::/8"
-                    "::1/128"
-                  ];
-                  public_base = "https://${config.matrix.mas.domain}/";
-                  issuer = "https://${config.matrix.mas.domain}/";
-                };
-                database = {
-                  uri = "postgresql://mas@localhost/mas?host=/run/postgresql";
-                };
-                email = {
-                  from = "\"Authentication Service\" <root@localhost>";
-                  reply_to = "\"Authentication Service\" <root@localhost>";
-                  transport = "blackhole";
-                };
-                secrets = {
-                  encryption = "$encryption";
-                  keys = [
-                    {
-                      kid = "ERoVDasMln";
-                      key = "$ERoVDasMln";
-                    }
-                    {
-                      kid = "Say3DRq9iv";
-                      key = "$Say3DRq9iv";
-                    }
-                    {
-                      kid = "g38dzwm5Ug";
-                      key = "$g38dzwm5Ug";
-                    }
-                    {
-                      kid = "vIIeN3Ao1A";
-                      key = "$vIIeN3Ao1A";
-                    }
-                  ];
-                };
-                experimental_features = {
-                  msc4108_enabled = true;
-                };
-                passwords = {
-                  enabled = false;
-                };
-                matrix = {
-                  kind = "synapse";
-                  homeserver = base_domain_name;
-                  endpoint = "http://[::1]:${toString config.matrix.port}/";
-                  secret_file = config.age.secrets.mas_matrix_secret.path;
-                };
 
-                upstream_oauth2 = {
-                  providers = [
-                    {
-                      id = "01H8PKNWKKRPCBW4YGH1RWV279";
-                      human_name = "Authelia";
-                      issuer = "https://${config.authelia.domain}";
-                      client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
-                      client_secret = "$provider_client_secret";
-                      token_endpoint_auth_method = "client_secret_basic";
-                      scope = "openid profile email";
-                      discovery_mode = "insecure";
-                      fetch_userinfo = true;
-                      claims_imports = {
-                        localpart = {
-                          action = "require";
-                          template = "{{ user.preferred_username }}";
-                        };
-                        displayname = {
-                          action = "suggest";
-                          template = "{{ user.name }}";
-                        };
-                        email = {
-                          action = "suggest";
-                          template = "{{ user.email }}";
-                          set_email_verification = "always";
-                        };
-                      };
-                    }
-                  ];
-                };
+      postgres.initialScripts = [
+        ''
+          CREATE ROLE "mas";
+          ALTER ROLE "mas" WITH LOGIN;
+          CREATE DATABASE "mas" WITH OWNER "mas";
+        ''
+      ];
+    }
+    // lib.optionalAttrs (options.services ? matrix-authentication-service) {
+      services.matrix-authentication-service = {
+        enable = true;
+        extraConfigFiles = [ settingsFile ];
+        settings = {
+          http = {
+            listeners = [
+              {
+                name = "web";
+                resources = [
+                  { name = "discovery"; }
+                  { name = "human"; }
+                  { name = "oauth"; }
+                  { name = "compat"; }
+                  { name = "graphql"; }
+                  { name = "assets"; }
+                ];
+                binds = [
+                  { address = "[::]:${toString config.matrix.mas.port}"; }
+                ];
+                proxy_protocol = false;
               }
-            ))
-          }'
-        ${pkgs.coreutils}/bin/chmod 600 '${settingsFile}'
-      '';
-    };
-
-    postgres.initialScripts = [
-      ''
-        CREATE ROLE "mas";
-        ALTER ROLE "mas" WITH LOGIN;
-        CREATE DATABASE "mas" WITH OWNER "mas";
-      ''
-    ];
-  };
+              {
+                name = "internal";
+                resources = [
+                  { name = "health"; }
+                ];
+                binds = [
+                  {
+                    host = "localhost";
+                    port = config.matrix.mas.port2;
+                  }
+                ];
+                proxy_protocol = false;
+              }
+            ];
+            trusted_proxies = [
+              "192.168.0.0/16"
+              "172.16.0.0/12"
+              "10.0.0.0/10"
+              "127.0.0.1/8"
+              "fd00::/8"
+              "::1/128"
+            ];
+            public_base = "https://${config.matrix.mas.domain}/";
+            issuer = "https://${config.matrix.mas.domain}/";
+          };
+          database = {
+            uri = "postgresql://mas@localhost/mas?host=/run/postgresql";
+          };
+          email = {
+            from = "\"Authentication Service\" <root@localhost>";
+            reply_to = "\"Authentication Service\" <root@localhost>";
+            transport = "blackhole";
+          };
+          experimental_features = {
+            msc4108_enabled = true;
+          };
+          passwords = {
+            enabled = false;
+          };
+          matrix = {
+            homeserver = base_domain_name;
+            endpoint = "http://[::1]:${toString config.matrix.port}/";
+            secret_file = config.age.secrets.mas_matrix_secret.path;
+          };
+        };
+      };
+    }
+  );
 }

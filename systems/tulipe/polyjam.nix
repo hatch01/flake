@@ -95,7 +95,7 @@
               always = true;
             }
             {
-              command = "${pkgs.kitty}/bin/kitty --class nmcli-password --hold bash -c '${lib.getExe pkgs.networkmanager} device wifi show-password'";
+              command = "${pkgs.kitty}/bin/kitty --class nmcli-password --hold bash -c '${lib.getExe' pkgs.networkmanager "nmcli"} device wifi show-password'";
               always = true;
             }
             {
