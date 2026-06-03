@@ -26,6 +26,7 @@ in
         pdfarranger
         rnote
         anytype
+        planify
       ]
       ++ optionals config.libreoffice.enable [
         libreoffice-fresh
