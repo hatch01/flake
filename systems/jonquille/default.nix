@@ -66,6 +66,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Enable Tailscale routing features for exit node (IP forwarding & sysctl)
+  services.tailscale.useRoutingFeatures = "server";
+
   # btrfs
   services.btrfs.autoScrub = {
     enable = true;
