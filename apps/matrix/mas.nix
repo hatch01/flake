@@ -130,9 +130,9 @@ in
 
       postgres.initialScripts = [
         ''
-          CREATE ROLE "mas";
-          ALTER ROLE "mas" WITH LOGIN;
-          CREATE DATABASE "mas" WITH OWNER "mas";
+          CREATE ROLE "matrix-authentication-service";
+          ALTER ROLE "matrix-authentication-service" WITH LOGIN;
+          CREATE DATABASE "mas" WITH OWNER "matrix-authentication-service";
         ''
       ];
     }
