@@ -7,6 +7,7 @@
   inputs,
   username,
   mkSecrets,
+  lib,
   ...
 }:
 {
@@ -16,6 +17,8 @@
     ./nvidia.nix
     ./polyjam.nix
   ];
+
+  time.timeZone = lib.mkForce "Asia/Ho_Chi_Minh";
 
   zramSwap.enable = true;
 
