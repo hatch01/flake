@@ -57,7 +57,6 @@ in
       "matrix_signing_key" = {
         owner = "matrix-synapse";
       };
-      "mas_matrix_secret" = { };
     };
 
     systemd.services.matrix-synapse = {

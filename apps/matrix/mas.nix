@@ -41,26 +41,14 @@ in
       age.secrets = mkSecrets {
         "mas_config" = { };
         "mas_matrix_secret" = {
-          owner = "mas";
           group = "matrix-synapse";
           mode = "0440";
         };
       };
 
-      users = {
-        groups.mas = { };
-        users.mas = {
-          isSystemUser = true;
-          group = "mas";
-          home = dataDir;
-          createHome = true;
-          description = "Matrix Authentication Service";
-        };
-      };
-
       systemd.services.matrix-authentication-service = {
         serviceConfig.EnvironmentFile = config.age.secrets.mas_config.path;
-        serviceConfig.User = lib.mkForce "mas";
+        serviceConfig.SupplementaryGroups = "matrix-synapse";
         preStart = ''
           ${pkgs.coreutils}/bin/mkdir -p '${dataDir}'
           test -f '${settingsFile}' && ${pkgs.coreutils}/bin/rm -f '${settingsFile}'
@@ -136,7 +124,7 @@ in
         ''
       ];
     }
-    // lib.optionalAttrs (options.services ? matrix-authentication-service) {
+    // {
       services.matrix-authentication-service = {
         enable = true;
         extraConfigFiles = [ settingsFile ];
@@ -184,7 +172,7 @@ in
             issuer = "https://${config.matrix.mas.domain}/";
           };
           database = {
-            uri = "postgresql://mas@localhost/mas?host=/run/postgresql";
+            uri = "postgresql://matrix-authentication-service@localhost/mas?host=/run/postgresql";
           };
           email = {
             from = "\"Authentication Service\" <root@localhost>";
