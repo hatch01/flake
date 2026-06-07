@@ -469,10 +469,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1780525334,
-        "narHash": "sha256-IsKkAEN/9x0MRIrZduykgLJxME8L70KNknC+3iII6Yo=",
+        "lastModified": 1780765279,
+        "narHash": "sha256-md6QHmlIx40bQkun43M2eT8aav5GURGkXEMFwof6uZs=",
         "ref": "refs/heads/main",
-        "rev": "cde346714cb46261648cac80c361dbd388f82f20",
+        "rev": "3e6d8af994e2a2d31af7a91863d7c0d6e278d951",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/NixOS-WSL"
@@ -548,9 +548,9 @@
     "nixpkgs_4": {
       "locked": {
         "lastModified": 1780243769,
-        "narHash": "sha256-aG2KDYdL9A4EqFVI3yjItUW+0Sm2hmUySQMGmMeJkh8=",
+        "narHash": "sha256-mtIIdN0rH1dm+6tSAs1lcW6scz/ZjzBVVUinlNR+a6U=",
         "ref": "nixos-unstable",
-        "rev": "fd661bb6fcce60877f7a388c36d187c2180fc45b",
+        "rev": "bdbac9356d2c02730ed56b713822df5dfbfd94f0",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"
