@@ -97,7 +97,7 @@ in
       settings = {
         app_service_config_files = [ puppetFile ];
 
-        matrix_authentication_service = {
+        matrix_authentication_service = mkIf config.matrix.mas.enable {
           enabled = true;
           endpoint = "http://127.0.0.1:${toString config.matrix.mas.port}/";
           secret_path = config.age.secrets.mas_matrix_secret.path;

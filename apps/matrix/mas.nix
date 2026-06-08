@@ -36,8 +36,8 @@ in
     };
   };
 
-  config = mkIf config.matrix.mas.enable (
-    {
+  config =
+    mkIf config.matrix.mas.enable {
       age.secrets = mkSecrets {
         "mas_config" = { };
         "mas_matrix_secret" = {
@@ -192,6 +192,5 @@ in
           };
         };
       };
-    }
-  );
+    };
 }
