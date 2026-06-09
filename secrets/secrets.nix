@@ -13,6 +13,8 @@ let
   secrets =
     defineSecrets "" [
       "githubToken"
+      "smtpPasswordEnv"
+      "smtpPassword"
     ]
     // defineSecrets "desktop" [
       "wifi"
