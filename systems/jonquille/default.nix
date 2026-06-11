@@ -50,7 +50,7 @@
   bitcoin.server.enable = true;
   ntfy.enable = true;
 
-  nginx.nichihachi.enable = true;
+  nginx.nichihachi.enable = false;
   nginx.nichihachi.backendIp = "192.168.1.142";
 
   boot.loader.timeout = 1;
