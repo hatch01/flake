@@ -88,7 +88,7 @@ in
               (mkRule [ jonquille lavande tulipe lotus papa ] [ homeassistant ] [ 22 8123 ]) # allow access to homeassistant
               (mkRule [ tulipe ] [ jonquille ] [ config.bitcoin.server.portRpc ]) # allow jonquille to use bitcoin controller
               (mkRule [ alexandre ] [ polytech ] [ 22 ])
-              (mkRule [ tulipe lavande lotus ] [ "autogroup:internet" ] [ "*" ])
+              (mkRule [ tulipe lavande lotus "100.64.0.13" ] [ "autogroup:internet" ] [ "*" ])
             ];
           };
 
