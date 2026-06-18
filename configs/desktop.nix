@@ -80,7 +80,10 @@ in
 
   programs.firefox.enable = true;
 
-  networking.networkmanager.plugins = [ pkgs.networkmanager-openconnect ];
+  networking.networkmanager.plugins = with pkgs; [
+    networkmanager-openconnect
+    networkmanager-openvpn
+  ];
 
   environment = {
     systemPackages = with pkgs; [
