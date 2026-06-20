@@ -272,10 +272,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1781837860,
-        "narHash": "sha256-oxAvnVo7JI7YNH9xaBt3n7dPTTcToUy5hlzVqTnA0sw=",
+        "lastModified": 1781890084,
+        "narHash": "sha256-0HPkaiZtNBOaA9KsF26YI18sBvp1KDs/o8Ioo2qCqaw=",
         "ref": "refs/heads/master",
-        "rev": "3abeedcf409ecd8fca201646074bfb31797e8cc2",
+        "rev": "153bad8fb58fd3ad9bbfcbdd0a965acc89a869e1",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/home-manager"
