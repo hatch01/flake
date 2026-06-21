@@ -60,4 +60,17 @@
 
   # Enable firmware for Raspberry Pi
   hardware.enableRedistributableFirmware = true;
+
+  boot.kernelPackages = lib.mkForce (
+    let
+      pkgs_x86 = import inputs.nixpkgs-stable { system = "x86_64-linux"; };
+    in
+    pkgs_x86.pkgsCross.aarch64-multiplatform.linuxPackagesFor (
+      pkgs_x86.pkgsCross.aarch64-multiplatform.callPackage
+        "${inputs.nixos-hardware}/raspberry-pi/common/kernel.nix"
+        {
+          rpiVersion = 4;
+        }
+    )
+  );
 }
