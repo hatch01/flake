@@ -81,10 +81,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1780340061,
-        "narHash": "sha256-Ad+S86WqmtQWGSg0KgSjMwMXq+ya0HDeF4m89Kn463o=",
+        "lastModified": 1781935081,
+        "narHash": "sha256-OfZOqsYAPUOtAl28r0N7UzveFmHVtgdvst8fhl+ZXMw=",
         "ref": "refs/heads/main",
-        "rev": "56320254c8e651c052fb1a175470821a476c5bb1",
+        "rev": "7dd124136e1ed1203f9d940a910429196d599a93",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/comin"
@@ -272,10 +272,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1781890084,
-        "narHash": "sha256-0HPkaiZtNBOaA9KsF26YI18sBvp1KDs/o8Ioo2qCqaw=",
+        "lastModified": 1781980822,
+        "narHash": "sha256-UF4TqfMJCYOKVhLqgWnLZIdFm///wbUGlV0HyB2wHRg=",
         "ref": "refs/heads/master",
-        "rev": "153bad8fb58fd3ad9bbfcbdd0a965acc89a869e1",
+        "rev": "8695ecb389cb43449fba0494ffc21065c7cde39d",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/home-manager"
@@ -293,10 +293,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1781319724,
-        "narHash": "sha256-ZGuxexEMo4Xv28KJ0dX/m/PHN4oZIOnxHZpNTyrvx4M=",
+        "lastModified": 1781981105,
+        "narHash": "sha256-/1nNBbA7PrSQpTc9Qazkhl4kIPg+TNl0CjxS3UQJKlw=",
         "ref": "release-26.05",
-        "rev": "8355f0a16b2dbb06a97959a918af5b239bbe05ae",
+        "rev": "7bfff44b465909f69a442701293bc0badcf476dc",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/home-manager"
