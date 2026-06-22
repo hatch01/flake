@@ -94,6 +94,7 @@ in
           actions = {
             ENABLED = true;
             DEFAULT_ACTIONS_URL = "https://${config.forgejo.domain}";
+            ENDLESS_TASK_TIMEOUT = "5h";
           };
 
           indexer = {
