@@ -81,10 +81,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1781935081,
-        "narHash": "sha256-OfZOqsYAPUOtAl28r0N7UzveFmHVtgdvst8fhl+ZXMw=",
+        "lastModified": 1782030670,
+        "narHash": "sha256-wWjpbzANeTeVdGSNR8IWY6/Sx64sNxoIGSGojt0sv1o=",
         "ref": "refs/heads/main",
-        "rev": "7dd124136e1ed1203f9d940a910429196d599a93",
+        "rev": "4132225bd0a9e699e11958fa514bcc6fbe6c99a3",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/comin"
@@ -272,10 +272,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1781980822,
-        "narHash": "sha256-UF4TqfMJCYOKVhLqgWnLZIdFm///wbUGlV0HyB2wHRg=",
+        "lastModified": 1782051614,
+        "narHash": "sha256-xBRAhYLEXcjp8hM2tkkTTLb6PWU7VDxDoogl25g7Ezs=",
         "ref": "refs/heads/master",
-        "rev": "8695ecb389cb43449fba0494ffc21065c7cde39d",
+        "rev": "d1ccd0721ec599866622665f3651e19e6e2d4c6a",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/home-manager"
@@ -401,10 +401,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1781422160,
-        "narHash": "sha256-W7S8O86bVrw2gaomEwkHStOzmPpnFIHQ6lS4Q2HffJ0=",
+        "lastModified": 1782030356,
+        "narHash": "sha256-h4WpMr455AfRub0FXBaon6Vcpe0waUyJ4GivIW6oyd4=",
         "ref": "refs/heads/main",
-        "rev": "854d04e2368fb2e9c328a36b3c0a04cd713bfae1",
+        "rev": "3017088b49efd404f78e3b104f553b97e4af786b",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nix-index-database"
@@ -592,10 +592,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1781584259,
-        "narHash": "sha256-+NBwYumqndc0/gsvp3+bLEUxRMX801d7DHciRYDESm8=",
+        "lastModified": 1782034808,
+        "narHash": "sha256-aNhDvgs+MgPyE6teGkI2FKj+Y4aS9aojoKgHR80aIcM=",
         "ref": "refs/heads/main",
-        "rev": "e22a682e4c8b01cdccf72f791407adca76885db4",
+        "rev": "6c3d6e30ce00f3f1ce4550a51ea0d9e7dcfb46e7",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
