@@ -62,7 +62,6 @@ jobs:
         env:
           GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: nix shell nixpkgs#just nixpkgs#jq nixpkgs#curl nixpkgs#git --command just update
+        run: just update
       - name: Push flake update commit
         run: git push --force origin staging
-

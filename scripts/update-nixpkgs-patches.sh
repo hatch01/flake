@@ -1,4 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p just -p jq -p curl -p git
+# shellcheck shell=bash
+# impure: needs internet
+
+
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
