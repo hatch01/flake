@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -i bash -p just -p jq -p curl -p git
+#!/usr/bin/env bash
 # shellcheck shell=bash
 # impure: needs internet
 
