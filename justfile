@@ -18,7 +18,7 @@ update-input +inputs="":
     nix flake update --commit-lock-file --accept-flake-config {{ inputs }}
 
 update-patches:
-    bash ./scripts/update-nixpkgs-patches.sh
+    nix shell nixpkgs#bash nixpkgs#just nixpkgs#jq nixpkgs#curl nixpkgs#git --command bash ./scripts/update-nixpkgs-patches.sh
 
 history:
     nix profile history --profile /nix/var/nix/profiles/system
