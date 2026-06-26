@@ -461,7 +461,20 @@ in
           };
         })
 
-        (mkVhost "headplane" { })
+        (mkVhost "headplane" {
+          noDefaultLocations = true;
+          locations = {
+            "/" = {
+              extraConfig = ''
+                return 301 /admin/;
+              '';
+            };
+            "/admin/" = {
+              proxyWebsockets = true;
+              proxyPass = "http://127.0.0.1:${toString config.headplane.port}";
+            };
+          };
+        })
       ];
     };
     networking.firewall.allowedTCPPorts = [
