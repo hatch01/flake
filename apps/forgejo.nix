@@ -151,6 +151,13 @@ in
     nix.settings = {
       trusted-users = [ "gitea-runner" ];
     };
+    systemd.services.forgejo.after = [
+      "network.target"
+      "postgresql.target"
+      "forgejo-secrets.service"
+      "authelia.service"
+    ];
+
     systemd.services.forgejo.preStart =
       let
         forgejoBin = lib.getExe config.services.forgejo.package;
