@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf optionalAttrs;
 in
 {
   options = {
@@ -31,29 +31,37 @@ in
         maxtime = "168h"; # Do not ban for more than 1 week
         overalljails = true; # Calculate the bantime based on all the violations
       };
-      jails = {
-        authelia.settings = {
-          enabled = true;
-          port = "http,https";
-          filter = "authelia";
-          logpath = "/var/lib/authelia-main/authelia.log";
-          maxretry = 5;
+      jails =
+        { }
+        //
+
+          optionalAttrs config.authelia.enable {
+            authelia.settings = {
+              enabled = true;
+              port = "http,https";
+              filter = "authelia";
+              logpath = "/var/lib/authelia-main/authelia.log";
+              maxretry = 5;
+            };
+          }
+        // optionalAttrs config.cockpit.enable {
+          cockpit.settings = {
+            enabled = true;
+            backend = "systemd";
+            port = "http,https";
+            filter = "cockpit";
+            maxretry = 5;
+          };
+        }
+        // optionalAttrs config.home_assistant.enable {
+          home_assistant.settings = {
+            enabled = true;
+            port = "http,https";
+            filter = "home_assistant";
+            backend = "systemd";
+            maxretry = 5;
+          };
         };
-        cockpit.settings = {
-          enabled = true;
-          backend = "systemd";
-          port = "http,https";
-          filter = "cockpit";
-          maxretry = 5;
-        };
-        home_assistant.settings = {
-          enabled = true;
-          port = "http,https";
-          filter = "home_assistant";
-          backend = "systemd";
-          maxretry = 5;
-        };
-      };
     };
 
     environment.etc = {
