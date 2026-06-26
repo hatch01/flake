@@ -415,6 +415,33 @@ in
                     userinfo_signed_response_alg = "none";
                     token_endpoint_auth_method = "client_secret_basic";
                   }
+                  {
+                    client_id = "headplane";
+                    client_name = "Headplane";
+                    client_secret = "$pbkdf2-sha512$310000$uWi9yYhorV2Im3AZsS1yuQ$7Syte8I5LhSoBKVJcvBIedDABcm4hr6SD/x.392AP8xml2.p6UKyZTnzU0Wi3eDzb3SdYSfLiYGpXqVCzzIw2A";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    require_pkce = true;
+                    pkce_challenge_method = "S256";
+                    redirect_uris = [
+                      "https://${config.headplane.domain}/oidc/callback"
+                    ];
+                    scopes = [
+                      "openid"
+                      "email"
+                      "profile"
+                      "groups"
+                    ];
+                    response_types = [
+                      "code"
+                    ];
+                    grant_types = [
+                      "authorization_code"
+                    ];
+                    access_token_signed_response_alg = "none";
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "client_secret_basic";
+                  }
                 ]
                 ++ optionals config.home_assistant.enable [
                   {

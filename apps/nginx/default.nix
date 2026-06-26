@@ -460,6 +460,8 @@ in
             };
           };
         })
+
+        (mkVhost "headplane" { })
       ];
     };
     networking.firewall.allowedTCPPorts = [

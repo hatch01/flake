@@ -86,6 +86,10 @@ let
       "headscale_oidc"
       "kvmdHttpHeader"
       "gatusEnv"
+      "headplane_cookie"
+      "headscale_api_key"
+      "headplane_oidc"
+      "headplane_pre_authkey"
     ];
 
   defineSecrets =

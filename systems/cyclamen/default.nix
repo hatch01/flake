@@ -4,6 +4,7 @@
   imports = [ ];
 
   headscale.enable = true;
+  headplane.enable = true;
   beszel.hub.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;

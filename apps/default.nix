@@ -20,6 +20,7 @@
     ./gatus.nix
     ./git.nix
     ./headscale.nix
+    ./headplane.nix
     ./home_automation
     ./homebank.nix
     ./homepage.nix
