@@ -193,6 +193,14 @@ in
                 };
               }
               {
+                "Headplane" = {
+                  icon = "tailscale.png";
+                  description = "Headscale Web UI";
+                  href = "https://${config.headplane.domain}/";
+                  siteMonitor = "https://${config.headplane.domain}/admin/";
+                };
+              }
+              {
                 "Cockpit" = {
                   icon = "cockpit.png";
                   description = "cockpit c'est vraiment cool";
