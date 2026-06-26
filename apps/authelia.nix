@@ -266,6 +266,15 @@ in
                     }
                   ];
                 };
+                admin_only = {
+                  default_policy = "deny";
+                  rules = [
+                    {
+                      policy = "two_factor";
+                      subject = "group:admin";
+                    }
+                  ];
+                };
               };
               clients =
                 [ ]
@@ -420,11 +429,11 @@ in
                     client_name = "Headplane";
                     client_secret = "$pbkdf2-sha512$310000$uWi9yYhorV2Im3AZsS1yuQ$7Syte8I5LhSoBKVJcvBIedDABcm4hr6SD/x.392AP8xml2.p6UKyZTnzU0Wi3eDzb3SdYSfLiYGpXqVCzzIw2A";
                     public = false;
-                    authorization_policy = "two_factor";
+                    authorization_policy = "admin_only";
                     require_pkce = true;
                     pkce_challenge_method = "S256";
                     redirect_uris = [
-                      "https://${config.headplane.domain}/oidc/callback"
+                      "https://${config.headplane.domain}/admin/oidc/callback"
                     ];
                     scopes = [
                       "openid"
