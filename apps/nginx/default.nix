@@ -458,18 +458,9 @@ in
                 add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;
               '';
             };
-          };
-        })
-
-        (mkVhost "headplane" {
-          noDefaultLocations = true;
-          locations = {
-            "/" = {
-              extraConfig = ''
-                return 301 /admin/;
-              '';
-            };
-            "/admin/" = {
+          }
+          // lib.optionalAttrs config.headplane.enable {
+            "/admin" = {
               proxyWebsockets = true;
               proxyPass = "http://127.0.0.1:${toString config.headplane.port}";
             };

@@ -22,7 +22,7 @@ in
     };
     headplane.domain = mkOption {
       type = lib.types.str;
-      default = "headplane.${base_domain_name}";
+      default = config.headscale.domain;
       description = "The domain of the Headplane UI";
     };
   };

@@ -91,6 +91,30 @@
     footer a:hover {
       color: var(--text);
     }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn:hover {
+      background: #4f46e5;
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -103,6 +127,8 @@
       If you’re seeing this page, you’re in the right place —
       but probably not meant to browse here.
     </p>
+
+    <a href="/admin" class="btn">Access Admin Panel</a>
 
     <footer>
       headscale.onyx.ovh · powered by headscale
