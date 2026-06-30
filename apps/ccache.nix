@@ -67,5 +67,7 @@ in
     nixpkgs.overlays = [
       cfg.overlay
     ];
+
+    environment.persistence."/persistent".directories = [ "/var/cache/ccache" ];
   };
 }
