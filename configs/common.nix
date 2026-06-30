@@ -28,13 +28,9 @@ in
   nix = {
     package = pkgs.nixVersions.git;
     settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      trusted-users = [ "@wheel" ];
       download-buffer-size = 524288000;
-    };
+    }
+    // (import ../flake.nix).nixConfig;
   };
 
   nixpkgs = {
@@ -136,6 +132,7 @@ in
       (final: prev: {
         ardour = (
           prev.ardour.overrideAttrs (old: {
+            stdenv = final.ccacheStdenv;
             patches = (old.patches or [ ]) ++ [
               (prev.fetchpatch {
                 # enable midi control for plugin bypasses

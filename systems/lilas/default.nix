@@ -63,14 +63,21 @@
 
   boot.kernelPackages = lib.mkForce (
     let
-      pkgs_x86 = import inputs.nixpkgs-stable { system = "x86_64-linux"; };
+      pkgs_x86 = import inputs.nixpkgs-stable {
+        system = "x86_64-linux";
+        overlays = [ config.apps.ccache.overlay ];
+      };
+      crossPkgs = pkgs_x86.pkgsCross.aarch64-multiplatform;
+      kernel = crossPkgs.callPackage "${inputs.nixos-hardware}/raspberry-pi/common/kernel.nix" {
+        rpiVersion = 4;
+      };
+      kernelWithCcache = kernel.override {
+        stdenv = crossPkgs.ccacheStdenv;
+        buildPackages = crossPkgs.buildPackages // {
+          stdenv = crossPkgs.buildPackages.ccacheStdenv;
+        };
+      };
     in
-    pkgs_x86.pkgsCross.aarch64-multiplatform.linuxPackagesFor (
-      pkgs_x86.pkgsCross.aarch64-multiplatform.callPackage
-        "${inputs.nixos-hardware}/raspberry-pi/common/kernel.nix"
-        {
-          rpiVersion = 4;
-        }
-    )
+    crossPkgs.linuxPackagesFor kernelWithCcache
   );
 }

@@ -7,6 +7,7 @@
     ./beszel/agent.nix
     ./beszel/hub.nix
     ./bitcoin.nix
+    ./ccache.nix
     ./cloud-storage.nix
     ./cockpit.nix
     ./comin.nix

@@ -13,6 +13,7 @@
     ./impermanence.nix
   ];
 
+  apps.ccache.enable = true;
   nextcloud.enable = true;
   nextcloud.app_api.enable = false;
   onlyofficeDocumentServer.enable = true;
