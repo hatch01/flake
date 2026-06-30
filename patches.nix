@@ -12,11 +12,6 @@
       pr = 526514;
       name = "ratatouille-lv2: init at 0.9.11";
     }
-    {
-      # pr = 527621;
-      branch = "matrix-authentification-service-unstable";
-      name = "matrix-authentification-service module";
-    }
   ];
 
   common = [
