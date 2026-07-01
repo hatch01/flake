@@ -118,6 +118,7 @@
       "/var/lib/tailscale"
       "/var/lib/incus"
       "/var/lib/docker"
+      "/var/cache/ccache"
     ];
     files = [
       "/etc/ssh/ssh_host_ed25519_key"

@@ -67,9 +67,5 @@ in
     nixpkgs.overlays = [
       cfg.overlay
     ];
-
-    environment.persistence."/persistent".directories =
-      lib.optional config.environment.persistence."/persistent".enable
-        "/var/cache/ccache";
   };
 }
