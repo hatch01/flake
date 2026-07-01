@@ -155,7 +155,7 @@ in
       "network.target"
       "postgresql.target"
       "forgejo-secrets.service"
-      "authelia.service"
+      "authelia-main.service"
     ];
 
     systemd.services.forgejo.preStart =
