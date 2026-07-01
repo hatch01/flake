@@ -17,6 +17,7 @@ in
   };
 
   config = mkIf config.matrix.instagram.enable {
+    systemd.services.mautrix-meta-instagram-registration.preStart="rm -r /var/lib/mautrix-meta-instagram/";
     services.mautrix-meta = {
       instances = {
         instagram = {
