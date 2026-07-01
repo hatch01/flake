@@ -68,6 +68,8 @@ in
       cfg.overlay
     ];
 
-    environment.persistence."/persistent".directories = lib.optional config.environment.persistence."/persistent".enable "/var/cache/ccache";
+    environment.persistence."/persistent".directories =
+      lib.optional config.environment.persistence."/persistent".enable
+        "/var/cache/ccache";
   };
 }
