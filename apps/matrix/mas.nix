@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   mkSecrets,
   base_domain_name,
   stable,
@@ -44,11 +43,6 @@ in
             owner = "matrix-synapse";
             mode = "0440";
           };
-        };
-
-        systemd.services.matrix-authentication-service = {
-          wants = [ "matrix-authentication-service-init.service" ];
-          after = [ "matrix-authentication-service-init.service" ];
         };
 
         services.matrix-authentication-service = {
