@@ -39,7 +39,7 @@ in
       {
         age.secrets = mkSecrets {
           "mas_config" = { };
-          "mas_authelia_secret" = {};
+          "mas_authelia_secret" = { };
           "mas_matrix_secret" = {
             owner = "matrix-synapse";
             mode = "0440";
