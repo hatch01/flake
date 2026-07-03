@@ -42,15 +42,17 @@ in
         age.secrets = mkSecrets {
           "mas_config" = { };
           "mas_matrix_secret" = {
-            group = "matrix-synapse";
+            owner = "matrix-synapse";
             mode = "0440";
           };
         };
 
-        systemd.services.matrix-authentication-service = {
-          serviceConfig.EnvironmentFile = config.age.secrets.mas_config.path;
-          serviceConfig.SupplementaryGroups = "matrix-synapse";
-          preStart = ''
+        systemd.services.matrix-authentication-service-init = {
+          serviceConfig = {
+            Type = "oneshot";
+            EnvironmentFile = config.age.secrets.mas_config.path;
+          };
+          script = ''
             ${pkgs.coreutils}/bin/mkdir -p '${dataDir}'
             test -f '${settingsFile}' && ${pkgs.coreutils}/bin/rm -f '${settingsFile}'
             ${pkgs.envsubst}/bin/envsubst \
@@ -117,9 +119,15 @@ in
           '';
         };
 
+        systemd.services.matrix-authentication-service = {
+          wants = [ "matrix-authentication-service-init.service" ];
+          after = [ "matrix-authentication-service-init.service" ];
+        };
+
         services.matrix-authentication-service = {
           enable = true;
           extraConfigFiles = [ settingsFile ];
+          credentials."mas_matrix_secret" = config.age.secrets.mas_matrix_secret.path;
           settings = {
             http = {
               listeners = [
@@ -180,7 +188,7 @@ in
             matrix = {
               homeserver = base_domain_name;
               endpoint = "http://[::1]:${toString config.matrix.port}/";
-              secret_file = config.age.secrets.mas_matrix_secret.path;
+              secret_file = "/run/credentials/matrix-authentication-service.service/mas_matrix_secret";
             };
           };
         };
