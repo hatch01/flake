@@ -9,8 +9,6 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf mkOption;
-  dataDir = "/var/lib/matrix-authentication-service";
-  settingsFile = "${dataDir}/secrets.yaml";
 in
 {
   imports = [ ];
@@ -41,82 +39,11 @@ in
       {
         age.secrets = mkSecrets {
           "mas_config" = { };
+          "mas_authelia_secret" = {};
           "mas_matrix_secret" = {
             owner = "matrix-synapse";
             mode = "0440";
           };
-        };
-
-        systemd.services.matrix-authentication-service-init = {
-          serviceConfig = {
-            Type = "oneshot";
-            EnvironmentFile = config.age.secrets.mas_config.path;
-          };
-          script = ''
-            ${pkgs.coreutils}/bin/mkdir -p '${dataDir}'
-            test -f '${settingsFile}' && ${pkgs.coreutils}/bin/rm -f '${settingsFile}'
-            ${pkgs.envsubst}/bin/envsubst \
-              -o '${settingsFile}' \
-              -i '${
-                (pkgs.writeText "mas-secrets.yaml" (
-                  lib.generators.toYAML { } {
-                    secrets = {
-                      encryption = "$encryption";
-                      keys = [
-                        {
-                          kid = "ERoVDasMln";
-                          key = "$ERoVDasMln";
-                        }
-                        {
-                          kid = "Say3DRq9iv";
-                          key = "$Say3DRq9iv";
-                        }
-                        {
-                          kid = "g38dzwm5Ug";
-                          key = "$g38dzwm5Ug";
-                        }
-                        {
-                          kid = "vIIeN3Ao1A";
-                          key = "$vIIeN3Ao1A";
-                        }
-                      ];
-                    };
-                    upstream_oauth2 = {
-                      providers = [
-                        {
-                          id = "01H8PKNWKKRPCBW4YGH1RWV279";
-                          client_secret = "$provider_client_secret";
-                          human_name = "Authelia";
-                          issuer = "https://${config.authelia.domain}";
-                          client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
-                          token_endpoint_auth_method = "client_secret_basic";
-                          scope = "openid profile email";
-                          discovery_mode = "insecure";
-                          fetch_userinfo = true;
-                          claims_imports = {
-                            localpart = {
-                              action = "require";
-                              template = "{{ user.preferred_username }}";
-                            };
-                            displayname = {
-                              action = "suggest";
-                              template = "{{ user.name }}";
-                            };
-                            email = {
-                              action = "suggest";
-                              template = "{{ user.email }}";
-                              set_email_verification = "always";
-                            };
-                          };
-
-                        }
-                      ];
-                    };
-                  }
-                ))
-              }'
-            ${pkgs.coreutils}/bin/chmod 600 '${settingsFile}'
-          '';
         };
 
         systemd.services.matrix-authentication-service = {
@@ -126,8 +53,9 @@ in
 
         services.matrix-authentication-service = {
           enable = true;
-          extraConfigFiles = [ settingsFile ];
+          extraConfigFiles = [ config.age.secrets.mas_config.path ];
           credentials."mas_matrix_secret" = config.age.secrets.mas_matrix_secret.path;
+          credentials."mas_authelia_secret" = config.age.secrets.mas_authelia_secret.path;
           settings = {
             http = {
               listeners = [
@@ -189,6 +117,37 @@ in
               homeserver = base_domain_name;
               endpoint = "http://[::1]:${toString config.matrix.port}/";
               secret_file = "/run/credentials/matrix-authentication-service.service/mas_matrix_secret";
+            };
+            upstream_oauth2 = {
+              providers = [
+                {
+                  id = "01H8PKNWKKRPCBW4YGH1RWV279";
+                  client_secret_file = "/run/credentials/matrix-authentication-service.service/mas_authelia_secret";
+                  human_name = "Authelia";
+                  issuer = "https://${config.authelia.domain}";
+                  client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
+                  token_endpoint_auth_method = "client_secret_basic";
+                  scope = "openid profile email";
+                  discovery_mode = "insecure";
+                  fetch_userinfo = true;
+                  claims_imports = {
+                    localpart = {
+                      action = "require";
+                      template = "{{ user.preferred_username }}";
+                    };
+                    displayname = {
+                      action = "suggest";
+                      template = "{{ user.name }}";
+                    };
+                    email = {
+                      action = "suggest";
+                      template = "{{ user.email }}";
+                      set_email_verification = "always";
+                    };
+                  };
+
+                }
+              ];
             };
           };
         };

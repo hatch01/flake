@@ -57,6 +57,7 @@ let
       "matrix_signing_key"
       "mas_matrix_secret"
       "mas_config"
+      "mas_authelia_secret"
       "livekit_api_key"
       "telegram_credentials"
 
