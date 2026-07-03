@@ -8,6 +8,7 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf mkOption;
+  credentialPath = name: "/run/credentials/matrix-authentication-service.service/${name}";
 in
 {
   imports = [ ];
@@ -37,7 +38,11 @@ in
     if !stable then
       {
         age.secrets = mkSecrets {
-          "mas_config" = { };
+          "mas_encryption" = { };
+          "mas_ERoVDasMln" = { };
+          "mas_Say3DRq9iv" = { };
+          "mas_g38dzwm5Ug" = { };
+          "mas_vIIeN3Ao1A" = { };
           "mas_authelia_secret" = { };
           "mas_matrix_secret" = {
             owner = "matrix-synapse";
@@ -47,9 +52,13 @@ in
 
         services.matrix-authentication-service = {
           enable = true;
-          extraConfigFiles = [ config.age.secrets.mas_config.path ];
-          credentials."mas_matrix_secret" = config.age.secrets.mas_matrix_secret.path;
-          credentials."mas_authelia_secret" = config.age.secrets.mas_authelia_secret.path;
+          credentials."matrix_secret" = config.age.secrets.mas_matrix_secret.path;
+          credentials."authelia_secret" = config.age.secrets.mas_authelia_secret.path;
+          credentials."encryption" = config.age.secrets.mas_encryption.path;
+          credentials."ERoVDasMln" = config.age.secrets.mas_ERoVDasMln.path;
+          credentials."Say3DRq9iv" = config.age.secrets.mas_Say3DRq9iv.path;
+          credentials."g38dzwm5Ug" = config.age.secrets.mas_g38dzwm5Ug.path;
+          credentials."vIIeN3Ao1A" = config.age.secrets.mas_vIIeN3Ao1A.path;
           settings = {
             http = {
               listeners = [
@@ -110,13 +119,13 @@ in
             matrix = {
               homeserver = base_domain_name;
               endpoint = "http://[::1]:${toString config.matrix.port}/";
-              secret_file = "/run/credentials/matrix-authentication-service.service/mas_matrix_secret";
+              secret_file = credentialPath "matrix_secret";
             };
             upstream_oauth2 = {
               providers = [
                 {
                   id = "01H8PKNWKKRPCBW4YGH1RWV279";
-                  client_secret_file = "/run/credentials/matrix-authentication-service.service/mas_authelia_secret";
+                  client_secret_file = credentialPath "authelia_secret";
                   human_name = "Authelia";
                   issuer = "https://${config.authelia.domain}";
                   client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
@@ -139,7 +148,27 @@ in
                       set_email_verification = "always";
                     };
                   };
-
+                }
+              ];
+            };
+            secrets = {
+              encryption_file = credentialPath "encryption";
+              keys = [
+                {
+                  kid = "ERoVDasMln";
+                  key_file = credentialPath "ERoVDasMln";
+                }
+                {
+                  kid = "Say3DRq9iv";
+                  key_file = credentialPath "Say3DRq9iv";
+                }
+                {
+                  kid = "g38dzwm5Ug";
+                  key_file = credentialPath "g38dzwm5Ug";
+                }
+                {
+                  kid = "vIIeN3Ao1A";
+                  key_file = credentialPath "vIIeN3Ao1A";
                 }
               ];
             };

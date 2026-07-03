@@ -56,8 +56,12 @@ let
       "matrix_sliding_sync"
       "matrix_signing_key"
       "mas_matrix_secret"
-      "mas_config"
       "mas_authelia_secret"
+      "mas_encryption"
+      "mas_ERoVDasMln"
+      "mas_Say3DRq9iv"
+      "mas_g38dzwm5Ug"
+      "mas_vIIeN3Ao1A"
       "livekit_api_key"
       "telegram_credentials"
 
