@@ -8,7 +8,6 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf mkOption;
-  credentialPath = name: "/run/credentials/matrix-authentication-service.service/${name}";
 in
 {
   imports = [ ];
@@ -119,13 +118,13 @@ in
             matrix = {
               homeserver = base_domain_name;
               endpoint = "http://[::1]:${toString config.matrix.port}/";
-              secret_file = credentialPath "matrix_secret";
+              secret_file = "$CREDENTIALS_DIRECTORY/matrix_secret";
             };
             upstream_oauth2 = {
               providers = [
                 {
                   id = "01H8PKNWKKRPCBW4YGH1RWV279";
-                  client_secret_file = credentialPath "authelia_secret";
+                  client_secret_file = "$CREDENTIALS_DIRECTORY/authelia_secret";
                   human_name = "Authelia";
                   issuer = "https://${config.authelia.domain}";
                   client_id = "K4XV9roQMaYIgP8X5dE1iSTEWQlIPSQG64m9OCIdzQgWkEMtYyoOsABGVbMPji-bcuEiBTUI";
@@ -152,23 +151,23 @@ in
               ];
             };
             secrets = {
-              encryption_file = credentialPath "encryption";
+              encryption_file = "$CREDENTIALS_DIRECTORY/encryption";
               keys = [
                 {
                   kid = "ERoVDasMln";
-                  key_file = credentialPath "ERoVDasMln";
+                  key_file = "$CREDENTIALS_DIRECTORY/ERoVDasMln";
                 }
                 {
                   kid = "Say3DRq9iv";
-                  key_file = credentialPath "Say3DRq9iv";
+                  key_file = "$CREDENTIALS_DIRECTORY/Say3DRq9iv";
                 }
                 {
                   kid = "g38dzwm5Ug";
-                  key_file = credentialPath "g38dzwm5Ug";
+                  key_file = "$CREDENTIALS_DIRECTORY/g38dzwm5Ug";
                 }
                 {
                   kid = "vIIeN3Ao1A";
-                  key_file = credentialPath "vIIeN3Ao1A";
+                  key_file = "$CREDENTIALS_DIRECTORY/vIIeN3Ao1A";
                 }
               ];
             };
