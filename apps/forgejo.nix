@@ -101,7 +101,7 @@ in
             REPO_INDEXER_ENABLED = true;
           };
 
-          attachments = {
+          attachment = {
             ENABLED = true;
             MAX_SIZE = 5 * 1024; # 5GB
           };
