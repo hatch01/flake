@@ -8,10 +8,6 @@
       branch = "mautrix-telegram-go";
       name = "mautrix-telegram";
     }
-    {
-      pr = 537261;
-      name = "matrix-authentification-service: add support for custom settings";
-    }
   ];
 
   common = [
