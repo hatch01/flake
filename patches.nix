@@ -9,10 +9,6 @@
       name = "mautrix-telegram";
     }
     {
-      pr = 526514;
-      name = "ratatouille-lv2: init at 0.9.11";
-    }
-    {
       pr = 537261;
       name = "matrix-authentification-service: add support for custom settings";
     }
