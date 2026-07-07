@@ -230,6 +230,13 @@ in
                   url = "https://grafana.nichihachi.net";
                   group = "nichihachi";
                 })
+                (mkGatusCheck {
+                  name = "matrix synapse nichihachi";
+                  url = "https://nichihachi.net/health";
+                  conditions = [
+                    "[BODY] == OK"
+                  ];
+                })
               ];
             };
             passAsFile = [ "value" ];
