@@ -49,6 +49,7 @@ in
         qemu = {
           swtpm.enable = true;
           runAsRoot = false;
+          vhostUserPackages = with pkgs; [ virtiofsd ];
         };
       };
       spiceUSBRedirection.enable = true;
