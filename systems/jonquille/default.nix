@@ -162,7 +162,27 @@
   users = {
     mutableUsers = false;
     groups.smtp = { };
+    users.guillaume = {
+      isNormalUser = true;
+      shell = "${pkgs.shadow}/bin/nologin";
+      home = "/data";
+      createHome = false;
+      openssh.authorizedKeys.keys = [
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCt8P+j17S6BHXZSWODBf9dOXuuj5bIdAaMyiyPv4YeU3SXlKpjczZIu4Rw15CUigDEGI8becAFfTRWrqF+/eoh//YId0uwrPDsThjNFbIFQdEp9C9FrM1tX8iB1sd37opPi/hu+WhDwS629tcmPvrzJ63VrXk0XEclS1U4f4Hu5k3kR98SYA/qm0cXf1Ioa85znPrQN6qWjQAzVyVRP2G4sK1koGM29a35t852L1zfoRojpJmW89maMekLMQrXjy9ZxThvW5rDpWDQljat6Bwq5DEEPTL+/8hwajRPiuRrNsFrS7xkCjKFkzxSHWkBjokTlpZUf9a0kAo5KTNiRwRUubTmO1x0602dUhPB0ZsbTOo+KHm8yFfSE0FtVefi4tfA3VBdnh9I7ooM3wIIPCYR9Pf7tQMHBaNQsTya+CqVCJeNeteVrPY/VdcckWg0QV+NLMyc2mEFooExD98VOsH6hUR4bQxi7GXJ0FARvWvhcNnSd80k7T/EPpDLJS+EGKE= flashonfire@helium"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAlaMjFhp2adUJa89ylHV+rDLj9xBfhTAF7q+QClqj83 flashonfire@beryllium"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBkO8NzZ2DfcwXbrddXhw3gSVZkZcxsFymqNJk6BPSDF root@beryllium"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAbUVbi9Az9GnBZ5DkSFG418j7o2/iB6Pw6VOGIKrnps flashonfire@bore"
+      ];
+    };
   };
+
+  # Configure directories for SFTP jailed users.
+  # The chroot directory itself must be owned by root and cannot be writable by any user/group.
+  # Guillaume can read and write within the 'data' subdirectory.
+  systemd.tmpfiles.rules = [
+    "d /storage/backup_guillaume 0755 root root - -"
+    "d /storage/backup_guillaume/data 0700 guillaume guillaume - -"
+  ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -170,6 +190,15 @@
     settings = {
       PermitRootLogin = "yes";
     };
+    extraConfig = ''
+      Match User guillaume
+          ForceCommand internal-sftp
+          ChrootDirectory /storage/backup_guillaume
+          PasswordAuthentication no
+          AllowTCPForwarding no
+          X11Forwarding no
+          AllowAgentForwarding no
+    '';
   };
 
   nix.settings = {
