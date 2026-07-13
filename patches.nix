@@ -12,6 +12,10 @@
       pr = 524622;
       name = "sparrow";
     }
+    {
+      pr = 541306;
+      name =  "fix onlyoffice doc service build";
+    }
   ];
 
   common = [
