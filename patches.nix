@@ -14,7 +14,7 @@
     }
     {
       pr = 541306;
-      name =  "fix onlyoffice doc service build";
+      name = "fix onlyoffice doc service build";
     }
   ];
 
