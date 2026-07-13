@@ -50,6 +50,7 @@
   vaultwarden.enable = true;
   bitcoin.server.enable = true;
   ntfy.enable = true;
+  programs.nh.clean.enable = lib.mkForce true;
 
   nginx.nichihachi.enable = false;
   nginx.nichihachi.backendIp = "192.168.1.142";

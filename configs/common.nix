@@ -214,7 +214,6 @@ in
   nix = {
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     # package = pkgs.lix;
-    optimise.automatic = mkDefault true;
     extraOptions = ''
       !include ${config.age.secrets.githubToken.path}
     '';
