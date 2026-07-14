@@ -29,6 +29,7 @@
     ./kde-connect.nix
     ./keepassxc
     ./konsole.nix
+    ./lasuite-meet.nix
     ./librespeed.nix
     ./matrix
     ./multimedia

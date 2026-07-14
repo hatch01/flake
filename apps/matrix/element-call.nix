@@ -53,10 +53,6 @@ in
       settings = {
         port = config.matrix.elementCall.livekitPort;
 
-        logging = {
-          level = "debug";
-        };
-
         rtc = {
           use_external_ip = true;
           port_range_start = 50000;

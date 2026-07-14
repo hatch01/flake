@@ -42,6 +42,7 @@
 
   librespeed.enable = true;
   apolline.enable = true;
+  lasuite-meet.enable = true;
   restic.enable = true;
   portfolio.enable = true;
   incus.enable = true;

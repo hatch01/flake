@@ -472,6 +472,26 @@ in
                     access_token_signed_response_alg = "RS256";
                     token_endpoint_auth_method = "client_secret_post";
                   }
+                ]
+                ++ optionals config.services.lasuite-meet.enable [
+                  {
+                    client_id = "lasuite-meet";
+                    client_name = "La Suite Meet";
+                    client_secret = "$pbkdf2-sha512$310000$wiWmUpkqp7.ri1wDOeav2g$k2XWSwhykbh4seC4cuLQa6rWtF0d2XmRH1KV4aj8dHolfv865foQJ4LoVmjZqQjNKWsAOfL9l2By4F3HcRMyHA";
+                    public = false;
+                    authorization_policy = "two_factor";
+                    consent_mode = "explicit";
+                    redirect_uris = [
+                      "https://${config.services.lasuite-meet.domain}/api/v1.0/callback/"
+                    ];
+                    scopes = [
+                      "openid"
+                      "email"
+                      "profile"
+                    ];
+                    userinfo_signed_response_alg = "none";
+                    token_endpoint_auth_method = "client_secret_post";
+                  }
                 ];
             };
           };
