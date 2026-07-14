@@ -219,6 +219,7 @@ in
                     "[BODY].maintenance == false"
                     "[BODY].needsDbUpgrade == false"
                   ];
+                  group = "nichihachi";
                 })
                 (mkGatusCheck {
                   name = "VaultWarden nichihachi";
@@ -236,6 +237,7 @@ in
                   conditions = [
                     "[BODY] == OK"
                   ];
+                  group = "nichihachi";
                 })
               ]
               ++ lib.optionals config.lasuite-meet.enable [
