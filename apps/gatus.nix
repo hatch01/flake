@@ -177,6 +177,14 @@ in
                   ];
                 }
 
+                (mkGatusCheck {
+                  name = "la suite meet";
+                  url = "https://${config.lasuite-meet.domain}/";
+                  conditions = [
+                    "[STATUS] == 200"
+                  ];
+                })
+
                 # polypresence
                 (mkGatusCheck {
                   name = "polypresence back";
@@ -238,15 +246,6 @@ in
                     "[BODY] == OK"
                   ];
                   group = "nichihachi";
-                })
-              ]
-              ++ lib.optionals config.lasuite-meet.enable [
-                (mkGatusCheck {
-                  name = "la suite meet";
-                  url = "https://${config.lasuite-meet.domain}/";
-                  conditions = [
-                    "[STATUS] == 200"
-                  ];
                 })
               ];
             };
