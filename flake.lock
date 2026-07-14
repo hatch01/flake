@@ -81,10 +81,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1783491028,
-        "narHash": "sha256-W7tFZ6PbrsGHWjT6CsC3z5Wpu6/pNsJXvtPZv6ju0h0=",
+        "lastModified": 1783921900,
+        "narHash": "sha256-a22A5GjInj7jpBC1VuJx7M//PZxlAXuSNEmR3ps81I0=",
         "ref": "refs/heads/main",
-        "rev": "33e038be1b817015deabb4104237462e607e69c3",
+        "rev": "a26c45684e85fd71af21c887deb634d159c60eb2",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/comin"
@@ -250,10 +250,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1783823409,
-        "narHash": "sha256-OI4IkRjRXa1e7hYmCGJDPDq5H/kPwhsyoS80cNUF9fI=",
+        "lastModified": 1783963347,
+        "narHash": "sha256-r376E2XpakiXwModDHIxlvB6qLq4iFVEq730vxOO4JY=",
         "ref": "refs/heads/master",
-        "rev": "7566825d4652a1b885bd4ce65bd9e8def432fec9",
+        "rev": "a45a7c451455a51ae740ec3bce4024b312809c29",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/home-manager"
@@ -479,10 +479,10 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1783703440,
-        "narHash": "sha256-x6nTOamR1aG0JyRnlWxmIKBFQxSz8+wkS0cQAUxx1HQ=",
+        "lastModified": 1783856661,
+        "narHash": "sha256-FejH020soMdtewQaLJ0UFcQQdNANsbklsnEAnfMwiP8=",
         "ref": "nixos-stable",
-        "rev": "32b756a29a73c12ac28514f348257ea7dc8ec6b4",
+        "rev": "a9425d3f3c7dcb35a731f0abe0db9202abe55052",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"
@@ -526,9 +526,9 @@
     "nixpkgs_4": {
       "locked": {
         "lastModified": 1783776592,
-        "narHash": "sha256-We7OmFelXgXGLvZDAnyXeJMTiz5PFJLRfhfbhbnCWn4=",
+        "narHash": "sha256-u61l1ofJoWkcWfkIV5T6wmeaV2GhUqmmMVoFpE08bCU=",
         "ref": "nixos-unstable",
-        "rev": "0fc9e78b456c6be7a31120c2f84f5ac036b24575",
+        "rev": "62302145c5a25a7fd1b54f3f9ddec83094ece257",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"
