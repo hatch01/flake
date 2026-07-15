@@ -133,7 +133,7 @@ in
             ++ lib.optionals config.lasuite-meet.enable [
               {
                 "La Suite Meet" = {
-                  icon = "google-meet.png";
+                  icon = "proton-meet.png";
                   description = "La Suite Meet c'est vraiment cool";
                   href = "https://${config.lasuite-meet.domain}/";
                   siteMonitor = "https://${config.lasuite-meet.domain}/";

@@ -49,6 +49,8 @@ in
         OIDC_RP_CLIENT_ID = "lasuite-meet";
         OIDC_RP_SIGN_ALGO = "RS256";
         OIDC_RP_SCOPES = "openid email profile";
+        OIDC_USERINFO_FULLNAME_FIELDS = "name";
+        OIDC_USERINFO_SHORTNAME_FIELD = "preferred_username";
 
         LOGIN_REDIRECT_URL = "https://${config.lasuite-meet.domain}";
         LOGIN_REDIRECT_URL_FAILURE = "https://${config.lasuite-meet.domain}";
