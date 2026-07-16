@@ -91,8 +91,12 @@ in
         bkill = "fzf-kill"; # not using direct path because it is provided by fzf-zsh-plugin
         gitnix = "${getExe git} add . && ${getExe git} commit --amend --no-edit && ${getExe git} push --force";
         ps = "${getExe procs}";
-        webcam = lib.mkIf (config.dev.androidtools.enable or false
-        ) "${getExe scrcpy} --v4l2-sink=/dev/video0 --orientation=0";
+        webcam_back =
+          lib.mkIf (config.dev.androidtools.enable or false)
+            "${getExe scrcpy} --video-source=camera --camera-id=0 --camera-size=1920x1080 --v4l2-sink=/dev/video0 --no-playback";
+        webcam_front =
+          lib.mkIf (config.dev.androidtools.enable or false)
+            "${getExe scrcpy} --video-source=camera --camera-id=1 --camera-size=1920x1080 --v4l2-sink=/dev/video0 --no-playback";
         vi = "nvim";
         vim = "nvim";
         rip = "rip --graveyard ~/.local/share/Trash";
