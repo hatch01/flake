@@ -126,6 +126,7 @@ in
         "jitsi-meet-1.0.8792"
         "python3.14-ecdsa-0.19.2"
         "electron-39.8.10"
+        "electron-40.10.5"
       ];
     };
     overlays = [
