@@ -12,6 +12,10 @@
       pr = 524622;
       name = "sparrow";
     }
+    {
+      pr = 537721;
+      name = "fix vtk";
+    }
   ];
 
   common = [
