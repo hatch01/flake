@@ -50,6 +50,7 @@ in
           kdePackages.kcolorchooser
           obs-studio
           inkscape-with-extensions
+          freecad
         ];
     }
     (mkIf config.multimedia.audio.enable ({
