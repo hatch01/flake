@@ -44,7 +44,7 @@ in
         ++ optionals config.multimedia.editing.enable [
           # editing
           gimp3
-          #blender
+          blender
           imagemagick
           kdePackages.kdenlive
           kdePackages.kcolorchooser
