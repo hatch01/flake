@@ -474,7 +474,9 @@ in
             enableACME = config.nginx.acme.enable;
             locations."/" = {
               root = "/persistent/lineageos";
-              tryFiles = "$uri $uri/ =404";
+              extraConfig = ''
+                autoindex on;
+              '';
             };
             extraConfig = mkVhostLogs "lineageos.${base_domain_name}";
           };
