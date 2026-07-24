@@ -173,6 +173,7 @@ in
   options = {
     nginx.enable = mkEnableOption "Nginx";
     nginx.acme.enable = mkEnableOption "Enable ACME terms";
+    nginx.lineageos.enable = mkEnableOption "Enable lineageos OTA server";
     nginx.ports.https = mkOption {
       type = types.int;
       default = 443;
@@ -464,6 +465,18 @@ in
               proxyWebsockets = true;
               proxyPass = "http://127.0.0.1:${toString config.headplane.port}";
             };
+          };
+        })
+
+        (mkIf config.nginx.lineageos.enable {
+          "lineageos.${base_domain_name}" = {
+            forceSSL = config.nginx.acme.enable;
+            enableACME = config.nginx.acme.enable;
+            locations."/" = {
+              root = "/persistent/lineageos";
+              tryFiles = "$uri $uri/ =404";
+            };
+            extraConfig = mkVhostLogs "lineageos.${base_domain_name}";
           };
         })
       ];
