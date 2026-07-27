@@ -339,4 +339,12 @@ in
     };
     ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
   };
+
+  services.journald.extraConfig = ''
+    SystemMaxUse=10G
+    SystemKeepFree=2G
+    SystemMaxFileSize=64M
+    MaxRetentionSec=14day
+    Compress=yes
+  '';
 }
