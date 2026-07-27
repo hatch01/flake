@@ -32,6 +32,7 @@ in
         "[::]"
       ];
       port = config.sslh.port;
+      method = "ev";
       settings = {
         timeout = 1000;
         transparent = true;
