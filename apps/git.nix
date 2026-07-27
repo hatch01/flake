@@ -19,6 +19,7 @@ in
       lazygit
     ];
     programs.git.enable = true;
+    programs.git.lfs.enable = true;
 
     hm = {
       xdg.configFile."git/config".force = true;
