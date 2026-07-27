@@ -187,6 +187,8 @@
     "d /storage/backup_guillaume/data 0700 guillaume guillaume - -"
   ];
 
+  services.beszel.agent.environment.EXTRA_FILESYSTEMS = "/storage__storage,/boot__boot,/storage/bitcoin__bitcoin";
+
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;

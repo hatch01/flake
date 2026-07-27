@@ -80,4 +80,6 @@
     in
     crossPkgs.linuxPackagesFor kernelWithCcache
   );
+
+  services.beszel.agent.environment.EXTRA_FILESYSTEMS = "/var/lib/kvmd/msd__msd,/var/lib/kvmd/pst__pst";
 }
