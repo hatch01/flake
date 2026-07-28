@@ -43,7 +43,7 @@ jobs:
           fi
 
           # List added keys for debugging
-          ssh-add -l || echo "No keys in agent"
+          ssh-add -L || echo "No keys in agent"
       - name: Add known SSH hosts
         run: |
           mkdir -p ~/.ssh
