@@ -12,6 +12,10 @@
       pr = 524622;
       name = "sparrow";
     }
+    {
+      pr = 546940;
+      name = "poetry";
+    }
   ];
 
   common = [
