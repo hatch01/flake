@@ -91,7 +91,6 @@
     nix4nvchad = {
       url = "git+https://forge.onyx.ovh/github_mirror/nix4nvchad?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
 
     pikvm = {
