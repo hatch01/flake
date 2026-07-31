@@ -337,10 +337,10 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1785142311,
-        "narHash": "sha256-2hj+F0SxJ9tVtJSGQpoO53vtrXxbeqURz65tkmm15GE=",
+        "lastModified": 1785452604,
+        "narHash": "sha256-d0NKOOtI90kk8DAXNDkgYUZD8KK908bczz6zNLTC/zw=",
         "ref": "refs/heads/master",
-        "rev": "683b7f72db7202e4ad037c58fac53b3f7c12f980",
+        "rev": "c191775376b8734af02970153b4e5d86841dff19",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/lanzaboote"
@@ -476,10 +476,10 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1785133411,
-        "narHash": "sha256-cNP+ZBvRSkTOmfLIvLboSwiWsmchlfS/0b/FiA3K+ck=",
+        "lastModified": 1785386831,
+        "narHash": "sha256-FPJEoy8tls/3hD4dYugoPCA5EL/xAT1VgyLmNiMSK4g=",
         "ref": "nixos-stable",
-        "rev": "b6e523ee2142c185e7535808d4e07de7a66dddc5",
+        "rev": "41cd783602dd67f96e5d4a6fc5b687f065b1a66e",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"
@@ -522,10 +522,10 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1785318670,
-        "narHash": "sha256-6Gi6lgo/2RyLXS54VbFmTOHnv+5isSoUuzFBSv0yeQw=",
+        "lastModified": 1785454630,
+        "narHash": "sha256-gSl8mlaR9Gw8WS31NY8cEJcSNHrfQv9iTACA6rV3Gps=",
         "ref": "nixos-unstable",
-        "rev": "770a109c3d565f1df068658ea399710a9c8398ed",
+        "rev": "b8286855088e4b57905aab541a77dc3e0cbc52b8",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"
