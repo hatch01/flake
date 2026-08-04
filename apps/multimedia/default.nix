@@ -51,6 +51,7 @@ in
           obs-studio
           inkscape-with-extensions
           freecad
+          orca-slicer
         ];
     }
     (mkIf config.multimedia.audio.enable ({
