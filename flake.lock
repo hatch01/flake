@@ -81,10 +81,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1784613260,
-        "narHash": "sha256-M+WLmuIVbA7XD822F8ZTEbMBKf1FamG1BEL0/aBqcKA=",
+        "lastModified": 1785748964,
+        "narHash": "sha256-Ep03U3O+GYuclb9XEvK5CWfo7RUHgojR9OYu0t/G1tY=",
         "ref": "refs/heads/main",
-        "rev": "c32a4e457cd3bc99d6c18631707e9d8294f4b5d0",
+        "rev": "5007334c353251a26172f7d5f66061df325d3b42",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/comin"
@@ -337,10 +337,10 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1785452604,
-        "narHash": "sha256-d0NKOOtI90kk8DAXNDkgYUZD8KK908bczz6zNLTC/zw=",
+        "lastModified": 1785749642,
+        "narHash": "sha256-5/wlGe3a4ucxvYq2cuAAsuSFWKcIttQ6En83MLlV2jY=",
         "ref": "refs/heads/master",
-        "rev": "c191775376b8734af02970153b4e5d86841dff19",
+        "rev": "f142433bdbeffd2af51231e0aff7162c2bfbf6ef",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/lanzaboote"
@@ -476,10 +476,10 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1785599192,
-        "narHash": "sha256-9AAmycmBEtRe/7aqQWAHeTUVxPZfs0P5znLvMhS0G3Y=",
+        "lastModified": 1785734586,
+        "narHash": "sha256-rT80NjV1yOc0tIe2qBRf+4Y94XWQBbmHxjR6utwnqOM=",
         "ref": "nixos-stable",
-        "rev": "ac566ee8e26f92172790785154c20cb985dc64f9",
+        "rev": "b8f3460c5e4549ce3556c0b467377b365f7326bd",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"
@@ -591,10 +591,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1783574839,
-        "narHash": "sha256-ICof1tV4/9XheBLBGf7dhMhfMq4dOs1zwTHrr7zGFlA=",
+        "lastModified": 1785762349,
+        "narHash": "sha256-jZhZkzAwc7f3exzcTDJWP2WCAchCv0iNC3UF/QsahdQ=",
         "ref": "refs/heads/trunk",
-        "rev": "c551f0687658e4bb699cfff6015436ad7ee57a0d",
+        "rev": "a19a2a029fa180911bd89c554dca1616e10f4c1d",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/plasma-manager"
