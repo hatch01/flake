@@ -9,7 +9,7 @@
       name = "mautrix-telegram";
     }
     {
-      pr = 524622;
+      pr = 549066;
       name = "sparrow";
     }
   ];
