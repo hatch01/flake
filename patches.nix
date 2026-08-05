@@ -12,6 +12,10 @@
       pr = 549066;
       name = "sparrow";
     }
+    {
+      branch = "mautrix-meta";
+      name = "mautrix-meta";
+    }
   ];
 
   common = [
