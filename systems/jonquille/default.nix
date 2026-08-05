@@ -64,6 +64,7 @@
 
   services.mail.sendmailSetuidWrapper.enable = true;
 
+  security.polkit.enable = true;
   services.fwupd.enable = true;
 
   services.earlyoom.enable = true;
