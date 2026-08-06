@@ -113,8 +113,6 @@ in
           # server
           "corefonts"
 
-          "anytype"
-          "anytype-heart"
           "nrf-udev"
           "iscan-ds"
           "virtualbox-extpack"

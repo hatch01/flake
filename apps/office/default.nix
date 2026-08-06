@@ -25,7 +25,6 @@ in
       ++ optionals config.office.enable [
         pdfarranger
         rnote
-        anytype
         planify
       ]
       ++ optionals config.libreoffice.enable [
