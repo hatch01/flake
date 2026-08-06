@@ -84,7 +84,7 @@ in
       nextcloud = {
         hostName = config.nextcloud.domain;
         enable = true;
-        package = pkgs.nextcloud33;
+        package = pkgs.nextcloud34;
         autoUpdateApps.enable = true;
         https = true;
         configureRedis = true;
