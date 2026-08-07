@@ -191,12 +191,14 @@ let
 
   # Proxy each bridge web endpoint on the homeserver domain, stripping the
   # prefix so e.g. /signal/_matrix/provision/v3/whoami hits the bridge root
-  bridgeLocations = lib.listToAttrs (map (bridge: {
-    name = "^~ /${bridge.name}";
-    value = {
-      proxyPass = "http://127.0.0.1:${toString bridge.port}/";
-    };
-  }) matrixBridges);
+  bridgeLocations = lib.listToAttrs (
+    map (bridge: {
+      name = "^~ /${bridge.name}";
+      value = {
+        proxyPass = "http://127.0.0.1:${toString bridge.port}/";
+      };
+    }) matrixBridges
+  );
 
   bridgeUrls = map (bridge: "https://${config.matrix.domain}/${bridge.name}") matrixBridges;
 in
