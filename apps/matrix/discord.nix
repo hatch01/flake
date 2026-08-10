@@ -28,6 +28,7 @@ in
       registerToSynapse = true;
       settings = {
         bridge = {
+          restricted_rooms = true;
           backfill = {
             forward_limits = {
               initial = {
