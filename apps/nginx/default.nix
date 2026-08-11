@@ -363,6 +363,10 @@ in
               proxyPass = "http://localhost:${toString config.matrix.elementCall.livekitPort}/";
               proxyWebsockets = true;
             };
+
+            "^~ /mautrix-discord/" = mkIf config.matrix.discord.enable {
+              proxyPass = "http://127.0.0.1:${toString config.services.mautrix-discord.settings.appservice.port}";
+            };
           };
         })
 

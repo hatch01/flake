@@ -28,6 +28,23 @@ in
       registerToSynapse = true;
       settings = {
         bridge = {
+          public_address = "https://${config.matrix.domain}";
+          restricted_rooms = true;
+          backfill = {
+            forward_limits = {
+              initial = {
+                dm = 100000;
+                channel = 100000;
+                thread = 100000;
+              };
+              missed = {
+                dm = 100000;
+                channel = 100000;
+                thread = 100000;
+              };
+            };
+            max_guild_members = -1;
+          };
           displayname_template = "{{ or .GlobalName .Username .ID }} (Discord)";
           permissions = {
             "*" = "relay";
