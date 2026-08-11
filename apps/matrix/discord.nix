@@ -28,6 +28,7 @@ in
       registerToSynapse = true;
       settings = {
         bridge = {
+          public_address = "https://${config.matrix.domain}";
           restricted_rooms = true;
           backfill = {
             forward_limits = {
