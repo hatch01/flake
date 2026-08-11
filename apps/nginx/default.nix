@@ -164,43 +164,6 @@ let
     add_header Access-Control-Allow-Origin *;
     return 200 '${builtins.toJSON data}';
   '';
-
-  # Bridges to advertise to mautrix-manager via /.well-known/matrix/mautrix
-  matrixBridges = lib.optionals config.matrix.enable (
-    lib.optional config.matrix.signal.enable {
-      name = "signal";
-      port = config.services.mautrix-signal.settings.appservice.port;
-    }
-    ++ lib.optional config.matrix.discord.enable {
-      name = "discord";
-      port = config.services.mautrix-discord.settings.appservice.port;
-    }
-    ++ lib.optional config.matrix.whatsapp.enable {
-      name = "whatsapp";
-      port = config.services.mautrix-whatsapp.settings.appservice.port;
-    }
-    ++ lib.optional config.matrix.instagram.enable {
-      name = "instagram";
-      port = config.services.mautrix-meta.instances.instagram.settings.appservice.port;
-    }
-    ++ lib.optional config.matrix.telegram.enable {
-      name = "telegram";
-      port = config.services.mautrix-telegram.settings.appservice.port;
-    }
-  );
-
-  # Proxy each bridge web endpoint on the homeserver domain, stripping the
-  # prefix so e.g. /signal/_matrix/provision/v3/whoami hits the bridge root
-  bridgeLocations = lib.listToAttrs (
-    map (bridge: {
-      name = "^~ /${bridge.name}";
-      value = {
-        proxyPass = "http://127.0.0.1:${toString bridge.port}/";
-      };
-    }) matrixBridges
-  );
-
-  bridgeUrls = map (bridge: "https://${config.matrix.domain}/${bridge.name}") matrixBridges;
 in
 {
   imports = [
@@ -294,9 +257,6 @@ in
               "m.server" = "${config.matrix.domain}:443";
             });
             "= /.well-known/matrix/client".extraConfig = mkIf config.matrix.enable (mkWellKnown clientConfig);
-            "= /.well-known/matrix/mautrix".extraConfig = mkIf config.matrix.enable (mkWellKnown {
-              "fi.mau.bridges" = bridgeUrls;
-            });
             "= /.well-known/openid-configuration".proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
           }
           // lib.optionalAttrs config.matrix.enable {
@@ -403,8 +363,7 @@ in
               proxyPass = "http://localhost:${toString config.matrix.elementCall.livekitPort}/";
               proxyWebsockets = true;
             };
-          }
-          // bridgeLocations;
+          };
         })
 
         (mkVhost "matrix.mas" {
