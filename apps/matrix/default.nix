@@ -39,6 +39,14 @@ in
         type = types.int;
         default = 8008;
       };
+      ketesa = {
+        enable = mkEnableOption "enable matrix ketesa";
+        domain = mkOption {
+          type = types.str;
+          default = "admin.${config.matrix.domain}";
+          description = "The domain of the ketesa instance";
+        };
+      };
     };
   };
 

@@ -252,6 +252,16 @@ in
                   };
                 };
               }
+            ]
+            ++ lib.optionals config.matrix.ketesa.enable [
+              {
+                "Ketesa" = {
+                  icon = "matrix.png";
+                  description = "Administration Matrix";
+                  href = "https://${config.matrix.ketesa.domain}/";
+                  siteMonitor = "https://${config.matrix.ketesa.domain}/";
+                };
+              }
             ];
           }
         ];

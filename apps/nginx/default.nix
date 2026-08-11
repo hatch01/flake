@@ -67,15 +67,19 @@ let
       svc = resolvePath serviceName;
       domain = svc.domain;
       enable = svc.enable;
-      port = svc.port;
 
       # Check if service is protected by Anubis
       isProtectedByAnubis = config.anubis.enable && lib.elem serviceName config.anubis.services;
+
+      # The port option is only required when a location proxies to the
+      # service. Static vhosts (e.g. ketesa served via `root`) can omit it.
       proxyPassTarget =
         if isProtectedByAnubis then
           "http://unix:/run/anubis/anubis-${serviceName}/anubis.sock"
+        else if lib.hasAttr "port" svc then
+          "http://127.0.0.1:${toString svc.port}"
         else
-          "http://127.0.0.1:${toString port}";
+          throw "Service '${serviceName}' has no 'port' option but a proxyPass location is used";
 
       # Server-level extraConfig
       serverExtraParts =
@@ -353,6 +357,25 @@ in
                 client_max_body_size 10G;
               '';
             };
+
+            # Synapse Admin API: allow CORS from Synapse Admin web UIs
+            "^~ /_synapse/admin/" = {
+              proxyPass = "http://[::1]:${toString config.matrix.port}";
+              extraConfig = ''
+                # Drop the upstream "*" header so only our origin is sent
+                proxy_hide_header Access-Control-Allow-Origin;
+                set $cors_origin "";
+                if ($http_origin = "https://admin.${config.matrix.domain}") {
+                  set $cors_origin $http_origin;
+                }
+                add_header Access-Control-Allow-Origin $cors_origin always;
+                add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS" always;
+                add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
+                if ($request_method = OPTIONS) {
+                  return 204;
+                }
+              '';
+            };
             "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
 
             "^~ /livekit/jwt/" = mkIf config.matrix.elementCall.enable {
@@ -376,6 +399,16 @@ in
             "/assets/".root = "${pkgs.matrix-authentication-service}/share/matrix-authentication-service/";
             "/health".proxyPass = "http://localhost:${toString config.matrix.mas.port2}";
           };
+        })
+
+        (mkVhost "matrix.ketesa" {
+          noDefaultLocations = true;
+          root = mkIf config.matrix.ketesa.enable (
+            pkgs.ketesa.withConfig {
+              restrictBaseUrl = "https://${config.matrix.domain}";
+              wellKnownDiscovery = false;
+            }
+          );
         })
 
         (mkVhost "nixCache" { })

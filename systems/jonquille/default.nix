@@ -30,6 +30,7 @@
   matrix.enable = true;
   matrix.enableElement = true;
   matrix.elementCall.enable = true;
+  matrix.ketesa.enable = true;
   watchtower.enable = true;
   ddclient.enable = true;
   ddclient.domains = [
