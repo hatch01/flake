@@ -51,6 +51,7 @@ in
             "${base_domain_name}" = "user";
             "matrix.clement-reniers.fr" = "user";
             "@root:${base_domain_name}" = "admin";
+            "@eymeric:${base_domain_name}" = "admin";
           };
           login_shared_secret_map = {
             "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
