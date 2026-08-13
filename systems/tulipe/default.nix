@@ -163,6 +163,8 @@
   ];
 
   services.comin.desktop.enable = true;
+  services.beszel.agent.environment.EXTRA_FILESYSTEMS =
+    "/home__home,/boot__boot";
 
   age = {
     identityPaths = [ "/etc/age/key" ];
