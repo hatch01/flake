@@ -14,7 +14,7 @@ in
   config = mkIf config.watchtower.enable {
     virtualisation.oci-containers.containers."watchtower" = {
       autoStart = true;
-      image = "nickfedor/watchtower";
+      image = "docker.io/nickfedor/watchtower";
       volumes = [
         "/var/run/docker.sock:/var/run/docker.sock"
       ];
