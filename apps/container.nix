@@ -21,7 +21,7 @@ in
   };
 
   config = mkIf config.container.enable {
-    container.docker.enable = mkDefault true;
+    container.docker.enable = mkDefault false;
     container.podman.enable = mkDefault true;
 
     environment = {
