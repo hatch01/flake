@@ -24,7 +24,7 @@ in
   };
 
   config = mkIf config.matter.enable {
-    environment.persistence."/persistent".directories = [ "/var/lib/matter-server" ];
+    environment.persistence."/persistent".directories = [ "/var/lib/private/matter-server" ];
     services.matter-server = {
       enable = true;
       port = config.matter.port;
