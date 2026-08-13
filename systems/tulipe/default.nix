@@ -162,6 +162,8 @@
     nrf-udev
   ];
 
+  services.comin.desktop.enable = true;
+
   age = {
     identityPaths = [ "/etc/age/key" ];
   };
