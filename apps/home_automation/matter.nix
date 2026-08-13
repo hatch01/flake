@@ -24,10 +24,22 @@ in
   };
 
   config = mkIf config.matter.enable {
-    environment.persistence."/persistent".directories = [ "/var/lib/private/matter-server" ];
-    services.matter-server = {
-      enable = true;
-      port = config.matter.port;
+    virtualisation.oci-containers.containers.matter-server = {
+      image = "ghcr.io/home-assistant-libs/python-matter-server:stable";
+      volumes = [
+        "/persistent/matter-server:/data"
+        "/run/dbus:/run/dbus:ro"
+      ];
+      extraOptions = [
+        "--security-opt=apparmor=unconfined"
+      ];
+      networks = [ "host" ];
+      cmd = [
+        "--storage-path"
+        "/data"
+        "--port"
+        (toString config.matter.port)
+      ];
     };
   };
 }
