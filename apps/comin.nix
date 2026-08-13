@@ -18,27 +18,9 @@ let
     COMIN_STATE_DIR="/var/lib/comin"
     LAST_MAILED_GEN_FILE="$COMIN_STATE_DIR/last-mailed-generation"
 
-    GEN_JSON=$(${lib.getExe pkgs.nixos-rebuild} list-generations --json 2>/dev/null || true)
-
-    CURR_GEN=$(echo "$GEN_JSON" \
-      | ${lib.getExe pkgs.jq} -r '.[] | select(.current == true) | .generation' \
-      | ${lib.getExe' pkgs.coreutils "head"} -n1)
-
-    PREV_GEN=$(echo "$GEN_JSON" \
-      | ${lib.getExe pkgs.jq} -r '.[] | select(.current == false) | .generation' \
-      | ${lib.getExe' pkgs.coreutils "head"} -n1)
-
-    if [ -n "$CURR_GEN" ] && [ "$CURR_GEN" != "null" ]; then
-      CURR_PROFILE="$PROFILES_DIR/comin-''${CURR_GEN}-link"
-    else
-      CURR_PROFILE=""
-    fi
-
-    if [ -n "$PREV_GEN" ] && [ "$PREV_GEN" != "null" ]; then
-      PREV_PROFILE="$PROFILES_DIR/comin-''${PREV_GEN}-link"
-    else
-      PREV_PROFILE=""
-    fi
+    CURR_GEN=$(readlink /nix/var/nix/profiles/system-profiles/comin | grep -oE '[0-9]+')
+    CURR_PROFILE="$PROFILES_DIR/comin"
+    PREV_PROFILE="$PROFILES_DIR/$(ls -t /nix/var/nix/profiles/system-profiles/ | grep "-" | head -n 2 | tail -n 1)"
 
     LAST_MAILED_GEN=""
     if [ -r "$LAST_MAILED_GEN_FILE" ]; then
@@ -52,15 +34,7 @@ let
     elif [ -z "$PREV_PROFILE" ] || [ ! -e "$PREV_PROFILE" ]; then
       DIFF="(no previous generation to diff against)"
     else
-      CURR_TARGET=$(${lib.getExe' pkgs.coreutils "readlink"} -f "$CURR_PROFILE" || true)
-      PREV_TARGET=$(${lib.getExe' pkgs.coreutils "readlink"} -f "$PREV_PROFILE" || true)
-
-      if [ -n "$CURR_TARGET" ] && [ -n "$PREV_TARGET" ] && [ "$CURR_TARGET" = "$PREV_TARGET" ]; then
-        DIFF="(no effective change: current and previous generations point to same system path)"
-      else
-        DIFF=$(${lib.getExe pkgs.dix} "$PREV_PROFILE" "$CURR_PROFILE" 2>&1 || true)
-        [ -n "$DIFF" ] || DIFF="(no diff output)"
-      fi
+      DIFF=$(${lib.getExe pkgs.dix} "$PREV_PROFILE" "$CURR_PROFILE" 2>&1 || true)
     fi
 
     if [ -n "$CURR_GEN" ] && [ "$CURR_GEN" != "null" ]; then
