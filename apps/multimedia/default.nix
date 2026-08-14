@@ -143,6 +143,7 @@ in
         airwindows-lv2
         nebula-de-esser
         open-stage-control-headless
+        sfizz-ui
       ];
     }))
   ];
