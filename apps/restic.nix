@@ -37,6 +37,7 @@ in
         exclude = [
           "/storage/postgresql"
           "/storage/backup_guillaume"
+          "/storage/.snapshots"
         ]
         ++ optionals config.bitcoin.server.enable [
           "/storage/bitcoin"
