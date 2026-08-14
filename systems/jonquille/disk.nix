@@ -95,6 +95,13 @@
                         "compress=zstd:3"
                       ];
                     };
+                    "/storage/.snapshots" = {
+                      mountpoint = "/storage/.snapshots";
+                      mountOptions = [
+                        "noatime"
+                        "compress=zstd:3"
+                      ];
+                    };
                   };
                 };
               };

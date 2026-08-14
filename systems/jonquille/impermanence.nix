@@ -4,7 +4,7 @@
   ...
 }:
 {
-  # Snapper configuration for /persistent backups
+  # Snapper configuration for /persistent and /storage backups
   services.snapper = {
     snapshotInterval = "hourly";
     cleanupInterval = "1d";
@@ -16,14 +16,24 @@
         # Unneeded as we use root
         # ALLOW_GROUPS = [ "wheel" ];
 
-        # Rétention : 7 snapshots quotidiens
         TIMELINE_CREATE = true;
         TIMELINE_CLEANUP = true;
-        TIMELINE_LIMIT_HOURLY = "0";
+        TIMELINE_LIMIT_HOURLY = "24";
         TIMELINE_LIMIT_DAILY = "7";
-        TIMELINE_LIMIT_WEEKLY = "0";
-        TIMELINE_LIMIT_MONTHLY = "0";
-        TIMELINE_LIMIT_YEARLY = "0";
+        TIMELINE_LIMIT_WEEKLY = "4";
+        TIMELINE_LIMIT_MONTHLY = "12";
+        TIMELINE_LIMIT_YEARLY = "10";
+      };
+      storage = {
+        SUBVOLUME = "/storage";
+
+        TIMELINE_CREATE = true;
+        TIMELINE_CLEANUP = true;
+        TIMELINE_LIMIT_HOURLY = "24";
+        TIMELINE_LIMIT_DAILY = "7";
+        TIMELINE_LIMIT_WEEKLY = "4";
+        TIMELINE_LIMIT_MONTHLY = "12";
+        TIMELINE_LIMIT_YEARLY = "10";
       };
     };
   };
