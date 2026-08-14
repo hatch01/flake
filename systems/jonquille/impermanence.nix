@@ -16,6 +16,7 @@
         # Unneeded as we use root
         # ALLOW_GROUPS = [ "wheel" ];
 
+        QGROUPS = "1/0";
         TIMELINE_CREATE = true;
         TIMELINE_CLEANUP = true;
         TIMELINE_LIMIT_HOURLY = "24";
@@ -27,6 +28,7 @@
       storage = {
         SUBVOLUME = "/storage";
 
+        QGROUPS = "1/0";
         TIMELINE_CREATE = true;
         TIMELINE_CLEANUP = true;
         TIMELINE_LIMIT_HOURLY = "24";
