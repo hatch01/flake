@@ -250,10 +250,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1786719456,
-        "narHash": "sha256-B74DLQs/VjlqyhnnX3tguWwghqJHWSJX30TKZuAljIg=",
+        "lastModified": 1786826571,
+        "narHash": "sha256-nNqmXIFmESRnU91KARtiekSox0+o+E3AS0d1TuUQ/9o=",
         "ref": "refs/heads/master",
-        "rev": "83b7606dcf44abe3a94b86e8bb2b3355d22e8797",
+        "rev": "c8058ecc1329a71a3c99c4d0353dba4009a66152",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/home-manager"
@@ -401,10 +401,10 @@
         "nvchad-starter": "nvchad-starter"
       },
       "locked": {
-        "lastModified": 1786241713,
-        "narHash": "sha256-+Ujhw7RDws25N6EYy/G4764k6T0hpGNqEup/bGTQrkc=",
+        "lastModified": 1786797655,
+        "narHash": "sha256-qAWI5Vf0xaRmb8/l9XWYrvEgrIaqKBv8Dg81JO7wkrY=",
         "ref": "refs/heads/main",
-        "rev": "a6277b06ed0de32831ce8e49686fd3a06201a23b",
+        "rev": "b878640ae13c8f70f41aa1159234206051a4378c",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nix4nvchad"
