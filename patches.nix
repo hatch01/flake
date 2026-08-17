@@ -8,10 +8,6 @@
       branch = "mautrix-telegram-go";
       name = "mautrix-telegram";
     }
-    {
-      pr = 549066;
-      name = "sparrow";
-    }
   ];
 
   common = [
