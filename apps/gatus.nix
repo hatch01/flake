@@ -257,7 +257,7 @@ in
                   group = "claq";
                 })
                 (mkGatusCheck {
-                  name = "authelia";
+                  name = "Claq immich";
                   url = "https://immich.ponton-mathi.eu/api/server/ping";
                   conditions = [ "[BODY].res == pong" ];
                   group = "claq";
