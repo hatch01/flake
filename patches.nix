@@ -8,6 +8,10 @@
       branch = "mautrix-telegram-go";
       name = "mautrix-telegram";
     }
+    {
+      pr = 553515;
+      name = "neuralrack";
+    }
   ];
 
   common = [
