@@ -141,7 +141,17 @@ in
             ];
           })
         );
-
+        ratatouille-lv2 = (
+          prev.ratatouille-lv2.overrideAttrs (old: {
+            src = pkgs.fetchFromGitHub {
+              owner = "brummer10";
+              repo = "Ratatouille.lv2";
+              rev = "30aa06683fcd5dd5985910b40530a334e662a433"; # latest main commit for A2 support
+              hash = "sha256-H5NB6B9yOE7icZ0njuNCFbFko/T4Pmb3IRbOmMq3PzY=";
+              fetchSubmodules = true;
+            };
+          })
+        );
       })
     ];
   };
