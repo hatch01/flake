@@ -139,6 +139,7 @@ in
         x42-avldrums
         x42-plugins
         ratatouille-lv2
+        neuralrack
         distrho-ports
         airwindows-lv2
         nebula-de-esser
