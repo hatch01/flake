@@ -20,6 +20,10 @@
       pr = 553636;
       name = "sforzando";
     }
+    {
+      pr = 553642;
+      name = "dsksfzplayer";
+    }
   ];
 
   common = [

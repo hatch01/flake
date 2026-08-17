@@ -147,6 +147,7 @@ in
         open-stage-control-headless
         sfizz-ui
         sforzando
+        dsksfzplayer
       ];
     }))
   ];
