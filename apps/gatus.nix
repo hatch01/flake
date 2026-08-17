@@ -290,7 +290,9 @@ in
                   - group: pimprenelles
                     to: snoel@outlook.fr
                   - group: nichihachi
-                    to: nichi.hc@proton.me" >> "$out"
+                    to: nichi.hc@proton.me
+                  - group: claq
+                    to: mathieu.ponton+notifs@gmail.com" >> "$out"
           ''
       ) { };
     };
