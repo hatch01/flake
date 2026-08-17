@@ -95,7 +95,6 @@
   };
   hardware.sane.extraBackends = [
     pkgs.epkowa
-    pkgs.utsushi
   ];
 
   services.hardware.bolt.enable = true;
