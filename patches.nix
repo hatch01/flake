@@ -16,6 +16,10 @@
       pr = 553547;
       name = "loadbox";
     }
+    {
+      pr = 553636;
+      name = "sforzando";
+    }
   ];
 
   common = [

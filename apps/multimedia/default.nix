@@ -146,6 +146,7 @@ in
         nebula-de-esser
         open-stage-control-headless
         sfizz-ui
+        sforzando
       ];
     }))
   ];
