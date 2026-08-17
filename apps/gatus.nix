@@ -247,6 +247,21 @@ in
                   ];
                   group = "nichihachi";
                 })
+              ]
+              ++ [
+                # Claq
+                (mkGatusCheck {
+                  name = "Claq authelia";
+                  url = "https://auth.ponton-mathi.eu/api/health";
+                  conditions = [ "[BODY].status == OK" ];
+                  group = "claq";
+                })
+                (mkGatusCheck {
+                  name = "authelia";
+                  url = "https://immich.ponton-mathi.eu/api/server/ping";
+                  conditions = [ "[BODY].res == pong" ];
+                  group = "claq";
+                })
               ];
             };
             passAsFile = [ "value" ];
