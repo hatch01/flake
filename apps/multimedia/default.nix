@@ -140,6 +140,7 @@ in
         x42-plugins
         ratatouille-lv2
         neuralrack
+        loadbox
         distrho-ports
         airwindows-lv2
         nebula-de-esser
