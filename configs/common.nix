@@ -109,6 +109,7 @@ in
           "libnpp"
           "libXNVCtrl"
           "blender" # only because of cuda
+          "sforzando"
 
           # server
           "corefonts"
