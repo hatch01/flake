@@ -522,10 +522,10 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1786862985,
-        "narHash": "sha256-K54MRvEkBrXpoD+ibMI9DgGeupF94SejOwKAGo1bldc=",
+        "lastModified": 1787001381,
+        "narHash": "sha256-AorbZdzBjY/+LSSOMTXBeFM4sy2TOBkZY/So78cxGFI=",
         "ref": "nixos-unstable",
-        "rev": "9901db29fb2a814dcf314c19447789ef93e9a19a",
+        "rev": "d9e8d71b3e6e1634032627eb0fa2255da0122253",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"
