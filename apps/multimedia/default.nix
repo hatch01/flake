@@ -148,6 +148,7 @@ in
         sfizz-ui
         sforzando
         dsksfzplayer
+        guitarmidi-lv2
       ];
     }))
   ];
