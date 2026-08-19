@@ -24,6 +24,10 @@
       pr = 553642;
       name = "dsksfzplayer";
     }
+    {
+      pr = 553949;
+      name = "guitarmidi-lv2";
+    }
   ];
 
   common = [
