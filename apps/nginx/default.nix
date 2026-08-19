@@ -411,6 +411,26 @@ in
           );
         })
 
+        (mkVhost "music-assistant" {
+          locations = {
+            "/".proxyWebsockets = true;
+            "/flow/" = {
+              proxyPass = "http://127.0.0.1:8097";
+              extraConfig = ''
+                proxy_buffering off;
+                proxy_read_timeout 3600s;
+              '';
+            };
+            "/pluginsource/" = {
+              proxyPass = "http://127.0.0.1:8097";
+              extraConfig = ''
+                proxy_buffering off;
+                proxy_read_timeout 3600s;
+              '';
+            };
+          };
+        })
+
         (mkVhost "nixCache" { })
 
         (mkVhost "home_assistant" {

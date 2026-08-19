@@ -33,6 +33,7 @@
     ./librespeed.nix
     ./matrix
     ./multimedia
+    ./music-assistant.nix
     ./neovim.nix
     ./nextcloud.nix
     ./nginx

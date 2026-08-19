@@ -39,6 +39,7 @@ in
           ffmpeg-full
           vlc
           spotify
+          music-assistant-desktop
           yt-dlp
         ]
         ++ optionals config.multimedia.editing.enable [

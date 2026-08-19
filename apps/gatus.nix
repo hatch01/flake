@@ -162,7 +162,14 @@ in
                   name = "ntfy";
                   url = "https://${config.ntfy.domain}";
                 })
-
+              ]
+              ++ lib.optionals config.music-assistant.enable [
+                (mkGatusCheck {
+                  name = "music-assistant";
+                  url = "https://${config.music-assistant.domain}";
+                })
+              ]
+              ++ [
                 {
                   inherit interval alerts;
                   group = default_group;
