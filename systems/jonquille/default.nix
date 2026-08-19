@@ -43,6 +43,7 @@
   nginx.lineageos.enable = true;
 
   librespeed.enable = true;
+  music-assistant.enable = true;
   apolline.enable = true;
   lasuite-meet.enable = true;
   restic.enable = true;
