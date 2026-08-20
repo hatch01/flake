@@ -184,6 +184,16 @@ in
                   };
                 };
               }
+            ]
+            ++ lib.optionals config.music-assistant.enable [
+              {
+                "Music Assistant" = {
+                  icon = "music-assistant.png";
+                  description = "Music Assistant c'est vraiment cool";
+                  href = "https://${config.music-assistant.domain}";
+                  siteMonitor = "https://${config.music-assistant.domain}";
+                };
+              }
             ];
           }
           {
