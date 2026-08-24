@@ -9,10 +9,6 @@
       name = "mautrix-telegram";
     }
     {
-      pr = 553515;
-      name = "neuralrack";
-    }
-    {
       pr = 553547;
       name = "loadbox";
     }
