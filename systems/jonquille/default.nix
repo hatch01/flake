@@ -45,7 +45,7 @@
   librespeed.enable = true;
   music-assistant.enable = true;
   apolline.enable = true;
-  lasuite-meet.enable = true;
+  lasuite-meet.enable = false;
   restic.enable = true;
   portfolio.enable = true;
   incus.enable = true;

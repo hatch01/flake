@@ -12,6 +12,7 @@
   ddclient.enable = true;
   ddclient.domains = [ "vps.${base_domain_name}" ];
   fail2ban.enable = true;
+  lasuite-meet.enable = true;
 
   boot.loader.grub.enable = true;
   container.enable = lib.mkForce false;
