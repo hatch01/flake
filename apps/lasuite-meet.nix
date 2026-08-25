@@ -39,7 +39,7 @@ in
       redis.createLocally = true;
 
       # We disable the local LiveKit instance since we'll reuse the existing one
-      livekit.enable = false;
+      # livekit.enable = false;
 
       settings = {
         OIDC_OP_JWKS_ENDPOINT = "https://${config.authelia.domain}/jwks.json";
@@ -57,7 +57,7 @@ in
         LOGOUT_REDIRECT_URL = "https://${config.lasuite-meet.domain}";
 
         # Reuse existing LiveKit server configured in Element Call
-        LIVEKIT_API_URL = "wss://${config.matrix.domain}/livekit/sfu";
+        # LIVEKIT_API_URL = "wss://${config.matrix.domain}/livekit/sfu";
       };
     };
 
