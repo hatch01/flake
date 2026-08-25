@@ -62,6 +62,7 @@ in
 
         # Reuse existing LiveKit server configured in Element Call
         # LIVEKIT_API_URL = "wss://${config.matrix.domain}/livekit/sfu";
+        LIVEKIT_API_URL = "https://${config.lasuite-meet.domain}/livekit/";
       };
     };
 
