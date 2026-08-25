@@ -473,8 +473,8 @@ in
                     token_endpoint_auth_method = "client_secret_post";
                   }
                 ]
-                ++ # optionals config.services.lasuite-meet.enable
-                [
+                # optionals config.services.lasuite-meet.enable
+                ++ [
                   {
                     client_id = "lasuite-meet";
                     client_name = "La Suite Meet";
