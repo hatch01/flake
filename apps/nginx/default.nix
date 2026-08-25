@@ -212,6 +212,7 @@ in
       recommendedTlsSettings = true;
       commonHttpConfig = ''
         access_log off;
+        absolute_redirect off;
       '';
       proxyCachePath = {
         "" = {
@@ -327,70 +328,76 @@ in
               };
             }
           );
-          locations = {
-            "/".extraConfig = mkIf (!config.matrix.enableElement) ''
-              return 404;
-            '';
-
-            "~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
-              priority = 100;
-              proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
-            };
-
-            "^~ /_synapse/client/rendezvous/" = {
-              proxyPass = "http://[::1]:${toString config.matrix.port}";
-              extraConfig = ''
-                proxy_http_version 1.1;
-                proxy_buffering off;
-                proxy_request_buffering off;
-                proxy_read_timeout 600s;
-                proxy_send_timeout 600s;
-                proxy_connect_timeout 60s;
-                proxy_set_header Accept-Encoding "";
-                gzip off;
+          locations =
+            let
+              livekitSfu = mkIf config.matrix.elementCall.enable {
+                proxyPass = "http://localhost:${toString config.matrix.elementCall.livekitPort}/";
+                proxyWebsockets = true;
+              };
+            in
+            {
+              "/".extraConfig = mkIf (!config.matrix.enableElement) ''
+                return 404;
               '';
-            };
 
-            "~ ^(/_matrix|/_synapse/client)" = {
-              proxyPass = "http://[::1]:${toString config.matrix.port}";
-              extraConfig = ''
-                client_max_body_size 10G;
-              '';
-            };
+              "~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
+                priority = 100;
+                proxyPass = "http://[::1]:${toString config.matrix.mas.port}";
+              };
 
-            # Synapse Admin API: allow CORS from Synapse Admin web UIs
-            "^~ /_synapse/admin/" = {
-              proxyPass = "http://[::1]:${toString config.matrix.port}";
-              extraConfig = ''
-                # Drop the upstream "*" header so only our origin is sent
-                proxy_hide_header Access-Control-Allow-Origin;
-                set $cors_origin "";
-                if ($http_origin = "https://admin.${config.matrix.domain}") {
-                  set $cors_origin $http_origin;
-                }
-                add_header Access-Control-Allow-Origin $cors_origin always;
-                add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS" always;
-                add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
-                if ($request_method = OPTIONS) {
-                  return 204;
-                }
-              '';
-            };
-            "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
+              "^~ /_synapse/client/rendezvous/" = {
+                proxyPass = "http://[::1]:${toString config.matrix.port}";
+                extraConfig = ''
+                  proxy_http_version 1.1;
+                  proxy_buffering off;
+                  proxy_request_buffering off;
+                  proxy_read_timeout 600s;
+                  proxy_send_timeout 600s;
+                  proxy_connect_timeout 60s;
+                  proxy_set_header Accept-Encoding "";
+                  gzip off;
+                '';
+              };
 
-            "^~ /livekit/jwt/" = mkIf config.matrix.elementCall.enable {
-              proxyPass = "http://localhost:${toString config.matrix.elementCall.jwtServicePort}/";
-            };
+              "~ ^(/_matrix|/_synapse/client)" = {
+                proxyPass = "http://[::1]:${toString config.matrix.port}";
+                extraConfig = ''
+                  client_max_body_size 10G;
+                '';
+              };
 
-            "^~ /livekit/sfu/" = mkIf config.matrix.elementCall.enable {
-              proxyPass = "http://localhost:${toString config.matrix.elementCall.livekitPort}/";
-              proxyWebsockets = true;
-            };
+              # Synapse Admin API: allow CORS from Synapse Admin web UIs
+              "^~ /_synapse/admin/" = {
+                proxyPass = "http://[::1]:${toString config.matrix.port}";
+                extraConfig = ''
+                  # Drop the upstream "*" header so only our origin is sent
+                  proxy_hide_header Access-Control-Allow-Origin;
+                  set $cors_origin "";
+                  if ($http_origin = "https://admin.${config.matrix.domain}") {
+                    set $cors_origin $http_origin;
+                  }
+                  add_header Access-Control-Allow-Origin $cors_origin always;
+                  add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS" always;
+                  add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
+                  if ($request_method = OPTIONS) {
+                    return 204;
+                  }
+                '';
+              };
+              "/health".proxyPass = "http://[::1]:${toString config.matrix.port}/health";
 
-            "^~ /mautrix-discord/" = mkIf config.matrix.discord.enable {
-              proxyPass = "http://127.0.0.1:${toString config.services.mautrix-discord.settings.appservice.port}";
+              "^~ /livekit/jwt/" = mkIf config.matrix.elementCall.enable {
+                proxyPass = "http://localhost:${toString config.matrix.elementCall.jwtServicePort}/";
+              };
+
+              "^~ /livekit/sfu/" = livekitSfu;
+
+              "= /livekit/sfu" = livekitSfu;
+
+              "^~ /mautrix-discord/" = mkIf config.matrix.discord.enable {
+                proxyPass = "http://127.0.0.1:${toString config.services.mautrix-discord.settings.appservice.port}";
+              };
             };
-          };
         })
 
         (mkVhost "matrix.mas" {
