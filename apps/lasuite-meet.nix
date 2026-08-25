@@ -2,7 +2,7 @@
   lib,
   config,
   base_domain_name,
-  mkSecret,
+  mkSecrets,
   ...
 }:
 let
@@ -27,7 +27,10 @@ in
 
   config = mkIf config.lasuite-meet.enable {
     # Securely load the OIDC secrets via Agenix
-    age.secrets = mkSecret "lasuite-meet" { };
+    age.secrets = mkSecrets {
+      "lasuite-meet" = { };
+      "livekit-keyFile" = { };
+    };
 
     services.lasuite-meet = {
       enable = true;
@@ -40,6 +43,7 @@ in
 
       # We disable the local LiveKit instance since we'll reuse the existing one
       # livekit.enable = false;
+      livekit.keyFile = config.age.secrets.livekit-keyFile.path;
 
       settings = {
         OIDC_OP_JWKS_ENDPOINT = "https://${config.authelia.domain}/jwks.json";

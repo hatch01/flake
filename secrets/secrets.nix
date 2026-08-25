@@ -98,6 +98,7 @@ let
 
       # La Suite Meet
       "lasuite-meet"
+      "livekit-keyFile"
     ];
 
   defineSecrets =
