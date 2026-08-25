@@ -85,9 +85,6 @@ let
 
       # ntfy
       "ntfy_auth_users_env"
-
-      # La Suite Meet
-      "lasuite-meet"
     ]
     // defineSecrets "cyclamen" [
       "rootPassword"
@@ -98,6 +95,9 @@ let
       "headscale_api_key"
       "headplane_oidc"
       "headplane_pre_authkey"
+
+      # La Suite Meet
+      "lasuite-meet"
     ];
 
   defineSecrets =
