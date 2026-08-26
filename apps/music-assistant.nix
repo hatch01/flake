@@ -34,7 +34,7 @@ in
       enable = true;
       providers = [
         "spotify"
-        "filesystem_local"
+        "opensubsonic"
       ];
     };
 
