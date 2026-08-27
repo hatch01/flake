@@ -56,7 +56,7 @@ in
           orca-slicer
         ];
     }
-    (mkIf config.multimedia.audio.enable ({
+    (mkIf config.multimedia.audio.enable {
       security.pam.loginLimits = [
         {
           domain = "@audio";
@@ -153,6 +153,6 @@ in
         guitarmidi-lv2
         inputs.bass2midi.packages.${system}.default
       ];
-    }))
+    })
   ];
 }
