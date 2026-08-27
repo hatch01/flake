@@ -30,6 +30,7 @@ in
         zed-editor
         kdePackages.kate
         gemini-cli
+        opencode
       ]
       ++ optionals config.jetbrains.enable [
         jetbrains.idea
