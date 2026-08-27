@@ -3,6 +3,7 @@
   config,
   lib,
   username,
+  system,
   inputs,
   ...
 }:
@@ -150,6 +151,7 @@ in
         sforzando
         dsksfzplayer
         guitarmidi-lv2
+        inputs.bass2midi.packages.${system}.default
       ];
     }))
   ];

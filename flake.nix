@@ -111,6 +111,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    bass2midi = {
+      url = "git+https://forge.onyx.ovh/eymeric/bass2midi.git?shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     musnix = {
       url = "git+https://forge.onyx.ovh/github_mirror/musnix?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
