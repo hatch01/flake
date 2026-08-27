@@ -28,7 +28,7 @@ in
         planify
       ]
       ++ optionals config.libreoffice.enable [
-        libreoffice-fresh
+        libreoffice
         hunspell
         hunspellDicts.fr-any
       ]
