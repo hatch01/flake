@@ -16,6 +16,7 @@ let
     ;
   cfg_central = config.services.ovn-central;
   cfg_host = config.services.ovn-host;
+  ovs_scripts = "${pkgs.openvswitch}/share/openvswitch/scripts";
 in
 {
   options.services.ovn-central = {
@@ -69,7 +70,10 @@ in
         ovn-controller = {
           enable = true;
           description = "Open Virtual Network host control daemon";
-          path = [ pkgs.gawk ];
+          path = [
+            pkgs.gawk
+            pkgs.openvswitch
+          ];
           requires = [ "openvswitch-switch.service" ];
           after = [
             "network.target"
@@ -101,13 +105,15 @@ in
             "ovsdb-server.service"
             "ovs-vswitchd.service"
           ];
-          path = [ pkgs.gawk ];
+          path = [
+            pkgs.gawk
+            pkgs.openvswitch
+          ];
           unitConfig.DefaultDependencies = "no";
           serviceConfig = {
             Type = "oneshot";
             ExecStart = "/run/current-system/sw/bin/true";
-            ExecStop = "${cfg_host.package}/share/openvswitch/scripts/ovs-ctl --no-ovsdb-server stop";
-            ExecReload = "${cfg_host.package}/share/openvswitch/scripts/ovs-systemd-reload";
+            ExecStop = "${ovs_scripts}/ovs-ctl --no-ovsdb-server stop";
             RemainAfterExit = "yes";
           };
         };
@@ -128,15 +134,16 @@ in
           path = [
             pkgs.gawk
             pkgs.kmod
+            pkgs.openvswitch
           ];
           requires = [ "ovsdb-server.service" ];
           unitConfig.DefaultDependencies = "no";
           serviceConfig = {
             Type = "forking";
-            ExecStart = "${cfg_host.package}/share/openvswitch/scripts/ovs-ctl --no-ovsdb-server --no-monitor --system-id=random --no-record-hostname start ${cfg_host.ovn_ctl_opts}";
-            ExecStop = "${cfg_host.package}/share/openvswitch/scripts/ovs-ctl --no-ovsdb-server stop";
+            ExecStart = "${ovs_scripts}/ovs-ctl --no-ovsdb-server --no-monitor --system-id=random --no-record-hostname start ${cfg_host.ovn_ctl_opts}";
+            ExecStop = "${ovs_scripts}/ovs-ctl --no-ovsdb-server stop";
             Restart = "on-failure";
-            ExecReload = "${cfg_host.package}/share/openvswitch/scripts/ovs-ctl --no-ovsdb-server --no-monitor --system-id=random --no-record-hostname restart ${cfg_host.ovn_ctl_opts}";
+            ExecReload = "${ovs_scripts}/ovs-ctl --no-ovsdb-server --no-monitor --system-id=random --no-record-hostname restart ${cfg_host.ovn_ctl_opts}";
             LimitNOFILE = "1048576";
             TimeoutSec = "300";
             OOMScoreAdjust = "900";
@@ -160,14 +167,15 @@ in
           path = [
             pkgs.gawk
             pkgs.util-linux
+            pkgs.openvswitch
           ];
           unitConfig.DefaultDependencies = "no";
           serviceConfig = {
             Type = "forking";
-            ExecStart = "${cfg_host.package}/share/openvswitch/scripts/ovs-ctl --no-ovs-vswitchd --no-monitor --system-id=random --no-record-hostname start ${cfg_host.ovn_ctl_opts}";
-            ExecStop = "${cfg_host.package}/share/openvswitch/scripts/ovs-ctl --no-ovs-vswitchd stop";
+            ExecStart = "${ovs_scripts}/ovs-ctl --no-ovs-vswitchd --no-monitor --system-id=random --no-record-hostname start ${cfg_host.ovn_ctl_opts}";
+            ExecStop = "${ovs_scripts}/ovs-ctl --no-ovs-vswitchd stop";
             Restart = "on-failure";
-            ExecReload = "${cfg_host.package}/share/openvswitch/scripts/ovs-ctl --no-ovs-vswitchd --no-record-hostname --no-monitor restart ${cfg_host.ovn_ctl_opts}";
+            ExecReload = "${ovs_scripts}/ovs-ctl --no-ovs-vswitchd --no-record-hostname --no-monitor restart ${cfg_host.ovn_ctl_opts}";
             LimitNOFILE = "1048576";
             TimeoutSec = "300";
             OOMScoreAdjust = "900";
