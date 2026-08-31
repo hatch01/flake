@@ -61,14 +61,38 @@ in
           wantedBy = [ "multi-user.target" ];
         };
 
+        ovn-config = {
+          enable = true;
+          description = "Configure Open vSwitch for OVN";
+          requires = [ "ovsdb.service" ];
+          after = [ "ovsdb.service" ];
+          partOf = [ "ovn-host.service" ];
+          wantedBy = [ "ovn-controller.service" ];
+          path = [ pkgs.openvswitch ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = "yes";
+          };
+          script = ''
+            ovs-vsctl set open_vswitch . \
+              external_ids:ovn-remote=unix:/run/ovn/ovnsb_db.sock \
+              external_ids:ovn-encap-type=geneve \
+              external_ids:ovn-encap-ip=127.0.0.1
+          '';
+        };
+
         ovn-controller = {
           enable = true;
           description = "Open Virtual Network host control daemon";
           path = [ cfg_host.package ];
-          requires = [ "ovsdb.service" ];
+          requires = [
+            "ovsdb.service"
+            "ovn-config.service"
+          ];
           after = [
             "network.target"
             "ovsdb.service"
+            "ovn-config.service"
           ];
           partOf = [ "ovn-host.service" ];
           unitConfig.DefaultDependencies = "no";

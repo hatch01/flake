@@ -98,7 +98,6 @@ in
           "oidc.issuer" = "https://${config.authelia.domain}";
           "oidc.client.id" = "incus";
           "oidc.audience" = "https://${config.incus.domain}";
-          "network.ovs.connection" = "unix:/run/openvswitch/db.sock";
         };
         networks = [
           {
@@ -108,6 +107,8 @@ in
               "ipv6.address" = "fd42:1234:1234::1/64";
               "ipv6.nat" = "true";
               "ipv4.dhcp" = "true";
+              "ipv4.dhcp.ranges" = "10.20.0.100-10.20.0.199";
+              "ipv4.ovn.ranges" = "10.20.0.200-10.20.0.254";
               "ipv6.dhcp" = "true";
               "dns.mode" = "managed";
               "dns.domain" = "incus";
