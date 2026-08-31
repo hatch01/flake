@@ -35,6 +35,7 @@ in
       "incusbr*"
       "tailscale0"
     ];
+    virtualisation.vswitch.enable = true;
     services.ovn-central.enable = true;
     services.ovn-host.enable = true;
 
@@ -97,6 +98,7 @@ in
           "oidc.issuer" = "https://${config.authelia.domain}";
           "oidc.client.id" = "incus";
           "oidc.audience" = "https://${config.incus.domain}";
+          "network.ovs.connection" = "unix:/run/openvswitch/db.sock";
         };
         networks = [
           {
