@@ -35,6 +35,7 @@ in
       "incusbr*"
       "tailscale0"
     ];
+    virtualisation.vswitch.enable = true;
 
     services.resolved = {
       enable = true;
