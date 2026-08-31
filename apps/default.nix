@@ -26,6 +26,7 @@
     ./homebank.nix
     ./homepage.nix
     ./incus.nix
+    ./ovn.nix
     ./kde-connect.nix
     ./keepassxc
     ./konsole.nix

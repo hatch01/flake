@@ -35,7 +35,8 @@ in
       "incusbr*"
       "tailscale0"
     ];
-    virtualisation.vswitch.enable = true;
+    services.ovn-central.enable = true;
+    services.ovn-host.enable = true;
 
     services.resolved = {
       enable = true;
