@@ -92,7 +92,11 @@ in
         ovn-controller = {
           enable = true;
           description = "Open Virtual Network host control daemon";
-          path = [ cfg_host.package pkgs.openvswitch pkgs.util-linux ];
+          path = [
+            cfg_host.package
+            pkgs.openvswitch
+            pkgs.util-linux
+          ];
           requires = [
             "ovsdb.service"
             "ovn-config.service"
