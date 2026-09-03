@@ -39,6 +39,14 @@ in
   };
 
   config = mkIf (cfg_central.enable || cfg_host.enable) {
+    environment.persistence."/persistent" = mkIf cfg_host.enable {
+      directories = [ "/var/lib/openvswitch" ];
+    };
+
+    systemd.tmpfiles.rules = mkIf cfg_host.enable [
+      "d /var/lib/openvswitch 0755 root root -"
+    ];
+
     environment.systemPackages = lib.mkMerge [
       (mkIf cfg_central.enable [ cfg_central.package ])
       (mkIf cfg_host.enable [ cfg_host.package ])
@@ -84,7 +92,7 @@ in
         ovn-controller = {
           enable = true;
           description = "Open Virtual Network host control daemon";
-          path = [ cfg_host.package ];
+          path = [ cfg_host.package pkgs.openvswitch pkgs.util-linux ];
           requires = [
             "ovsdb.service"
             "ovn-config.service"
@@ -94,6 +102,16 @@ in
             "ovsdb.service"
             "ovn-config.service"
           ];
+          preStart = ''
+            SYSTEM_ID_FILE=/var/lib/openvswitch/system-id
+
+            if [ ! -s "$SYSTEM_ID_FILE" ]; then
+              ${pkgs.util-linux}/bin/uuidgen > "$SYSTEM_ID_FILE"
+            fi
+
+            ${pkgs.openvswitch}/bin/ovs-vsctl \
+              set Open_vSwitch . external_ids:system-id="$(cat "$SYSTEM_ID_FILE")"
+          '';
           partOf = [ "ovn-host.service" ];
           unitConfig.DefaultDependencies = "no";
           serviceConfig = {
