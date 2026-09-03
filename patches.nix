@@ -20,6 +20,10 @@
       pr = 553949;
       name = "guitarmidi-lv2";
     }
+    {
+      pr = 559444;
+      name = "tone3000";
+    }
   ];
 
   common = [
