@@ -7,7 +7,7 @@
   # Snapper configuration for /persistent and /storage backups
   services.snapper = {
     snapshotInterval = "hourly";
-    cleanupInterval = "1d";
+    cleanupInterval = "1h";
 
     configs = {
       persistent = {
