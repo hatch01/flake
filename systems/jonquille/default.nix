@@ -14,6 +14,11 @@
   ];
 
   apps.ccache.enable = true;
+  snapper.enable = true;
+  snapper.backups = {
+    persistent.path = "/persistent";
+    storage.path = "/storage";
+  };
   nextcloud.enable = true;
   nextcloud.app_api.enable = false;
   onlyofficeDocumentServer.enable = true;

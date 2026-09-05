@@ -47,6 +47,7 @@
     ./postgres.nix
     ./restic.nix
     ./social
+    ./snapper.nix
     ./sslh.nix
     ./thunderbird.nix
     ./tools.nix

@@ -19,6 +19,14 @@
   ];
 
   apps.ccache.enable = true;
+  snapper.enable = true;
+  snapper.backups = {
+    root.path = "/";
+    home = {
+      path = "/home";
+      ALLOW_USERS = [ "root" username ];
+    };
+  };
 
   time.timeZone = lib.mkForce "Asia/Ho_Chi_Minh";
   services.tailscale.useRoutingFeatures = lib.mkDefault "client";

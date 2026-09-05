@@ -62,6 +62,9 @@
                     "noatime"
                   ];
                 };
+                "/root/.snapshots" = {
+                  # created but not mounted, snapper writes into it via its subvolume id
+                };
                 "/nix" = {
                   mountpoint = "/nix";
                   mountOptions = [
@@ -83,9 +86,13 @@
           home = {
             size = "400G";
             content = {
-              type = "filesystem";
-              format = "btrfs";
+              type = "btrfs";
               mountpoint = "/home";
+              subvolumes = {
+                "/.snapshots" = {
+                  # created but not mounted, snapper writes into it via its subvolume id
+                };
+              };
             };
           };
           swap = {
