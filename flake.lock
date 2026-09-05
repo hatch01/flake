@@ -604,7 +604,7 @@
           "nixos-hardware"
         ],
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ]
       },
       "locked": {
