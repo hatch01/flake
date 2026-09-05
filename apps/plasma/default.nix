@@ -41,6 +41,7 @@ in
         merkuro
         qtlocation # this is needed for merkuro
         kdepim-addons
+        kio-snapshot
       ]);
 
     hm = {
