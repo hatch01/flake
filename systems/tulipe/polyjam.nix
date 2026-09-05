@@ -37,7 +37,7 @@
       programs.msmtp.enable = false;
       services.openssh.enable = false;
       nix.optimise.automatic = false;
-      programs.nh.clean.enable = lib.mkForce true;
+      programs.nh.clean.enable = lib.mkForce false;
 
       programs.firefox.enable = true;
       multimedia.audio.enable = true;
