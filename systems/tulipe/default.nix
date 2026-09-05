@@ -24,7 +24,10 @@
     root.path = "/";
     home = {
       path = "/home";
-      ALLOW_USERS = [ "root" username ];
+      ALLOW_USERS = [
+        "root"
+        username
+      ];
     };
   };
 

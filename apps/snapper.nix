@@ -1,4 +1,10 @@
-{ lib, config, pkgs, username, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  username,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkOption mkIf;
 
@@ -56,9 +62,7 @@ in
       mkConfig =
         name: backup:
         {
-          SUBVOLUME =
-            backup.path
-            or (throw "snapper.backups.${name} requires a `path` attribute.");
+          SUBVOLUME = backup.path or (throw "snapper.backups.${name} requires a `path` attribute.");
         }
         // baseSettings
         // lib.removeAttrs backup [ "path" ];
@@ -80,14 +84,14 @@ in
           RemainAfterExit = true;
         };
         path = [ pkgs.btrfs-progs ];
-        script = let
-          mountpaths = lib.unique (
-            map (backup: backup.path) (lib.attrValues config.snapper.backups)
-          );
-        in
+        script =
+          let
+            mountpaths = lib.unique (map (backup: backup.path) (lib.attrValues config.snapper.backups));
+          in
           ''
             set -eu
-          '' + lib.concatMapStringsSep "\n" (path: ''
+          ''
+          + lib.concatMapStringsSep "\n" (path: ''
             if ! btrfs qgroup show "${path}" > /dev/null 2>&1; then
               btrfs quota enable "${path}"
             fi
