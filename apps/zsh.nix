@@ -55,6 +55,7 @@ in
       yazi
       doggo
       snitch
+      lazysql
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
