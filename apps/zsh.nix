@@ -22,42 +22,40 @@ in
     users.users.${username}.shell = pkgs.zsh;
     programs.pay-respects.enable = true;
     environment.systemPackages = with pkgs; [
-      w3m
-      ripgrep
-      ripgrep-all
-      zoxide
-      eza
-      procs
-      tokei
-      bandwhich
-      dust
-      duf
-      sd
-      hyperfine
-      fd
-      grex
-      detox
-      xcp
-      silicon
-      ouch
-      nix-tree
-      bottom
-      parallel
-      pbzip2
-      caligula
-      zellij
-      zsh-completions
-      jless
-      fzf-zsh-plugin
-      sshfs
-      gitoxide
-      btdu
-      yazi
-      doggo
-      snitch
-      lazysql
-      serpl
-      skim
+      bandwhich # CLI utility for displaying current network utilization
+      bottom # Cross-platform graphical process/system monitor with a customizable interface
+      btdu # Sampling disk usage profiler for btrfs
+      caligula # User-friendly, lightweight TUI for disk imaging
+      detox # Utility designed to clean up filenames
+      doggo # Command-line DNS Client for Humans. Written in Golang
+      duf # Disk Usage/Free Utility
+      dust # du, but more intuitive
+      eza # Modern, maintained replacement for ls
+      fd # Simple, fast and user-friendly alternative to find
+      gitoxide # Command-line application for interacting with git repositories
+      grex # Command-line tool for generating regular expressions from user-provided test cases
+      hyperfine # Command-line benchmarking tool
+      lazysql # Cross-platform TUI database management tool written in Go
+      nix-tree # Interactively browse a Nix store paths dependencies
+      ouch # Command-line utility for easily compressing and decompressing files and directories
+      parallel # Shell tool for executing jobs in parallel
+      pbzip2 # Parallel implementation of bzip2 for multi-core machines
+      procs # Modern replacement for ps written in Rust
+      ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+      ripgrep-all # Ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, and more
+      sd # Intuitive find & replace CLI (sed alternative)
+      serpl # Simple terminal UI for search and replace, ala VS Code
+      silicon # Create beautiful image of your source code
+      skim # Command-line fuzzy finder written in Rust
+      snitch # friendlier ss / netstat for humans
+      sshfs # FUSE-based filesystem that allows remote filesystems to be mounted over SSH
+      tokei # Count your code, quickly
+      w3m # Text-mode web browser
+      xcp # Extended cp(1)
+      yazi # Blazing fast terminal file manager written in Rust, based on async I/O
+      zellij # Terminal workspace with batteries included
+      zoxide # Fast cd command that learns your habits
+      zsh-completions # Additional completion definitions for zsh
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
