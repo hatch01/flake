@@ -56,6 +56,7 @@ in
       doggo
       snitch
       lazysql
+      serpl
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
