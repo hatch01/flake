@@ -35,6 +35,7 @@ in
       gitoxide # Command-line application for interacting with git repositories
       grex # Command-line tool for generating regular expressions from user-provided test cases
       hyperfine # Command-line benchmarking tool
+      jless # Command-line pager for JSON data
       lazysql # Cross-platform TUI database management tool written in Go
       nix-tree # Interactively browse a Nix store paths dependencies
       ouch # Command-line utility for easily compressing and decompressing files and directories
