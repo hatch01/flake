@@ -57,6 +57,7 @@ in
       snitch
       lazysql
       serpl
+      skim
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
