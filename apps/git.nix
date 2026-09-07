@@ -70,6 +70,10 @@ in
           enable = true;
           settings.git_protocol = "ssh";
         };
+        lazygit = {
+          enable = true;
+          settings.git.overrideGpg = true;
+        };
       };
     };
   };
