@@ -265,14 +265,14 @@ in
           let
             mkSSHConfig = host: {
               "${host}" = {
-                inherit host;
-                user = "root";
-                forwardAgent = true;
+                HostName = host;
+                User = "root";
+                ForwardAgent = true;
               };
               "${lib.toLower (lib.substring 0 1 username)}${host}" = {
-                host = "${host}";
-                user = "root";
-                forwardAgent = true;
+                HostName = host;
+                User = "root";
+                ForwardAgent = true;
               };
             };
           in
