@@ -54,15 +54,19 @@ in
       w3m # Text-mode web browser
       xcp # Extended cp(1)
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O
-      zellij # Terminal workspace with batteries included
       zoxide # Fast cd command that learns your habits
       zsh-completions # Additional completion definitions for zsh
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
 
+    hma.programs.zsh.enable = true; # only needed to allow home manager to autostart zellij
+    hma.programs.bash.enable = true; # only needed to allow home manager to autostart zellij
     hma.programs.zellij = {
       enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+      exitShellOnExit = true;
       settings = {
         show_startup_tips = false;
         theme = "catppuccin-mocha";
@@ -335,9 +339,6 @@ in
           fi
         }
 
-        export ZELLIJ_SHOW_STARTUP_TIPS=false
-        export ZELLIJ_AUTO_EXIT=true
-        eval "$(${getExe zellij} setup --generate-auto-start zsh)"
       '';
 
       ohMyZsh = {
