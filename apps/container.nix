@@ -32,6 +32,8 @@ in
         ]
         ++ optionals config.container.distrobox.enable [
           distrobox
+        ] ++ [
+          dtop
         ];
     };
 
@@ -61,6 +63,10 @@ in
       file.".distroboxrc".text = ''
         container_additional_volumes="/nix/store:/nix/store:ro /etc/static/profiles/per-user:/etc/profiles/per-user:ro"
       '';
+    };
+
+    programs.zsh.shellAliases = with pkgs; {
+      pdtop = "DOCKER_HOST=unix:///run/podman/podman.sock ${lib.getExe dtop}";
     };
   };
 }
