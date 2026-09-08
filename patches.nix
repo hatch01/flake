@@ -1,5 +1,17 @@
 {
   stable = [
+    {
+      pr = 552794;
+      name = "zellij-unwrapped: make web server optional";
+    }
+    {
+      pr = 554665;
+      name = "zellij-unwrapped: 0.44.3 -> 0.45.0";
+    }
+    {
+      pr = 557803;
+      name = "zellij[-unwrapped]: 0.45.0 -> 0.45.1";
+    }
   ];
 
   unstable = [
