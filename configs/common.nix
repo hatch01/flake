@@ -270,7 +270,7 @@ in
                 forwardAgent = true;
               };
               "${lib.toLower (lib.substring 0 1 username)}${host}" = {
-                host = "e${host}";
+                host = "${host}";
                 user = "root";
                 forwardAgent = true;
               };
