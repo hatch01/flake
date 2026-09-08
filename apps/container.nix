@@ -32,7 +32,8 @@ in
         ]
         ++ optionals config.container.distrobox.enable [
           distrobox
-        ] ++ [
+        ]
+        ++ [
           dtop
         ];
     };
