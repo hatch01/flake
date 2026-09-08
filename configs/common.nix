@@ -312,9 +312,6 @@ in
           iotop # io monitoring
           nmon
           iftop # network monitoring
-          nixfmt
-          alejandra
-          nixd
           sqlite
 
           # python is useful

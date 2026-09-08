@@ -15,6 +15,9 @@ in
     environment.systemPackages = with pkgs; [
       nix-forecast
       nil
+      nixfmt
+      alejandra
+      nixd
     ];
 
     programs.nh = {
