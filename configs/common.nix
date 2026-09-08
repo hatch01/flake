@@ -15,9 +15,18 @@ in
 {
   imports = [
     (lib.mkAliasOptionModule [ "hm" ] [ "home-manager" "users" username ])
+    (lib.mkAliasOptionModule [ "hmr" ] [ "home-manager" "users" "root" ])
     ../apps
   ];
 
+  options = {
+    hma = lib.mkOption {
+      type = lib.types.attrs;
+      description = "Home Manager configuration for all users";
+    };
+  };
+
+  config = {
   neovim.enable = mkDefault true;
   container.enable = mkDefault true;
   nix-related.enable = mkDefault true;
@@ -234,10 +243,14 @@ in
     };
   };
 
-  hm = {
+  # Apply homemanager All (hma) to username and root (hm and hmr)
+  hm = config.hma // { home = (config.hma.home or { }) // { inherit username; }; };
+  hmr = config.hma // { home = (config.hma.home or { }) // { username = "root"; }; };
+
+  hma = {
     programs.btop.settings.color_theme = "/home/${username}/.config/btop/themes/catppuccin_mocha.theme";
     home = {
-      inherit stateVersion username;
+      inherit stateVersion;
       file.".config/btop/themes" = {
         source =
           pkgs.fetchFromGitHub {
@@ -371,4 +384,5 @@ in
           Compress=yes
         '';
       };
+  };
 }
