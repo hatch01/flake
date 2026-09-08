@@ -48,7 +48,7 @@ in
     hm = {
       services.gpg-agent = {
         enable = true;
-        enableSshSupport = true;
+        # enableSshSupport = true;
         enableZshIntegration = true;
       };
       programs.gpg = {
