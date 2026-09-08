@@ -21,7 +21,7 @@ in
 
   options = {
     hma = lib.mkOption {
-      type = lib.types.attrs;
+      type = lib.types.attrsOf lib.types.anything;
       description = "Home Manager configuration for all users";
     };
   };
@@ -256,20 +256,7 @@ in
     };
 
     hma = {
-      programs.btop.settings.color_theme = "/home/${username}/.config/btop/themes/catppuccin_mocha.theme";
-      home = {
-        inherit stateVersion;
-        file.".config/btop/themes" = {
-          source =
-            pkgs.fetchFromGitHub {
-              owner = "catppuccin";
-              repo = "btop";
-              tag = "1.0.0";
-              sha256 = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
-            }
-            + "/themes";
-        };
-      };
+      home = { inherit stateVersion; };
     };
 
     environment = {
@@ -301,7 +288,6 @@ in
           tree
           bat
           rip2
-          btop # replacement of htop/nmon
           iotop # io monitoring
           nmon
           iftop # network monitoring

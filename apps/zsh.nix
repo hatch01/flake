@@ -73,6 +73,25 @@ in
       };
     };
 
+    hm.programs.btop.settings.color_theme =
+      "/home/${username}/.config/btop/themes/catppuccin_mocha.theme";
+    hmr.programs.btop.settings.color_theme = "/root/.config/btop/themes/catppuccin_mocha.theme";
+    hma = {
+      programs.btop.enable = true;
+      home = {
+        file.".config/btop/themes" = {
+          source =
+            pkgs.fetchFromGitHub {
+              owner = "catppuccin";
+              repo = "btop";
+              tag = "1.0.0";
+              sha256 = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
+            }
+            + "/themes";
+        };
+      };
+    };
+
     programs.zsh = {
       enable = true;
       autosuggestions.enable = false;
