@@ -27,362 +27,370 @@ in
   };
 
   config = {
-  neovim.enable = mkDefault true;
-  container.enable = mkDefault true;
-  nix-related.enable = mkDefault true;
-  gitConfig.enable = mkDefault true;
-  zshConfig.enable = mkDefault true;
-  beszel.agent.enable = mkDefault true;
-  comin.enable = mkDefault true;
+    neovim.enable = mkDefault true;
+    container.enable = mkDefault true;
+    nix-related.enable = mkDefault true;
+    gitConfig.enable = mkDefault true;
+    zshConfig.enable = mkDefault true;
+    beszel.agent.enable = mkDefault true;
+    comin.enable = mkDefault true;
 
-  nix = {
-    package = pkgs.nixVersions.git;
-    settings = {
-      download-buffer-size = 524288000;
-    }
-    // (import ../flake.nix).nixConfig;
-  };
+    nix = {
+      package = pkgs.nixVersions.git;
+      settings = {
+        download-buffer-size = 524288000;
+      }
+      // (import ../flake.nix).nixConfig;
+    };
 
-  nixpkgs = {
-    config = {
-      allowUnfreePredicate =
-        pkg:
-        builtins.elem (lib.getName pkg) [
-          # vscode
-          "vscode"
-          "vscode-extension-github-copilot"
-          "vscode-extension-github-copilot-chat"
-          "vscode-extension-MS-python-vscode-pylance"
-          "vscode-extension-ms-vscode-cpptools"
+    nixpkgs = {
+      config = {
+        allowUnfreePredicate =
+          pkg:
+          builtins.elem (lib.getName pkg) [
+            # vscode
+            "vscode"
+            "vscode-extension-github-copilot"
+            "vscode-extension-github-copilot-chat"
+            "vscode-extension-MS-python-vscode-pylance"
+            "vscode-extension-ms-vscode-cpptools"
 
-          # intellij
-          "idea"
-          "pycharm"
-          "clion"
-          "rust-rover"
-          "phpstorm"
-          "datagrip"
+            # intellij
+            "idea"
+            "pycharm"
+            "clion"
+            "rust-rover"
+            "phpstorm"
+            "datagrip"
 
-          # scanner
-          "iscan"
-          "iscan-gt"
-          "iscan-data"
-          "iscan-gt-f720-bundle"
-          "iscan-nt-bundle"
-          "iscan-gt-s650-bundle"
-          "iscan-gt-s80-bundle"
-          "iscan-v330-bundle"
-          "iscan-v370-bundle"
-          "iscan-perfection-v550-bundle"
-          "iscan-gt-x820-bundle"
-          "iscan-gt-x750-bundle"
-          "iscan-gt-x770-bundle"
-          "iscan-gt-s600-bundle"
+            # scanner
+            "iscan"
+            "iscan-gt"
+            "iscan-data"
+            "iscan-gt-f720-bundle"
+            "iscan-nt-bundle"
+            "iscan-gt-s650-bundle"
+            "iscan-gt-s80-bundle"
+            "iscan-v330-bundle"
+            "iscan-v370-bundle"
+            "iscan-perfection-v550-bundle"
+            "iscan-gt-x820-bundle"
+            "iscan-gt-x750-bundle"
+            "iscan-gt-x770-bundle"
+            "iscan-gt-s600-bundle"
 
-          #gaming
-          "steam"
-          "steam-run"
-          "steam-unwrapped"
-          "steam-original"
-          "libsciter"
-          "parsec-bin"
+            #gaming
+            "steam"
+            "steam-run"
+            "steam-unwrapped"
+            "steam-original"
+            "libsciter"
+            "parsec-bin"
 
-          #others
-          "geogebra"
-          "spotify"
-          # Nvidia related things
-          "nvidia-x11"
-          "nvidia-settings"
-          "nvidia-persistenced"
-          "cuda-merged"
-          "cuda_cuobjdump"
-          "cuda_gdb"
-          "cuda_nvcc"
-          "cuda_nvdisasm"
-          "cuda_nvprune"
-          "cuda_cccl"
-          "cuda_cudart"
-          "cuda_cupti"
-          "cuda_cuxxfilt"
-          "cuda_nvml_dev"
-          "cuda_nvrtc"
-          "cuda_nvtx"
-          "cuda_profiler_api"
-          "cuda_sanitizer_api"
-          "cudnn"
-          "libcublas"
-          "libcufft"
-          "libcurand"
-          "libcusolver"
-          "libnvjitlink"
-          "libcusparse"
-          "libnpp"
-          "libXNVCtrl"
-          "blender" # only because of cuda
-          "sforzando"
+            #others
+            "geogebra"
+            "spotify"
+            # Nvidia related things
+            "nvidia-x11"
+            "nvidia-settings"
+            "nvidia-persistenced"
+            "cuda-merged"
+            "cuda_cuobjdump"
+            "cuda_gdb"
+            "cuda_nvcc"
+            "cuda_nvdisasm"
+            "cuda_nvprune"
+            "cuda_cccl"
+            "cuda_cudart"
+            "cuda_cupti"
+            "cuda_cuxxfilt"
+            "cuda_nvml_dev"
+            "cuda_nvrtc"
+            "cuda_nvtx"
+            "cuda_profiler_api"
+            "cuda_sanitizer_api"
+            "cudnn"
+            "libcublas"
+            "libcufft"
+            "libcurand"
+            "libcusolver"
+            "libnvjitlink"
+            "libcusparse"
+            "libnpp"
+            "libXNVCtrl"
+            "blender" # only because of cuda
+            "sforzando"
 
-          # server
-          "corefonts"
+            # server
+            "corefonts"
 
-          "nrf-udev"
-          "iscan-ds"
-          "virtualbox-extpack"
+            "nrf-udev"
+            "iscan-ds"
+            "virtualbox-extpack"
+          ];
+
+        permittedInsecurePackages = [
+          "olm-3.2.16"
+          "mbedtls-2.28.10"
+          "jitsi-meet-1.0.8792"
+          "python3.14-ecdsa-0.19.2"
+          "electron-39.8.10"
+          "electron-40.10.5"
         ];
-
-      permittedInsecurePackages = [
-        "olm-3.2.16"
-        "mbedtls-2.28.10"
-        "jitsi-meet-1.0.8792"
-        "python3.14-ecdsa-0.19.2"
-        "electron-39.8.10"
-        "electron-40.10.5"
+      };
+      overlays = [
+        (final: prev: {
+          ardour = (
+            prev.ardour.overrideAttrs (old: {
+              stdenv = final.ccacheStdenv;
+              patches = (old.patches or [ ]) ++ [
+                (prev.fetchpatch {
+                  # enable midi control for plugin bypasses
+                  url = "https://github.com/Ardour/ardour/pull/1111.patch";
+                  hash = "sha256-0YJOgHe+GgdpJVpEKKmqClp5WGvCUy/Ah0/UxrYE/Cs=";
+                })
+              ];
+            })
+          );
+          ratatouille-lv2 = (
+            prev.ratatouille-lv2.overrideAttrs (old: {
+              src = pkgs.fetchFromGitHub {
+                owner = "brummer10";
+                repo = "Ratatouille.lv2";
+                rev = "30aa06683fcd5dd5985910b40530a334e662a433"; # latest main commit for A2 support
+                hash = "sha256-H5NB6B9yOE7icZ0njuNCFbFko/T4Pmb3IRbOmMq3PzY=";
+                fetchSubmodules = true;
+              };
+            })
+          );
+        })
       ];
     };
-    overlays = [
-      (final: prev: {
-        ardour = (
-          prev.ardour.overrideAttrs (old: {
-            stdenv = final.ccacheStdenv;
-            patches = (old.patches or [ ]) ++ [
-              (prev.fetchpatch {
-                # enable midi control for plugin bypasses
-                url = "https://github.com/Ardour/ardour/pull/1111.patch";
-                hash = "sha256-0YJOgHe+GgdpJVpEKKmqClp5WGvCUy/Ah0/UxrYE/Cs=";
-              })
-            ];
-          })
-        );
-        ratatouille-lv2 = (
-          prev.ratatouille-lv2.overrideAttrs (old: {
-            src = pkgs.fetchFromGitHub {
-              owner = "brummer10";
-              repo = "Ratatouille.lv2";
-              rev = "30aa06683fcd5dd5985910b40530a334e662a433"; # latest main commit for A2 support
-              hash = "sha256-H5NB6B9yOE7icZ0njuNCFbFko/T4Pmb3IRbOmMq3PzY=";
-              fetchSubmodules = true;
-            };
-          })
-        );
-      })
-    ];
-  };
 
-  age = {
-    secrets = mkSecrets {
-      rootPassword = { };
-      githubToken = {
-        root = true;
-      };
-      smtpPassword = {
-        group = "smtp";
-        mode = "440";
-        root = true;
-      };
-      smtpPasswordEnv = {
-        group = "smtp";
-        mode = "440";
-        root = true;
-      };
-    };
-  };
-  users = {
-    groups.smtp = { };
-  };
-
-  programs.direnv = {
-    enable = true;
-    loadInNixShell = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  programs.nix-index-database.comma.enable = true;
-
-  system.stateVersion = stateVersion;
-
-  # Set your time zone.
-  time.timeZone = "Europe/Paris";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "fr_FR.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "fr_FR.UTF-8";
-    LC_IDENTIFICATION = "fr_FR.UTF-8";
-    LC_MEASUREMENT = "fr_FR.UTF-8";
-    LC_MONETARY = "fr_FR.UTF-8";
-    LC_NAME = "fr_FR.UTF-8";
-    LC_NUMERIC = "fr_FR.UTF-8";
-    LC_PAPER = "fr_FR.UTF-8";
-    LC_TELEPHONE = "fr_FR.UTF-8";
-    LC_TIME = "fr_FR.UTF-8";
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "fr";
-    variant = "";
-  };
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    backupFileExtension = "backup";
-  };
-
-  nix = {
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-    # package = pkgs.lix;
-    extraOptions = ''
-      !include ${config.age.secrets.githubToken.path}
-    '';
-    channel.enable = false;
-    registry = {
-      n.flake = inputs.nixpkgs;
-    };
-  };
-
-  # Apply homemanager All (hma) to username and root (hm and hmr)
-  hm = config.hma // { home = (config.hma.home or { }) // { inherit username; }; };
-  hmr = config.hma // { home = (config.hma.home or { }) // { username = "root"; }; };
-
-  hma = {
-    programs.btop.settings.color_theme = "/home/${username}/.config/btop/themes/catppuccin_mocha.theme";
-    home = {
-      inherit stateVersion;
-      file.".config/btop/themes" = {
-        source =
-          pkgs.fetchFromGitHub {
-            owner = "catppuccin";
-            repo = "btop";
-            tag = "1.0.0";
-            sha256 = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
-          }
-          + "/themes";
-      };
-    };
-  };
-
-  environment = {
-    systemPackages =
-      with pkgs;
-      let
-        inherit (pkgs.stdenv.hostPlatform) system;
-      in
-      [
-        inputs.agenix.packages.${system}.default
-        wget
-        tealdeer
-        sbctl
-        just
-        clang
-        killall
-        nmap
-        openvpn
-        nix-index
-        nix-output-monitor
-        dix
-        openssl
-        pv # monitor the progress of data through a pipe
-        hyfetch
-        zip
-        unzip
-        file
-        which
-        tree
-        bat
-        rip2
-        btop # replacement of htop/nmon
-        iotop # io monitoring
-        nmon
-        iftop # network monitoring
-        nixfmt
-        alejandra
-        nixd
-        sqlite
-
-        # python is useful
-        virtualenv
-        poetry
-        uv
-        (python3.withPackages (ps: [ ]))
-      ];
-  };
-  services.tailscale = {
-    enable = mkDefault true;
-    package = pkgs.tailscale.overrideAttrs (oa: {
-      doCheck = false;
-    });
-  };
-
-  security.sudo-rs = {
-    enable = mkDefault true;
-    extraConfig = "Defaults targetpw";
-    extraRules = [
-      {
-        users = [ "ALL" ];
-        commands = [ "SETENV: ALL" ];
-      }
-    ];
-  };
-
-  programs.msmtp = {
-    enable = mkDefault true;
-    setSendmail = true;
-    defaults = {
-      aliases = "/etc/aliases";
-      port = 587;
-      auth = "plain";
-      tls = "on";
-      tls_starttls = "on";
-    };
-    accounts = {
-      default = {
-        host = "smtp.free.fr";
-        passwordeval = "cat ${config.age.secrets."smtpPassword".path}";
-        user = "eymeric.monitoring";
-        from = "eymeric.monitoring@free.fr";
-      };
-    };
-  };
-  environment.etc.aliases.text = ''
-    root: eymeric.monitoring@free.fr
-  '';
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = mkDefault true;
-
-  users.users = {
-    root = {
-      hashedPasswordFile = config.age.secrets.rootPassword.path;
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+QyzHE8xVIWrDHZTf0M8mmFNC1tcbIOt+PafD8H4S7"
-      ];
-    };
-    ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
-  };
-
-  services.journald =
-    if !stable then
-      {
-        settings.Journal = {
-          SystemMaxUse = "10G";
-          SystemKeepFree = "2G";
-          SystemMaxFileSize = "64M";
-          MaxRetentionSec = "14day";
-          Compress = true;
+    age = {
+      secrets = mkSecrets {
+        rootPassword = { };
+        githubToken = {
+          root = true;
         };
-      }
-    else
-      {
-        extraConfig = ''
-          SystemMaxUse=10G
-          SystemKeepFree=2G
-          SystemMaxFileSize=64M
-          MaxRetentionSec=14day
-          Compress=yes
-        '';
+        smtpPassword = {
+          group = "smtp";
+          mode = "440";
+          root = true;
+        };
+        smtpPasswordEnv = {
+          group = "smtp";
+          mode = "440";
+          root = true;
+        };
       };
+    };
+    users = {
+      groups.smtp = { };
+    };
+
+    programs.direnv = {
+      enable = true;
+      loadInNixShell = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+      nix-direnv.enable = true;
+    };
+
+    programs.nix-index-database.comma.enable = true;
+
+    system.stateVersion = stateVersion;
+
+    # Set your time zone.
+    time.timeZone = "Europe/Paris";
+
+    # Select internationalisation properties.
+    i18n.defaultLocale = "fr_FR.UTF-8";
+
+    i18n.extraLocaleSettings = {
+      LC_ADDRESS = "fr_FR.UTF-8";
+      LC_IDENTIFICATION = "fr_FR.UTF-8";
+      LC_MEASUREMENT = "fr_FR.UTF-8";
+      LC_MONETARY = "fr_FR.UTF-8";
+      LC_NAME = "fr_FR.UTF-8";
+      LC_NUMERIC = "fr_FR.UTF-8";
+      LC_PAPER = "fr_FR.UTF-8";
+      LC_TELEPHONE = "fr_FR.UTF-8";
+      LC_TIME = "fr_FR.UTF-8";
+    };
+
+    # Configure keymap in X11
+    services.xserver.xkb = {
+      layout = "fr";
+      variant = "";
+    };
+
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      backupFileExtension = "backup";
+    };
+
+    nix = {
+      nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+      # package = pkgs.lix;
+      extraOptions = ''
+        !include ${config.age.secrets.githubToken.path}
+      '';
+      channel.enable = false;
+      registry = {
+        n.flake = inputs.nixpkgs;
+      };
+    };
+
+    # Apply homemanager All (hma) to username and root (hm and hmr)
+    hm = config.hma // {
+      home = (config.hma.home or { }) // {
+        inherit username;
+      };
+    };
+    hmr = config.hma // {
+      home = (config.hma.home or { }) // {
+        username = "root";
+      };
+    };
+
+    hma = {
+      programs.btop.settings.color_theme = "/home/${username}/.config/btop/themes/catppuccin_mocha.theme";
+      home = {
+        inherit stateVersion;
+        file.".config/btop/themes" = {
+          source =
+            pkgs.fetchFromGitHub {
+              owner = "catppuccin";
+              repo = "btop";
+              tag = "1.0.0";
+              sha256 = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
+            }
+            + "/themes";
+        };
+      };
+    };
+
+    environment = {
+      systemPackages =
+        with pkgs;
+        let
+          inherit (pkgs.stdenv.hostPlatform) system;
+        in
+        [
+          inputs.agenix.packages.${system}.default
+          wget
+          tealdeer
+          sbctl
+          just
+          clang
+          killall
+          nmap
+          openvpn
+          nix-index
+          nix-output-monitor
+          dix
+          openssl
+          pv # monitor the progress of data through a pipe
+          hyfetch
+          zip
+          unzip
+          file
+          which
+          tree
+          bat
+          rip2
+          btop # replacement of htop/nmon
+          iotop # io monitoring
+          nmon
+          iftop # network monitoring
+          nixfmt
+          alejandra
+          nixd
+          sqlite
+
+          # python is useful
+          virtualenv
+          poetry
+          uv
+          (python3.withPackages (ps: [ ]))
+        ];
+    };
+    services.tailscale = {
+      enable = mkDefault true;
+      package = pkgs.tailscale.overrideAttrs (oa: {
+        doCheck = false;
+      });
+    };
+
+    security.sudo-rs = {
+      enable = mkDefault true;
+      extraConfig = "Defaults targetpw";
+      extraRules = [
+        {
+          users = [ "ALL" ];
+          commands = [ "SETENV: ALL" ];
+        }
+      ];
+    };
+
+    programs.msmtp = {
+      enable = mkDefault true;
+      setSendmail = true;
+      defaults = {
+        aliases = "/etc/aliases";
+        port = 587;
+        auth = "plain";
+        tls = "on";
+        tls_starttls = "on";
+      };
+      accounts = {
+        default = {
+          host = "smtp.free.fr";
+          passwordeval = "cat ${config.age.secrets."smtpPassword".path}";
+          user = "eymeric.monitoring";
+          from = "eymeric.monitoring@free.fr";
+        };
+      };
+    };
+    environment.etc.aliases.text = ''
+      root: eymeric.monitoring@free.fr
+    '';
+
+    # Enable the OpenSSH daemon.
+    services.openssh.enable = mkDefault true;
+
+    users.users = {
+      root = {
+        hashedPasswordFile = config.age.secrets.rootPassword.path;
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+QyzHE8xVIWrDHZTf0M8mmFNC1tcbIOt+PafD8H4S7"
+        ];
+      };
+      ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
+    };
+
+    services.journald =
+      if !stable then
+        {
+          settings.Journal = {
+            SystemMaxUse = "10G";
+            SystemKeepFree = "2G";
+            SystemMaxFileSize = "64M";
+            MaxRetentionSec = "14day";
+            Compress = true;
+          };
+        }
+      else
+        {
+          extraConfig = ''
+            SystemMaxUse=10G
+            SystemKeepFree=2G
+            SystemMaxFileSize=64M
+            MaxRetentionSec=14day
+            Compress=yes
+          '';
+        };
   };
 }
