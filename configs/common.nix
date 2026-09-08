@@ -7,6 +7,7 @@
   inputs,
   mkSecrets,
   stable,
+  hostNames,
   ...
 }:
 let
@@ -257,6 +258,26 @@ in
 
     hma = {
       home = { inherit stateVersion; };
+      programs.ssh = {
+        enable = true;
+        enableDefaultConfig = false;
+        settings =
+          let
+            mkSSHConfig = host: {
+              "${host}" = {
+                inherit host;
+                user = "root";
+                forwardAgent = true;
+              };
+              "${lib.toLower (lib.substring 0 1 username)}${host}" = {
+                host = "e${host}";
+                user = "root";
+                forwardAgent = true;
+              };
+            };
+          in
+          { } // builtins.foldl' (acc: host: acc // mkSSHConfig host) { } hostNames;
+      };
     };
 
     environment = {

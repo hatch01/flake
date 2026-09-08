@@ -45,6 +45,8 @@ let
           mkSecret = secretName: other: mkSecrets { ${secretName} = other; };
           stable = isStable;
           system = value.system;
+          inherit systems;
+          hostNames = lib.attrNames systems;
         }
         // (value.specialArgs or { });
       }
