@@ -21,7 +21,7 @@ in
     programs.git.enable = true;
     programs.git.lfs.enable = true;
 
-    hm = {
+    hma = {
       xdg.configFile."git/config".force = true;
 
       programs = {
