@@ -102,6 +102,7 @@ in
     services.matrix-synapse = {
       enable = true;
 
+      log.root.level = "WARNING";
       settings = {
         app_service_config_files = [ puppetFile ];
 
