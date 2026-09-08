@@ -61,7 +61,7 @@ in
 
     environment.pathsToLink = [ "/share/zsh" ];
 
-    hm.programs.zellij = {
+    hma.programs.zellij = {
       enable = true;
       settings = {
         show_startup_tips = false;
