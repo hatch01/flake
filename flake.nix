@@ -82,11 +82,6 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    portfolio = {
-      url = "git+ssh://forgejo@forge.onyx.ovh:443/github_mirror/portfolio?shallow=1";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix4nvchad = {
       url = "git+https://forge.onyx.ovh/github_mirror/nix4nvchad?shallow=1";

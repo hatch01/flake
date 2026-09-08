@@ -43,7 +43,6 @@
     ./office
     ./ollama.nix
     ./plasma
-    ./portfolio.nix
     ./postgres.nix
     ./restic.nix
     ./social

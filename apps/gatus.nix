@@ -115,11 +115,7 @@ in
                   name = "homepage";
                   url = "https://${config.homepage.domain}";
                 })
-                (mkGatusCheck {
-                  name = "portfolio";
-                  url = "https://${config.portfolio.domain}";
-                  group = "clement";
-                })
+
                 (mkGatusCheck {
                   name = "speedtest";
                   url = "https://${config.librespeed.domain}/";

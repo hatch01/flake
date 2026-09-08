@@ -52,7 +52,6 @@
   apolline.enable = true;
   lasuite-meet.enable = false;
   restic.enable = true;
-  portfolio.enable = true;
   incus.enable = true;
   sslh.enable = true;
   wakapi.enable = true;

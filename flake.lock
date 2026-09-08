@@ -646,30 +646,6 @@
         "url": "https://forge.onyx.ovh/github_mirror/plasma-manager"
       }
     },
-    "portfolio": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1767041346,
-        "narHash": "sha256-sU/1OUmSpUlGGwzXbDAdJPClH6d8jDZKb8yb3KGpzyA=",
-        "ref": "refs/heads/master",
-        "rev": "c42119cbdd198eeda8c1c7fef10452458ecdc03b",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://forgejo@forge.onyx.ovh:443/github_mirror/portfolio"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://forgejo@forge.onyx.ovh:443/github_mirror/portfolio"
-      }
-    },
     "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -716,7 +692,6 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "pikvm": "pikvm",
         "plasma-manager": "plasma-manager",
-        "portfolio": "portfolio",
         "systems": "systems_2"
       }
     },

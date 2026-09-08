@@ -451,8 +451,6 @@ in
 
         (mkVhost "apolline" { authelia = true; })
 
-        (mkVhost "portfolio" { })
-
         (mkVhost "incus" {
           locations."/" = {
             proxyPass = "https://127.0.0.1:${toString config.incus.port}";
