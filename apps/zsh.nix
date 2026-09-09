@@ -108,6 +108,7 @@ in
         ls = getExe eza;
         ll = "${getExe eza} -l";
         l = "${getExe eza} -la";
+        y = "yazi"; # yazi wrapper: cd into last browsed dir on exit
         rm = "${getExe rip2} --graveyard ~/.local/share/Trash";
         sgit = "sudo -E ${getExe git}";
         se = "sudo -E";
@@ -329,6 +330,20 @@ in
               echo "     -o sftp_server=\"$sftp_cmd\" -v"
             fi
             return 1
+          fi
+        }
+
+        # yazi: cd into the directory browsed in yazi when it exits
+        yazi() {
+          local tmp="''${TMPDIR:-/tmp}/yazi-cwd.$$"
+          ${getExe yazi} --cwd-file "$tmp" "$@"
+          if [[ -f "$tmp" ]]; then
+            local cwd
+            cwd="$(<$tmp)"
+            if [[ -n "$cwd" && "$cwd" != "$PWD" && -d "$cwd" ]]; then
+              builtin cd -- "$cwd"
+            fi
+            rm -f -- "$tmp"
           fi
         }
 
