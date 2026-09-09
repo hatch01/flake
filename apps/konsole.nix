@@ -40,7 +40,7 @@ in
             "Cursor Options"."CursorShape".value = 1;
 
             "General" = {
-              "Command".value = "${lib.getExe pkgs.zsh}";
+              "Command".value = "${lib.getExe pkgs.zellij}";
               "Name".value = "light";
             };
             "Scrolling"."HistoryMode".value = 2;
@@ -59,7 +59,7 @@ in
             "Cursor Options"."CursorShape".value = 1;
 
             "General" = {
-              "Command".value = "${lib.getExe pkgs.zsh}";
+              "Command".value = "${lib.getExe pkgs.zellij}";
               "Name".value = "light";
             };
             "Scrolling"."HistoryMode".value = 2;
