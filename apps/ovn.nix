@@ -40,7 +40,10 @@ in
 
   config = mkIf (cfg_central.enable || cfg_host.enable) {
     environment.persistence."/persistent" = mkIf cfg_host.enable {
-      directories = [ "/var/lib/openvswitch" ];
+      directories = [
+        "/var/lib/openvswitch"
+        "/var/lib/ovn"
+      ];
     };
 
     systemd.tmpfiles.rules = mkIf cfg_host.enable [
