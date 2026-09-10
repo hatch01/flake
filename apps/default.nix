@@ -55,7 +55,7 @@
     ./wakapi.nix
     ./watchtower.nix
     ./yubikey.nix
-    ./zsh.nix
+    ./zsh
     ./bitwarden.nix
     ./ntfy.nix
     ./anubis.nix

@@ -56,6 +56,16 @@ in
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O
       zoxide # Fast cd command that learns your habits
       zsh-completions # Additional completion definitions for zsh
+      # Delete a file or folder from btrfs live fs and all matching snapshots
+      (writeShellApplication {
+        name = "brm";
+        runtimeInputs = [
+          btrfs-progs
+          util-linux
+          coreutils
+        ];
+        text = builtins.readFile ./brm.sh;
+      })
     ];
 
     environment.pathsToLink = [ "/share/zsh" ];
