@@ -288,8 +288,6 @@ in
                 to: eymeric.monitoring@free.fr
                 username: eymeric.monitoring
                 overrides:
-                  - group: clement
-                    to: clement.reniers00@gmail.com
                   - group: pimprenelles
                     to: snoel@outlook.fr
                   - group: nichihachi
