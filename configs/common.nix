@@ -28,6 +28,7 @@ in
   };
 
   config = {
+    atop.enable = mkDefault true;
     neovim.enable = mkDefault true;
     container.enable = mkDefault true;
     nix-related.enable = mkDefault true;

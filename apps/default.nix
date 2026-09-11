@@ -2,6 +2,7 @@
 {
   imports = [
     ./adguard.nix
+    ./atop.nix
     ./apolline.nix
     ./authelia.nix
     ./beszel/agent.nix
