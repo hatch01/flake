@@ -19,6 +19,7 @@
     dtc
   ];
 
+  atop.netatop.enable = false;
   container.enable = lib.mkForce false;
   cockpit.enable = true;
   cockpit.domain = "lilas:9090";
