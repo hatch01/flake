@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkOption mkIf;
+  inherit (lib) mkEnableOption mkOption mkIf mkDefault;
 
   # Base keep-strategy for every snapshot config.
   # Any of these can be overridden per-backup simply by adding the key.
@@ -67,6 +67,7 @@ in
         // lib.removeAttrs backup [ "path" ];
     in
     {
+      snapper.setupQuota = mkDefault false;
       services.snapper = {
         snapshotInterval = config.snapper.snapshotInterval;
         cleanupInterval = config.snapper.cleanupInterval;
