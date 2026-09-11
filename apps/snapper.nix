@@ -5,7 +5,12 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkOption mkIf mkDefault;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    mkDefault
+    ;
 
   # Base keep-strategy for every snapshot config.
   # Any of these can be overridden per-backup simply by adding the key.
