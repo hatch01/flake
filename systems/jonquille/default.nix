@@ -64,6 +64,7 @@
   nginx.nichihachi.backendIp = "192.168.1.142";
 
   boot.loader.timeout = 1;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   age.identityPaths = [ "/persistent/key" ];
