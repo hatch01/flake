@@ -25,6 +25,13 @@
     options = [ "noatime" ];
   };
 
+  # Firmware partition, populated by hardware.raspberry-pi.firmware (kvmd module)
+  fileSystems."/boot/firmware" = {
+    device = "/dev/disk/by-label/FIRMWARE";
+    fsType = "vfat";
+    options = [ "nofail" ];
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
