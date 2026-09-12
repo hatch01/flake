@@ -1,5 +1,14 @@
 {
-  stable = [ ];
+  stable = [
+    {
+      pr = 537545;
+      name = "headscale: 0.28.0 -> 0.29.2";
+    }
+    {
+      pr = 547112;
+      name = "headscale: 0.29.2 -> 0.29.3";
+    }
+  ];
 
   unstable = [
     {
