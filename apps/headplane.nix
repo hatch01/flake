@@ -41,10 +41,6 @@ in
         owner = "headscale";
         group = "headscale";
       };
-      "headplane_pre_authkey" = {
-        owner = "headscale";
-        group = "headscale";
-      };
     };
 
     services.headplane = {
@@ -62,13 +58,13 @@ in
           url = "http://127.0.0.1:${toString config.headscale.port}";
           public_url = "https://${config.headscale.domain}";
           config_path = "/etc/headscale/config.yaml";
+          api_key_path = config.age.secrets.headscale_api_key.path;
         };
 
         integration = {
           proc.enabled = true;
           agent = {
             enabled = true;
-            pre_authkey_path = config.age.secrets.headplane_pre_authkey.path;
           };
         };
 
@@ -77,7 +73,6 @@ in
           issuer = "https://${config.authelia.domain}";
           client_id = "headplane";
           client_secret_path = config.age.secrets.headplane_oidc.path;
-          headscale_api_key_path = config.age.secrets.headscale_api_key.path;
           scope = "openid profile email groups";
           use_pkce = true;
         };
