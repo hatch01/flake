@@ -35,6 +35,7 @@ in
       providers = [
         "spotify"
         "opensubsonic"
+        "chromecast"
       ];
     };
 
