@@ -31,7 +31,6 @@
     };
   };
 
-  time.timeZone = lib.mkForce "Asia/Ho_Chi_Minh";
   services.tailscale.useRoutingFeatures = lib.mkDefault "client";
 
   zramSwap.enable = true;
