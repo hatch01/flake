@@ -39,6 +39,12 @@ in
       ];
     };
 
+    # Chromecast discovery relies on mDNS multicast (UDP 5353) and players
+    # must reach the Music Assistant stream server over inbound TCP 8097.
+    # The nftables firewall drops inbound traffic unless these ports are open.
+    networking.firewall.allowedUDPPorts = [ 5353 ];
+    networking.firewall.allowedTCPPorts = [ 8097 ];
+
     environment.persistence."/persistent".directories = [
       "/var/lib/private/music-assistant"
     ];
