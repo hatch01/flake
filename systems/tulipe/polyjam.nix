@@ -54,6 +54,9 @@
         };
       };
 
+      environment.systemPackages = with pkgs; [
+        kdePackages.dolphin
+      ];
       services.libinput = {
         enable = true;
         touchpad.naturalScrolling = true;
