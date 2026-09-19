@@ -156,6 +156,7 @@
 
       # Auto-start WiFi hotspot on boot
       systemd.services.networkmanager-hotspot = {
+        enable = false;
         description = "NetworkManager WiFi Hotspot";
         after = [ "NetworkManager.service" ];
         wants = [ "NetworkManager.service" ];
