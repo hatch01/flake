@@ -40,6 +40,10 @@
       pr = 559444;
       name = "tone3000";
     }
+    {
+      pr = 564869;
+      name = "music-assistant fix spotify";
+    }
   ];
 
   common = [
