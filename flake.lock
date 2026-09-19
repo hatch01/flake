@@ -81,10 +81,10 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1787912381,
-        "narHash": "sha256-FLXUIfz5JUq92NJn78siRM7VuBv/Rw0GUq81iaM2qgE=",
+        "lastModified": 1789837398,
+        "narHash": "sha256-V5qPaF+4GF/3JSLZFBfpEbGci4Z/ojjVCTMU3yrsAEw=",
         "ref": "refs/heads/main",
-        "rev": "a848680d5133f63d475e98eba018699ae80dfb6c",
+        "rev": "c2ccc105122b7875903df4fdf2996e64ba5a0b2a",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/bass2midi.git"
