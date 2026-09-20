@@ -51,5 +51,9 @@
       pr = 402608;
       name = "satochip-utils";
     }
+    {
+      pr = 565322;
+      name = "update ustreamer";
+    }
   ];
 }
