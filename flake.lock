@@ -458,21 +458,22 @@
     },
     "nixos-hardware": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1789752250,
         "narHash": "sha256-q0J27mJDfd4BM9a7KcMVbcRmqyU+goQwudbMIu66qsg=",
-        "ref": "refs/heads/master",
+        "owner": "nixos",
+        "repo": "nixos-hardware",
         "rev": "b2d7d02644f0002535a3bb51a73780945cdc7ba4",
-        "shallow": true,
-        "type": "git",
-        "url": "https://forge.onyx.ovh/github_mirror/nixos-hardware"
+        "type": "github"
       },
       "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "https://forge.onyx.ovh/github_mirror/nixos-hardware"
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "type": "github"
       }
     },
     "nixos-wsl": {
@@ -549,19 +550,6 @@
       }
     },
     "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1789546076,
-        "narHash": "sha256-vWkSk5bbfTqdtMoSgD9FshACO8JCvXTFi+3cqEp0mH0=",
-        "rev": "b1b875982b17dabde9b4a37f3e229e74913e6db3",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1074753.b1b875982b17/nixexprs.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
-      }
-    },
-    "nixpkgs_4": {
       "locked": {
         "lastModified": 1789785513,
         "narHash": "sha256-vbA41bZNfL9AFxwvS4DVPefv3yVADl4oHr6jE3misxU=",
@@ -688,7 +676,7 @@
         "nix4nvchad": "nix4nvchad",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
         "pikvm": "pikvm",
         "plasma-manager": "plasma-manager",
