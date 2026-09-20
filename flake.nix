@@ -32,7 +32,11 @@
       inputs.flake-compat.follows = "flake-compat";
     };
 
-    nixos-hardware.url = "git+https://forge.onyx.ovh/github_mirror/nixos-hardware?shallow=1";
+    nixos-hardware = {
+      # url = "git+https://forge.onyx.ovh/github_mirror/nixos-hardware?shallow=1";
+      url = "github:nixos/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     systems.url = "git+https://forge.onyx.ovh/github_mirror/nix-systems?shallow=1";
 
