@@ -26,7 +26,7 @@ let
 
     sourceRoot = "source/shs_z2m_presence_zones";
 
-    npmDepsHash = "sha256-gKg5joc3yM13ANkAjWMJ+xSJ4CbM6DJ78cLtukzrBOY=";
+    npmDepsHash = "sha256-s8XfIiEC4CHNIDlHrHzKVtRaTxNo28F99p9LoRGAD+o=";
 
     npmBuildScript = "build";
 
