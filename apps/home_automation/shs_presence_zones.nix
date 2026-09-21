@@ -77,11 +77,11 @@ in
       };
 
       serviceConfig = {
-        ExecStart = "''${pkgs.nodejs}/bin/node ''${shsPresenceZonesPackage}/lib/node_modules/shs-z2m-presence-zones/server.js";
+        ExecStart = "${pkgs.nodejs}/bin/node ${shsPresenceZonesPackage}/lib/node_modules/shs-z2m-presence-zones/server.js";
         Restart = "always";
         DynamicUser = true;
         StateDirectory = "shs-presence-zones";
-        WorkingDirectory = "''${shsPresenceZonesPackage}/lib/node_modules/shs-z2m-presence-zones";
+        WorkingDirectory = "${shsPresenceZonesPackage}/lib/node_modules/shs-z2m-presence-zones";
       };
     };
   };
