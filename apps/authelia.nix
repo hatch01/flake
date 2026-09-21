@@ -222,6 +222,10 @@ in
                 groups = [ "home" ];
               }
               ++ mkUserRule {
+                appName = "shs_presence_zones";
+                groups = [ "home" ];
+              }
+              ++ mkUserRule {
                 appName = "esp_home";
                 groups = [ "home" ];
               }

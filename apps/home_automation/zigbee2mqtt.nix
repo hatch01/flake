@@ -33,6 +33,19 @@ in
     services.mosquitto = {
       enable = true;
       dataDir = "/storage/mosquitto";
+      listeners = [
+        {
+          port = 1883;
+          omitPasswordAuth = true;
+          settings.allow_anonymous = true;
+        }
+        {
+          port = 1884;
+          omitPasswordAuth = true;
+          settings.allow_anonymous = true;
+          settings.protocol = "websockets";
+        }
+      ];
     };
 
     systemd.services.zigbee2mqtt.serviceConfig.Restart = lib.mkForce "always";
