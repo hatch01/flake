@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   base_domain_name,
   ...
 }:
@@ -42,13 +41,6 @@ in
 
       settings = {
         version = 4;
-        external_converters = [
-          (pkgs.fetchurl {
-            name = "shs01_enhanced.js";
-            url = "https://raw.githubusercontent.com/notownblues/SHS-Z2M-Presence/main/zigbee2mqtt/external_converters/shs01_enhanced.js";
-            hash = "sha256-gFTLBt4AMBHHaHwcSbaPx8mLP1nRYtfwfmRLwHzFTo4=";
-          })
-        ];
         homeassistant.enabled = true;
         mqtt = {
           base_topic = "zigbee2mqtt";
