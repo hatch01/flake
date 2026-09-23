@@ -173,14 +173,6 @@ in
                 };
               }
               {
-                "SHS Presence Zones" = {
-                  icon = "zigbee2mqtt.png"; # Or a different icon if available
-                  description = "SHS Presence Zones Configurator";
-                  href = "https://${config.shs_presence_zones.domain}";
-                  siteMonitor = "https://${config.shs_presence_zones.domain}";
-                };
-              }
-              {
                 "Esp Home" = {
                   icon = "esphome.png";
                   description = "Esp Home c'est vraiment cool";

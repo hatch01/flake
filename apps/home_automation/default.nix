@@ -17,7 +17,6 @@ in
     ./matter.nix
     ./openthread.nix
     ./esp_home.nix
-    ./shs_presence_zones.nix
   ];
 
   options = {
@@ -31,6 +30,5 @@ in
     openthread.enable = true;
     matter.enable = true;
     esp_home.enable = true;
-    shs_presence_zones.enable = true;
   };
 }

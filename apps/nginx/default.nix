@@ -488,11 +488,6 @@ in
           locations."/".proxyWebsockets = true;
         })
 
-        (mkVhost "shs_presence_zones" {
-          authelia = true;
-          locations."/".proxyWebsockets = true;
-        })
-
         (mkVhost "esp_home" {
           authelia = true;
           locations."/".proxyWebsockets = true;
