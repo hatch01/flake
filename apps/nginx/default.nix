@@ -210,17 +210,16 @@ in
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
-      commonHttpConfig =
-        ''
-          access_log off;
-          absolute_redirect off;
-        ''
-        + lib.optionalString (config.nginx.ports.httpsRedirect != null) ''
-          # tlsrouter forwards via PROXY protocol, restore the real client IP.
-          real_ip_header proxy_protocol;
-          set_real_ip_from 127.0.0.1;
-          set_real_ip_from ::1;
-        '';
+      commonHttpConfig = ''
+        access_log off;
+        absolute_redirect off;
+      ''
+      + lib.optionalString (config.nginx.ports.httpsRedirect != null) ''
+        # tlsrouter forwards via PROXY protocol, restore the real client IP.
+        real_ip_header proxy_protocol;
+        set_real_ip_from 127.0.0.1;
+        set_real_ip_from ::1;
+      '';
       proxyCachePath = {
         "" = {
           enable = true;
