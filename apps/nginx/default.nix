@@ -191,7 +191,7 @@ in
     nginx.ports.httpsRedirect = mkOption {
       type = types.nullOr types.int;
       default = null;
-      description = "Port for HTTPS traffic when nginx redirecting to itself (see nichihachi-redirects.nix)";
+      description = "Port for HTTPS traffic when nginx redirecting to itself (see nichihachi-redirects.nix / tlsrouter)";
     };
   };
 
@@ -210,10 +210,17 @@ in
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
-      commonHttpConfig = ''
-        access_log off;
-        absolute_redirect off;
-      '';
+      commonHttpConfig =
+        ''
+          access_log off;
+          absolute_redirect off;
+        ''
+        + lib.optionalString (config.nginx.ports.httpsRedirect != null) ''
+          # tlsrouter forwards via PROXY protocol, restore the real client IP.
+          real_ip_header proxy_protocol;
+          set_real_ip_from 127.0.0.1;
+          set_real_ip_from ::1;
+        '';
       proxyCachePath = {
         "" = {
           enable = true;
@@ -235,11 +242,13 @@ in
             addr = if https != 443 then "127.0.0.1" else "0.0.0.0";
             port = https;
             ssl = true;
+            proxyProtocol = config.nginx.ports.httpsRedirect != null;
           }
           {
             addr = if https != 443 then "[::1]" else "[::]";
             port = https;
             ssl = true;
+            proxyProtocol = config.nginx.ports.httpsRedirect != null;
           }
           {
             addr = if http != 80 then "127.0.0.1" else "0.0.0.0";

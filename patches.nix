@@ -44,6 +44,10 @@
       pr = 564869;
       name = "music-assistant fix spotify";
     }
+    {
+      pr = 390619;
+      name = "tlsrouteur";
+    }
   ];
 
   common = [
