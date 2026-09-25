@@ -92,7 +92,7 @@ in
         dataDir = "/storage/bitcoin";
         rpc = {
           port = config.bitcoin.server.portRpc;
-          users.eymeric.passwordHMAC = "a389e7d06c32b0708df55f48b2443754$5ac271542e5ecf9136d13a60149ca4e2ce5e96a47c476fd075817298ac7c7c80";
+          users.eymeric.passwordHMAC = "2774138d1955fbf3124f9f9e9f703a6b$db5d597b20b13b2cb0995584cab1f31f0cac0bc1aa441e366faa996a46fca34f";
         };
         extraConfig = ''
           rpcbind=100.64.0.4
