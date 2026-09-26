@@ -61,7 +61,7 @@
   programs.nh.clean.enable = lib.mkForce false;
 
   nginx.nichihachi.enable = true;
-  nginx.nichihachi.backendIp = "192.168.1.142";
+  nginx.nichihachi.backendIp = "192.168.1.124";
 
   boot.loader.timeout = 1;
   boot.kernelPackages = pkgs.linuxPackages_latest;
