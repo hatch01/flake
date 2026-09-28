@@ -38,9 +38,18 @@ in
     comin.enable = mkDefault true;
 
     nix = {
+      # package = pkgs.lix;
+      extraOptions = ''
+        !include ${config.age.secrets.githubToken.path}
+      '';
+      channel.enable = false;
+      registry = {
+        n.flake = inputs.nixpkgs;
+      };
       package = pkgs.nixVersions.git;
       settings = {
         download-buffer-size = 524288000;
+        nix-path = [ "nixpkgs=${inputs.nixpkgs}" ];
       }
       // (import ../flake.nix).nixConfig;
     };
@@ -244,18 +253,6 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "backup";
-    };
-
-    nix = {
-      nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-      # package = pkgs.lix;
-      extraOptions = ''
-        !include ${config.age.secrets.githubToken.path}
-      '';
-      channel.enable = false;
-      registry = {
-        n.flake = inputs.nixpkgs;
-      };
     };
 
     # Apply homemanager All (hma) to username and root (hm and hmr)
