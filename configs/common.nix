@@ -58,7 +58,7 @@ in
             "vscode-extension-ms-vscode-cpptools"
 
             # intellij
-            "idea"
+            "intellij-idea"
             "pycharm"
             "clion"
             "rust-rover"
