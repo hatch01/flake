@@ -16,6 +16,10 @@
       pr = 538802;
       name = "headplane: 0.6.3 -> 0.7.0, inherit headplane-agent from headplane, nixos/headplane: clean up deprecated options";
     }
+    {
+      pr = 565322;
+      name = "update ustreamer";
+    }
   ];
 
   unstable = [
@@ -41,7 +45,8 @@
       name = "tone3000";
     }
     {
-      pr = 564869;
+      # pr = 564869;
+      branch = "fix-music-assistant-spotify-unstable";
       name = "music-assistant fix spotify";
     }
     {
@@ -54,10 +59,6 @@
     {
       pr = 402608;
       name = "satochip-utils";
-    }
-    {
-      pr = 565322;
-      name = "update ustreamer";
     }
   ];
 }
