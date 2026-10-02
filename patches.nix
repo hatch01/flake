@@ -16,10 +16,6 @@
       pr = 538802;
       name = "headplane: 0.6.3 -> 0.7.0, inherit headplane-agent from headplane, nixos/headplane: clean up deprecated options";
     }
-    {
-      pr = 565322;
-      name = "update ustreamer";
-    }
   ];
 
   unstable = [
