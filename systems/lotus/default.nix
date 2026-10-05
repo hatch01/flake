@@ -22,6 +22,7 @@
   office.enable = true;
   home-manager.sharedModules = with inputs; [ plasma-manager.homeModules.plasma-manager ];
   ghostwriter.enable = true;
+  atop.enable = false;
 
   # dev params
   dev.enable = true;
