@@ -37,6 +37,10 @@
       pr = 390619;
       name = "tlsrouteur";
     }
+    {
+      pr = 570596;
+      name = "rxvt-unicode-unwrapped: fix build with gcc16";
+    }
   ];
 
   common = [
