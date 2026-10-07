@@ -212,6 +212,8 @@ in
 
     programs.nix-index-database.comma.enable = true;
 
+    boot.supportedFilesystems = [ "sshfs" ];
+
     system.stateVersion = stateVersion;
 
     # Set your time zone.
