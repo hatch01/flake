@@ -38,10 +38,6 @@
       name = "tlsrouter";
       branch = "tlsrouter";
     }
-    {
-      pr = 570596;
-      name = "rxvt-unicode-unwrapped: fix build with gcc16";
-    }
   ];
 
   common = [
