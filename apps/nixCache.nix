@@ -38,9 +38,7 @@ in
   };
 
   config = mkIf config.nixCache.enable {
-    age.secrets = mkSecret "cache-priv-key.pem" {
-      owner = "harmonia";
-    };
+    age.secrets = mkSecret "cache-priv-key.pem" { };
     services.harmonia.cache = harmoniaConfig;
   };
 }
