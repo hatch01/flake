@@ -34,8 +34,9 @@
       name = "music-assistant fix spotify";
     }
     {
-      pr = 390619;
-      name = "tlsrouteur";
+      # pr = 390619;
+      name = "tlsrouter";
+      branch = "tlsrouter";
     }
     {
       pr = 570596;
