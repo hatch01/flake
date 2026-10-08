@@ -351,15 +351,15 @@ in
           ARGS=$1
           if [[ "$ARGS" =~ \@ ]]
           then
-             	SRV=$(echo $ARGS | cut -d '@' -f2)
+              SRV=$(echo $ARGS | cut -d '@' -f2)
           else
-             	SRV="$ARGS"
+              SRV="$ARGS"
           fi
           ssh-keygen -R $SRV
           read -p "Reconnect ? IT WILL RUN \"ssh $ARGS\" ? (y/N) " RECO
           if [[ "$RECO" == "y" ]]
           then
-         	    ssh "$ARGS"
+              ssh "$ARGS"
           fi
         }
 
@@ -384,22 +384,148 @@ in
 
         s() {
           local no_www=0
-          local OPTIND opt
+          local no_zellij=''${S_NO_ZELLIJ:-0}
 
-          while getopts "w" opt; do
-            case $opt in
-              w) no_www=1 ;;
-              *) echo "Usage: s [-w] [server]" >&2; return 1 ;;
+          _s_help() {
+            print -r "Usage: s [options] [server]
+
+        Options:
+          -w, --no-www      Connect directly as the SSH user (skip 'sudo su - www')
+          -z, --no-zellij   Disable Zellij integration (standard SSH / sudo session)
+          -h, --help        Show this help message
+
+        Environment:
+          S_NO_ZELLIJ=1     Disable Zellij by default for all connections
+
+        Arguments:
+          [server]          Target server (fuzzy search via fzf if omitted or partial)"
+          }
+
+          while [[ $# -gt 0 ]]; do
+            case "$1" in
+              -h|--help)
+                _s_help
+                return 0
+                ;;
+              -w|--no-www)
+                no_www=1
+                shift
+                ;;
+              -z|--no-zellij)
+                no_zellij=1
+                shift
+                ;;
+              -wz|-zw)
+                no_www=1
+                no_zellij=1
+                shift
+                ;;
+              --)
+                shift
+                break
+                ;;
+              -*)
+                echo "Unknown option: $1" >&2
+                _s_help >&2
+                return 1
+                ;;
+              *)
+                break
+                ;;
             esac
           done
-          shift $((OPTIND - 1))
+
           local server=$(_select_ssh_host "$1")
-          if [[ -n $server ]]; then
+          if [[ -z "$server" ]]; then
+            return 1
+          fi
+
+          # Si Zellij est désactivé (flag -z ou S_NO_ZELLIJ=1)
+          if (( no_zellij )); then
             if [[ $no_www -eq 1 ]]; then
               ssh "$server"
             else
               ssh -t "$server" "sudo su - www"
             fi
+            return $?
+          fi
+
+          # ── 1. Gestion du cache local et auto-update de Zellij statique ────
+          local cache_dir="$HOME/.cache/zellij-static"
+          local local_bin="$cache_dir/zellij"
+          local stamp_file="$cache_dir/.last_update_check"
+          local zellij_url="https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz"
+          mkdir -p "$cache_dir"
+
+          local now=$(date +%s)
+          local last_check=$(stat -c %Y "$stamp_file" 2>/dev/null || echo 0)
+
+          # Si le binaire local n'existe pas, premier téléchargement synchrone
+          if [[ ! -x "$local_bin" ]]; then
+            echo "📥 Premier téléchargement de Zellij statique..."
+            local tmp_init=$(mktemp -d "/tmp/zellij-init.XXXXXX")
+            if curl -sSL --connect-timeout 5 --max-time 60 "$zellij_url" -o "$tmp_init/zellij.tar.gz" && tar -xzf "$tmp_init/zellij.tar.gz" -C "$tmp_init" 2>/dev/null; then
+              mv "$tmp_init/zellij" "$local_bin"
+              chmod 755 "$local_bin"
+              touch "$stamp_file"
+            else
+              echo "⚠ Impossible de télécharger Zellij (hors-ligne ou GitHub indisponible)." >&2
+            fi
+            rm -rf "$tmp_init"
+          elif (( now - last_check > 604800 )); then
+            # Plus de 7 jours : vérification / mise à jour asynchrone en arrière-plan (non-bloquant)
+            touch "$stamp_file"
+            (
+              local tmp_bg=$(mktemp -d "/tmp/zellij-update.XXXXXX")
+              if curl -sSL --connect-timeout 4 --max-time 45 "$zellij_url" -o "$tmp_bg/zellij.tar.gz" 2>/dev/null && tar -xzf "$tmp_bg/zellij.tar.gz" -C "$tmp_bg" 2>/dev/null; then
+                if [[ -x "$tmp_bg/zellij" ]]; then
+                  mv "$tmp_bg/zellij" "$local_bin"
+                  chmod 755 "$local_bin"
+                fi
+              fi
+              rm -rf "$tmp_bg"
+            ) >/dev/null 2>&1 &!
+          fi
+
+          # ── 2. Déploiement et exécution sur le serveur distant ───────────────
+          local ssh_opts=(-o ControlMaster=auto -o ControlPersist=60s -o ControlPath="/tmp/ssh-%C")
+
+          if [[ -x "$local_bin" ]]; then
+            local local_ver=$("$local_bin" --version 2>/dev/null)
+
+            # Arbre de décision pour trouver un répertoire inscriptible et exécutable (sans noexec)
+            # Exécution de zellij-probe.sh sur le serveur distant
+            local remote_dir
+            remote_dir=$(ssh "''${ssh_opts[@]}" "$server" "bash -s" < ${./zellij-probe.sh} 2>/dev/null | grep '^DIR:' | head -n1 | cut -d: -f2-)
+
+            if [[ -n "$remote_dir" ]]; then
+              local remote_bin="$remote_dir/zellij"
+              local remote_sh="$remote_dir/shell"
+              local remote_cfg="$remote_dir/config.kdl"
+
+              # Vérifier si zellij est présent avec la bonne version et ses wrappers
+              if ! ssh "''${ssh_opts[@]}" "$server" "test -x '$remote_bin' && [ \"\$('$remote_bin' --version 2>/dev/null)\" = '$local_ver' ] && test -x '$remote_sh' && test -f '$remote_cfg'" 2>/dev/null; then
+                echo "📤 Synchronisation de Zellij ($local_ver) vers $server:$remote_dir..."
+                cat "$local_bin" | ssh "''${ssh_opts[@]}" "$server" "cat > '$remote_bin' && chmod 755 '$remote_bin' && printf '#!/bin/sh\nexec sudo su - www\n' > '$remote_sh' && chmod 755 '$remote_sh' && printf 'default_shell \"%s\"\n' '$remote_sh' > '$remote_cfg'"
+              fi
+
+              # Lancement de Zellij avec rattachement de session
+              if [[ $no_www -eq 1 ]]; then
+                ssh "''${ssh_opts[@]}" -t "$server" "'$remote_bin' attach -c main || exec \$SHELL -l"
+              else
+                ssh "''${ssh_opts[@]}" -t "$server" "'$remote_bin' --config '$remote_cfg' attach -c main-www || sudo su - www"
+              fi
+              return $?
+            else
+              echo "⚠ Aucun répertoire exécutable trouvé (noexec). Connexion standard..." >&2
+            fi
+          fi
+
+          # Repli sur le shell standard si aucun binaire Zellij n'a pu être obtenu ou déployé
+          if [[ $no_www -eq 1 ]]; then
+            ssh "$server"
+          else
+            ssh -t "$server" "sudo su - www"
           fi
         }
 
