@@ -38,6 +38,10 @@
       name = "tlsrouter";
       branch = "tlsrouter";
     }
+    {
+      pr = 569719;
+      name = "fix contour";
+    }
   ];
 
   common = [
