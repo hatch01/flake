@@ -42,6 +42,10 @@
       pr = 569719;
       name = "fix contour";
     }
+    {
+      pr = 572125;
+      name = "fix authelia missing hash (be carefull this will probably no be merged)";
+    }
   ];
 
   common = [
