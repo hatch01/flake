@@ -23,6 +23,7 @@
   home-manager.sharedModules = with inputs; [ plasma-manager.homeModules.plasma-manager ];
   ghostwriter.enable = true;
   atop.enable = false;
+  hma.programs.ssh.enable = lib.mkForce false;
 
   # dev params
   dev.enable = true;
