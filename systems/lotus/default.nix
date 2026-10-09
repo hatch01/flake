@@ -58,7 +58,7 @@
         };
         settings = {
           user = {
-            email = lib.mkForce "eymeric.dechelette@worldline.com";
+            email = lib.mkForce "eymeric.dechelette@magellangroup.eu";
             name = lib.mkForce "w191923";
           };
         };
