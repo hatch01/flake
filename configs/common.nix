@@ -185,6 +185,15 @@ in
               ];
             })
           );
+          nix-output-monitor = prev.nix-output-monitor.overrideAttrs (old: {
+            patches = (old.patches or [ ]) ++ [
+              (prev.fetchpatch {
+                url = "https://github.com/maralorn/nix-output-monitor/pull/321.patch";
+                relative = "nix-output-monitor";
+                hash = "sha256-LNtuZI/4E7xQgX1US15WR0w//EU+GViuKfaz4qrVr38=";
+              })
+            ];
+          });
         })
       ];
     };
