@@ -56,90 +56,97 @@ in
 
     nixpkgs = {
       config = {
-        allowUnfreePredicate =
-          pkg:
-          builtins.elem (lib.getName pkg) [
-            # vscode
-            "vscode"
-            "vscode-extension-github-copilot"
-            "vscode-extension-github-copilot-chat"
-            "vscode-extension-MS-python-vscode-pylance"
-            "vscode-extension-ms-vscode-cpptools"
-
-            # intellij
-            "intellij-idea"
-            "pycharm"
-            "clion"
-            "rust-rover"
-            "phpstorm"
-            "datagrip"
-
-            # scanner
-            "iscan"
-            "iscan-gt"
-            "iscan-data"
-            "iscan-gt-f720-bundle"
-            "iscan-nt-bundle"
-            "iscan-gt-s650-bundle"
-            "iscan-gt-s80-bundle"
-            "iscan-v330-bundle"
-            "iscan-v370-bundle"
-            "iscan-perfection-v550-bundle"
-            "iscan-gt-x820-bundle"
-            "iscan-gt-x750-bundle"
-            "iscan-gt-x770-bundle"
-            "iscan-gt-s600-bundle"
-
-            #gaming
-            "steam"
-            "steam-run"
-            "steam-unwrapped"
-            "steam-original"
-            "libsciter"
-            "parsec-bin"
-
-            #others
-            "geogebra"
-            "spotify"
-            # Nvidia related things
-            "nvidia-x11"
-            "nvidia-settings"
-            "nvidia-persistenced"
-            "cuda-merged"
-            "cuda_cuobjdump"
-            "cuda_gdb"
-            "cuda_nvcc"
-            "cuda_nvdisasm"
-            "cuda_nvprune"
-            "cuda_cccl"
-            "cuda_cudart"
-            "cuda_cupti"
-            "cuda_cuxxfilt"
-            "cuda_nvml_dev"
-            "cuda_nvrtc"
-            "cuda_nvtx"
-            "cuda_profiler_api"
-            "cuda_sanitizer_api"
-            "cudnn"
-            "libcublas"
-            "libcufft"
-            "libcurand"
-            "libcusolver"
-            "libnvjitlink"
-            "libcusparse"
-            "libnpp"
-            "libXNVCtrl"
-            "blender" # only because of cuda
-            "sforzando"
-
-            # server
-            "corefonts"
-
-            "nrf-udev"
-            "iscan-ds"
-            "virtualbox-extpack"
-          ];
-
+        allowUnfree = true;
+        # allowUnfreePredicate =
+        #   pkg:
+        #   let
+        #     name = lib.getName pkg;
+        #   in
+        #   lib.hasInfix "tensorrt" name
+        #   || builtins.elem name [
+        #     # pkg:
+        #     # builtins.elem (lib.getName pkg) [
+        #     # vscode
+        #     "vscode"
+        #     "vscode-extension-github-copilot"
+        #     "vscode-extension-github-copilot-chat"
+        #     "vscode-extension-MS-python-vscode-pylance"
+        #     "vscode-extension-ms-vscode-cpptools"
+        #
+        #     # intellij
+        #     "intellij-idea"
+        #     "pycharm"
+        #     "clion"
+        #     "rust-rover"
+        #     "phpstorm"
+        #     "datagrip"
+        #
+        #     # scanner
+        #     "iscan"
+        #     "iscan-gt"
+        #     "iscan-data"
+        #     "iscan-gt-f720-bundle"
+        #     "iscan-nt-bundle"
+        #     "iscan-gt-s650-bundle"
+        #     "iscan-gt-s80-bundle"
+        #     "iscan-v330-bundle"
+        #     "iscan-v370-bundle"
+        #     "iscan-perfection-v550-bundle"
+        #     "iscan-gt-x820-bundle"
+        #     "iscan-gt-x750-bundle"
+        #     "iscan-gt-x770-bundle"
+        #     "iscan-gt-s600-bundle"
+        #
+        #     #gaming
+        #     "steam"
+        #     "steam-run"
+        #     "steam-unwrapped"
+        #     "steam-original"
+        #     "libsciter"
+        #     "parsec-bin"
+        #
+        #     #others
+        #     "geogebra"
+        #     "spotify"
+        #     # Nvidia related things
+        #     "nvidia-x11"
+        #     "nvidia-settings"
+        #     "nvidia-persistenced"
+        #     "cuda-merged"
+        #     "cuda_cuobjdump"
+        #     "cuda_gdb"
+        #     "cuda_nvcc"
+        #     "cuda_nvdisasm"
+        #     "cuda_nvprune"
+        #     "cuda_cccl"
+        #     "cuda_cudart"
+        #     "cuda_cupti"
+        #     "cuda_cuxxfilt"
+        #     "cuda_nvml_dev"
+        #     "cuda_nvrtc"
+        #     "cuda_nvtx"
+        #     "cuda_profiler_api"
+        #     "cuda_sanitizer_api"
+        #     "cudnn"
+        #     "libcublas"
+        #     "libcufft"
+        #     "libcurand"
+        #     "libcusolver"
+        #     "libnvjitlink"
+        #     "libcusparse"
+        #     "libnpp"
+        #     "libXNVCtrl"
+        #     "blender" # only because of cuda
+        #     "sforzando"
+        #
+        #     # server
+        #     "corefonts"
+        #
+        #     "nrf-udev"
+        #     "iscan-ds"
+        #     "virtualbox-extpack"
+        #   ];
+        #
         permittedInsecurePackages = [
           "olm-3.2.16"
           "mbedtls-2.28.10"
