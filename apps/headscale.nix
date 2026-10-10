@@ -74,7 +74,7 @@ in
             pimprenelles = "100.64.0.7";
             polytech = "100.64.0.13";
             papa = "100.64.0.11";
-            lotus = "100.64.0.9";
+            lotus = "100.64.0.10";
             alexandre = "100.64.0.12";
             alexandre_laptop = "100.64.0.15";
           in

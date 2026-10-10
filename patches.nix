@@ -1,20 +1,8 @@
 {
   stable = [
     {
-      pr = 537545;
-      name = "headscale: 0.28.0 -> 0.29.2";
-    }
-    {
-      pr = 547112;
-      name = "headscale: 0.29.2 -> 0.29.3";
-    }
-    {
-      pr = 537576;
-      name = "headplane: 0.6.2 -> 0.6.3";
-    }
-    {
-      pr = 538802;
-      name = "headplane: 0.6.3 -> 0.7.0, inherit headplane-agent from headplane, nixos/headplane: clean up deprecated options";
+      pr = 562569;
+      name = "headplane";
     }
   ];
 
@@ -42,11 +30,21 @@
     }
     {
       pr = 564869;
+      # branch = "fix-music-assistant-spotify-unstable";
       name = "music-assistant fix spotify";
     }
     {
-      pr = 390619;
-      name = "tlsrouteur";
+      # pr = 390619;
+      name = "tlsrouter";
+      branch = "tlsrouter";
+    }
+    {
+      pr = 569719;
+      name = "fix contour";
+    }
+    {
+      pr = 572125;
+      name = "fix authelia missing hash (be carefull this will probably no be merged)";
     }
   ];
 
@@ -54,10 +52,6 @@
     {
       pr = 402608;
       name = "satochip-utils";
-    }
-    {
-      pr = 565322;
-      name = "update ustreamer";
     }
   ];
 }

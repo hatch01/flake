@@ -26,6 +26,10 @@ in
         # Connexion via socket uniquement, peer auth
         local all all peer
       '';
+
+      settings = {
+        shared_buffers = "256MB"; # asked by nextcloud backend insights
+      };
     };
   };
 }

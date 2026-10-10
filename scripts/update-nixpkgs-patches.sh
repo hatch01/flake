@@ -32,6 +32,14 @@ apply_patches() {
 
 	git switch "$branch" >/dev/null 2>&1
 
+	local patch_cache_dir="${repo_dir}_cache"
+	mkdir -p "$patch_cache_dir"
+
+	local github_auth_header=()
+	if [ -n "${GITHUB_TOKEN:-}" ]; then
+		github_auth_header=(-H "Authorization: Bearer $GITHUB_TOKEN")
+	fi
+
 	# Process each patch (PR numbers or branch names)
 	echo "$patches_json" | jq -c '.[]' | while IFS= read -r patch_data; do
 		pr_number=$(echo "$patch_data" | jq -r '.pr')
@@ -40,6 +48,7 @@ apply_patches() {
 
 		if [ "$pr_number" != "null" ]; then
 			echo "Attempting to apply PR $patch_data"
+			cache_file="$patch_cache_dir/pr_${pr_number}.diff"
 			diff_url="https://github.com/$NIXPKGS_REPO/pull/$pr_number.diff"
 			echo "Downloading PR #$pr_number diff from: $diff_url"
 			fail_msg="Failed to download diff for PR #$pr_number (PR may not exist or is inaccessible)"
@@ -48,12 +57,44 @@ apply_patches() {
 			err_apply_msg="Failed to apply diff for PR #$pr_number"
 			err_conflict_msg="Diff for PR #$pr_number has conflicts or issues"
 		elif [ "$branch_name" != "null" ]; then
-			echo "Attempting to apply branch $patch_data"
-			local base_branch="nixos-unstable"
-			if [ "$branch" = "nixos-stable" ]; then
-				base_branch="$NIXPKGS_STABLE_VERSION"
+			branch_owner=$(echo "$patch_data" | jq -r '.owner // "hatch01"')
+			base_override=$(echo "$patch_data" | jq -r '.base // empty')
+			echo "Attempting to apply branch $patch_data (owner: $branch_owner)"
+			cache_file="$patch_cache_dir/branch_${branch_owner}_${branch_name}.diff"
+
+			if [ -n "$base_override" ]; then
+				echo "Using explicitly specified base '$base_override' for branch $branch_name"
+				diff_url="https://github.com/$NIXPKGS_REPO/compare/${base_override}...${branch_owner}:nixpkgs:${branch_name}.patch"
+			else
+				# Find where the branch diverged from upstream to only include commits added on this branch
+				candidates=("master" "nixos-unstable" "$NIXPKGS_STABLE_VERSION" "staging")
+				best_base="master"
+				min_ahead=999999999
+				merge_base_sha=""
+
+				for candidate in "${candidates[@]}"; do
+					api_url="https://api.github.com/repos/$NIXPKGS_REPO/compare/${candidate}...${branch_owner}:${branch_name}"
+					compare_json=$(curl -sL "${github_auth_header[@]}" -H "Accept: application/vnd.github.v3+json" "$api_url" 2>/dev/null || true)
+					if [ -n "$compare_json" ]; then
+						ahead=$(echo "$compare_json" | jq -r '.ahead_by // empty' 2>/dev/null || true)
+						mb_sha=$(echo "$compare_json" | jq -r '.merge_base_commit.sha // empty' 2>/dev/null || true)
+						if [ -n "$ahead" ] && [ "$ahead" != "null" ] && [ "$ahead" -lt "$min_ahead" ] 2>/dev/null; then
+							min_ahead="$ahead"
+							best_base="$candidate"
+							merge_base_sha="$mb_sha"
+						fi
+					fi
+				done
+
+				if [ -n "$merge_base_sha" ] && [ "$merge_base_sha" != "null" ]; then
+					echo "Detected branch base relative to $best_base (merge base: $merge_base_sha, $min_ahead commits ahead)"
+					diff_url="https://github.com/$NIXPKGS_REPO/compare/${merge_base_sha}...${branch_owner}:nixpkgs:${branch_name}.patch"
+				else
+					echo "Falling back to comparing against $best_base for branch $branch_name"
+					diff_url="https://github.com/$NIXPKGS_REPO/compare/${best_base}...${branch_owner}:nixpkgs:${branch_name}.patch"
+				fi
 			fi
-			diff_url="https://github.com/$NIXPKGS_REPO/compare/${base_branch}...hatch01:nixpkgs:$branch_name.patch"
+
 			echo "Downloading branch $branch_name patch from: $diff_url"
 			fail_msg="Failed to download patch for branch $branch_name (branch may not exist or is inaccessible)"
 			apply_msg="Apply branch $branch_name: $patch_name"
@@ -65,15 +106,20 @@ apply_patches() {
 			exit 1
 		fi
 
-		diff_output=$(curl -sL -f "$diff_url" 2>/dev/null)
-		if [ -z "$diff_output" ]; then
-			echo "$fail_msg"
-			exit 1
+		if [ -f "$cache_file" ]; then
+			diff_output=$(cat "$cache_file")
+		else
+			diff_output=$(curl -sL -f "$diff_url" 2>/dev/null || true)
+			if [ -z "$diff_output" ]; then
+				echo "$fail_msg"
+				exit 1
+			fi
+			echo "$diff_output" > "$cache_file"
 		fi
 
-		if echo "$diff_output" | git apply --check 2>/dev/null 2>&1; then
+		if echo "$diff_output" | git apply --check 2>/dev/null; then
 			echo "$success_msg"
-			if echo "$diff_output" | git apply 2>/dev/null 2>&1; then
+			if echo "$diff_output" | git apply 2>/dev/null; then
 				git add . >/dev/null 2>&1
 
 				# Use the commit date for both author and committer
@@ -83,10 +129,12 @@ apply_patches() {
 				git commit --no-gpg-sign -m "$apply_msg" --no-edit >/dev/null 2>&1 || true
 			else
 				echo "$err_apply_msg"
+				echo "$diff_output" | git apply || true
 				exit 1
 			fi
 		else
 			echo "$err_conflict_msg"
+			echo "$diff_output" | git apply --check || true
 			exit 1
 		fi
 	done
@@ -104,7 +152,7 @@ git remote add upstream "$NIXPKGS_FORGE_REPO" >/dev/null
 git remote add mirror "$NIXPKGS_PATCHED_URL_GITHUB_MIRROR" >/dev/null
 
 # Cleanup on exit
-trap "rm -rf $WORK_DIR" EXIT
+trap 'rm -rf "$WORK_DIR" "${WORK_DIR}_cache"' EXIT
 
 categories=("common" "stable" "unstable")
 

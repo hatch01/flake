@@ -38,9 +38,18 @@ in
     comin.enable = mkDefault true;
 
     nix = {
+      # package = pkgs.lix;
+      extraOptions = ''
+        !include ${config.age.secrets.githubToken.path}
+      '';
+      channel.enable = false;
+      registry = {
+        n.flake = inputs.nixpkgs;
+      };
       package = pkgs.nixVersions.git;
       settings = {
         download-buffer-size = 524288000;
+        nix-path = [ "nixpkgs=${inputs.nixpkgs}" ];
       }
       // (import ../flake.nix).nixConfig;
     };
@@ -58,7 +67,7 @@ in
             "vscode-extension-ms-vscode-cpptools"
 
             # intellij
-            "idea"
+            "intellij-idea"
             "pycharm"
             "clion"
             "rust-rover"
@@ -176,6 +185,15 @@ in
               ];
             })
           );
+          nix-output-monitor = prev.nix-output-monitor.overrideAttrs (old: {
+            patches = (old.patches or [ ]) ++ [
+              (prev.fetchpatch {
+                url = "https://github.com/maralorn/nix-output-monitor/pull/321.patch";
+                relative = "nix-output-monitor";
+                hash = "sha256-LNtuZI/4E7xQgX1US15WR0w//EU+GViuKfaz4qrVr38=";
+              })
+            ];
+          });
         })
       ];
     };
@@ -244,18 +262,6 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "backup";
-    };
-
-    nix = {
-      nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-      # package = pkgs.lix;
-      extraOptions = ''
-        !include ${config.age.secrets.githubToken.path}
-      '';
-      channel.enable = false;
-      registry = {
-        n.flake = inputs.nixpkgs;
-      };
     };
 
     # Apply homemanager All (hma) to username and root (hm and hmr)

@@ -58,8 +58,6 @@
     agenix = {
       url = "git+https://forge.onyx.ovh/github_mirror/agenix?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-      inputs.home-manager.follows = "home-manager";
     };
 
     # home-manager, used for managing user configuration
