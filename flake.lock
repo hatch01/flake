@@ -568,10 +568,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1791456080,
-        "narHash": "sha256-D4Q5bxoG+2MH6+YGb2viSi3M8RuxUnfa06rz0mg2+4s=",
+        "lastModified": 1791710269,
+        "narHash": "sha256-PfNn1wkOq/xvKR2mrD0RGp92OuRxtJUm2XkbrR//GaA=",
         "ref": "refs/heads/main",
-        "rev": "3774dd52e452612c16fe5c7a475ef1a2574ffac6",
+        "rev": "4248b555975b8282a5aac7d7f4a56ee5ff8035ad",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixos-pikvm.git"
