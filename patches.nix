@@ -29,7 +29,7 @@
       name = "tone3000";
     }
     {
-      pr = 564869;
+      pr = 572850;
       # branch = "fix-music-assistant-spotify-unstable";
       name = "music-assistant fix spotify";
     }
