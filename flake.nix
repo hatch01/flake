@@ -33,8 +33,8 @@
     };
 
     nixos-hardware = {
-      # url = "git+https://forge.onyx.ovh/github_mirror/nixos-hardware?shallow=1";
-      url = "github:nixos/nixos-hardware";
+      url = "git+https://forge.onyx.ovh/github_mirror/nixos-hardware?shallow=1";
+      # url = "github:nixos/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

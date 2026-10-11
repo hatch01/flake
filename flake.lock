@@ -436,15 +436,16 @@
       "locked": {
         "lastModified": 1791373788,
         "narHash": "sha256-c3oMt0QoE+4yiRk6u1m2L9ogjaUw0uTGn9yk808KkgE=",
-        "owner": "nixos",
-        "repo": "nixos-hardware",
+        "ref": "refs/heads/master",
         "rev": "4bc63156b109ee7b4103e3ec30565c8c92bde435",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixos-hardware"
       },
       "original": {
-        "owner": "nixos",
-        "repo": "nixos-hardware",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://forge.onyx.ovh/github_mirror/nixos-hardware"
       }
     },
     "nixos-wsl": {
