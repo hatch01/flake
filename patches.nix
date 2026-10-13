@@ -39,16 +39,12 @@
       branch = "tlsrouter";
     }
     {
-      pr = 569719;
-      name = "fix contour";
-    }
-    {
-      pr = 572125;
-      name = "fix authelia missing hash (be carefull this will probably no be merged)";
-    }
-    {
       pr = 572369;
       name = "hyperhdr update";
+    }
+    {
+      pr = 573587;
+      name = "gdi2m";
     }
   ];
 
