@@ -98,6 +98,7 @@ in
           "0x70b3d52b600a3c0f".friendly_name = "Imprimante 3d";
           "0xe498bb2a3b66e43b".friendly_name = "Présence chambre Eymeric";
           "0xa4c1380b4ad8ffff".friendly_name = "Serveur Kevin";
+          "0xa4c1380b7816ffff".friendly_name = "Led lit Eymeric";
         };
       };
     };
