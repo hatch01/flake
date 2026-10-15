@@ -349,10 +349,10 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1791795551,
-        "narHash": "sha256-wEgLr0c1X27BAc4V7JW1XI12XcDUO64RgP0jbuyjTic=",
+        "lastModified": 1792016088,
+        "narHash": "sha256-9c0Cd16neZP4jb/jUY1kcvvFG1U480mC9qtrSXqXxAY=",
         "ref": "refs/heads/master",
-        "rev": "5b5719bd925664fb5f7f1771d9e36fd35cc9fc17",
+        "rev": "b39d0853df99afe18a5a5ea6576c597023dc7196",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/lanzaboote"
@@ -523,10 +523,10 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1791734076,
-        "narHash": "sha256-W6J4ucRw/rOusQFeyuuoA8s3mHdHpmOqEkei82jalss=",
+        "lastModified": 1791956154,
+        "narHash": "sha256-EcDcN8dk3kD0Lsu/GehVS3a2WTftwVQpMDZmpKyr3wo=",
         "ref": "nixos-unstable",
-        "rev": "d089c21fe0cb67c31f625bb1a74c39de5ce65fad",
+        "rev": "9acede4417b37c2aca4b6a928a010ff18ff8ac34",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/eymeric/nixpkgs-patched"

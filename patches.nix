@@ -29,18 +29,9 @@
       name = "tone3000";
     }
     {
-      pr = 572850;
-      # branch = "fix-music-assistant-spotify-unstable";
-      name = "music-assistant fix spotify";
-    }
-    {
       # pr = 390619;
       name = "tlsrouter";
       branch = "tlsrouter";
-    }
-    {
-      pr = 572369;
-      name = "hyperhdr update";
     }
     {
       pr = 573587;
