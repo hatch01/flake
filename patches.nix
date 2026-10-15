@@ -37,6 +37,10 @@
       pr = 573587;
       name = "gdi2m";
     }
+    {
+      pr = 574435;
+      name = "fix ovn";
+    }
   ];
 
   common = [
