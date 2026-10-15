@@ -48,13 +48,7 @@ in
         );
       in
       {
-        defaultOptions.policy.settings = {
-          openGraph = {
-            enabled = true;
-            considerHost = false;
-            ttl = "4h";
-          };
-        };
+        defaultOptions.policy.settings = { };
 
         inherit instances;
       };
