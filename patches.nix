@@ -41,6 +41,10 @@
       pr = 574435;
       name = "fix ovn";
     }
+    {
+      pr = 569444;
+      name = "nix-ccache writeCBin";
+    }
   ];
 
   common = [
