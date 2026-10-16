@@ -7,17 +7,15 @@
 let
   thunderbird_profile = "default_thunderbird";
 
-  thunderbirdPackage = pkgs.wrapThunderbird (
-    pkgs.thunderbird-latest-unwrapped.override {
-      onnxruntime = pkgs.onnxruntime.override {
+  thunderbirdPackage = pkgs.wrapThunderbird (pkgs.thunderbird-latest-unwrapped.override {
+    onnxruntime = pkgs.onnxruntime.override {
+      cudaSupport = false;
+      openvino = pkgs.openvino.override {
         cudaSupport = false;
-        openvino = pkgs.openvino.override {
-          cudaSupport = false;
-          opencv = pkgs.opencv.override { enableCuda = false; };
-        };
+        opencv = pkgs.opencv.override { enableCuda = false; };
       };
-    }
-  ) { };
+    };
+  }) { };
 
   inherit (lib) mkEnableOption mkDefault mkIf;
 in
