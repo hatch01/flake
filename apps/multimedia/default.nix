@@ -153,6 +153,7 @@ in
         guitarmidi-lv2
         inputs.bass2midi.packages.${system}.default
         tone3000
+        gdi2m
       ];
     })
   ];

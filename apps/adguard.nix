@@ -39,8 +39,10 @@ in
     };
     services.adguardhome = {
       enable = true;
-      host = "127.0.0.1";
       settings = {
+        http = {
+          address = "127.0.0.1";
+        };
         dns = {
           upstream_dns = [
             "9.9.9.9" # dns.quad9.net

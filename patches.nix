@@ -29,26 +29,21 @@
       name = "tone3000";
     }
     {
-      pr = 564869;
-      # branch = "fix-music-assistant-spotify-unstable";
-      name = "music-assistant fix spotify";
-    }
-    {
       # pr = 390619;
       name = "tlsrouter";
       branch = "tlsrouter";
     }
     {
-      pr = 569719;
-      name = "fix contour";
+      pr = 573587;
+      name = "gdi2m";
     }
     {
-      pr = 572125;
-      name = "fix authelia missing hash (be carefull this will probably no be merged)";
+      pr = 574435;
+      name = "fix ovn";
     }
     {
-      pr = 572369;
-      name = "hyperhdr update";
+      pr = 569444;
+      name = "nix-ccache writeCBin";
     }
   ];
 
