@@ -121,35 +121,35 @@ in
         stateDir = "/storage/forgejo";
       };
 
-      gitea-actions-runner = {
-        package = pkgs.forgejo-runner;
-        instances.onyx = {
-          enable = true;
-          name = "onyx-runner";
-          url = "https://${config.forgejo.domain}/";
-          tokenFile = config.age.secrets.forgejo_runner_token.path;
-          labels = [
-            "docker:docker://node:24-alpine"
-            "alpine-latest:docker://node:24-alpine"
-            "ubuntu-latest:docker://catthehacker/ubuntu:act-latest"
-            "native:host"
-          ];
-
-          settings = {
-            log.level = "info";
-            container.network = "host";
-            runner = {
-              capacity = 4;
-              timeout = "5h";
-              insecure = false;
-            };
+      forgejo-runner.instances.onyx = {
+        enable = true;
+        settings = {
+          log.level = "info";
+          container.network = "host";
+          runner = {
+            capacity = 4;
+            timeout = "5h";
+            insecure = false;
+            labels = [
+              "docker:docker://node:24-alpine"
+              "alpine-latest:docker://node:24-alpine"
+              "ubuntu-latest:docker://catthehacker/ubuntu:act-latest"
+              "native:host"
+            ];
+          };
+          server.connections.default = {
+            url = "https://${config.forgejo.domain}/";
+            # uuid/token pair obtained by registering the runner once. The token
+            # itself is stored encrypted in the `forgejo_runner_token` agenix secret.
+            uuid = "9d386904-0dd0-4f36-85e5-fb91137f1d9d";
           };
         };
+        secrets.server.connections.default.token_url = config.age.secrets.forgejo_runner_token.path;
       };
     };
 
     nix.settings = {
-      trusted-users = [ "gitea-runner" ];
+      trusted-users = [ "forgejo-runner-onyx" ];
     };
     systemd.services.forgejo.after = [
       "network.target"
@@ -191,7 +191,7 @@ in
         fi
       '';
 
-    systemd.services.gitea-runner-onyx = {
+    systemd.services.forgejo-runner-onyx = {
       # Prevents Forgejo runner deployments
       # from being restarted on a system switch,
       # thus breaking a deployment.
