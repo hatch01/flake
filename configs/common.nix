@@ -46,7 +46,7 @@ in
       registry = {
         n.flake = inputs.nixpkgs;
       };
-      package = pkgs.nixVersions.git;
+      package = pkgs.nixVersions.latest;
       settings = {
         download-buffer-size = 524288000;
         nix-path = [ "nixpkgs=${inputs.nixpkgs}" ];
