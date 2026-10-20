@@ -41,6 +41,10 @@
       pr = 569444;
       name = "nix-ccache writeCBin";
     }
+    {
+      pr = 575253;
+      name = "fix matrix-synapse";
+    }
   ];
 
   common = [
