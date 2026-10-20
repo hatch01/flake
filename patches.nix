@@ -52,5 +52,9 @@
       pr = 576283;
       name = "fix netatop kernel build";
     }
+    {
+      pr = 576147;
+      name = "patch nom";
+    }
   ];
 }
