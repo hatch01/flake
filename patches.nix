@@ -48,5 +48,9 @@
       pr = 402608;
       name = "satochip-utils";
     }
+    {
+      pr = 576283;
+      name = "fix netatop kernel build";
+    }
   ];
 }
