@@ -29,11 +29,6 @@
       name = "tone3000";
     }
     {
-      # pr = 390619;
-      name = "tlsrouter";
-      branch = "tlsrouter";
-    }
-    {
       pr = 573587;
       name = "gdi2m";
     }
@@ -41,20 +36,12 @@
       pr = 569444;
       name = "nix-ccache writeCBin";
     }
-    {
-      pr = 575253;
-      name = "fix matrix-synapse";
-    }
   ];
 
   common = [
     {
       pr = 402608;
       name = "satochip-utils";
-    }
-    {
-      pr = 576283;
-      name = "fix netatop kernel build";
     }
     {
       pr = 576147;
