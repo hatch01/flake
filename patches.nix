@@ -29,11 +29,6 @@
       name = "tone3000";
     }
     {
-      # pr = 390619;
-      name = "tlsrouter";
-      branch = "tlsrouter";
-    }
-    {
       pr = 573587;
       name = "gdi2m";
     }
@@ -47,6 +42,10 @@
     {
       pr = 402608;
       name = "satochip-utils";
+    }
+    {
+      pr = 576147;
+      name = "patch nom";
     }
   ];
 }
