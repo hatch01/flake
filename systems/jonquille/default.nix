@@ -19,7 +19,7 @@
     persistent.path = "/persistent";
     storage.path = "/storage";
   };
-  nextcloud.enable = true;
+  nextcloud.enable = false;
   nextcloud.app_api.enable = false;
   onlyofficeDocumentServer.enable = true;
   homepage.enable = true;
