@@ -42,7 +42,6 @@ let
       "rootPassword"
 
       # Nextcloud
-      "nextcloudAdmin"
       "nextcloudSecretFile"
       "nextcloudDspPassword"
       "onlyofficeDocumentServerKey"
