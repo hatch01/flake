@@ -1,10 +1,5 @@
 {
-  stable = [
-    {
-      pr = 562569;
-      name = "headplane";
-    }
-  ];
+  stable = [ ];
 
   unstable = [
     {
@@ -35,6 +30,15 @@
     {
       pr = 569444;
       name = "nix-ccache writeCBin";
+    }
+    {
+      # pr = 576853;
+      branch = "php";
+      name = "php patch";
+    }
+    {
+      pr = 576411;
+      name = "fix musescore build";
     }
   ];
 
