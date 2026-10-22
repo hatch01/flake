@@ -56,10 +56,6 @@ in
   config = mkIf config.nextcloud.enable {
     age.secrets =
       optionalAttrs config.nextcloud.enable (mkSecrets {
-        nextcloudAdmin = {
-          owner = config.users.users.nextcloud.name;
-          group = config.users.users.nextcloud.name;
-        };
         nextcloudSecretFile = {
           owner = config.users.users.nextcloud.name;
           group = config.users.users.nextcloud.name;
@@ -92,7 +88,6 @@ in
         database.createLocally = true;
         maxUploadSize = "10G";
         config = {
-          adminpassFile = config.age.secrets.nextcloudAdmin.path;
           dbtype = "pgsql";
         };
 
