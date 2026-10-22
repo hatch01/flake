@@ -37,11 +37,6 @@ in
     beszel.agent.enable = mkDefault true;
     comin.enable = mkDefault true;
 
-    security.pki.caCertificateBlacklist = [
-      "Comodo AAA Services root"
-      "emSign ECC Root CA - G3"
-    ];
-
     nix = {
       # package = pkgs.lix;
       extraOptions = ''
