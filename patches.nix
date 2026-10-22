@@ -40,6 +40,10 @@
       pr = 576411;
       name = "fix musescore build";
     }
+    {
+      branch = "drumgizmo";
+      name = "use latest drumgizmo patch";
+    }
   ];
 
   common = [
