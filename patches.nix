@@ -44,6 +44,10 @@
       branch = "drumgizmo";
       name = "use latest drumgizmo patch";
     }
+    {
+      pr = 575861;
+      name = "fix v4l2";
+    }
   ];
 
   common = [
