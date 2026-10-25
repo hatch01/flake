@@ -59,7 +59,6 @@ in
       };
     };
 
-    boot.initrd.systemd.enable = true;
     boot.initrd.kernelModules = [
       "usb_storage"
       "usbhid"
