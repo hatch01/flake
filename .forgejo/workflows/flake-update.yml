@@ -24,43 +24,27 @@ jobs:
           git status
       - name: Setup SSH agent with multiple keys
         run: |
-          echo "Starting SSH agent..."
           eval $(ssh-agent -s)
-          echo "Exporting SSH auth sock environment variable..."
-          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $FORGEJO_OUTPUT
-          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $FORGEJO_ENV
-
-          # Add main SSH key for flake repository operations
-          echo "Adding main SSH key for flake repo..."
-          echo "${{ secrets.SSH_KEY }}" | ssh-add - 2>/dev/null || echo "Warning: Failed to add main SSH key"
-
-          # Add dedicated SSH key for nixpkgs-patched repository if available
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
+          echo "${{ secrets.SSH_KEY }}" | tr -d '\r' | ssh-add - 2>/dev/null || echo "Warning: Failed to add main SSH key"
           if [ -n "${{ secrets.NIXPKGS_PATCHED_PUSH_KEY }}" ]; then
-            echo "Adding dedicated key for nixpkgs-patched repo..."
-            echo "${{ secrets.NIXPKGS_PATCHED_PUSH_KEY }}" | ssh-add - 2>/dev/null || echo "Warning: Failed to add nixpkgs-patched SSH key"
-          else
-            echo "Note: NIXPKGS_PATCHED_PUSH_KEY not configured, will attempt to use main SSH_KEY"
+            echo "${{ secrets.NIXPKGS_PATCHED_PUSH_KEY }}" | tr -d '\r' | ssh-add - 2>/dev/null || echo "Warning: Failed to add nixpkgs-patched SSH key"
           fi
-
-          # List added keys for debugging
-          ssh-add -L || echo "No keys in agent"
       - name: Add known SSH hosts
         run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          echo "forge.onyx.ovh github.com" | xargs ssh-keyscan > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
+          ssh-keyscan forge.onyx.ovh github.com > /tmp/known_hosts
+          ssh-keyscan forge.onyx.ovh 2>/dev/null | awk '!/^#/ {print "[forge.onyx.ovh]:443 " $2 " " $3}' >> /tmp/known_hosts
       - name: Fetch main branch
         run: git fetch origin main
         env:
-          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/tmp/known_hosts
       - name: Rebase on main
         run: git rebase origin/main
         env:
-          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/tmp/known_hosts
       - name: Update flake inputs
         env:
-          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/tmp/known_hosts
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: nix shell nixpkgs#just --command just update
       - name: Push flake update commit
