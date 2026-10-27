@@ -2,7 +2,7 @@
   common = [
     {
       name = "satochip-utils";
-      pr = 402608;
+      pr = 559720;
     }
   ];
   stable = [ ];
