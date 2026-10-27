@@ -97,10 +97,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1792310586,
-        "narHash": "sha256-4gaALWPUrc+coBvu02PB5WAuwSGdDgfJkkVX65buXX0=",
+        "lastModified": 1793083015,
+        "narHash": "sha256-0siydyIPahJJ38sKCHoRPVfHx+gbksUU55SEGL8Kk+A=",
         "ref": "refs/heads/main",
-        "rev": "1399adecc682e557bc3ee914d929f8e20391a148",
+        "rev": "f95451172287f3cb36249a2cdef56efa9bbeef19",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/comin"
@@ -413,10 +413,10 @@
         "nvchad-starter": "nvchad-starter"
       },
       "locked": {
-        "lastModified": 1792593944,
-        "narHash": "sha256-CiqzeKQdtkkW56w/KZq6orzsPC6vHZqYYbJ3kqhEIy0=",
+        "lastModified": 1793082508,
+        "narHash": "sha256-joN4R39MOZ4Bau8mWsuFT6lEeHLOHqFv+SgdKoNCw5Y=",
         "ref": "refs/heads/main",
-        "rev": "042bbb1be519d01c76d8c65b2e004212b5b706ad",
+        "rev": "b0b0daf5663d494b0e3fd1d1486c68e7aedbf2f1",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nix4nvchad"
