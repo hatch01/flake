@@ -11,14 +11,14 @@ debug:
     NIXOS_LABEL=$(echo "$(git log -1 --pretty=format:%s)---$(git diff --name-only HEAD)" | paste -sd '-' | tr "/" "_" | tr " " "_" | sed 's/[^a-zA-Z0-9:_\.-]//g') nixos-rebuild switch --flake . --sudo --show-trace --verbose
 
 update:
-    just update-patches --commit
+    just update-patches
     just update-input
 
 update-input +inputs="":
     nix flake update --commit-lock-file --accept-flake-config {{ inputs }}
 
 update-patches +args="":
-    nix shell nixpkgs#git nixpkgs#python3 --command python3 ./scripts/update-nixpkgs-patches.py {{ args }}
+    nix shell nixpkgs#git nixpkgs#python3 --command python3 ./scripts/update-nixpkgs-patches.py --commit {{ args }}
 
 history:
     nix profile history --profile /nix/var/nix/profiles/system
