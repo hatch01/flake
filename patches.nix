@@ -1,42 +1,40 @@
 {
+  common = [
+    {
+      name = "satochip-utils";
+      pr = 402608;
+    }
+  ];
   stable = [ ];
-
   unstable = [
     {
-      # pr = 510662;
       branch = "mautrix-telegram-go";
       name = "mautrix-telegram";
+      pr = 510662;
     }
     {
-      pr = 553636;
       name = "sforzando";
+      pr = 553636;
     }
     {
-      pr = 553642;
       name = "dsksfzplayer";
+      pr = 553642;
     }
     {
-      pr = 553949;
       name = "guitarmidi-lv2";
+      pr = 553949;
     }
     {
-      pr = 559444;
       name = "tone3000";
+      pr = 559444;
     }
     {
-      pr = 573587;
       name = "gdi2m";
+      pr = 573587;
     }
     {
       branch = "drumgizmo";
       name = "use latest drumgizmo patch";
-    }
-  ];
-
-  common = [
-    {
-      pr = 402608;
-      name = "satochip-utils";
     }
   ];
 }
