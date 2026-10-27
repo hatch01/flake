@@ -24,10 +24,10 @@ os.environ["GIT_AUTHOR_EMAIL"] = "patcher@nixpkgs.local"
 os.environ["GIT_COMMITTER_NAME"] = os.environ["GIT_AUTHOR_NAME"]
 os.environ["GIT_COMMITTER_EMAIL"] = os.environ["GIT_AUTHOR_EMAIL"]
 
-def run(cmd, cwd=None, check=True, capture=False, env=None):
+def run(cmd, cwd=None, check=True, capture=False, env=None, **kwargs):
     if env is None:
         env = os.environ.copy()
-    return subprocess.run(cmd, cwd=cwd, check=check, text=True, capture_output=capture, shell=isinstance(cmd, str), env=env)
+    return subprocess.run(cmd, cwd=cwd, check=check, text=True, capture_output=capture, shell=isinstance(cmd, str), env=env, **kwargs)
 
 def api_req(url):
     req = urllib.request.Request(url)
