@@ -186,8 +186,8 @@ in
               stdenv = final.ccacheStdenv;
               patches = (old.patches or [ ]) ++ [
                 (prev.fetchpatch {
-                  url = "https://github.com/aristocratos/btop/compare/v1.4.7...hatch01:btop:sort-diskio-stable.patch";
-                  hash = "sha256-4l2u/wCrendueUIMnfKGMK+eV82/t6uQhS872ovSdfo=";
+                  url = "https://github.com/aristocratos/btop/compare/v1.4.8...hatch01:btop:sort-diskio-stable.patch";
+                  hash = "sha256-bzAoDKvG9S9llZJocQkRder3HkjZTFnPl467qVdtWno=";
                 })
               ];
             })
