@@ -36,6 +36,8 @@ in
         deadnix
         glab
         flyctl
+        clang
+        nixd
       ];
 
     hm.home.file.".zfunc/_poetry" = {

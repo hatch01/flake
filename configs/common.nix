@@ -310,7 +310,6 @@ in
           tealdeer
           sbctl
           just
-          clang
           killall
           nmap
           openvpn

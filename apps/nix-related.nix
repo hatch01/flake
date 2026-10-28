@@ -17,7 +17,6 @@ in
       nil
       nixfmt
       alejandra
-      nixd
     ];
 
     programs.nh = {
