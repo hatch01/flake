@@ -53,7 +53,7 @@ in
   #   protonup.enable = false # enabled by default if steam.enable is true
   # };
   # gamemode.enable = false # enabled by default if gaming.enable is true
-  # minecraft.enable = false # enabled by default if gaming.enable is true
+  minecraft.enable = false; # enabled by default if gaming.enable is true
   # winetools.enable = false # enabled by default if gaming.enable is true
   # heroic.enable = false # enabled by default if gaming.enable is true
 
