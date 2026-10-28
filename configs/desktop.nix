@@ -18,7 +18,7 @@ in
   # dev
   dev.enable = mkDefault true;
   dev.androidtools.enable = mkDefault true;
-  jetbrains.enable = mkDefault true;
+  jetbrains.enable = mkDefault false;
   vscode.enable = mkDefault true;
 
   # office
