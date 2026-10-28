@@ -43,14 +43,34 @@ let
       fi
     fi
 
+    REBOOT_NEEDED=0
+    if "${lib.getExe config.services.comin.package}" status 2>/dev/null | ${lib.getExe pkgs.ripgrep} -q 'Need to reboot: yes'; then
+      REBOOT_NEEDED=1
+    fi
+
     {
       echo "To: root"
-      echo "Subject: [comin] ''${COMIN_STATUS:-} deployment on ''${COMIN_HOSTNAME:-} (gen ''${COMIN_GENERATION:-})"
+      if [ "$REBOOT_NEEDED" -eq 1 ]; then
+        echo "Importance: high"
+        echo "X-Priority: 1"
+        echo "X-MSMail-Priority: High"
+        echo "Priority: urgent"
+        echo "Subject: [comin] [REBOOT REQUIRED] ''${COMIN_STATUS:-} deployment on ''${COMIN_HOSTNAME:-} (gen ''${COMIN_GENERATION:-})"
+      else
+        echo "Subject: [comin] ''${COMIN_STATUS:-} deployment on ''${COMIN_HOSTNAME:-} (gen ''${COMIN_GENERATION:-})"
+      fi
       echo ""
+      if [ "$REBOOT_NEEDED" -eq 1 ]; then
+        echo "WARNING: System reboot is required to complete this update."
+        echo ""
+      fi
       echo "Deployment details"
       echo "=================="
       echo "Host:       ''${COMIN_HOSTNAME:-}"
       echo "Status:     ''${COMIN_STATUS:-}"
+      if [ "$REBOOT_NEEDED" -eq 1 ]; then
+        echo "Reboot:     REQUIRED"
+      fi
       echo "Generation: ''${COMIN_GENERATION:-}"
       echo "Ref:        ''${COMIN_GIT_REF:-}"
       echo "SHA:        ''${COMIN_GIT_SHA:-}"
