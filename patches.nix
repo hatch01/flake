@@ -5,7 +5,12 @@
       pr = 559720;
     }
   ];
-  stable = [ ];
+  stable = [
+    {
+      name = "update btop";
+      pr = 579970;
+    }
+  ];
   unstable = [
     {
       branch = "mautrix-telegram-go";
