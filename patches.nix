@@ -1,10 +1,5 @@
 {
-  common = [
-    {
-      name = "satochip-utils";
-      pr = 559720;
-    }
-  ];
+  common = [ ];
   stable = [
     {
       name = "update btop";
@@ -12,6 +7,10 @@
     }
   ];
   unstable = [
+    {
+      name = "satochip-utils";
+      pr = 559720;
+    }
     {
       branch = "mautrix-telegram-go";
       name = "mautrix-telegram";
