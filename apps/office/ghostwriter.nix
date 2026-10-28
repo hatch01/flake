@@ -18,7 +18,7 @@ in
       kdePackages.ghostwriter
       pandoc
       nodejs
-      texliveFull
+      texliveBasic
       mermaid-cli
       mermaid-filter
       librsvg
