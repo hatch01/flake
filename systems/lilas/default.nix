@@ -11,14 +11,6 @@
     inputs.pikvm.nixosModules.default
   ];
 
-  environment.systemPackages = with pkgs; [
-    ffmpeg
-    i2c-tools
-    v4l-utils
-    gst_all_1.gstreamer
-    dtc
-  ];
-
   atop.netatop.enable = false;
   container.enable = lib.mkForce false;
   cockpit.enable = true;
