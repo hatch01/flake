@@ -17,7 +17,12 @@ in
 
   config = mkIf config.neovim.enable {
     environment.systemPackages = [
-      (if config.neovim.nvchad.enable then inputs.nix4nvchad.packages.${system}.nvchad else pkgs.neovim)
+      (
+        if config.neovim.nvchad.enable then
+          inputs.nix4nvchad.packages.${system}.nvchad
+        else
+          (pkgs.neovim.override { waylandSupport = false; })
+      )
     ];
     environment.variables.EDITOR = "nvim";
     hm.home.sessionVariables = {
