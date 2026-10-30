@@ -21,7 +21,8 @@
 
   cockpit.enable = true;
   cockpit.domain = "cyclamen:9090";
-  networking.firewall.allowedTCPPorts = [
+  # Cockpit is only reachable through the tailnet
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
     config.cockpit.port
   ];
 
