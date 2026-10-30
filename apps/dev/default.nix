@@ -44,6 +44,8 @@ in
         flyctl
         clang
         nixd
+        nix-forecast
+        nil
         ungit
       ];
 
