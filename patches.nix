@@ -2,8 +2,8 @@
   common = [ ];
   stable = [
     {
-      name = "update btop";
-      pr = 579970;
+      name = "update headscale";
+      pr = 580970;
     }
   ];
   unstable = [
