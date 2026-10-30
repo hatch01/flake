@@ -36,7 +36,8 @@ in
     ];
 
     environment.systemPackages =
-      with pkgs; [ kwi ]
+      with pkgs;
+      [ kwi ]
       ++ (with pkgs.kdePackages; [
         merkuro
         qtlocation # this is needed for merkuro
