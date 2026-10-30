@@ -90,6 +90,7 @@ in
               (mkRule [ tulipe ] [ jonquille ] [ config.bitcoin.server.portRpc ]) # allow jonquille to use bitcoin controller
               (mkRule [ tulipe alexandre alexandre_laptop ] [ polytech ] [ 22 ])
               (mkRule [ tulipe lavande lotus ] [ "autogroup:internet" ] [ "*" ])
+              (mkRule [ tulipe lavande lotus ] [ cyclamen lilas jonquille ] [ config.cockpit.port ])
             ];
           };
 
