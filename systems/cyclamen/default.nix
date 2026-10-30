@@ -15,10 +15,10 @@
   lasuite-meet.enable = true;
 
   cockpit.enable = true;
-    cockpit.domain = "cyclamen:9090";
-    networking.firewall.allowedTCPPorts = [
-      config.cockpit.port
-    ];
+  cockpit.domain = "cyclamen:9090";
+  networking.firewall.allowedTCPPorts = [
+    config.cockpit.port
+  ];
 
   boot.loader.grub.enable = true;
   container.enable = lib.mkForce false;
