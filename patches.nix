@@ -40,5 +40,9 @@
       branch = "drumgizmo";
       name = "use latest drumgizmo patch";
     }
+    {
+      pr = 581011;
+      name = "feat kwi";
+    }
   ];
 }
