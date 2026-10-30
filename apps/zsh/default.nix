@@ -336,6 +336,10 @@ in
           sshfs # FUSE-based filesystem that allows remote filesystems to be mounted over SSH
           tokei # Count your code, quickly
           w3m # Text-mode web browser
+          nmap
+          openvpn
+          openssl
+          pv # monitor the progress of data through a pipe
           # Delete a file or folder from btrfs live fs and all matching snapshots
           (writeShellApplication {
             name = "brm";

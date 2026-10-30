@@ -311,31 +311,18 @@ in
           sbctl
           just
           killall
-          nmap
-          openvpn
           nix-index
           nix-output-monitor
           dix
-          openssl
-          pv # monitor the progress of data through a pipe
           hyfetch
           zip
           unzip
           file
           which
           tree
-          bat
-          rip2
           iotop # io monitoring
           nmon
           iftop # network monitoring
-          sqlite
-
-          # python is useful
-          virtualenv
-          poetry
-          uv
-          (python3.withPackages (ps: [ ]))
         ];
     };
     services.tailscale = {

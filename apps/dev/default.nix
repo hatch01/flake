@@ -47,6 +47,12 @@ in
         nix-forecast
         nil
         ungit
+        sqlite
+        # python is useful
+        virtualenv
+        poetry
+        uv
+        (python3.withPackages (ps: [ ]))
       ];
 
     hm.home.file.".zfunc/_poetry" = {
