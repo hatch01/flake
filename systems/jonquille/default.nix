@@ -60,6 +60,9 @@
   ntfy.enable = true;
   programs.nh.clean.enable = lib.mkForce false;
 
+  # dev tooling: full neovim via nvchad
+  neovim.enable = true;
+  neovim.nvchad.enable = true;
   nginx.nichihachi.enable = true;
   nginx.nichihachi.backendIp = "192.168.1.124";
 

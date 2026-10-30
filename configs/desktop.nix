@@ -20,6 +20,9 @@ in
   dev.androidtools.enable = mkDefault true;
   jetbrains.enable = mkDefault false;
   vscode.enable = mkDefault true;
+  # dev tooling: full neovim via nvchad
+  neovim.enable = true;
+  neovim.nvchad.enable = true;
 
   # office
   libreoffice.enable = mkDefault true;
