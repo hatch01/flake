@@ -286,20 +286,24 @@ in
 
         (mkVhost "gatus" { })
 
-        (mkVhost "cockpit" {
-          locations."/" = {
-            recommendedProxySettings = false;
-            extraConfig = ''
-              # Required for web sockets to work
-              proxy_http_version 1.1;
-              proxy_buffering off;
-              proxy_set_header Upgrade $http_upgrade;
-              proxy_set_header Connection "upgrade";
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              gzip off;
-            '';
-          };
-        })
+        # No vhost when cockpit is reached directly as host:port (e.g. over the tailnet),
+        # as "cyclamen:9090" is not a valid ACME domain
+        (lib.optionalAttrs (!(lib.hasInfix ":" config.cockpit.domain)) (
+          mkVhost "cockpit" {
+            locations."/" = {
+              recommendedProxySettings = false;
+              extraConfig = ''
+                # Required for web sockets to work
+                proxy_http_version 1.1;
+                proxy_buffering off;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                gzip off;
+              '';
+            };
+          }
+        ))
 
         (mkVhost "adguard" {
           authelia = true;
