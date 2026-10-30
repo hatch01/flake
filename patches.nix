@@ -1,11 +1,11 @@
 {
-  common = [ ];
-  stable = [
+  common = [
     {
-      name = "update btop";
-      pr = 579970;
+      name = "update headscale";
+      pr = 580970;
     }
   ];
+  stable = [ ];
   unstable = [
     {
       name = "satochip-utils";
