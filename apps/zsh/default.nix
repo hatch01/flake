@@ -10,9 +10,20 @@ let
     mkEnableOption
     mkIf
     mkMerge
+    mkForce
+    mkBefore
     getExe
     getExe'
     ;
+
+  # The ssh helpers live in their own file; inject the store path of the
+  # remote probe script (Nix does not interpolate files that are only
+  # referenced by path).
+  magellanSmartSsh = pkgs.writeText "magellan_smart_ssh.sh" (
+    builtins.replaceStrings [ "@zellijProbe@" ] [ "${./zellij-probe.sh}" ] (
+      builtins.readFile ./magellan_smart_ssh.sh
+    )
+  );
 
   basePackages = with pkgs; [
     bat
@@ -118,7 +129,7 @@ let
   fullShellFunctions = baseShellFunctions + ''
     export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
 
-    ${./magellan_smart_ssh.sh}
+    source ${magellanSmartSsh}
 
 
     # yazi: cd into the directory browsed in yazi when it exits
@@ -181,31 +192,28 @@ let
       zprof
     fi
   '';
-  fullShellInit =
-    with pkgs;
-    ''
+  # Must run before baseShellInit (which calls compinit), hence mkBefore.
+  fullShellInitExtra = with pkgs; ''
+    # ── fpath additions (must come before compinit) ──────────────────────
+    # poetry completions
+    fpath+=~/.zfunc
 
-      # ── fpath additions (must come before compinit) ──────────────────────
-      # poetry completions
-      fpath+=~/.zfunc
-
-      # Cache uv/uvx completion files into a fpath directory.
-      # Using fpath files (instead of `eval`/`source`) means compinit picks
-      # them up naturally — no `compdef` call needed after compinit.
-      # The stamp file holds the current uv store path; it changes on every
-      # `nix` upgrade, which is the only time the completions need regenerating.
-      _uv_comp_dir="$HOME/.zsh/completions"
-      _uv_store_path="${getExe uv}"
-      _uv_comp_stamp="$_uv_comp_dir/.stamp"
-      if [[ "$(cat "$_uv_comp_stamp" 2>/dev/null)" != "$_uv_store_path" ]]; then
-        mkdir -p "$_uv_comp_dir"
-        ${getExe uv} generate-shell-completion zsh >| "$_uv_comp_dir/_uv"
-        ${getExe' uv "uvx"} --generate-shell-completion zsh >| "$_uv_comp_dir/_uvx"
-        echo "$_uv_store_path" >| "$_uv_comp_stamp"
-      fi
-      fpath=("$_uv_comp_dir" $fpath)
-    ''
-    + baseShellInit; # baseShellInit go after for performance of zsh start time
+    # Cache uv/uvx completion files into a fpath directory.
+    # Using fpath files (instead of `eval`/`source`) means compinit picks
+    # them up naturally — no `compdef` call needed after compinit.
+    # The stamp file holds the current uv store path; it changes on every
+    # `nix` upgrade, which is the only time the completions need regenerating.
+    _uv_comp_dir="$HOME/.zsh/completions"
+    _uv_store_path="${getExe uv}"
+    _uv_comp_stamp="$_uv_comp_dir/.stamp"
+    if [[ "$(cat "$_uv_comp_stamp" 2>/dev/null)" != "$_uv_store_path" ]]; then
+      mkdir -p "$_uv_comp_dir"
+      ${getExe uv} generate-shell-completion zsh >| "$_uv_comp_dir/_uv"
+      ${getExe' uv "uvx"} --generate-shell-completion zsh >| "$_uv_comp_dir/_uvx"
+      echo "$_uv_store_path" >| "$_uv_comp_stamp"
+    fi
+    fpath=("$_uv_comp_dir" $fpath)
+  '';
 in
 {
   options = {
@@ -345,8 +353,13 @@ in
         ]);
 
       programs.zsh = {
-        shellInit = fullShellFunctions;
-        interactiveShellInit = fullShellInit;
+        # zsh.shellInit is types.lines: use mkForce so baseShellFunctions is not
+        # concatenated with fullShellFunctions (which already contains it).
+        shellInit = mkForce fullShellFunctions;
+        # zsh.interactiveShellInit is types.lines too: prepend the fpath block
+        # (needed before compinit) and let baseShellInit + other modules append.
+        interactiveShellInit = mkBefore fullShellInitExtra;
+        shellAliases = fullShellAliases;
       };
     })
   ];
