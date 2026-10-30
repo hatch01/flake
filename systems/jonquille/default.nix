@@ -32,6 +32,7 @@
   adguard.enable = true;
   fail2ban.enable = true;
   cockpit.enable = true;
+  cockpit.machines = true;
   matrix.enable = true;
   matrix.enableElement = true;
   matrix.elementCall.enable = true;

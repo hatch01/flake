@@ -10,11 +10,13 @@ let
     mkEnableOption
     mkOption
     mkIf
+    mkMerge
     ;
 in
 {
   options = {
     cockpit.enable = mkEnableOption "Enable cockpit";
+    cockpit.machines = mkEnableOption "VM management (libvirt + cockpit-machines)";
     cockpit.port = mkOption {
       type = lib.types.int;
       default = 9090;
@@ -27,50 +29,54 @@ in
     };
   };
 
-  config = mkIf config.cockpit.enable {
-    virtualisation = {
-      libvirtd.enable = true;
-    };
-
-    users = {
-      users.libvirtdbus = {
-        isSystemUser = true;
-        group = "libvirtdbus";
-        description = "Libvirt D-Bus bridge";
-      };
-      groups.libvirtdbus = { };
-    };
-
-    systemd.packages = [ pkgs.libvirt-dbus ];
-
-    environment.systemPackages = with pkgs; [
-      virt-manager
-      osinfo-db
-      osinfo-db-tools
-      libosinfo
-    ];
-
-    services.cockpit = {
-      enable = true;
-      port = config.cockpit.port;
-      allowed-origins = [
-        "https://${config.cockpit.domain}"
-        "wss://${config.cockpit.domain}"
-      ];
-      settings = {
-        "WebService" = {
-          ProtocolHeader = "X-Forwarded-Proto";
-          ForwardedForHeader = "X-Forwarded-For";
+  config = mkIf config.cockpit.enable (mkMerge [
+    {
+      services.cockpit = {
+        enable = true;
+        port = config.cockpit.port;
+        allowed-origins = [
+          "https://${config.cockpit.domain}"
+          "wss://${config.cockpit.domain}"
+        ];
+        settings = {
+          "WebService" = {
+            ProtocolHeader = "X-Forwarded-Proto";
+            ForwardedForHeader = "X-Forwarded-For";
+          };
+          #   "basic" = {
+          #     "action" = "none";
+          #   };
         };
-        #   "basic" = {
-        #     "action" = "none";
-        #   };
+        plugins = with pkgs; [
+          cockpit-files
+          cockpit-podman
+        ];
       };
-      plugins = with pkgs; [
-        cockpit-files
-        cockpit-podman
-        cockpit-machines
+    }
+    (mkIf config.cockpit.machines {
+      virtualisation = {
+        libvirtd.enable = true;
+      };
+
+      users = {
+        users.libvirtdbus = {
+          isSystemUser = true;
+          group = "libvirtdbus";
+          description = "Libvirt D-Bus bridge";
+        };
+        groups.libvirtdbus = { };
+      };
+
+      systemd.packages = [ pkgs.libvirt-dbus ];
+
+      environment.systemPackages = with pkgs; [
+        virt-manager
+        osinfo-db
+        osinfo-db-tools
+        libosinfo
       ];
-    };
-  };
+
+      services.cockpit.plugins = [ pkgs.cockpit-machines ];
+    })
+  ]);
 }
