@@ -1,4 +1,4 @@
-{ base_domain_name, lib, ... }:
+{ base_domain_name, lib, config, ... }:
 
 {
   imports = [ ];
