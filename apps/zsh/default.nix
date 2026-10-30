@@ -9,730 +9,345 @@ let
   inherit (lib)
     mkEnableOption
     mkIf
+    mkMerge
     getExe
     getExe'
     ;
 
-  yaziExtraPackages = with pkgs; [
+  basePackages = with pkgs; [
     bat
-    btrfs-progs
-    coreutils
-    diffutils
-    git
-    lazygit
-    nushell
-    ouch
-    rsync
-    sudo-rs
-    udisks
-    util-linux
-    wl-clipboard
+    eza # Modern, maintained replacement for ls
+    fd # Simple, fast and user-friendly alternative to find
+    dust # du, but more intuitive
+    duf # Disk Usage/Free Utility
+    ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+    zoxide # Fast cd command that learns your habits
+    rip2 # rm, but more intuitive
+    xcp # Extended cp(1)
+    zsh-completions # Additional completion definitions for zsh
+    nix-tree # Interactively browse a Nix store paths dependencies
+    procs # Modern replacement for ps written in Rust
+    snitch # friendlier ss / netstat for humans
   ];
-  yaziPackage = pkgs.yazi.override { extraPackages = yaziExtraPackages; };
-  timeTravel = pkgs.yaziPlugins.time-travel.overrideAttrs (oldAttrs: {
-    postPatch = (oldAttrs.postPatch or "") + ''
-      substituteInPlace main.lua \
-        --replace-fail \
-          $'local function btrfs_uuids(cwd)\n    local cmd, _ = run_with_sudo("btrfs", { "subvolume", "show", cwd })' \
-          $'local function btrfs_uuids(cwd)\n    local rootid_cmd, _ = run_with_sudo("btrfs", { "inspect-internal", "rootid", cwd })\n    if not rootid_cmd then\n        return nil\n    end\n    local rootid = trim(rootid_cmd.stdout)\n    local cmd, _ = run_with_sudo("btrfs", { "subvolume", "show", "-r", rootid, cwd })' \
-        --replace-fail \
-          'local path = mountpoint .. "/" .. name' \
-          'local path = name == "<FS_TREE>" and mountpoint or mountpoint .. "/" .. name'
-    '';
-  });
-  catppuccinMochaBlue = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/catppuccin/yazi/main/themes/mocha/catppuccin-mocha-blue.toml";
-    sha256 = "sha256-DR84Cv8VaTTuHBrrLB5VBbIajNiSwgb5g4/AYhurGOk=";
+
+  baseShellAliases = with pkgs; {
+    du = getExe dust;
+    df = getExe duf;
+    ls = getExe eza;
+    ll = "${getExe eza} -l";
+    l = "${getExe eza} -la";
+    cd = "z"; # provided by zoxide
+    cp = "${getExe xcp} -r";
+    mv = "${getExe' coreutils "mv"} -vi";
+    rm = "${getExe rip2} --graveyard ~/.local/share/Trash";
+    cat = getExe bat;
+    slazygit = "sudo -E ${getExe lazygit}";
+    search = "${getExe nh} search";
+    clean = "${getExe nh} clean all";
+    nix-history = "${getExe nix} profile history --profile /nix/var/nix/profiles/system";
+    bkill = "fzf-kill"; # not using direct path because it is provided by fzf-zsh-plugin
+    gitnix = "${getExe git} add . && ${getExe git} commit --amend --no-edit && ${getExe git} push --force";
+    vi = "nvim";
+    vim = "nvim";
+    rip = "rip --graveyard ~/.local/share/Trash";
+    sman = getExe tlrc;
+    sgit = "sudo -E ${getExe git}";
+    se = "sudo -E";
+    update-old = "sudo ${getExe nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
+    update = "${getExe nh} os switch /etc/nixos";
+    ps = "${getExe procs}";
   };
+
+  fullShellAliases =
+    with pkgs;
+    baseShellAliases
+    // {
+      y = "yazi"; # yazi wrapper: cd into last browsed dir on exit
+      stress = "for i in $(${getExe' coreutils "seq"} $(${getExe getconf} _NPROCESSORS_ONLN)); do ${getExe' coreutils "yes"} > /dev/null & done";
+      webcam_back =
+        lib.mkIf (config.dev.androidtools.enable or false)
+          "${getExe scrcpy} --video-source=camera --camera-id=0 --camera-size=1920x1080 --v4l2-sink=/dev/video0 --no-playback";
+      webcam_front =
+        lib.mkIf (config.dev.androidtools.enable or false)
+          "${getExe scrcpy} --video-source=camera --camera-id=1 --camera-size=1920x1080 --v4l2-sink=/dev/video0 --no-playback";
+      dig = getExe doggo;
+    };
+
+  baseShellFunctions = with pkgs; ''
+    nshell(){
+        local packages=("$@")
+        local package_list=()
+
+        for pkg in "''${packages[@]}"; do
+          package_list+=("n#$pkg")
+        done
+
+        NIXALLOW_UNFREE=1 ${getExe nix} shell --impure "''${package_list[@]}"
+      }
+
+      ccd() {
+        cd $1 && ${getExe' ncurses "clear"}
+      }
+      cp_song() {
+        ${getExe rsync} -var $1 $2
+      }
+
+      nix-quick(){
+        ${getExe nix} flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
+      }
+      flake-parts(){
+        ${getExe nix} flake init -t github:hercules-ci/flake-parts
+      }
+      sshrm(){
+        ARGS=$1
+        if [[ "$ARGS" =~ \@ ]]
+        then
+            SRV=$(echo $ARGS | cut -d '@' -f2)
+        else
+            SRV="$ARGS"
+        fi
+        ssh-keygen -R $SRV
+        read -p "Reconnect ? IT WILL RUN \"ssh $ARGS\" ? (y/N) " RECO
+        if [[ "$RECO" == "y" ]]
+        then
+            ssh "$ARGS"
+        fi
+      }
+  '';
+
+  fullShellFunctions = baseShellFunctions + ''
+    export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
+
+    ${./magellan_smart_ssh.sh}
+
+
+    # yazi: cd into the directory browsed in yazi when it exits
+    yazi() {
+      local tmp="''${TMPDIR:-/tmp}/yazi-cwd.$$"
+      command yazi --cwd-file "$tmp" "$@"
+      if [[ -f "$tmp" ]]; then
+        local cwd
+        cwd="$(<$tmp)"
+        if [[ -n "$cwd" && "$cwd" != "$PWD" && -d "$cwd" ]]; then
+          builtin cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+      fi
+    }
+  '';
+
+  baseShellInit = with pkgs; ''
+    if [ -n "''${ZSH_PROFILE_STARTUP:+x}" ]
+    then
+      zmodload zsh/zprof
+    fi
+
+    source ${zsh-defer}/share/zsh-defer/zsh-defer.plugin.zsh
+
+    # enable fzf
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    # enable zoxide
+    eval "$(${getExe zoxide} init zsh)"
+
+    # ── completion init ───────────────────────────────────────────────────
+    # zstyle must be set before compinit.
+    zstyle ':completion::complete:*' use-cache on
+    zstyle ':completion::complete:*' cache-path ~/.zsh/cache
+
+    # fpath is already populated by /etc/zshenv via the NIX_PROFILES loop.
+    # -C: skip security audit and dump regeneration entirely.
+    # The dump is regenerated automatically on every nixos-rebuild (Nix store
+    # paths in fpath change → dump is absent/stale on first shell after rebuild).
+    # For a manual regen (e.g. after `nix profile install`), run: zinit
+    autoload -Uz compinit
+    compinit -C
+
+    zinit() { autoload -Uz compinit && compinit -u && echo "compinit done" }
+
+    # ── things that call compdef (must come after compinit) ───────────────
+    # nix-index command-not-found handler registers a compdef internally.
+    source ${nix-index}/etc/profile.d/command-not-found.sh
+
+    source ${zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
+    source ${zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+    zsh-defer source ${zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    zsh-defer source ${zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
+    zsh-defer source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+    zsh-defer source ${zsh-autopair}/share/zsh/zsh-autopair/autopair.zsh
+    zsh-defer source ${fzf-zsh-plugin}/share/zsh/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+
+    if [ -n "$ZSH_PROFILE_STARTUP" ]
+    then
+      zprof
+    fi
+  '';
+  fullShellInit =
+    with pkgs;
+    ''
+
+      # ── fpath additions (must come before compinit) ──────────────────────
+      # poetry completions
+      fpath+=~/.zfunc
+
+      # Cache uv/uvx completion files into a fpath directory.
+      # Using fpath files (instead of `eval`/`source`) means compinit picks
+      # them up naturally — no `compdef` call needed after compinit.
+      # The stamp file holds the current uv store path; it changes on every
+      # `nix` upgrade, which is the only time the completions need regenerating.
+      _uv_comp_dir="$HOME/.zsh/completions"
+      _uv_store_path="${getExe uv}"
+      _uv_comp_stamp="$_uv_comp_dir/.stamp"
+      if [[ "$(cat "$_uv_comp_stamp" 2>/dev/null)" != "$_uv_store_path" ]]; then
+        mkdir -p "$_uv_comp_dir"
+        ${getExe uv} generate-shell-completion zsh >| "$_uv_comp_dir/_uv"
+        ${getExe' uv "uvx"} --generate-shell-completion zsh >| "$_uv_comp_dir/_uvx"
+        echo "$_uv_store_path" >| "$_uv_comp_stamp"
+      fi
+      fpath=("$_uv_comp_dir" $fpath)
+    ''
+    + baseShellInit; # baseShellInit go after for performance of zsh start time
 in
 {
   options = {
     zshConfig.enable = mkEnableOption "Enable zsh configuration";
+    zshConfig.enableFull = mkEnableOption "Enable full zsh configuration";
   };
-  config = mkIf config.zshConfig.enable {
-    users.users.root.shell = pkgs.zsh;
-    users.users.${username}.shell = pkgs.zsh;
-    programs.pay-respects.enable = true;
-    environment.systemPackages = with pkgs; [
-      bandwhich # CLI utility for displaying current network utilization
-      bottom # Cross-platform graphical process/system monitor with a customizable interface
-      btdu # Sampling disk usage profiler for btrfs
-      caligula # User-friendly, lightweight TUI for disk imaging
-      detox # Utility designed to clean up filenames
-      doggo # Command-line DNS Client for Humans. Written in Golang
-      duf # Disk Usage/Free Utility
-      dust # du, but more intuitive
-      eza # Modern, maintained replacement for ls
-      fd # Simple, fast and user-friendly alternative to find
-      gitoxide # Command-line application for interacting with git repositories
-      grex # Command-line tool for generating regular expressions from user-provided test cases
-      hyperfine # Command-line benchmarking tool
-      jless # Command-line pager for JSON data
-      lazysql # Cross-platform TUI database management tool written in Go
-      nix-tree # Interactively browse a Nix store paths dependencies
-      ouch # Command-line utility for easily compressing and decompressing files and directories
-      parallel # Shell tool for executing jobs in parallel
-      pbzip2 # Parallel implementation of bzip2 for multi-core machines
-      procs # Modern replacement for ps written in Rust
-      ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
-      ripgrep-all # Ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, and more
-      sd # Intuitive find & replace CLI (sed alternative)
-      serpl # Simple terminal UI for search and replace, ala VS Code
-      silicon # Create beautiful image of your source code
-      skim # Command-line fuzzy finder written in Rust
-      snitch # friendlier ss / netstat for humans
-      sshfs # FUSE-based filesystem that allows remote filesystems to be mounted over SSH
-      tokei # Count your code, quickly
-      w3m # Text-mode web browser
-      xcp # Extended cp(1)
-      zoxide # Fast cd command that learns your habits
-      zsh-completions # Additional completion definitions for zsh
-      # Delete a file or folder from btrfs live fs and all matching snapshots
-      (writeShellApplication {
-        name = "brm";
-        runtimeInputs = [
-          btrfs-progs
-          util-linux
-          coreutils
-        ];
-        text = builtins.readFile ./brm.sh;
-      })
-    ];
+  config = mkMerge [
+    (mkIf config.zshConfig.enable {
+      users.users.root.shell = pkgs.zsh;
+      users.users.${username}.shell = pkgs.zsh;
 
-    environment.pathsToLink = [ "/share/zsh" ];
-
-    hma.programs.zsh.enable = true; # only needed to allow home manager to autostart zellij
-    hma.programs.bash.enable = true; # only needed to allow home manager to autostart zellij
-    programs.yazi = {
-      enable = true;
-      package = yaziPackage;
-      initLua = pkgs.writeText "yazi-init.lua" ''
-        require("git"):setup({ ["order"] = 1500 })
-      '';
-      plugins = {
-        git = pkgs.yaziPlugins.git;
-        sudo = pkgs.yaziPlugins.sudo;
-        ouch = pkgs.yaziPlugins.ouch;
-        diff = pkgs.yaziPlugins.diff;
-        piper = pkgs.yaziPlugins.piper;
-        mount = pkgs.yaziPlugins.mount;
-        rsync = pkgs.yaziPlugins.rsync;
-        lazygit = pkgs.yaziPlugins.lazygit;
-        "time-travel" = timeTravel;
-      };
-      settings = {
-        yazi.plugin = {
-          prepend_fetchers = [
-            {
-              url = "*";
-              run = "git";
-              group = "git";
-            }
-            {
-              url = "*/";
-              run = "git";
-              group = "git";
-            }
-          ];
-          prepend_previewers = [
-            {
-              mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}";
-              run = "ouch";
-            }
-            {
-              url = "*.md";
-              run = "piper -- bat -p --color=always --style=plain \"$1\"";
-            }
-          ];
-        };
-        theme = builtins.fromTOML (builtins.readFile catppuccinMochaBlue);
-        keymap.mgr.prepend_keymap = [
-          {
-            on = [ "<C-d>" ];
-            run = "plugin diff";
-            desc = "Diff selected and hovered files";
-          }
-          {
-            on = [ "C" ];
-            run = "plugin ouch";
-            desc = "Compress with ouch";
-          }
-          {
-            on = [ "M" ];
-            run = "plugin mount";
-            desc = "Manage mounts";
-          }
-          {
-            on = [ "R" ];
-            run = "plugin rsync";
-            desc = "Copy with rsync";
-          }
-          {
-            on = [
-              "g"
-              "i"
-            ];
-            run = "plugin lazygit";
-            desc = "Open lazygit";
-          }
-          {
-            on = [
-              "<A-s>"
-              "p"
-            ];
-            run = "plugin sudo -- paste";
-            desc = "Paste with sudo";
-          }
-          {
-            on = [
-              "<A-s>"
-              "d"
-            ];
-            run = "plugin sudo -- remove";
-            desc = "Remove with sudo";
-          }
-          {
-            on = [
-              "z"
-              "h"
-            ];
-            run = "plugin time-travel prev";
-            desc = "Go to previous snapshot";
-          }
-          {
-            on = [
-              "z"
-              "l"
-            ];
-            run = "plugin time-travel next";
-            desc = "Go to next snapshot";
-          }
-          {
-            on = [
-              "z"
-              "e"
-            ];
-            run = "plugin time-travel exit";
-            desc = "Exit snapshot browsing";
-          }
-        ];
-      };
-    };
-    hma.programs.zellij = {
-      enable = true;
-      enableZshIntegration = true;
-      enableBashIntegration = true;
-      exitShellOnExit = true;
-      settings = {
-        show_startup_tips = false;
-        theme = "catppuccin-mocha";
-      };
-    };
-
-    hm.programs.btop.settings.color_theme =
-      "/home/${username}/.config/btop/themes/catppuccin_mocha.theme";
-    hmr.programs.btop.settings.color_theme = "/root/.config/btop/themes/catppuccin_mocha.theme";
-    hma = {
-      programs.btop.enable = true;
-      home = {
-        file.".config/btop/themes" = {
-          source =
-            pkgs.fetchFromGitHub {
-              owner = "catppuccin";
-              repo = "btop";
-              tag = "1.0.0";
-              sha256 = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
-            }
-            + "/themes";
-        };
-      };
-    };
-
-    programs.zsh = {
-      enable = true;
-      autosuggestions.enable = false;
-      enableCompletion = false;
-      enableBashCompletion = true;
-      shellAliases = with pkgs; {
-        du = getExe dust;
-        df = getExe duf;
-        cp = "${getExe xcp} -r";
-        mv = "${getExe' coreutils "mv"} -vi";
-        cd = "z"; # not using direct path because it is provided by zoxide
-        sman = getExe tlrc;
-        cat = getExe bat;
-        ls = getExe eza;
-        ll = "${getExe eza} -l";
-        l = "${getExe eza} -la";
-        y = "yazi"; # yazi wrapper: cd into last browsed dir on exit
-        rm = "${getExe rip2} --graveyard ~/.local/share/Trash";
-        sgit = "sudo -E ${getExe git}";
-        se = "sudo -E";
-        slazygit = "sudo -E ${getExe lazygit}";
-        # nixos specific command
-        update-old = "sudo ${getExe nixos-rebuild} switch --flake /etc/nixos --use-remote-sudo";
-        update = "${getExe nh} os switch /etc/nixos";
-        nix-history = "${getExe nix} profile history --profile /nix/var/nix/profiles/system";
-        yay = "upgrade";
-        bro = "upgrade";
-        search = "${getExe nh} search";
-        clean = "${getExe nh} clean all";
-        stress = "for i in $(${getExe' coreutils "seq"} $(${getExe getconf} _NPROCESSORS_ONLN)); do ${getExe' coreutils "yes"} > /dev/null & done";
-        bkill = "fzf-kill"; # not using direct path because it is provided by fzf-zsh-plugin
-        gitnix = "${getExe git} add . && ${getExe git} commit --amend --no-edit && ${getExe git} push --force";
-        ps = "${getExe procs}";
-        webcam_back =
-          lib.mkIf (config.dev.androidtools.enable or false)
-            "${getExe scrcpy} --video-source=camera --camera-id=0 --camera-size=1920x1080 --v4l2-sink=/dev/video0 --no-playback";
-        webcam_front =
-          lib.mkIf (config.dev.androidtools.enable or false)
-            "${getExe scrcpy} --video-source=camera --camera-id=1 --camera-size=1920x1080 --v4l2-sink=/dev/video0 --no-playback";
-        vi = "nvim";
-        vim = "nvim";
-        rip = "rip --graveyard ~/.local/share/Trash";
-        dig = getExe doggo;
-      };
-      promptInit = with pkgs; ''
-        source ${zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-        export POWERLEVEL9K_MODE="nerdfont-v3"
-        export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time battery)
-        export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir dir_writable virtualenv anaconda pyenv root_indicator vcs)
-        export POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-        export POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-        export POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=$'\u256d\u2500 '
-        export POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=$'\u2570\uf460 '
-        export POWERLEVEL9K_TIME_FORMAT='%D{\ue383 %H:%M \uf073 %d.%m.%y}'
-        export POWERLEVEL9K_STATUS_OK_BACKGROUND=232
-        export POWERLEVEL9K_STATUS_OK_FOREGROUND=46
-        export POWERLEVEL9K_STATUS_ERROR_BACKGROUND=232
-        export POWERLEVEL9K_STATUS_ERROR_FOREGROUND=196
-        export POWERLEVEL9K_BATTERY_CHARGING="yellow"
-        export POWERLEVEL9K_BATTERY_CHARGED="green"
-        export POWERLEVEL9K_BATTERY_DISCONNECTED="$DEFAULT_COLOR"
-        export POWERLEVEL9K_BATTERY_LOW_THRESHOLD="10"
-        export POWERLEVEL9K_BATTERY_LOW_COLOR="red"
-        export POWERLEVEL9K_BATTERY_ICON=$'\uf1e6'
-        export POWERLEVEL9K_ROOT_ICON=$'\uf198'
-        export POWERLEVEL9K_ROOT_INDICATOR_BACKGROUND=196
-        export POWERLEVEL9K_ROOT_INDICATOR_FOREGROUND=232
-        export POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=232
-        export POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=178
-        export POWERLEVEL9K_INSTANT_PROMPT="quiet"
-        typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
-      '';
-
-      shellInit = with pkgs; ''
-        export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.cargo/bin"
-        nshell(){
-          local packages=("$@")
-          local package_list=()
-
-          for pkg in "''${packages[@]}"; do
-            package_list+=("n#$pkg")
-          done
-
-          NIXALLOW_UNFREE=1 ${getExe nix} shell --impure "''${package_list[@]}"
-        }
-
-        ccd() {
-          cd $1 && ${getExe' ncurses "clear"}
-        }
-        cp_song() {
-          ${getExe rsync} -var $1 $2
-        }
-
-        nix-quick(){
-          ${getExe nix} flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
-        }
-        flake-parts(){
-          ${getExe nix} flake init -t github:hercules-ci/flake-parts
-        }
-        sshrm(){
-          ARGS=$1
-          if [[ "$ARGS" =~ \@ ]]
-          then
-              SRV=$(echo $ARGS | cut -d '@' -f2)
-          else
-              SRV="$ARGS"
-          fi
-          ssh-keygen -R $SRV
-          read -p "Reconnect ? IT WILL RUN \"ssh $ARGS\" ? (y/N) " RECO
-          if [[ "$RECO" == "y" ]]
-          then
-              ssh "$ARGS"
-          fi
-        }
-
-        # Helper function to select SSH host with fzf
-        _select_ssh_host() {
-          local query="$1"
-          local hosts
-          hosts=$(grep -E '^Host ' ~/.ssh/config | awk '{print $2}')
-
-          if [[ -n $query ]]; then
-            local server=$(echo "$hosts" | grep -i "$query")
-            local count=$(echo "$server" | wc -l)
-            if [[ $count -eq 1 ]]; then
-              echo "$server"
-              return 0
-            fi
-            echo "$hosts" | fzf --query="$query"
-          else
-            echo "$hosts" | fzf
-          fi
-        }
-
-        s() {
-          local no_www=0
-          local no_zellij=''${S_NO_ZELLIJ:-0}
-
-          _s_help() {
-            print -r "Usage: s [options] [server]
-
-        Options:
-          -w, --no-www      Connect directly as the SSH user (skip 'sudo su - www')
-          -z, --no-zellij   Disable Zellij integration (standard SSH / sudo session)
-          -h, --help        Show this help message
-
-        Environment:
-          S_NO_ZELLIJ=1     Disable Zellij by default for all connections
-
-        Arguments:
-          [server]          Target server (fuzzy search via fzf if omitted or partial)"
-          }
-
-          while [[ $# -gt 0 ]]; do
-            case "$1" in
-              -h|--help)
-                _s_help
-                return 0
-                ;;
-              -w|--no-www)
-                no_www=1
-                shift
-                ;;
-              -z|--no-zellij)
-                no_zellij=1
-                shift
-                ;;
-              -wz|-zw)
-                no_www=1
-                no_zellij=1
-                shift
-                ;;
-              --)
-                shift
-                break
-                ;;
-              -*)
-                echo "Unknown option: $1" >&2
-                _s_help >&2
-                return 1
-                ;;
-              *)
-                break
-                ;;
-            esac
-          done
-
-          local server=$(_select_ssh_host "$1")
-          if [[ -z "$server" ]]; then
-            return 1
-          fi
-
-          # Si Zellij est désactivé (flag -z ou S_NO_ZELLIJ=1)
-          if (( no_zellij )); then
-            if [[ $no_www -eq 1 ]]; then
-              ssh "$server"
-            else
-              ssh -t "$server" "sudo su - www"
-            fi
-            return $?
-          fi
-
-          # ── 1. Gestion du cache local et auto-update de Zellij statique ────
-          local cache_dir="$HOME/.cache/zellij-static"
-          local local_bin="$cache_dir/zellij"
-          local stamp_file="$cache_dir/.last_update_check"
-          local zellij_url="https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz"
-          mkdir -p "$cache_dir"
-
-          local now=$(date +%s)
-          local last_check=$(stat -c %Y "$stamp_file" 2>/dev/null || echo 0)
-
-          # Si le binaire local n'existe pas, premier téléchargement synchrone
-          if [[ ! -x "$local_bin" ]]; then
-            echo "📥 Premier téléchargement de Zellij statique..."
-            local tmp_init=$(mktemp -d "/tmp/zellij-init.XXXXXX")
-            if curl -sSL --connect-timeout 5 --max-time 60 "$zellij_url" -o "$tmp_init/zellij.tar.gz" && tar -xzf "$tmp_init/zellij.tar.gz" -C "$tmp_init" 2>/dev/null; then
-              mv "$tmp_init/zellij" "$local_bin"
-              chmod 755 "$local_bin"
-              touch "$stamp_file"
-            else
-              echo "⚠ Impossible de télécharger Zellij (hors-ligne ou GitHub indisponible)." >&2
-            fi
-            rm -rf "$tmp_init"
-          elif (( now - last_check > 604800 )); then
-            # Plus de 7 jours : vérification / mise à jour asynchrone en arrière-plan (non-bloquant)
-            touch "$stamp_file"
-            (
-              local tmp_bg=$(mktemp -d "/tmp/zellij-update.XXXXXX")
-              if curl -sSL --connect-timeout 4 --max-time 45 "$zellij_url" -o "$tmp_bg/zellij.tar.gz" 2>/dev/null && tar -xzf "$tmp_bg/zellij.tar.gz" -C "$tmp_bg" 2>/dev/null; then
-                if [[ -x "$tmp_bg/zellij" ]]; then
-                  mv "$tmp_bg/zellij" "$local_bin"
-                  chmod 755 "$local_bin"
-                fi
-              fi
-              rm -rf "$tmp_bg"
-            ) >/dev/null 2>&1 &!
-          fi
-
-          # ── 2. Déploiement et exécution sur le serveur distant ───────────────
-          local ssh_opts=(-o ControlMaster=auto -o ControlPersist=60s -o ControlPath="/tmp/ssh-%C")
-
-          if [[ -x "$local_bin" ]]; then
-            local local_ver=$("$local_bin" --version 2>/dev/null)
-
-            # Arbre de décision pour trouver un répertoire inscriptible et exécutable (sans noexec)
-            # Exécution de zellij-probe.sh sur le serveur distant
-            local remote_dir
-            remote_dir=$(ssh "''${ssh_opts[@]}" "$server" "bash -s" < ${./zellij-probe.sh} 2>/dev/null | grep '^DIR:' | head -n1 | cut -d: -f2-)
-
-            if [[ -n "$remote_dir" ]]; then
-              local remote_bin="$remote_dir/zellij"
-              local remote_sh="$remote_dir/shell"
-              local remote_cfg="$remote_dir/config.kdl"
-
-              # Vérifier si zellij est présent avec la bonne version et ses wrappers
-              if ! ssh "''${ssh_opts[@]}" "$server" "test -x '$remote_bin' && [ \"\$('$remote_bin' --version 2>/dev/null)\" = '$local_ver' ] && test -x '$remote_sh' && test -f '$remote_cfg'" 2>/dev/null; then
-                echo "📤 Synchronisation de Zellij ($local_ver) vers $server:$remote_dir..."
-                cat "$local_bin" | ssh "''${ssh_opts[@]}" "$server" "cat > '$remote_bin' && chmod 755 '$remote_bin' && printf '#!/bin/sh\nexec sudo su - www\n' > '$remote_sh' && chmod 755 '$remote_sh' && printf 'default_shell \"%s\"\n' '$remote_sh' > '$remote_cfg'"
-              fi
-
-              # Lancement de Zellij avec rattachement de session
-              if [[ $no_www -eq 1 ]]; then
-                ssh "''${ssh_opts[@]}" -t "$server" "'$remote_bin' attach -c main || exec \$SHELL -l"
-              else
-                ssh "''${ssh_opts[@]}" -t "$server" "'$remote_bin' --config '$remote_cfg' attach -c main-www || sudo su - www"
-              fi
-              return $?
-            else
-              echo "⚠ Aucun répertoire exécutable trouvé (noexec). Connexion standard..." >&2
-            fi
-          fi
-
-          # Repli sur le shell standard si aucun binaire Zellij n'a pu être obtenu ou déployé
-          if [[ $no_www -eq 1 ]]; then
-            ssh "$server"
-          else
-            ssh -t "$server" "sudo su - www"
-          fi
-        }
-
-        smount() {
-          local remote_user="www"
-          local OPTIND opt
-
-          # Parse les options
-          while getopts "u:" opt; do
-            case $opt in
-              u) remote_user="$OPTARG" ;;
-              *) echo "Usage: smount [-u user] [server]" >&2; return 1 ;;
-            esac
-          done
-          shift $((OPTIND - 1))
-
-          # Toujours passer par fzf pour matcher le serveur
-          local query="$1"
-          local server=$(_select_ssh_host "$query")
-          if [[ -z "$server" ]]; then
-            echo "No server selected" >&2
-            return 1
-          fi
-
-          # Extrait les infos de la config SSH (supprime stderr)
-          local ssh_config=$(ssh -G "$server" 2>/dev/null)
-          local ssh_user=$(echo "$ssh_config" | awk '/^user / {print $2}')
-          local ssh_host=$(echo "$ssh_config" | awk '/^hostname / {print $2}')
-          local proxy_jump=$(echo "$ssh_config" | awk '/^proxyjump / {print $2}')
-
-          # Utilise uniquement le dernier segment après le dernier /
-          local server_name="''${ssh_host##*/}"
-          local mount_point="/tmp/$server_name"
-          mkdir -p "$mount_point"
-
-          # Check si déjà monté
-          if mountpoint -q "$mount_point" 2>/dev/null; then
-            echo "✓ Already mounted at $mount_point"
-            cd "$mount_point"
-            return 0
-          fi
-
-          # Construit la commande sftp_server
-          local sftp_cmd
-          if [[ "$remote_user" == "$ssh_user" ]]; then
-            sftp_cmd="/usr/libexec/openssh/sftp-server"
-            echo "📁 Mounting $server_name as $remote_user (no sudo)..."
-          else
-            sftp_cmd="sudo -u $remote_user /usr/libexec/openssh/sftp-server"
-            echo "📁 Mounting $server_name as $remote_user (with sudo)..."
-          fi
-
-          # Monte avec ProxyCommand si nécessaire
-          local mount_result
-          if [[ -n "$proxy_jump" ]]; then
-            echo "🔧 Using ProxyJump: $proxy_jump"
-            sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
-              -o ProxyCommand="ssh -W %h:%p $proxy_jump" \
-              -o sftp_server="$sftp_cmd" \
-              -o reconnect \
-              -o ServerAliveInterval=15
-            mount_result=$?
-          else
-            sshfs "$ssh_user@$ssh_host:/" "$mount_point" \
-              -o sftp_server="$sftp_cmd" \
-              -o reconnect \
-              -o ServerAliveInterval=15
-            mount_result=$?
-          fi
-
-          if [[ $mount_result -eq 0 ]]; then
-            echo "✓ Mounted at $mount_point"
-            cd "$mount_point"
-          else
-            echo "✗ Failed to mount" >&2
-            echo ""
-            echo "💡 Debug: Try this command manually:"
-            if [[ -n "$proxy_jump" ]]; then
-              echo "   sshfs $ssh_user@$ssh_host:/ $mount_point \\"
-              echo "     -o ProxyCommand=\"ssh -W %h:%p $proxy_jump\" \\"
-              echo "     -o sftp_server=\"$sftp_cmd\" -v"
-            else
-              echo "   sshfs $ssh_user@$ssh_host:/ $mount_point \\"
-              echo "     -o sftp_server=\"$sftp_cmd\" -v"
-            fi
-            return 1
-          fi
-        }
-
-        # yazi: cd into the directory browsed in yazi when it exits
-        yazi() {
-          local tmp="''${TMPDIR:-/tmp}/yazi-cwd.$$"
-          command yazi --cwd-file "$tmp" "$@"
-          if [[ -f "$tmp" ]]; then
-            local cwd
-            cwd="$(<$tmp)"
-            if [[ -n "$cwd" && "$cwd" != "$PWD" && -d "$cwd" ]]; then
-              builtin cd -- "$cwd"
-            fi
-            rm -f -- "$tmp"
-          fi
-        }
-
-        sumount() {
-          local server="$1"
-
-          # Si pas de serveur spécifié, utilise fzf sur les montages existants
-          if [[ -z "$server" ]]; then
-            local mounted=$(find /tmp -maxdepth 1 -type d -exec mountpoint -q {} \; -print 2>/dev/null | xargs -n1 basename)
-            if [[ -z "$mounted" ]]; then
-              echo "No mounted servers found in /tmp" >&2
-              return 1
-            fi
-            server=$(echo "$mounted" | fzf --prompt="Select server to unmount: ")
-            if [[ -z "$server" ]]; then
-              echo "No server selected" >&2
-              return 1
-            fi
-          fi
-
-          local mount_point="/tmp/$server"
-          if mountpoint -q "$mount_point" 2>/dev/null; then
-            fusermount -u "$mount_point" 2>/dev/null || umount "$mount_point"
-            echo "✓ Unmounted $mount_point"
-          else
-            echo "⚠ Not mounted: $mount_point"
-          fi
-        }
-
-      '';
-
-      ohMyZsh = {
+      programs.zsh = {
         enable = true;
-        plugins = [
-          "git"
-          "colored-man-pages"
-          "sudo"
-          "command-not-found"
-          "common-aliases"
-        ];
+        autosuggestions.enable = false;
+        enableCompletion = false;
+        enableBashCompletion = true;
+        shellAliases = baseShellAliases;
+        shellInit = baseShellFunctions;
+        interactiveShellInit = baseShellInit;
+        ohMyZsh = {
+          enable = true;
+          plugins = [
+            "git"
+            "colored-man-pages"
+            "sudo"
+            "command-not-found"
+            "common-aliases"
+          ];
+        };
+        promptInit = with pkgs; ''
+          source ${zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+          export POWERLEVEL9K_MODE="nerdfont-v3"
+          export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time battery)
+          export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir dir_writable virtualenv anaconda pyenv root_indicator vcs)
+          export POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+          export POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+          export POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=$'\u256d\u2500 '
+          export POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=$'\u2570\uf460 '
+          export POWERLEVEL9K_TIME_FORMAT='%D{\ue383 %H:%M \uf073 %d.%m.%y}'
+          export POWERLEVEL9K_STATUS_OK_BACKGROUND=232
+          export POWERLEVEL9K_STATUS_OK_FOREGROUND=46
+          export POWERLEVEL9K_STATUS_ERROR_BACKGROUND=232
+          export POWERLEVEL9K_STATUS_ERROR_FOREGROUND=196
+          export POWERLEVEL9K_BATTERY_CHARGING="yellow"
+          export POWERLEVEL9K_BATTERY_CHARGED="green"
+          export POWERLEVEL9K_BATTERY_DISCONNECTED="$DEFAULT_COLOR"
+          export POWERLEVEL9K_BATTERY_LOW_THRESHOLD="10"
+          export POWERLEVEL9K_BATTERY_LOW_COLOR="red"
+          export POWERLEVEL9K_BATTERY_ICON=$'\uf1e6'
+          export POWERLEVEL9K_ROOT_ICON=$'\uf198'
+          export POWERLEVEL9K_ROOT_INDICATOR_BACKGROUND=196
+          export POWERLEVEL9K_ROOT_INDICATOR_FOREGROUND=232
+          export POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=232
+          export POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=178
+          export POWERLEVEL9K_INSTANT_PROMPT="quiet"
+          typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
+        '';
       };
 
-      interactiveShellInit = with pkgs; ''
-        if [ -n "''${ZSH_PROFILE_STARTUP:+x}" ]
-        then
-          zmodload zsh/zprof
-        fi
+      hma.programs.zellij = {
+        enable = true;
+        enableZshIntegration = true;
+        enableBashIntegration = true;
+        exitShellOnExit = true;
+        settings = {
+          show_startup_tips = false;
+          theme = "catppuccin-mocha";
+        };
+      };
 
-        source ${zsh-defer}/share/zsh-defer/zsh-defer.plugin.zsh
+      hm.programs.btop.settings.color_theme =
+        "/home/${username}/.config/btop/themes/catppuccin_mocha.theme";
+      hmr.programs.btop.settings.color_theme = "/root/.config/btop/themes/catppuccin_mocha.theme";
+      hma = {
+        programs.btop.enable = true;
+        home = {
+          file.".config/btop/themes" = {
+            source =
+              pkgs.fetchFromGitHub {
+                owner = "catppuccin";
+                repo = "btop";
+                tag = "1.0.0";
+                sha256 = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
+              }
+              + "/themes";
+          };
+        };
+      };
 
-        # enable fzf
-        [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-        # enable zoxide
-        eval "$(${getExe zoxide} init zsh)"
+      environment.systemPackages = basePackages;
+      environment.pathsToLink = [ "/share/zsh" ];
 
-        # ── fpath additions (must come before compinit) ──────────────────────
-        # poetry completions
-        fpath+=~/.zfunc
+      hma.programs.zsh.enable = true; # only needed to allow home manager to autostart zellij
+      hma.programs.bash.enable = true; # only needed to allow home manager to autostart zellij
+    })
+    (mkIf config.zshConfig.enableFull {
+      programs.pay-respects.enable = true;
+      environment.systemPackages =
+        basePackages
+        ++ (with pkgs; [
+          bandwhich # CLI utility for displaying current network utilization
+          bottom # Cross-platform graphical process/system monitor with a customizable interface
+          btdu # Sampling disk usage profiler for btrfs
+          caligula # User-friendly, lightweight TUI for disk imaging
+          detox # Utility designed to clean up filenames
+          doggo # Command-line DNS Client for Humans. Written in Golang
+          gitoxide # Command-line application for interacting with git repositories
+          grex # Command-line tool for generating regular expressions from user-provided test cases
+          hyperfine # Command-line benchmarking tool
+          jless # Command-line pager for JSON data
+          lazysql # Cross-platform TUI database management tool written in Go
+          ouch # Command-line utility for easily compressing and decompressing files and directories
+          parallel # Shell tool for executing jobs in parallel
+          pbzip2 # Parallel implementation of bzip2 for multi-core machines
+          ripgrep-all # Ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, and more
+          sd # Intuitive find & replace CLI (sed alternative)
+          serpl # Simple terminal UI for search and replace, ala VS Code
+          silicon # Create beautiful image of your source code
+          skim # Command-line fuzzy finder written in Rust
+          sshfs # FUSE-based filesystem that allows remote filesystems to be mounted over SSH
+          tokei # Count your code, quickly
+          w3m # Text-mode web browser
+          # Delete a file or folder from btrfs live fs and all matching snapshots
+          (writeShellApplication {
+            name = "brm";
+            runtimeInputs = [
+              btrfs-progs
+              util-linux
+              coreutils
+            ];
+            text = builtins.readFile ./brm.sh;
+          })
+          (writeShellApplication {
+            name = "zellij-probe";
+            text = builtins.readFile ./zellij-probe.sh;
+          })
+        ]);
 
-        # Cache uv/uvx completion files into a fpath directory.
-        # Using fpath files (instead of `eval`/`source`) means compinit picks
-        # them up naturally — no `compdef` call needed after compinit.
-        # The stamp file holds the current uv store path; it changes on every
-        # `nix` upgrade, which is the only time the completions need regenerating.
-        _uv_comp_dir="$HOME/.zsh/completions"
-        _uv_store_path="${getExe uv}"
-        _uv_comp_stamp="$_uv_comp_dir/.stamp"
-        if [[ "$(cat "$_uv_comp_stamp" 2>/dev/null)" != "$_uv_store_path" ]]; then
-          mkdir -p "$_uv_comp_dir"
-          ${getExe uv} generate-shell-completion zsh >| "$_uv_comp_dir/_uv"
-          ${getExe' uv "uvx"} --generate-shell-completion zsh >| "$_uv_comp_dir/_uvx"
-          echo "$_uv_store_path" >| "$_uv_comp_stamp"
-        fi
-        fpath=("$_uv_comp_dir" $fpath)
-
-        # ── completion init ───────────────────────────────────────────────────
-        # zstyle must be set before compinit.
-        zstyle ':completion::complete:*' use-cache on
-        zstyle ':completion::complete:*' cache-path ~/.zsh/cache
-
-        # fpath is already populated by /etc/zshenv via the NIX_PROFILES loop.
-        # -C: skip security audit and dump regeneration entirely.
-        # The dump is regenerated automatically on every nixos-rebuild (Nix store
-        # paths in fpath change → dump is absent/stale on first shell after rebuild).
-        # For a manual regen (e.g. after `nix profile install`), run: zinit
-        autoload -Uz compinit
-        compinit -C
-
-        zinit() { autoload -Uz compinit && compinit -u && echo "compinit done" }
-
-        # ── things that call compdef (must come after compinit) ───────────────
-        # nix-index command-not-found handler registers a compdef internally.
-        source ${nix-index}/etc/profile.d/command-not-found.sh
-
-        source ${zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
-        source ${zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-        zsh-defer source ${zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-        zsh-defer source ${zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
-        zsh-defer source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-        zsh-defer source ${zsh-autopair}/share/zsh/zsh-autopair/autopair.zsh
-        zsh-defer source ${fzf-zsh-plugin}/share/zsh/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
-
-        if [ -n "$ZSH_PROFILE_STARTUP" ]
-        then
-          zprof
-        fi
-      '';
-    };
-  };
+      programs.zsh = {
+        shellInit = fullShellFunctions;
+        interactiveShellInit = fullShellInit;
+      };
+    })
+  ];
 }

@@ -63,6 +63,11 @@
   # dev tooling: full neovim via nvchad
   neovim.enable = true;
   neovim.nvchad.enable = true;
+
+  # full zsh for this dev host
+  zshConfig.enableFull = true;
+  yazi.enable = true;
+
   nginx.nichihachi.enable = true;
   nginx.nichihachi.backendIp = "192.168.1.124";
 

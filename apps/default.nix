@@ -55,6 +55,7 @@
     ./vm.nix
     ./wakapi.nix
     ./watchtower.nix
+    ./yazi.nix
     ./yubikey.nix
     ./zsh
     ./bitwarden.nix

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption optionals;
+  inherit (lib) mkEnableOption optionals mkIf;
 in
 {
   imports = [
@@ -19,6 +19,12 @@ in
   };
 
   config = {
+
+    hm.programs.gh = mkIf config.dev.enable {
+      enable = true;
+      settings.git_protocol = "ssh";
+    };
+
     environment.systemPackages =
       with pkgs;
       [ ]
@@ -38,6 +44,7 @@ in
         flyctl
         clang
         nixd
+        ungit
       ];
 
     hm.home.file.".zfunc/_poetry" = {

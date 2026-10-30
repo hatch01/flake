@@ -15,7 +15,6 @@ in
   config = mkIf config.gitConfig.enable {
     environment.systemPackages = with pkgs; [
       delta
-      ungit
       lazygit
     ];
     programs.git.enable = true;
@@ -65,10 +64,6 @@ in
             key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+QyzHE8xVIWrDHZTf0M8mmFNC1tcbIOt+PafD8H4S7";
             format = "ssh";
           };
-        };
-        gh = {
-          enable = true;
-          settings.git_protocol = "ssh";
         };
         lazygit = {
           enable = true;

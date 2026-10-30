@@ -28,6 +28,8 @@
   # dev params
   dev.enable = true;
   neovim.nvchad.enable = true;
+  zshConfig.enableFull = true;
+  yazi.enable = true;
   jetbrains.enable = false;
   arduino.enable = false;
   dev.androidtools.enable = false;
