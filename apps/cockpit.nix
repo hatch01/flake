@@ -17,6 +17,7 @@ in
   options = {
     cockpit.enable = mkEnableOption "Enable cockpit";
     cockpit.machines = mkEnableOption "VM management (libvirt + cockpit-machines)";
+    cockpit.podman = mkEnableOption "Podman management (cockpit-podman)";
     cockpit.port = mkOption {
       type = lib.types.int;
       default = 9090;
@@ -49,8 +50,7 @@ in
         };
         plugins = with pkgs; [
           cockpit-files
-          cockpit-podman
-        ];
+        ] ++ (lib.optionals config.cockpit.podman [ pkgs.cockpit-podman ]);
       };
     }
     (mkIf config.cockpit.machines {
