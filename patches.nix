@@ -41,8 +41,8 @@
       name = "use latest drumgizmo patch";
     }
     {
-      pr = 581011;
       name = "feat kwi";
+      pr = 581011;
     }
   ];
 }
