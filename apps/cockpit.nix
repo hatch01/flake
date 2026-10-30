@@ -48,9 +48,12 @@ in
           #     "action" = "none";
           #   };
         };
-        plugins = with pkgs; [
-          cockpit-files
-        ] ++ (lib.optionals config.cockpit.podman [ pkgs.cockpit-podman ]);
+        plugins =
+          with pkgs;
+          [
+            cockpit-files
+          ]
+          ++ (lib.optionals config.cockpit.podman [ pkgs.cockpit-podman ]);
       };
     }
     (mkIf config.cockpit.machines {
