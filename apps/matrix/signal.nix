@@ -17,9 +17,11 @@ in
   };
 
   config = mkIf config.matrix.signal.enable {
-    services.mautrix-signal = {
+    services.mautrix.bridges.signal = {
+      type = "signal";
       enable = true;
       registerToSynapse = true;
+      environmentFiles = [ config.age.secrets.matrix_shared_secret.path ];
       settings = {
         analytics = {
           token = null;
@@ -67,7 +69,6 @@ in
           max_open_conns = 5;
         };
       };
-      environmentFile = config.age.secrets.matrix_shared_secret.path;
     };
     postgres.initialScripts = [
       ''

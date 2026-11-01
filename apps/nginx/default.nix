@@ -407,7 +407,7 @@ in
               "= /livekit/sfu" = livekitSfu;
 
               "^~ /mautrix-discord/" = mkIf config.matrix.discord.enable {
-                proxyPass = "http://127.0.0.1:${toString config.services.mautrix-discord.settings.appservice.port}";
+                proxyPass = "http://127.0.0.1:${toString config.services.mautrix.bridges.discord.settings.appservice.port}";
               };
             };
         })

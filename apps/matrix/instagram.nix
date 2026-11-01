@@ -17,60 +17,56 @@ in
   };
 
   config = mkIf config.matrix.instagram.enable {
-    services.mautrix-meta = {
-      instances = {
-        instagram = {
-          enable = true;
-          registerToSynapse = true;
-          settings = {
-            analytics = {
-              token = null;
-              url = "https://api.segment.io/v1/track";
-              user_id = null;
-            };
-            network = {
-              device_name = "mautrix-instagram";
-              disappear_view_once = false;
-              displayname_template = "{{or .DisplayName .Username \"Unknown user\"}} (Insta)";
-              location_format = "'https://www.google.com/maps/place/%[1]s,%[2]s'";
-              note_to_self_avatar = "mxc://maunium.net/REBIVrqjZwmaWpssCZpBlmlL";
-              number_in_topic = true;
-              sync_contacts_on_startup = true;
-              use_contact_avatars = false;
-              use_outdated_profiles = false;
-            };
-            bridge = {
-              permissions = {
-                "*" = "relay";
-                "${base_domain_name}" = "user";
-                "@root:${base_domain_name}" = "admin";
-              };
-
-              sync_direct_chat_list = true;
-            };
-            double_puppet = {
-              secrets = {
-                "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
-              };
-            };
-            homeserver = {
-              address = "http://localhost:${toString config.matrix.port}";
-              domain = base_domain_name;
-            };
-            encryption = {
-              require = false;
-              msc4190 = true;
-            };
-            database = {
-              type = "postgres";
-              uri = "postgresql:///mautrix-meta?host=/run/postgresql";
-              max_conn_idle_time = null;
-              max_conn_lifetime = null;
-              max_idle_conns = 1;
-              max_open_conns = 5;
-            };
+    services.mautrix.bridges.meta-instagram = {
+      type = "instagram";
+      enable = true;
+      registerToSynapse = true;
+      environmentFiles = [ config.age.secrets.matrix_shared_secret.path ];
+      settings = {
+        analytics = {
+          token = null;
+          url = "https://api.segment.io/v1/track";
+          user_id = null;
+        };
+        network = {
+          device_name = "mautrix-instagram";
+          disappear_view_once = false;
+          displayname_template = "{{or .DisplayName .Username \"Unknown user\"}} (Insta)";
+          location_format = "'https://www.google.com/maps/place/%[1]s,%[2]s'";
+          note_to_self_avatar = "mxc://maunium.net/REBIVrqjZwmaWpssCZpBlmlL";
+          number_in_topic = true;
+          sync_contacts_on_startup = true;
+          use_contact_avatars = false;
+          use_outdated_profiles = false;
+        };
+        bridge = {
+          permissions = {
+            "*" = "relay";
+            "${base_domain_name}" = "user";
+            "@root:${base_domain_name}" = "admin";
           };
-          environmentFile = config.age.secrets.matrix_shared_secret.path;
+          sync_direct_chat_list = true;
+        };
+        double_puppet = {
+          secrets = {
+            "${base_domain_name}" = "as_token:$SHARED_AS_TOKEN";
+          };
+        };
+        homeserver = {
+          address = "http://localhost:${toString config.matrix.port}";
+          domain = base_domain_name;
+        };
+        encryption = {
+          require = false;
+          msc4190 = true;
+        };
+        database = {
+          type = "postgres";
+          uri = "postgresql:///mautrix-meta?host=/run/postgresql";
+          max_conn_idle_time = null;
+          max_conn_lifetime = null;
+          max_idle_conns = 1;
+          max_open_conns = 5;
         };
       };
     };

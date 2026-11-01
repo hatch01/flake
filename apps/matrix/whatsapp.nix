@@ -17,12 +17,11 @@ in
   };
 
   config = mkIf config.matrix.whatsapp.enable {
-    systemd.services.matrix-synapse.serviceConfig.SupplementaryGroups = [ "mautrix-whatsapp" ];
-    services.matrix-synapse.settings.app_service_config_files = [
-      # "/var/lib/mautrix-whatsapp/whatsapp-registration.yaml"
-    ];
-    services.mautrix-whatsapp = {
+    services.mautrix.bridges.whatsapp = {
+      type = "whatsapp";
       enable = true;
+      registerToSynapse = true;
+      environmentFiles = [ config.age.secrets.matrix_shared_secret.path ];
       settings = {
         analytics = {
           token = null;
@@ -70,7 +69,6 @@ in
           max_open_conns = 5;
         };
       };
-      environmentFile = config.age.secrets.matrix_shared_secret.path;
     };
     postgres.initialScripts = [
       ''

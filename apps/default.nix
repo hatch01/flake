@@ -33,7 +33,6 @@
     ./konsole.nix
     ./lasuite-meet.nix
     ./librespeed.nix
-    ./matrix
     ./multimedia
     ./music-assistant.nix
     ./neovim.nix
@@ -62,5 +61,6 @@
     ./ntfy.nix
     ./anubis.nix
     ./hyprland.nix
+    ./matrix
   ];
 }
