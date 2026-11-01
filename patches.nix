@@ -1,20 +1,14 @@
 {
-  common = [
+  common = [ ];
+  stable = [ ];
+  unstable = [
     {
       name = "update headscale";
       pr = 580970;
     }
-  ];
-  stable = [ ];
-  unstable = [
     {
       name = "satochip-utils";
       pr = 559720;
-    }
-    {
-      branch = "mautrix-telegram-go";
-      name = "mautrix-telegram";
-      pr = 510662;
     }
     {
       name = "sforzando";
@@ -43,6 +37,11 @@
     {
       name = "feat kwi";
       pr = 581011;
+    }
+    {
+      branch = "mautrix-refactor-easy-patch";
+      name = "unify mautrix bridges";
+      pr = 581772;
     }
   ];
 }
