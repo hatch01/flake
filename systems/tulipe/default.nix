@@ -98,7 +98,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  hardware.sane.enable = true; # enables support for SANE scanners
+  # hardware.sane.enable = true; # enables support for SANE scanners
   services.avahi = {
     enable = true;
     # nssmdns4 = true;
