@@ -24,11 +24,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          nix run github:Mic92/nix-fast-build -- \
-            --flake .#nixosConfigurations \
-            --option accept-flake-config true \
-            --no-nom \
-            --skip-cached
+          configs=$(nix --extra-experimental-features "nix-command flakes" eval --json .#nixosConfigurations --apply 'builtins.attrNames' --accept-flake-config)
+          for config in $(echo "$configs" | nix run nixpkgs#jq -- -r '.[]'); do
+            nix run github:Mic92/nix-fast-build -- \
+              --flake ".#nixosConfigurations.${config}.config.system.build.toplevel" \
+              --option accept-flake-config true \
+              --no-nom \
+              --skip-cached
+          done
       - name: Merge staging to main
         if: forgejo.ref == 'refs/heads/staging'
         run: |
