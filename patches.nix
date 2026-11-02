@@ -3,10 +3,6 @@
   stable = [ ];
   unstable = [
     {
-      name = "update headscale";
-      pr = 580970;
-    }
-    {
       name = "satochip-utils";
       pr = 559720;
     }
