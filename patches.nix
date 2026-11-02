@@ -3,10 +3,6 @@
   stable = [ ];
   unstable = [
     {
-      name = "update headscale";
-      pr = 580970;
-    }
-    {
       name = "satochip-utils";
       pr = 559720;
     }
@@ -42,6 +38,10 @@
       branch = "mautrix-refactor-easy-patch";
       name = "unify mautrix bridges";
       pr = 581772;
+    }
+    {
+      name = "fix onlyoffice";
+      pr = 582158;
     }
   ];
 }
