@@ -413,10 +413,10 @@
         "nvchad-starter": "nvchad-starter"
       },
       "locked": {
-        "lastModified": 1793082508,
-        "narHash": "sha256-joN4R39MOZ4Bau8mWsuFT6lEeHLOHqFv+SgdKoNCw5Y=",
+        "lastModified": 1793543635,
+        "narHash": "sha256-yjDz5vWoymPD/ZZhLlrInN8jm/X7ebgbFhYkmjSTR84=",
         "ref": "refs/heads/main",
-        "rev": "b0b0daf5663d494b0e3fd1d1486c68e7aedbf2f1",
+        "rev": "94b2d0d1cd82111f48b017a6f8b7bc8160cb9910",
         "shallow": true,
         "type": "git",
         "url": "https://forge.onyx.ovh/github_mirror/nix4nvchad"
