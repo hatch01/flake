@@ -26,8 +26,7 @@ jobs:
         run: |
           nix run github:Mic92/nix-fast-build -- \
             --flake .#nixosConfigurations \
-            --accept-flake-config \
-            -L \
+            --option accept-flake-config true \
             --no-nom \
             --skip-cached
       - name: Merge staging to main
