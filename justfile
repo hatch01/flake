@@ -18,7 +18,10 @@ update-input +inputs="":
     nix flake update --commit-lock-file --accept-flake-config {{ inputs }}
 
 update-patches +args="":
-    nix shell nixpkgs#git nixpkgs#python3 --command python3 ./scripts/update-nixpkgs-patches.py --commit {{ args }}
+    nix shell nixpkgs#git nixpkgs#python3 --command python3 ./scripts/update-nixpkgs-patches.py update --commit {{ args }}
+
+add-patch +args="":
+    nix shell nixpkgs#git nixpkgs#python3 --command python3 ./scripts/update-nixpkgs-patches.py add {{ args }}
 
 history:
     nix profile history --profile /nix/var/nix/profiles/system

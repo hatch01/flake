@@ -1,0 +1,108 @@
+name: Add nixpkgs patch
+enable-email-notifications: true
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Short patch name/description"
+        required: true
+        type: string
+      category:
+        description: "Where the patch should be applied"
+        required: true
+        default: unstable
+        type: choice
+        options:
+          - unstable
+          - stable
+          - common
+      pr:
+        description: "Nixpkgs PR number (leave empty when using a branch)"
+        required: false
+        type: string
+      branch:
+        description: "Nixpkgs branch (leave empty when using a PR)"
+        required: false
+        type: string
+      owner:
+        description: "GitHub owner of the branch"
+        required: false
+        default: hatch01
+        type: string
+      base:
+        description: "Optional base ref for a branch patch"
+        required: false
+        type: string
+      apply:
+        description: "Apply all patches to nixpkgs-patched immediately"
+        required: true
+        default: "yes"
+        type: choice
+        options:
+          - "yes"
+          - "no"
+
+concurrency:
+  group: flake-patches
+  cancel-in-progress: false
+
+jobs:
+  add-patch:
+    runs-on: native
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: staging
+          fetch-depth: 0
+          persist-credentials: true
+          token: ${{ secrets.PAT_TOKEN }}
+      - name: Configure git
+        run: |
+          git config user.name "Flake Updater"
+          git config user.email "flake-updater@forge.onyx.ovh"
+      - name: Setup SSH agent with multiple keys
+        if: ${{ github.event.inputs.apply == 'yes' }}
+        run: |
+          eval $(ssh-agent -s)
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
+          echo "${{ secrets.SSH_KEY }}" | tr -d '\r' | ssh-add - 2>/dev/null || echo "Warning: Failed to add main SSH key"
+          if [ -n "${{ secrets.NIXPKGS_PATCHED_PUSH_KEY }}" ]; then
+            echo "${{ secrets.NIXPKGS_PATCHED_PUSH_KEY }}" | tr -d '\r' | ssh-add - 2>/dev/null || echo "Warning: Failed to add nixpkgs-patched SSH key"
+          fi
+      - name: Add known SSH hosts
+        run: |
+          ssh-keyscan forge.onyx.ovh github.com > /tmp/known_hosts
+          ssh-keyscan forge.onyx.ovh 2>/dev/null | awk '!/^#/ {print "[forge.onyx.ovh]:443 " $2 " " $3}' >> /tmp/known_hosts
+      - name: Add patch
+        env:
+          PATCH_NAME: ${{ github.event.inputs.name }}
+          PATCH_CATEGORY: ${{ github.event.inputs.category }}
+          PATCH_PR: ${{ github.event.inputs.pr }}
+          PATCH_BRANCH: ${{ github.event.inputs.branch }}
+          PATCH_OWNER: ${{ github.event.inputs.owner }}
+          PATCH_BASE: ${{ github.event.inputs.base }}
+          PATCH_APPLY: ${{ github.event.inputs.apply }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/tmp/known_hosts
+        run: |
+          set -euo pipefail
+          args=(add --name "$PATCH_NAME" --category "$PATCH_CATEGORY" --commit)
+          if [ -n "${PATCH_PR:-}" ]; then
+            args+=(--pr "$PATCH_PR")
+          fi
+          if [ -n "${PATCH_BRANCH:-}" ]; then
+            args+=(--branch "$PATCH_BRANCH")
+          fi
+          if [ -n "${PATCH_OWNER:-}" ]; then
+            args+=(--owner "$PATCH_OWNER")
+          fi
+          if [ -n "${PATCH_BASE:-}" ]; then
+            args+=(--base "$PATCH_BASE")
+          fi
+          if [ "${PATCH_APPLY:-no}" = "yes" ]; then
+            args+=(--apply)
+          fi
+          nix shell nixpkgs#git nixpkgs#python3 --command python3 ./scripts/update-nixpkgs-patches.py "${args[@]}"
+      - name: Push patch bookkeeping
+        run: git push origin staging

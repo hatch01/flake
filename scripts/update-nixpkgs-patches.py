@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import datetime
 import json
 import os
@@ -88,6 +89,127 @@ in lib.generators.toPretty {{}} data
     finally:
         os.unlink(temp_json)
         os.unlink(temp_nix)
+
+def commit_patches_file(message):
+    diff_res = run(["git", "diff", "--quiet", PATCHES_FILE], cwd=FLAKE_DIR, check=False)
+    if diff_res.returncode == 0:
+        print("No changes to commit.")
+        return False
+
+    run(["git", "add", "patches.nix"], cwd=FLAKE_DIR)
+    env_flake = os.environ.copy()
+    for key in ["GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL", "GIT_COMMITTER_NAME", "GIT_COMMITTER_EMAIL"]:
+        env_flake.pop(key, None)
+    run(["git", "commit", "-m", message], cwd=FLAKE_DIR, env=env_flake)
+    print("Committed patches.nix modifications.")
+    return True
+
+def push_current_branch():
+    branch = run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=FLAKE_DIR, capture=True).stdout.strip()
+    if branch == "HEAD":
+        print("Error: cannot push from a detached HEAD.", file=sys.stderr)
+        sys.exit(1)
+    run(["git", "push", "origin", f"HEAD:{branch}"], cwd=FLAKE_DIR)
+    print(f"Pushed {branch} to origin.")
+
+def patch_source(patch):
+    if patch.get("pr") is not None:
+        return f"PR #{patch['pr']}"
+    if patch.get("branch"):
+        owner = patch.get("owner", "hatch01")
+        return f"branch {owner}:{patch['branch']}"
+    return None
+
+def add_patch(args):
+    data = get_nix_patches()
+    normalized = {category: list(data.get(category, [])) for category in ["stable", "unstable", "common"]}
+
+    if args.pr is not None:
+        new_patch = {"name": args.name, "pr": args.pr}
+        source = f"PR #{args.pr}"
+    else:
+        new_patch = {"name": args.name, "branch": args.branch}
+        if args.owner and args.owner != "hatch01":
+            new_patch["owner"] = args.owner
+        if args.base:
+            new_patch["base"] = args.base
+        source = f"branch {args.owner}:{args.branch}"
+
+    for category, patches in normalized.items():
+        for patch in patches:
+            if patch_source(patch) == source:
+                print(f"Patch for {source} is already present in '{category}', nothing to do.")
+                return False
+            if patch.get("name") == args.name:
+                print(f"Warning: another patch is already named '{args.name}'.", file=sys.stderr)
+
+    normalized[args.category].append(new_patch)
+    write_nix_patches(normalized)
+    print(f"Added patch '{args.name}' ({source}) to '{args.category}'.")
+
+    if args.commit:
+        commit_message = f"chore(patches): add {args.name} ({source})"
+        if commit_patches_file(commit_message) and args.push:
+            push_current_branch()
+
+    return True
+
+def positive_int(value):
+    try:
+        number = int(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"invalid integer: {value}")
+    if number <= 0:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return number
+
+def parse_args(argv):
+    parser = argparse.ArgumentParser(
+        description="Clean patches.nix and rebuild the patched nixpkgs branches, or add a new patch."
+    )
+    subparsers = parser.add_subparsers(dest="command")
+
+    update_parser = subparsers.add_parser("update", help="Remove merged PRs and apply all patches (default).")
+    update_parser.add_argument("--commit", action="store_true", help="Commit changes to patches.nix.")
+
+    add_parser = subparsers.add_parser("add", help="Add a new patch to patches.nix.")
+    add_parser.add_argument("--name", required=True, help="Short description used as the patch name.")
+    source = add_parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--pr", type=positive_int, help="Nixpkgs pull request number.")
+    source.add_argument("--branch", help="Nixpkgs branch to apply instead of a PR.")
+    add_parser.add_argument("--owner", default="hatch01", help="GitHub owner of --branch (default: hatch01).")
+    add_parser.add_argument("--base", help="Optional base ref to compare against for --branch.")
+    add_parser.add_argument(
+        "--category",
+        choices=["unstable", "stable", "common"],
+        default="unstable",
+        help="Where to apply the patch (default: unstable).",
+    )
+    add_parser.add_argument("--commit", action="store_true", help="Commit changes to patches.nix.")
+    add_parser.add_argument("--push", action="store_true", help="Push the commit to origin (implies --commit).")
+    add_parser.add_argument(
+        "--apply",
+        action="store_true",
+        help="After adding the patch, run the normal update/apply flow.",
+    )
+
+    # Keep the old `--commit` invocation working when no subcommand is provided.
+    if not argv:
+        return argparse.Namespace(command="update", commit=False)
+    if argv[0] not in ("add", "update"):
+        if "-h" in argv or "--help" in argv:
+            parser.print_help()
+            parser.exit()
+        return argparse.Namespace(command="update", commit="--commit" in argv)
+
+    args, unknown = parser.parse_known_args(argv)
+    if unknown and args.command == "add":
+        parser.error(f"unrecognized arguments: {' '.join(unknown)}")
+    if args.command == "add" and args.base and args.pr is not None:
+        add_parser.error("--base can only be used with --branch")
+    if args.command == "add" and args.push:
+        args.commit = True
+    return args
 
 def apply_patches(repo_dir, branch, patches_list):
     run(["git", "switch", branch], cwd=repo_dir, capture=True)
@@ -195,10 +317,17 @@ def cleanup():
         shutil.rmtree(f"{WORK_DIR}_cache")
 
 def main():
-    commit_changes = "--commit" in sys.argv
-    if commit_changes:
-        sys.argv.remove("--commit")
-        
+    args = parse_args(sys.argv[1:])
+
+    if args.command == "add":
+        added = add_patch(args)
+        if not args.apply:
+            return
+        if not added:
+            print("No patch was added, running the normal update flow anyway.")
+
+    commit_changes = args.commit
+
     cleanup()
     print("Checking and updating patches.nix for merged PRs...")
     data = get_nix_patches()
@@ -244,19 +373,12 @@ def main():
     write_nix_patches(new_data)
     
     if commit_changes:
-        diff_res = run(["git", "diff", "--quiet", PATCHES_FILE], cwd=FLAKE_DIR, check=False)
-        if diff_res.returncode != 0:
-            commit_msg = "chore(patches): auto-clean merged PRs\n\n"
-            if changes_made:
-                commit_msg += "\n".join(f"- {c}" for c in changes_made)
-            else:
-                commit_msg += "Formatted or updated patches.nix"
-            run(["git", "add", "patches.nix"], cwd=FLAKE_DIR)
-            env_flake = os.environ.copy()
-            for k in ["GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL", "GIT_COMMITTER_NAME", "GIT_COMMITTER_EMAIL"]:
-                env_flake.pop(k, None)
-            run(["git", "commit", "-m", commit_msg], cwd=FLAKE_DIR, env=env_flake)
-            print("Committed patches.nix modifications.")
+        commit_msg = "chore(patches): auto-clean merged PRs\n\n"
+        if changes_made:
+            commit_msg += "\n".join(f"- {c}" for c in changes_made)
+        else:
+            commit_msg += "Formatted or updated patches.nix"
+        commit_patches_file(commit_msg)
     
     if os.environ.get("NO_GIT") == "1":
         print("NO_GIT is set, skipping git clone and patch application.")

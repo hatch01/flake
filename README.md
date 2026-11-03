@@ -1,5 +1,19 @@
 # install
 
+## nixpkgs patches
+
+Add a patch from the command line:
+
+```console
+just add-patch --name "fix foo" --pr 123456 --category unstable --commit --apply
+just add-patch --name "use my branch" --branch my-branch --owner someone --commit
+```
+
+Or run the `Add nixpkgs patch` workflow from the Forgejo Actions tab and fill in
+the form. The workflow adds the patch to `patches.nix`, applies all patches to
+`nixpkgs-patched` unless `apply` is set to `no`, then pushes the changes to
+`staging`.
+
 ## remote install
 
 example:
