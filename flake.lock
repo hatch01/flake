@@ -468,10 +468,10 @@
     "nixpkgs_3": {
       "locked": {
         "lastModified": 1793540411,
-        "narHash": "sha256-v+0HviHdgXeUWktsxv1prruz7PioXbsBRTobvCbiH10=",
-        "rev": "81fd49bf0db0c19cdb8c847350ff3e22c03901bf",
+        "narHash": "sha256-BICCR0dOaQa31pSNUVjIh7V0o13ubKw72Memxa7+VA8=",
+        "rev": "4b215a72440f2a5968e4e2d9661c33a4c409aeac",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/81fd49bf0db0c19cdb8c847350ff3e22c03901bf.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/4b215a72440f2a5968e4e2d9661c33a4c409aeac.tar.gz"
       },
       "original": {
         "type": "tarball",
