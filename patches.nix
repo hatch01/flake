@@ -43,5 +43,9 @@
       name = "fix onlyoffice";
       pr = 582158;
     }
+    {
+      name = "fzf-zsh-plugin update";
+      pr = 582487;
+    }
   ];
 }
