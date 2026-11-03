@@ -34,7 +34,7 @@ let
     elif [ -z "$PREV_PROFILE" ] || [ ! -e "$PREV_PROFILE" ]; then
       DIFF="(no previous generation to diff against)"
     else
-      DIFF=$(${lib.getExe pkgs.dix} "$PREV_PROFILE" "$CURR_PROFILE" 2>&1 || true)
+      DIFF=$(${lib.getExe pkgs.dix} diff "$PREV_PROFILE" "$CURR_PROFILE" 2>&1 || true)
     fi
 
     if [ -n "$CURR_GEN" ] && [ "$CURR_GEN" != "null" ]; then
