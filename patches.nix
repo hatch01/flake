@@ -40,12 +40,8 @@
       pr = 581772;
     }
     {
-      name = "fix onlyoffice";
-      pr = 582158;
-    }
-    {
-      name = "fzf-zsh-plugin update";
-      pr = 582487;
+      name = "fix opencode";
+      pr = 582675;
     }
   ];
 }
