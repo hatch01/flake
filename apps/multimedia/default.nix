@@ -154,7 +154,7 @@ in
         inputs.bass2midi.packages.${system}.default
         tone3000
         gdi2m
-        rubberband
+        swh_lv2
       ];
     })
   ];
