@@ -71,7 +71,7 @@
   };
 
   programs.zsh = {
-    shellInit = "eval $(${lib.getExe' pkgs.wsl2-ssh-agent "wsl2-ssh-agent"})";
+    interactiveShellInit = "eval $(${lib.getExe' pkgs.wsl2-ssh-agent "wsl2-ssh-agent"})";
   };
 
   environment.systemPackages = with pkgs; [

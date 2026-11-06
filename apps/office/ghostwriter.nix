@@ -23,7 +23,7 @@ in
       mermaid-filter
       librsvg
     ];
-    programs.zsh.shellInit = ''
+    programs.zsh.interactiveShellInit = ''
       md2pdf(){
         md2 pdf $@
       }

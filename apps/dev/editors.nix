@@ -40,6 +40,6 @@ in
         jetbrains.phpstorm
         jetbrains.datagrip
       ];
-    programs.zsh.shellInit = "export GOOGLE_CLOUD_PROJECT=\"gbr-mts-ctoo-utils-dev\"";
+    programs.zsh.interactiveShellInit = "export GOOGLE_CLOUD_PROJECT=\"gbr-mts-ctoo-utils-dev\"";
   };
 }

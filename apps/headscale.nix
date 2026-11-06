@@ -29,7 +29,7 @@ in
   };
 
   config = mkIf config.headscale.enable {
-    programs.bash.shellInit = ''
+    programs.bash.interactiveShellInit = ''
       eval "$(headscale completion bash)"
     '';
 
