@@ -74,7 +74,17 @@
   nginx.nichihachi.backendIp = "192.168.1.124";
 
   boot.loader.timeout = 1;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages;
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
+  boot.zfs.extraPools = [ "zbackup" ];
+  networking.hostId = "0ff40c1c";
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+    pools = [ "zbackup" ];
+  };
+
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   age.identityPaths = [ "/persistent/key" ];
@@ -181,14 +191,14 @@
   # Configure console keymap
   console.keyMap = "fr";
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account for remote ZFS backups.
   users = {
     mutableUsers = false;
     groups.smtp = { };
     users.guillaume = {
       isNormalUser = true;
-      shell = "${pkgs.shadow}/bin/nologin";
-      home = "/data";
+      shell = pkgs.bashInteractive;
+      home = "/var/empty";
       createHome = false;
       openssh.authorizedKeys.keys = [
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCt8P+j17S6BHXZSWODBf9dOXuuj5bIdAaMyiyPv4YeU3SXlKpjczZIu4Rw15CUigDEGI8becAFfTRWrqF+/eoh//YId0uwrPDsThjNFbIFQdEp9C9FrM1tX8iB1sd37opPi/hu+WhDwS629tcmPvrzJ63VrXk0XEclS1U4f4Hu5k3kR98SYA/qm0cXf1Ioa85znPrQN6qWjQAzVyVRP2G4sK1koGM29a35t852L1zfoRojpJmW89maMekLMQrXjy9ZxThvW5rDpWDQljat6Bwq5DEEPTL+/8hwajRPiuRrNsFrS7xkCjKFkzxSHWkBjokTlpZUf9a0kAo5KTNiRwRUubTmO1x0602dUhPB0ZsbTOo+KHm8yFfSE0FtVefi4tfA3VBdnh9I7ooM3wIIPCYR9Pf7tQMHBaNQsTya+CqVCJeNeteVrPY/VdcckWg0QV+NLMyc2mEFooExD98VOsH6hUR4bQxi7GXJ0FARvWvhcNnSd80k7T/EPpDLJS+EGKE= flashonfire@helium"
@@ -199,13 +209,23 @@
     };
   };
 
-  # Configure directories for SFTP jailed users.
-  # The chroot directory itself must be owned by root and cannot be writable by any user/group.
-  # Guillaume can read and write within the 'data' subdirectory.
-  systemd.tmpfiles.rules = [
-    "d /storage/backup_guillaume 0755 root root - -"
-    "d /storage/backup_guillaume/data 0700 guillaume guillaume - -"
-  ];
+  # Delegate ZFS permissions to user guillaume for remote backup replication
+  systemd.services.zfs-allow-guillaume = {
+    description = "Delegate ZFS permissions to user guillaume";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "zfs.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      if ${pkgs.zfs}/bin/zpool list zbackup >/dev/null 2>&1; then
+        ${pkgs.zfs}/bin/zfs allow -u guillaume \
+          compression,create,destroy,hold,mount,mountpoint,receive,release,rollback,snapshot,userprop,bookmark \
+          zbackup
+      fi
+    '';
+  };
 
   services.beszel.agent.environment.EXTRA_FILESYSTEMS =
     "/storage__storage,/boot__boot,/storage/bitcoin__bitcoin";
@@ -218,8 +238,6 @@
     };
     extraConfig = ''
       Match User guillaume
-          ForceCommand internal-sftp
-          ChrootDirectory /storage/backup_guillaume
           PasswordAuthentication no
           AllowTCPForwarding no
           X11Forwarding no

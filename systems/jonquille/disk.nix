@@ -4,6 +4,7 @@
       rootDisk = "/dev/sdb";
       dataDisk1 = "/dev/sda";
       dataDisk2 = "/dev/sdc";
+      backupDisk = "/dev/sdd";
     in
     {
       disk = {
@@ -129,6 +130,32 @@
                 };
               };
             };
+          };
+        };
+        backup = {
+          type = "disk";
+          device = backupDisk;
+          content = {
+            type = "gpt";
+            partitions = {
+              zfs = {
+                size = "100%";
+                content = {
+                  type = "zfs";
+                  pool = "zbackup";
+                };
+              };
+            };
+          };
+        };
+      };
+      zpool = {
+        zbackup = {
+          type = "zpool";
+          options.ashift = "12";
+          rootFsOptions = {
+            compression = "zstd";
+            mountpoint = "none";
           };
         };
       };
