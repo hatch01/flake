@@ -32,7 +32,7 @@
     }
     {
       name = "feat kwi";
-      pr = 581011;
+      pr = 581960;
     }
     {
       branch = "mautrix-refactor-easy-patch";
