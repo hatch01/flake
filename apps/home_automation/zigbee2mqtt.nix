@@ -99,6 +99,7 @@ in
           "0xe498bb2a3b66e43b".friendly_name = "Présence chambre Eymeric";
           "0xa4c1380b4ad8ffff".friendly_name = "Serveur Kevin";
           "0xa4c1380b7816ffff".friendly_name = "Led lit Eymeric";
+          "0xa4c1380b2f23ffff".friendly_name = "Plaque 2 cuisson";
         };
       };
     };
