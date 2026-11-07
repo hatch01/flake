@@ -218,13 +218,49 @@
     settings = {
       PermitRootLogin = "yes";
     };
-    extraConfig = ''
-      Match User guillaume
-          PasswordAuthentication no
-          AllowTCPForwarding no
-          X11Forwarding no
-          AllowAgentForwarding no
-    '';
+    extraConfig =
+      let
+        zfsBackupWrapper = pkgs.writeShellScript "zfs-backup-wrapper" ''
+          set -euo pipefail
+
+          if [ -z "''${SSH_ORIGINAL_COMMAND:-}" ]; then
+            echo "Access denied: Interactive login not permitted." >&2
+            exit 1
+          fi
+
+          read -r -a args <<< "$SSH_ORIGINAL_COMMAND"
+          if [ "''${#args[@]}" -eq 0 ]; then
+            echo "Access denied: Interactive login not permitted." >&2
+            exit 1
+          fi
+
+          if [ "''${args[0]}" = "zfs" ]; then
+            case "''${args[1]:-}" in
+              receive|recv|list|get|rollback|snapshot|destroy|hold|release)
+                exec ${pkgs.zfs}/bin/zfs "''${args[@]:1}"
+                ;;
+              *)
+                echo "Access denied: ZFS subcommand not permitted: ''${args[1]:-}" >&2
+                exit 1
+                ;;
+            esac
+          elif [ "''${args[0]}" = "ps" ]; then
+            exec ${pkgs.procps}/bin/ps "''${args[@]:1}"
+          else
+            echo "Access denied: Only zfs backup commands are permitted." >&2
+            exit 1
+          fi
+        '';
+      in
+      ''
+        Match User guillaume
+            ForceCommand ${zfsBackupWrapper}
+            PermitTTY no
+            PasswordAuthentication no
+            AllowTCPForwarding no
+            X11Forwarding no
+            AllowAgentForwarding no
+      '';
   };
 
   nix.settings = {
