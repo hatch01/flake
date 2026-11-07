@@ -144,13 +144,17 @@ Arguments:
         cat "$local_bin" | ssh "${ssh_opts[@]}" "$server" "cat > '$remote_bin' && chmod 755 '$remote_bin' && printf '#!/bin/sh\nexec sudo su - www\n' > '$remote_sh' && chmod 755 '$remote_sh' && printf 'default_shell \"%s\"\n' '$remote_sh' > '$remote_cfg'"
       fi
 
-      # Lancement de Zellij avec rattachement de session
+      # Lancement de Zellij avec rattachement de session (et nettoyage du binaire à la déconnexion)
       if [[ $no_www -eq 1 ]]; then
-        ssh "${ssh_opts[@]}" -t "$server" "'$remote_bin' attach -c main || exec \$SHELL -l"
+        ssh "${ssh_opts[@]}" -t "$server" "trap \"rm -f '$remote_bin'\" EXIT; '$remote_bin' attach -c main || \$SHELL -l"
       else
-        ssh "${ssh_opts[@]}" -t "$server" "'$remote_bin' --config '$remote_cfg' attach -c main-www || sudo su - www"
+        ssh "${ssh_opts[@]}" -t "$server" "trap \"rm -f '$remote_bin'\" EXIT; '$remote_bin' --config '$remote_cfg' attach -c main-www || sudo su - www"
       fi
-      return $?
+      local ret=$?
+
+      # Secondary cleanup in case the remote trap failed (e.g. SIGKILL)
+      ssh "${ssh_opts[@]}" -o ConnectTimeout=1 -o BatchMode=yes "$server" "rm -f '$remote_bin'" 2>/dev/null
+      return $ret
     else
       echo "⚠ Aucun répertoire exécutable trouvé (noexec). Connexion standard..." >&2
     fi
