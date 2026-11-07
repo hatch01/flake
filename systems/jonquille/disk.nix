@@ -157,6 +157,7 @@
             compression = "zstd";
             mountpoint = "none";
           };
+          postCreateHook = "zfs allow -u guillaume compression,create,destroy,hold,mount,mountpoint,receive,release,rollback,snapshot,userprop,bookmark zbackup";
         };
       };
     };

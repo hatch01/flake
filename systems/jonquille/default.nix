@@ -209,24 +209,6 @@
     };
   };
 
-  # Delegate ZFS permissions to user guillaume for remote backup replication
-  systemd.services.zfs-allow-guillaume = {
-    description = "Delegate ZFS permissions to user guillaume";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "zfs.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    script = ''
-      if ${pkgs.zfs}/bin/zpool list zbackup >/dev/null 2>&1; then
-        ${pkgs.zfs}/bin/zfs allow -u guillaume \
-          compression,create,destroy,hold,mount,mountpoint,receive,release,rollback,snapshot,userprop,bookmark \
-          zbackup
-      fi
-    '';
-  };
-
   services.beszel.agent.environment.EXTRA_FILESYSTEMS =
     "/storage__storage,/boot__boot,/storage/bitcoin__bitcoin";
 
