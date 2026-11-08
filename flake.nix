@@ -133,7 +133,7 @@
     };
   };
   outputs =
-    { flake-parts, ... }@inputs:
+    { self, flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
@@ -144,7 +144,7 @@
       ];
 
       perSystem =
-        { pkgs, ... }:
+        { pkgs, system, ... }:
         {
           formatter = pkgs.nixfmt-tree;
           devShells.default = pkgs.mkShell {
@@ -152,6 +152,14 @@
               just
             ];
           };
+          checks =
+            pkgs.lib.mapAttrs'
+              (name: cfg: pkgs.lib.nameValuePair "nixos-${name}" cfg.config.system.build.toplevel)
+              (
+                pkgs.lib.filterAttrs (
+                  _: cfg: cfg.pkgs.stdenv.hostPlatform.system == system
+                ) self.nixosConfigurations
+              );
         };
     };
 }

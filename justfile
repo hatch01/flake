@@ -2,6 +2,12 @@
 _list_servers:
     @nix --extra-experimental-features "nix-command flakes" eval --json .#nixosConfigurations --apply 'builtins.attrNames' --accept-flake-config | nix run nixpkgs#jq -- -r '.[]'
 
+build machine +args="":
+    nix run nixpkgs#nix-fast-build -- --flake .#nixosConfigurations.{{ machine }}.config.system.build.toplevel --systems "x86_64-linux aarch64-linux" --option accept-flake-config true --skip-cached {{ args }}
+
+buildall +args="":
+    nix run nixpkgs#nix-fast-build -- --systems "x86_64-linux aarch64-linux" --option accept-flake-config true --skip-cached {{ args }}
+
 rebuild:
     # using impure to allow passing the env vars to nixos-rebuild
     NIXOS_LABEL=$(echo "$(git log -1 --pretty=format:%s)---$(git diff --name-only HEAD)" | paste -sd '-' | tr "/" "_" | tr " " "_" | sed 's/[^a-zA-Z0-9:_\.-]//g') nixos-rebuild switch --flake . --impure --sudo
