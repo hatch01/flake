@@ -39,9 +39,5 @@
       name = "unify mautrix bridges";
       pr = 581772;
     }
-    {
-      name = "fix opencode";
-      pr = 582675;
-    }
   ];
 }
