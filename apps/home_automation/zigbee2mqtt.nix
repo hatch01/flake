@@ -2,6 +2,7 @@
   lib,
   config,
   base_domain_name,
+  mkSecrets,
   ...
 }:
 let
@@ -11,6 +12,23 @@ let
     mkIf
     types
     ;
+
+  mqttUsers = {
+    zigbee2mqtt = {
+      passwordFile = config.age.secrets."zigbee2mqtt/zigbee2mqtt".path;
+      acl = [
+        "readwrite zigbee2mqtt/#"
+        "readwrite homeassistant/#"
+      ];
+    };
+    homeassistant = {
+      passwordFile = config.age.secrets."zigbee2mqtt/homeassistant".path;
+      acl = [
+        "readwrite zigbee2mqtt/#"
+        "readwrite homeassistant/#"
+      ];
+    };
+  };
 in
 {
   options = {
@@ -29,12 +47,46 @@ in
   };
 
   config = mkIf config.zigbee2mqtt.enable {
+    age.secrets = mkSecrets {
+      "zigbee2mqtt/zigbee2mqtt" = { };
+      "zigbee2mqtt/homeassistant" = { };
+      "zigbee2mqtt/env" = { };
+    };
+
     services.mosquitto = {
       enable = true;
       dataDir = "/storage/mosquitto";
+      listeners = [
+        {
+          address = "127.0.0.1";
+          port = 1883;
+          users = mqttUsers;
+          settings.allow_anonymous = false;
+        }
+        {
+          address = "::1";
+          port = 1883;
+          users = mqttUsers;
+          settings.allow_anonymous = false;
+        }
+      ];
     };
 
-    systemd.services.zigbee2mqtt.serviceConfig.Restart = lib.mkForce "always";
+    systemd.services.mosquitto.restartTriggers = [
+      config.age.secrets."zigbee2mqtt/zigbee2mqtt".file
+      config.age.secrets."zigbee2mqtt/homeassistant".file
+    ];
+
+    systemd.services.zigbee2mqtt = {
+      restartTriggers = [
+        config.age.secrets."zigbee2mqtt/env".file
+      ];
+      serviceConfig = {
+        Restart = lib.mkForce "always";
+        EnvironmentFile = config.age.secrets."zigbee2mqtt/env".path;
+      };
+    };
+
     services.zigbee2mqtt = {
       enable = true;
       dataDir = "/storage/zigbee2mqtt";
@@ -44,7 +96,8 @@ in
         homeassistant.enabled = true;
         mqtt = {
           base_topic = "zigbee2mqtt";
-          server = "mqtt://localhost";
+          server = "mqtt://127.0.0.1:1883";
+          user = "zigbee2mqtt";
         };
         serial = {
           port = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20240220202746-if00";

@@ -84,6 +84,11 @@ let
 
       # ntfy
       "ntfy_auth_users_env"
+
+      # Zigbee2MQTT
+      "zigbee2mqtt/zigbee2mqtt"
+      "zigbee2mqtt/homeassistant"
+      "zigbee2mqtt/env"
     ]
     // defineSecrets "cyclamen" [
       "rootPassword"
