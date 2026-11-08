@@ -40,8 +40,8 @@
       pr = 581772;
     }
     {
-      name = "fix opencode";
-      pr = 582675;
+      name = "lk-jwt fix";
+      pr = 584539;
     }
   ];
 }
