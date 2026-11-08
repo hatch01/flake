@@ -63,6 +63,10 @@ in
       };
 
       environment.systemPackages = with pkgs; [
+        # libvirt-dbus runs as the unprivileged libvirtdbus user. Its polkit
+        # rule is only linked into the system path when the package is
+        # installed here, allowing it to connect to libvirtd.
+        libvirt-dbus
         virt-manager
         osinfo-db
         osinfo-db-tools
