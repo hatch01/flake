@@ -57,20 +57,10 @@ in
       };
     }
     (mkIf config.cockpit.machines {
-      virtualisation = {
-        libvirtd.enable = true;
+      virtualisation.libvirtd = {
+        enable = true;
+        dbus.enable = true;
       };
-
-      users = {
-        users.libvirtdbus = {
-          isSystemUser = true;
-          group = "libvirtdbus";
-          description = "Libvirt D-Bus bridge";
-        };
-        groups.libvirtdbus = { };
-      };
-
-      systemd.packages = [ pkgs.libvirt-dbus ];
 
       environment.systemPackages = with pkgs; [
         virt-manager
