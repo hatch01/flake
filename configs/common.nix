@@ -192,6 +192,17 @@ in
               ];
             })
           );
+          mautrix-signal = (
+            prev.mautrix-signal.overrideAttrs (old: {
+              patches = (old.patches or [ ]) ++ [
+                (prev.fetchpatch {
+                  # signalmeow/attachments: send uploadLength when requesting upload form
+                  url = "https://github.com/mautrix/signal/pull/703.patch";
+                  hash = "sha256-xz9POxxL4zUfKpx9AEZFDwhKxRbQFHp3mdB3y7bONqY=";
+                })
+              ];
+            })
+          );
         })
       ];
     };
