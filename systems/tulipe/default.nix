@@ -146,7 +146,6 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    jack.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -159,6 +158,8 @@
     openrgb-plugin-hardwaresync
     hyperhdr
     tigervnc
+    pipewire
+    pipewire.jack
   ];
 
   services.hardware.openrgb = {
