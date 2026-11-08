@@ -39,5 +39,9 @@
       name = "unify mautrix bridges";
       pr = 581772;
     }
+    {
+      name = "lk-jwt fix";
+      pr = 584539;
+    }
   ];
 }
