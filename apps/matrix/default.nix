@@ -79,7 +79,8 @@ in
           restartTriggers = [
             config.age.secrets.matrix_shared_secret.file
             config.age.secrets.matrix_signing_key.file
-          ] ++ lib.optional config.matrix.mas.enable config.age.secrets.mas_matrix_secret.file;
+          ]
+          ++ lib.optional config.matrix.mas.enable config.age.secrets.mas_matrix_secret.file;
           serviceConfig = {
             EnvironmentFile = config.age.secrets.matrix_shared_secret.path;
             SystemCallFilter = lib.mkForce [ "@system-service" ]; # making the service less secure to be able to modify files

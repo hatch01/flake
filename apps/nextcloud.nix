@@ -274,8 +274,9 @@ in
         config.age.secrets.onlyofficeNonce.file
       ];
     systemd.services."${config.virtualisation.oci-containers.backend}-app_api-dsp" =
-      mkIf config.nextcloud.app_api.enable {
-        restartTriggers = [ config.age.secrets.nextcloudDspPassword.file ];
-      };
+      mkIf config.nextcloud.app_api.enable
+        {
+          restartTriggers = [ config.age.secrets.nextcloudDspPassword.file ];
+        };
   };
 }
