@@ -32,6 +32,11 @@ in
       "livekit-keyFile" = { };
     };
 
+    systemd.services.lasuite-meet.restartTriggers = [
+      config.age.secrets.lasuite-meet.file
+      config.age.secrets.livekit-keyFile.file
+    ];
+
     services.lasuite-meet = {
       enable = true;
       inherit (config.lasuite-meet) domain;

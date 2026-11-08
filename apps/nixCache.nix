@@ -39,6 +39,9 @@ in
 
   config = mkIf config.nixCache.enable {
     age.secrets = mkSecret "cache-priv-key.pem" { };
+    systemd.services.harmonia.restartTriggers = [
+      config.age.secrets."cache-priv-key.pem".file
+    ];
     services.harmonia.cache = harmoniaConfig;
   };
 }

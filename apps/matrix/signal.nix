@@ -17,6 +17,10 @@ in
   };
 
   config = mkIf config.matrix.signal.enable {
+    systemd.services.mautrix-signal.restartTriggers = [
+      config.age.secrets.matrix_shared_secret.file
+    ];
+
     services.mautrix.bridges.signal = {
       type = "signal";
       enable = true;

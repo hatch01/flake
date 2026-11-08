@@ -43,6 +43,12 @@ in
       };
     };
 
+    systemd.services.headplane.restartTriggers = [
+      config.age.secrets.headplane_cookie.file
+      config.age.secrets.headscale_api_key.file
+      config.age.secrets.headplane_oidc.file
+    ];
+
     services.headplane = {
       enable = true;
       settings = {

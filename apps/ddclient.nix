@@ -21,6 +21,10 @@ in
   config = mkIf config.ddclient.enable {
     age.secrets = mkSecret "server/dyndns" { root = true; };
 
+    systemd.services.ddclient.restartTriggers = [
+      config.age.secrets."server/dyndns".file
+    ];
+
     services.ddclient = {
       enable = true;
       protocol = "ovh";

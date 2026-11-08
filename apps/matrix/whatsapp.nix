@@ -17,6 +17,10 @@ in
   };
 
   config = mkIf config.matrix.whatsapp.enable {
+    systemd.services.mautrix-whatsapp.restartTriggers = [
+      config.age.secrets.matrix_shared_secret.file
+    ];
+
     services.mautrix.bridges.whatsapp = {
       type = "whatsapp";
       enable = true;

@@ -49,6 +49,16 @@ in
           };
         };
 
+        systemd.services.matrix-authentication-service.restartTriggers = [
+          config.age.secrets.mas_matrix_secret.file
+          config.age.secrets.mas_authelia_secret.file
+          config.age.secrets.mas_encryption.file
+          config.age.secrets.mas_ERoVDasMln.file
+          config.age.secrets.mas_Say3DRq9iv.file
+          config.age.secrets.mas_g38dzwm5Ug.file
+          config.age.secrets.mas_vIIeN3Ao1A.file
+        ];
+
         services.matrix-authentication-service = {
           enable = true;
           credentials."matrix_secret" = config.age.secrets.mas_matrix_secret.path;

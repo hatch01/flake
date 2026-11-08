@@ -71,7 +71,15 @@ in
       keyFile = config.age.secrets.livekit_api_key.path;
       livekitUrl = "wss://${config.matrix.domain}/livekit/sfu";
     };
-    systemd.services.lk-jwt-service.environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = base_domain_name;
+    systemd.services.livekit.restartTriggers = [
+      config.age.secrets.livekit_api_key.file
+    ];
+    systemd.services.lk-jwt-service = {
+      restartTriggers = [
+        config.age.secrets.livekit_api_key.file
+      ];
+      environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = base_domain_name;
+    };
 
     environment.persistence."/persistent".directories = [ "/var/lib/livekit" ];
   };

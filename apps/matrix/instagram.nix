@@ -17,6 +17,10 @@ in
   };
 
   config = mkIf config.matrix.instagram.enable {
+    systemd.services.mautrix-meta-instagram.restartTriggers = [
+      config.age.secrets.matrix_shared_secret.file
+    ];
+
     services.mautrix.bridges.meta-instagram = {
       type = "instagram";
       enable = true;

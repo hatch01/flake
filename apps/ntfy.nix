@@ -33,10 +33,15 @@ in
   config = mkIf config.ntfy.enable {
     age.secrets = mkSecret "ntfy_auth_users_env" { };
 
-    systemd.services.ntfy-sh.after = [
-      "network.target"
-      "postgresql.service"
-    ];
+    systemd.services.ntfy-sh = {
+      restartTriggers = [
+        config.age.secrets."ntfy_auth_users_env".file
+      ];
+      after = [
+        "network.target"
+        "postgresql.service"
+      ];
+    };
     services.ntfy-sh = {
       enable = true;
       environmentFile = config.age.secrets."ntfy_auth_users_env".path;

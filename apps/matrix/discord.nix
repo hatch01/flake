@@ -17,6 +17,10 @@ in
   };
 
   config = mkIf config.matrix.discord.enable {
+    systemd.services.mautrix-discord.restartTriggers = [
+      config.age.secrets.matrix_shared_secret.file
+    ];
+
     services.mautrix.bridges.discord = {
       type = "discord";
       enable = true;

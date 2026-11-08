@@ -16,6 +16,11 @@ in
   age = {
     secrets = mkSecret "desktop/wifi" { root = true; };
   };
+
+  systemd.services.NetworkManager-ensure-profiles.restartTriggers = [
+    config.age.secrets."desktop/wifi".file
+  ];
+
   #networks
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [ "${config.age.secrets."desktop/wifi".path}" ];

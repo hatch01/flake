@@ -28,6 +28,10 @@
     passwordFile = config.age.secrets.kvmd.path;
   };
 
+  systemd.services.kvmd.restartTriggers = [
+    config.age.secrets.kvmd.file
+  ];
+
   security.sudo-rs = {
     enable = lib.mkForce false;
   };

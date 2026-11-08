@@ -36,6 +36,9 @@ in
       group = "users";
       mode = "400";
     };
+    systemd.services.homepage-dashboard.restartTriggers = [
+      config.age.secrets.homepage.file
+    ];
     services = {
       homepage-dashboard = {
         enable = true;

@@ -66,10 +66,17 @@ in
       "kvmdHttpHeader" = { };
       "gatusEnv" = { };
     };
-    systemd.services.gatus.serviceConfig.EnvironmentFile = [
-      config.age.secrets.kvmdHttpHeader.path
-      config.age.secrets.gatusEnv.path
-    ];
+    systemd.services.gatus = {
+      restartTriggers = [
+        config.age.secrets.kvmdHttpHeader.file
+        config.age.secrets.gatusEnv.file
+        config.age.secrets."smtpPasswordEnv".file
+      ];
+      serviceConfig.EnvironmentFile = [
+        config.age.secrets.kvmdHttpHeader.path
+        config.age.secrets.gatusEnv.path
+      ];
+    };
 
     services.postgresql.enable = true;
     services.gatus = {

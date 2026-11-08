@@ -260,5 +260,22 @@ in
       mkForce "/run/wrappers/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/usr/bin:/bin:${
         lib.makeBinPath [ config.services.phpfpm.pools.nextcloud.phpPackage ]
       }";
+
+    systemd.services.nextcloud-setup.restartTriggers =
+      lib.optional config.authelia.enable config.age.secrets.nextcloudSecretFile.file
+      ++ lib.optionals config.onlyofficeDocumentServer.enable [
+        config.age.secrets.onlyofficeDocumentServerKey.file
+        config.age.secrets.onlyofficeNonce.file
+      ];
+    systemd.services.phpfpm-nextcloud.restartTriggers =
+      lib.optional config.authelia.enable config.age.secrets.nextcloudSecretFile.file
+      ++ lib.optionals config.onlyofficeDocumentServer.enable [
+        config.age.secrets.onlyofficeDocumentServerKey.file
+        config.age.secrets.onlyofficeNonce.file
+      ];
+    systemd.services."${config.virtualisation.oci-containers.backend}-app_api-dsp" =
+      mkIf config.nextcloud.app_api.enable {
+        restartTriggers = [ config.age.secrets.nextcloudDspPassword.file ];
+      };
   };
 }

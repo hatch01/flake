@@ -23,6 +23,10 @@ in
   };
 
   config = mkIf config.vaultwarden.enable {
+    systemd.services.vaultwarden.restartTriggers = [
+      config.age.secrets."smtpPasswordEnv".file
+    ];
+
     services.vaultwarden = {
       enable = true;
       config = {

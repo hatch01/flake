@@ -41,12 +41,17 @@ in
       userDir = "/storage/node-red";
       configFile = "/storage/node-red/settings.js";
     };
-    systemd.services.node-red.serviceConfig = {
-      ExecStartPre = pkgs.writeShellScript "node-red-pre-start" ''
-        cp ${config.services.node-red.package}/lib/node_modules/node-red/packages/node_modules/node-red/settings.js /storage/node-red/settings.js
-        chmod 644 /storage/node-red/settings.js
-        sed -i "s|//credentialSecret: \"a-secret-key\",|$(cat ${config.age.secrets.node_red.path})|" /storage/node-red/settings.js
-      '';
+    systemd.services.node-red = {
+      restartTriggers = [
+        config.age.secrets.node_red.file
+      ];
+      serviceConfig = {
+        ExecStartPre = pkgs.writeShellScript "node-red-pre-start" ''
+          cp ${config.services.node-red.package}/lib/node_modules/node-red/packages/node_modules/node-red/settings.js /storage/node-red/settings.js
+          chmod 644 /storage/node-red/settings.js
+          sed -i "s|//credentialSecret: \"a-secret-key\",|$(cat ${config.age.secrets.node_red.path})|" /storage/node-red/settings.js
+        '';
+      };
     };
   };
 }

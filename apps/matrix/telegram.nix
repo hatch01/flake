@@ -20,6 +20,11 @@ in
   config = mkIf config.matrix.telegram.enable {
     age.secrets = mkSecret "telegram_credentials" { };
 
+    systemd.services.mautrix-telegram.restartTriggers = [
+      config.age.secrets.matrix_shared_secret.file
+      config.age.secrets.telegram_credentials.file
+    ];
+
     services.mautrix.bridges.telegram = {
       type = "telegram";
       enable = true;

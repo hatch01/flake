@@ -42,6 +42,10 @@ in
       group = "headscale";
     };
 
+    systemd.services.headscale.restartTriggers = [
+      config.age.secrets.headscale_oidc.file
+    ];
+
     services.headscale = {
       enable = true;
       port = config.headscale.port;

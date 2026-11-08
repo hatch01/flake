@@ -74,6 +74,14 @@ in
       after = [ "postgresql.service" ];
     };
     systemd.services."authelia-${autheliaInstance}" = {
+      restartTriggers = [
+        config.age.secrets."authelia/storageKey".file
+        config.age.secrets."authelia/jwtKey".file
+        config.age.secrets."authelia/authBackend".file
+        config.age.secrets."authelia/oAuth2PrivateKey".file
+        config.age.secrets."authelia/oAuth2HmacSecret".file
+        config.age.secrets."smtpPassword".file
+      ];
       environment = {
         # needed to set the secrets using agenix see: https://www.authelia.com/configuration/methods/files/#file-filters
         X_AUTHELIA_CONFIG_FILTERS = "template";

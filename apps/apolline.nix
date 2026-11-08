@@ -40,6 +40,9 @@ in
       enable = true;
       description = "apolline";
       wantedBy = [ "multi-user.target" ];
+      restartTriggers = [
+        config.age.secrets.apolline.file
+      ];
       serviceConfig = {
         Restart = "on-failure";
         EnvironmentFile = config.age.secrets.apolline.path;

@@ -156,12 +156,18 @@ in
     nix.settings = {
       trusted-users = [ "forgejo-runner-onyx" ];
     };
-    systemd.services.forgejo.after = [
-      "network.target"
-      "postgresql.target"
-      "forgejo-secrets.service"
-      "authelia-main.service"
-    ];
+    systemd.services.forgejo = {
+      restartTriggers = [
+        config.age.secrets."smtpPassword".file
+        config.age.secrets."authelia/forgejoKey".file
+      ];
+      after = [
+        "network.target"
+        "postgresql.target"
+        "forgejo-secrets.service"
+        "authelia-main.service"
+      ];
+    };
 
     systemd.services.forgejo.preStart =
       let
@@ -197,6 +203,9 @@ in
       '';
 
     systemd.services.forgejo-runner-onyx = {
+      restartTriggers = [
+        config.age.secrets.forgejo_runner_token.file
+      ];
       # Prevents Forgejo runner deployments
       # from being restarted on a system switch,
       # thus breaking a deployment.
