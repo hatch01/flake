@@ -50,6 +50,9 @@
                     "/persistent/.snapshots" = {
                       mountpoint = "/persistent/.snapshots";
                     };
+                    "/persistent/var/cache" = {
+                      mountpoint = "/persistent/var/cache";
+                    };
                   };
                   mountpoint = "/partition-root";
                 };
