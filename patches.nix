@@ -1,12 +1,12 @@
 {
-  common = [
+  common = [ ];
+  stable = [
     {
-      branch = "hydrascale";
+      branch = "hydrascale-stable";
       name = "head hydrascale";
       pr = 569707;
     }
   ];
-  stable = [ ];
   unstable = [
     {
       name = "satochip-utils";
@@ -48,6 +48,11 @@
     {
       name = "lk-jwt fix";
       pr = 584539;
+    }
+    {
+      branch = "hydrascale";
+      name = "head hydrascale";
+      pr = 569707;
     }
   ];
 }
