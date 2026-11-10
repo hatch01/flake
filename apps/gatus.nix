@@ -313,15 +313,16 @@ in
               ]
               ++ [
                 # flashonfire
-                (mkGatusCheck {
+                {
+                  inherit interval alerts;
                   name = "lithium.ovh";
                   url = "https://lithium.ovh";
+                  group = "flashonfire";
                   conditions = [
                     "[RESPONSE_TIME] < 1000"
                     "[STATUS] == 401"
                   ];
-                  group = "flashonfire";
-                })
+                }
               ];
             };
             passAsFile = [ "value" ];
