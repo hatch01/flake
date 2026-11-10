@@ -1,5 +1,10 @@
 {
-  common = [ ];
+  common = [
+    {
+      name = "head hydrascale";
+      pr = 569707;
+    }
+  ];
   stable = [ ];
   unstable = [
     {
