@@ -299,7 +299,10 @@ in
                 (mkGatusCheck {
                   name = "Alex grafana";
                   url = "https://grafana.kongoseki.fr/api/health";
-                  conditions = [ "[BODY].database == ok" "[STATUS] == 200" ];
+                  conditions = [
+                    "[BODY].database == ok"
+                    "[STATUS] == 200"
+                  ];
                   group = "alex";
                 })
                 (mkGatusCheck {
@@ -307,12 +310,16 @@ in
                   url = "https://jellyfin.kongoseki.fr/health";
                   group = "alex";
                 })
-              ] ++ [
+              ]
+              ++ [
                 # flashonfire
                 (mkGatusCheck {
                   name = "lithium.ovh";
                   url = "https://lithium.ovh";
-                  conditions = [ "[RESPONSE_TIME] < 1000" "[STATUS] == 401"];
+                  conditions = [
+                    "[RESPONSE_TIME] < 1000"
+                    "[STATUS] == 401"
+                  ];
                   group = "flashonfire";
                 })
               ];
