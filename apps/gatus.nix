@@ -312,7 +312,7 @@ in
                 (mkGatusCheck {
                   name = "lithium.ovh";
                   url = "https://lithium.ovh";
-                  conditions = [ "[RESPONSE_TIME] < 1000" "[STATUS] == 302"];
+                  conditions = [ "[RESPONSE_TIME] < 1000" "[STATUS] == 401"];
                   group = "flashonfire";
                 })
               ];
