@@ -1,6 +1,7 @@
 {
   common = [
     {
+      branch = "hydrascale";
       name = "head hydrascale";
       pr = 569707;
     }
