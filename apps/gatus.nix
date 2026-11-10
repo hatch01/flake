@@ -272,6 +272,49 @@ in
                   conditions = [ "[BODY].res == pong" ];
                   group = "claq";
                 })
+              ]
+              ++ [
+                # Alex
+                (mkGatusCheck {
+                  name = "Alex vaultwarden";
+                  url = "https://vault.kongoseki.fr";
+                  group = "alex";
+                })
+                (mkGatusCheck {
+                  name = "Alex nextcloud";
+                  url = "https://cloud.kongoseki.fr/status.php";
+                  conditions = [
+                    "[BODY].installed == true"
+                    "[BODY].maintenance == false"
+                    "[BODY].needsDbUpgrade == false"
+                  ];
+                  group = "alex";
+                })
+                (mkGatusCheck {
+                  name = "Alex immich";
+                  url = "https://photos.kongoseki.fr/api/server/ping";
+                  conditions = [ "[BODY].res == pong" ];
+                  group = "alex";
+                })
+                (mkGatusCheck {
+                  name = "Alex grafana";
+                  url = "https://grafana.kongoseki.fr/api/health";
+                  conditions = [ "[BODY].database == ok" "[STATUS] == 200" ];
+                  group = "alex";
+                })
+                (mkGatusCheck {
+                  name = "Alex jellyfin";
+                  url = "https://jellyfin.kongoseki.fr/health";
+                  group = "alex";
+                })
+              ] ++ [
+                # flashonfire
+                (mkGatusCheck {
+                  name = "lithium.ovh";
+                  url = "https://lithium.ovh";
+                  conditions = [ "[RESPONSE_TIME] < 1000" "[STATUS] == 302"]
+                  group = "flashonfire";
+                })
               ];
             };
             passAsFile = [ "value" ];
@@ -300,7 +343,11 @@ in
                   - group: nichihachi
                     to: nichi.hc@proton.me
                   - group: claq
-                    to: mathieu.ponton+notifs@gmail.com" >> "$out"
+                    to: mathieu.ponton+notifs@gmail.com
+                  - group: alex
+                    to: alex@kongoseki.fr
+                  - group: flashonfire
+                    to: flashonfire@proton.me" >> "$out"
           ''
       ) { };
     };
