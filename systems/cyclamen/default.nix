@@ -1,7 +1,6 @@
 {
   base_domain_name,
   lib,
-  config,
   ...
 }:
 
@@ -10,6 +9,14 @@
 
   headscale.enable = true;
   headplane.enable = true;
+  hydrascale.enable = true;
+  hydrascale.extraTailnets = [
+    {
+      id = "tailscale_alex";
+      host_access = true;
+    }
+  ];
+
   beszel.hub.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
@@ -21,10 +28,6 @@
 
   cockpit.enable = true;
   cockpit.domain = "cyclamen:9090";
-  # Cockpit is only reachable through the tailnet
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
-    config.cockpit.port
-  ];
 
   boot.loader.grub.enable = true;
   container.enable = lib.mkForce false;

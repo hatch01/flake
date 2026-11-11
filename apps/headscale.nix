@@ -70,7 +70,7 @@ in
             };
 
             tulipe = "100.64.0.1";
-            cyclamen = "100.64.0.2";
+            cyclamen = "100.64.0.8";
             lavande = "100.64.0.3";
             jonquille = "100.64.0.4";
             lilas = "100.64.0.5";

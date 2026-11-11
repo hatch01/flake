@@ -26,6 +26,7 @@
     ./home_automation
     ./homebank.nix
     ./homepage.nix
+    ./hydrascale.nix
     ./incus.nix
     ./ovn.nix
     ./kde-connect.nix
