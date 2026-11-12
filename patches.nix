@@ -46,10 +46,6 @@
       pr = 581772;
     }
     {
-      name = "lk-jwt fix";
-      pr = 584539;
-    }
-    {
       branch = "hydrascale";
       name = "head hydrascale";
       pr = 569707;
