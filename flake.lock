@@ -88,11 +88,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1793862729,
-        "narHash": "sha256-D+wmmPytpGiLOLKtDJKv3g1XYpguvv2Bz4NSg5XRgH4=",
-        "rev": "004a55ced41d72340373ebc6774e29a417512638",
+        "lastModified": 1794468740,
+        "narHash": "sha256-ZJ3VeNKZmKdCJL19bG7GBE+KjloDNGXFUyqt/Aewtzc=",
+        "rev": "51e20d80b237b405009ddeb8c19a648eb95737e0",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/comin/archive/004a55ced41d72340373ebc6774e29a417512638.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/comin/archive/51e20d80b237b405009ddeb8c19a648eb95737e0.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -467,11 +467,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1794192123,
-        "narHash": "sha256-MdJgWLDBQ9zbzQGQBbJFdf5W5RAubW/Fw0VUsF0AdoQ=",
-        "rev": "2f833bb76aa5aaab711ee0ca7973e02693b019e5",
+        "lastModified": 1794386569,
+        "narHash": "sha256-hqrnCeHcrlYm1O0utuCHQWOTtb+1yJmuwLwBPFrzEEc=",
+        "rev": "b7340a4228b8cde36757411492c93b1e952feeac",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/2f833bb76aa5aaab711ee0ca7973e02693b019e5.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/b7340a4228b8cde36757411492c93b1e952feeac.tar.gz"
       },
       "original": {
         "type": "tarball",
