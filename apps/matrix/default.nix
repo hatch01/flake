@@ -149,6 +149,15 @@ in
               msc3266_enabled = true;
               msc4222_enabled = true;
               msc4108_enabled = true;
+              msc4143_enabled = true; # rtc/transports endpoint
+            };
+            matrix_rtc = lib.mkIf config.matrix.elementCall.enable {
+              transports = [
+                {
+                  type = "livekit";
+                  livekit_service_url = "https://${config.matrix.domain}/livekit/jwt";
+                }
+              ];
             };
             max_event_delay_duration = "24h";
             rc_message = {
