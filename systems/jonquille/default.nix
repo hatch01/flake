@@ -57,7 +57,6 @@
   incus.enable = true;
   sslh.enable = true;
   wakapi.enable = true;
-  vaultwarden.enable = true;
   bitcoin.server.enable = true;
   ntfy.enable = true;
   programs.nh.clean.enable = lib.mkForce false;

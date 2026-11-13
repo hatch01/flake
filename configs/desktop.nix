@@ -31,8 +31,9 @@ in
   ghostwriter.enable = mkDefault true;
   cloud-storage.enable = mkDefault true;
 
-  # bitwarden
-  bitwarden.enable = mkDefault true;
+  # keepassxc
+  keepassxc.enable = mkDefault true;
+  keepassxc.autostart = mkDefault true;
 
   social.enable = mkDefault true;
 
