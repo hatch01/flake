@@ -112,7 +112,6 @@ in
       kdePackages.ktorrent
       wl-clipboard
       pwvucontrol
-      gnupg
     ];
   };
 }

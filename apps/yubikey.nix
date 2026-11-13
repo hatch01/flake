@@ -46,17 +46,17 @@ in
     hardware.gpgSmartcards.enable = true;
     services.udev.packages = [ pkgs.yubikey-personalization ];
     hm = {
-      services.gpg-agent = {
-        enable = true;
-        # enableSshSupport = true;
-        enableZshIntegration = true;
-      };
-      programs.gpg = {
-        enable = true;
-        scdaemonSettings = {
-          disable-ccid = true;
-        };
-      };
+      # services.gpg-agent = {
+      #   enable = true;
+      #   enableSshSupport = true;
+      #   enableZshIntegration = true;
+      # };
+      # programs.gpg = {
+      #   enable = true;
+      #   scdaemonSettings = {
+      #     disable-ccid = true;
+      #   };
+      # };
     };
 
     boot.initrd.kernelModules = [
@@ -70,9 +70,9 @@ in
       "usbhid"
     ];
 
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
+    # programs.gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    # };
   };
 }
