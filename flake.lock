@@ -388,11 +388,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794425805,
-        "narHash": "sha256-4s5CRvkYX4oAJVZ+zu2bBKFH2gG2GqN6OKHEWgJr1AY=",
-        "rev": "b6ca87f78ec5bafc4b2aef7b29803dcf419266af",
+        "lastModified": 1794567267,
+        "narHash": "sha256-rNEpg5aWAPgBPdF1vhhwztYtV7hgzE3fQiby+FZMuCQ=",
+        "rev": "75206a855c8de3bc71f8b513edf29ca427941c3a",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/nixos-hardware/archive/b6ca87f78ec5bafc4b2aef7b29803dcf419266af.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/nixos-hardware/archive/75206a855c8de3bc71f8b513edf29ca427941c3a.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -439,10 +439,10 @@
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1794165970,
-        "narHash": "sha256-cd0glI56a+zf/M9WIQomvkS1NnZEZXhAZfoEr0NSg6g=",
-        "rev": "44342d28d9e2089b1183c102e4ffb0a476b0f199",
+        "narHash": "sha256-dyliNHXxzGL+iuPxV/uo71HPyP0cF0QEr000ssAKYBQ=",
+        "rev": "72cc6088f185e68a3bce4e4beb0b0f5522570958",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/44342d28d9e2089b1183c102e4ffb0a476b0f199.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/72cc6088f185e68a3bce4e4beb0b0f5522570958.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -468,10 +468,10 @@
     "nixpkgs_3": {
       "locked": {
         "lastModified": 1794386569,
-        "narHash": "sha256-hqrnCeHcrlYm1O0utuCHQWOTtb+1yJmuwLwBPFrzEEc=",
-        "rev": "b7340a4228b8cde36757411492c93b1e952feeac",
+        "narHash": "sha256-XkrTMCTaqHQ0YYx/3EkYaJT/zrrIKx3LuUf/4flguQc=",
+        "rev": "dc5529822f293c80cc1037032bd743057778d818",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/b7340a4228b8cde36757411492c93b1e952feeac.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/dc5529822f293c80cc1037032bd743057778d818.tar.gz"
       },
       "original": {
         "type": "tarball",
