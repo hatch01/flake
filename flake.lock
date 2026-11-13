@@ -370,11 +370,11 @@
         "nvchad-starter": "nvchad-starter"
       },
       "locked": {
-        "lastModified": 1793543635,
-        "narHash": "sha256-yjDz5vWoymPD/ZZhLlrInN8jm/X7ebgbFhYkmjSTR84=",
-        "rev": "94b2d0d1cd82111f48b017a6f8b7bc8160cb9910",
+        "lastModified": 1794495478,
+        "narHash": "sha256-CuOGMwdN3aSDdyA8aVEikJbzaSmHFUZA0FtSYFZJQ4I=",
+        "rev": "6377df6be44d701ce3826d10ea792dd82d440f89",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/nix4nvchad/archive/94b2d0d1cd82111f48b017a6f8b7bc8160cb9910.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/nix4nvchad/archive/6377df6be44d701ce3826d10ea792dd82d440f89.tar.gz"
       },
       "original": {
         "type": "tarball",
