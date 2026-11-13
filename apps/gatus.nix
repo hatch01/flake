@@ -147,10 +147,6 @@ in
                   url = "https://${config.adguard.domain}/";
                 })
                 (mkGatusCheck {
-                  name = "VaultWarden";
-                  url = "https://${config.vaultwarden.domain}/api/alive";
-                })
-                (mkGatusCheck {
                   name = "lmatrix lk-jwt-service";
                   url = "https://${config.matrix.domain}/livekit/jwt/healthz";
                 })
