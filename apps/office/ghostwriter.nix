@@ -7,6 +7,43 @@
 let
   inherit (lib) mkEnableOption mkIf;
   pandocCommand = "--pdf-engine=xelatex --mathjax --toc --toc-depth=6 --wrap=preserve -L /home/eymeric/.local/share/pandoc/filters/search_replace/filter.lua --filter=/home/eymeric/.local/share/pandoc/filters/asciimathml-pandocfilter/asciimathfilter.js --filter mermaid-filter -f markdown+hard_line_breaks+multiline_tables --template eisvogel -N --highlight-style kate";
+
+  # texliveSmall plus the extra LaTeX packages required by the eisvogel
+  # pandoc template. This avoids pulling in the whole (huge) texliveFull.
+  # List taken from eisvogel's requirements, minus what scheme-small already
+  # ships, plus a few transitive dependencies (collectbox, framed, import,
+  # needspace, transparent, zref, ifmtarg). CJK support (xecjk) is left out
+  # on purpose: it drags in ~200 MB of Chinese/Japanese/Korean fonts.
+  texlive = pkgs.texliveSmall.withPackages (
+    ps:
+    map (n: ps.${n}) [
+      "adjustbox"
+      "background"
+      "cancel"
+      "collectbox"
+      "csquotes"
+      "footmisc"
+      "footnotebackref"
+      "framed"
+      "fvextra"
+      "ifmtarg"
+      "import"
+      "lua-ul"
+      "luacolor"
+      "mdframed"
+      "multirow"
+      "needspace"
+      "pagecolor"
+      "soul"
+      "sourcecodepro"
+      "sourcesanspro"
+      "svg"
+      "titling"
+      "transparent"
+      "xurl"
+      "zref"
+    ]
+  );
 in
 {
   options = {
@@ -18,7 +55,7 @@ in
       kdePackages.ghostwriter
       pandoc
       nodejs
-      texliveSmall
+      texlive
       mermaid-cli
       mermaid-filter
       librsvg
