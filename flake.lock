@@ -438,11 +438,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1794552581,
-        "narHash": "sha256-vORS1mnkykP5Yi8ptQPLtqzYCQCWncwitnSmXVfRxDc=",
-        "rev": "f5785a537d4c3d48210db8199055469a375c6c48",
+        "lastModified": 1794756927,
+        "narHash": "sha256-gyuMrGx8/LkDU+T6bbmJFWq72mCanAYlrYvfxe03//0=",
+        "rev": "aa05bf878c2aac967f8ff726a211fe339f501e29",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/f5785a537d4c3d48210db8199055469a375c6c48.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/aa05bf878c2aac967f8ff726a211fe339f501e29.tar.gz"
       },
       "original": {
         "type": "tarball",
