@@ -175,6 +175,18 @@ in
   ];
 
   options = {
+    services.nginx.virtualHosts = lib.mkOption {
+      type = types.attrsOf (
+        types.submodule {
+          # Priority slightly above normal explicit values, so it wins against service modules,
+          # but still loses to mkForce
+          config = lib.mkOverride 99 {
+            http2 = false;
+          };
+        }
+      );
+    };
+
     nginx.enable = mkEnableOption "Nginx";
     nginx.acme.enable = mkEnableOption "Enable ACME terms";
     nginx.lineageos.enable = mkEnableOption "Enable lineageos OTA server";
@@ -213,6 +225,7 @@ in
       commonHttpConfig = ''
         access_log off;
         absolute_redirect off;
+        http2 off;
       ''
       + lib.optionalString (config.nginx.ports.httpsRedirect != null) ''
         # tlsrouter forwards via PROXY protocol, restore the real client IP.
