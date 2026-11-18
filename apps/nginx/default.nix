@@ -182,6 +182,9 @@ in
           # but still loses to mkForce
           config = lib.mkOverride 99 {
             http2 = false;
+            http3 = true;
+            quic = true;
+            kTLS = true;
           };
         }
       );
@@ -226,6 +229,7 @@ in
         access_log off;
         absolute_redirect off;
         http2 off;
+        add_header Alt-Svc 'h3=":443"; ma=86400';
       ''
       + lib.optionalString (config.nginx.ports.httpsRedirect != null) ''
         # tlsrouter forwards via PROXY protocol, restore the real client IP.
@@ -572,6 +576,9 @@ in
     };
     networking.firewall.allowedTCPPorts = [
       80
+      443
+    ];
+    networking.firewall.allowedUDPPorts = [
       443
     ];
   };
