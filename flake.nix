@@ -150,7 +150,6 @@
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
               just
-              sbomnix
             ];
           };
           checks =
