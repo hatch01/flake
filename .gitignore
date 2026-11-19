@@ -5,3 +5,5 @@
 .direnv
 secrets/*.key
 *-sd-*
+/sboms/
+/reports/
