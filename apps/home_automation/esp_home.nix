@@ -30,6 +30,10 @@ in
 
   config = mkIf config.esp_home.enable {
     virtualisation.oci-containers.containers.esphome = {
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
+      pull = "newer";
       volumes = [ "/persistent/esphome:/config" ];
       environment.TZ = "Europe/Paris";
       image = "ghcr.io/esphome/esphome";

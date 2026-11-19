@@ -238,6 +238,10 @@ in
       # };
 
       app_api-dsp = mkIf config.nextcloud.app_api.enable {
+        labels = {
+          "io.containers.autoupdate" = "registry";
+        };
+        pull = "newer";
         image = "ghcr.io/nextcloud/nextcloud-appapi-dsp:release";
         autoStart = true;
         hostname = "nextcloud-appapi-dsp";

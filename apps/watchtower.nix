@@ -8,18 +8,10 @@ let
 in
 {
   options = {
-    watchtower.enable = mkEnableOption "Watchtower";
+    watchtower.enable = mkEnableOption "Podman container auto-update timer";
   };
 
   config = mkIf config.watchtower.enable {
-    hmr.services.podman.enable = true;
-    hmr.services.podman.autoUpdate.enable = true;
-    # virtualisation.oci-containers.containers."watchtower" = {
-    #   autoStart = true;
-    #   image = "docker.io/nickfedor/watchtower";
-    #   volumes = [
-    #     "/var/run/docker.sock:/var/run/docker.sock"
-    #   ];
-    # };
+    systemd.timers."podman-auto-update".wantedBy = [ "timers.target" ];
   };
 }

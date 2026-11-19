@@ -31,6 +31,10 @@ in
 
   config = mkIf config.librespeed.enable {
     virtualisation.oci-containers.containers.speedtest = {
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
+      pull = "newer";
       ports = [
         "127.0.0.1:${toString config.librespeed.port}:8080"
       ];

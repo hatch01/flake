@@ -25,6 +25,10 @@ in
 
   config = mkIf config.matter.enable {
     virtualisation.oci-containers.containers.matter-server = {
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
+      pull = "newer";
       image = "ghcr.io/home-assistant-libs/python-matter-server:stable";
       volumes = [
         "/persistent/matter-server:/data"

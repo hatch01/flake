@@ -60,6 +60,10 @@ in
       };
     };
 
+    systemd.timers."podman-auto-update" = mkIf config.container.podman.enable {
+      wantedBy = [ "timers.target" ];
+    };
+
     hm.home = mkIf config.container.distrobox.enable {
       file.".distroboxrc".text = ''
         container_additional_volumes="/nix/store:/nix/store:ro /etc/static/profiles/per-user:/etc/profiles/per-user:ro"

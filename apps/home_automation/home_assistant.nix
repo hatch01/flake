@@ -29,6 +29,10 @@ in
 
   config = mkIf config.home_assistant.enable {
     virtualisation.oci-containers.containers.home_assistant = {
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
+      pull = "newer";
       volumes = [
         "/storage/home_assistant/:/config"
         "/run/postgresql:/run/postgresql:ro"
