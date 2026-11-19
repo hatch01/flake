@@ -388,11 +388,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794906521,
-        "narHash": "sha256-B3ox9O5jQ7/RU2IECjP6MtA0BRqL9+yunGJRow0c1gA=",
-        "rev": "d9da8426d86bd7e937226f5ecef1df1504ead2e8",
+        "lastModified": 1795018746,
+        "narHash": "sha256-glQAHvZGgBVjzGIWgIZYSf3X10gvtO2LPR4rtyP/Soc=",
+        "rev": "33475966110df258f52d05ec4d4cd6394637cbb9",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/nixos-hardware/archive/d9da8426d86bd7e937226f5ecef1df1504ead2e8.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/nixos-hardware/archive/33475966110df258f52d05ec4d4cd6394637cbb9.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -467,11 +467,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1794750194,
-        "narHash": "sha256-822j3uPxicTdOPBp5szOHF9Xy6h7Vm75M9DVvRqEAnM=",
-        "rev": "407ff806f6fdf112a6cb1fee4377048b8cfcb04a",
+        "lastModified": 1794890597,
+        "narHash": "sha256-5lbqdoSJ6OnhmS27ReYx5dcH1vPQ5xn31LNtJCPACko=",
+        "rev": "59cdb52e8c5990eb90d60449d6780f626ccdbe1b",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/407ff806f6fdf112a6cb1fee4377048b8cfcb04a.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixpkgs-patched/archive/59cdb52e8c5990eb90d60449d6780f626ccdbe1b.tar.gz"
       },
       "original": {
         "type": "tarball",
