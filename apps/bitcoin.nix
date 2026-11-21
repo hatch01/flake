@@ -94,10 +94,14 @@ in
           port = config.bitcoin.server.portRpc;
           users.eymeric.passwordHMAC = "2774138d1955fbf3124f9f9e9f703a6b$db5d597b20b13b2cb0995584cab1f31f0cac0bc1aa441e366faa996a46fca34f";
         };
-        extraConfig = ''
-          rpcbind=100.64.0.4
-          rpcallowip=100.64.0.0/24
-        '';
+        extraConfig =
+          let
+            subnet = lib.concatStringsSep "." (lib.take 3 (lib.splitString "." config.headscale.hostIP)) + ".0/24";
+          in
+          ''
+            rpcbind=${config.headscale.hostIP}
+            rpcallowip=${subnet}
+          '';
       };
 
       networking.firewall.allowedTCPPorts = [ config.bitcoin.server.port ];

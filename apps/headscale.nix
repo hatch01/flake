@@ -26,6 +26,29 @@ in
       default = "headscale.${base_domain_name}";
       description = "The domain of the cockpit";
     };
+    headscale.hosts = mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = {
+        tulipe = "100.64.0.1";
+        cyclamen = "100.64.0.8";
+        lavande = "100.64.0.3";
+        jonquille = "100.64.0.4";
+        lilas = "100.64.0.5";
+        homeassistant = "100.64.0.6";
+        pimprenelles = "100.64.0.7";
+        polytech = "100.64.0.13";
+        papa = "100.64.0.11";
+        lotus = "100.64.0.10";
+        alexandre = "100.64.0.12";
+        alexandre_laptop = "100.64.0.15";
+      };
+      description = "The Tailscale/Headscale IP addresses of the hosts";
+    };
+    headscale.hostIP = mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = config.headscale.hosts.${config.networking.hostName} or null;
+      description = "The Tailscale IP address of the current host";
+    };
   };
 
   config = mkIf config.headscale.enable {
@@ -68,20 +91,8 @@ in
               inherit src;
               dst = map (d: "${d}:${lib.concatStringsSep "," (map toString ports)}") dst;
             };
-
-            tulipe = "100.64.0.1";
-            cyclamen = "100.64.0.8";
-            lavande = "100.64.0.3";
-            jonquille = "100.64.0.4";
-            lilas = "100.64.0.5";
-            homeassistant = "100.64.0.6";
-            pimprenelles = "100.64.0.7";
-            polytech = "100.64.0.13";
-            papa = "100.64.0.11";
-            lotus = "100.64.0.10";
-            alexandre = "100.64.0.12";
-            alexandre_laptop = "100.64.0.15";
           in
+          with config.headscale.hosts;
           pkgs.writers.writeJSON "policy.json" {
             acls = [
               # mkRule source destination ports
