@@ -96,7 +96,8 @@ in
         };
         extraConfig =
           let
-            subnet = lib.concatStringsSep "." (lib.take 3 (lib.splitString "." config.headscale.hostIP)) + ".0/24";
+            subnet =
+              lib.concatStringsSep "." (lib.take 3 (lib.splitString "." config.headscale.hostIP)) + ".0/24";
           in
           ''
             rpcbind=${config.headscale.hostIP}
