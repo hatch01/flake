@@ -464,9 +464,21 @@ in
         (mkVhost "apolline" { authelia = true; })
 
         (mkVhost "incus" {
+          extraConfig = ''
+            # Ask for a client certificate and let Incus validate it, so that
+            # --auth-type=tls works through this reverse proxy as well as OIDC.
+            ssl_verify_client optional_no_ca;
+          '';
           locations."/" = {
             proxyPass = "https://127.0.0.1:${toString config.incus.port}";
             extraConfig = ''
+              # gzip turns strong ETags from Incus into weak ones, which breaks
+              # OpenTofu If-Match comparisons (HTTP 412 / "ETag doesn't match").
+              gzip off;
+              etag off;
+              # Forward the client certificate to Incus for TLS authentication.
+              # Nginx omits the header when the client did not present one.
+              proxy_set_header X-Client-Cert $ssl_client_escaped_cert;
               # Required for web sockets to work
               proxy_buffering off;
               client_max_body_size 0;
