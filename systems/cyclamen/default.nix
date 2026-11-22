@@ -25,6 +25,7 @@
   ddclient.domains = [ "vps.${base_domain_name}" ];
   fail2ban.enable = true;
   lasuite-meet.enable = true;
+  incus.enable = true;
 
   cockpit.enable = true;
   cockpit.domain = "cyclamen:9090";
