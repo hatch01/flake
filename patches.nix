@@ -9,10 +9,6 @@
   ];
   unstable = [
     {
-      name = "satochip-utils";
-      pr = 559720;
-    }
-    {
       name = "sforzando";
       pr = 553636;
     }
