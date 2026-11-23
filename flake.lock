@@ -88,11 +88,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1795253528,
-        "narHash": "sha256-TvzBvAV7KVWsvTCQjRg1oY/lhDbuN9YXLDctGGhXPdU=",
-        "rev": "4cc0f6a9764a0ac73ec248d1475a1372c19b4773",
+        "lastModified": 1795358991,
+        "narHash": "sha256-mvuhV7fo4Du31x5Y9ixgNGmVMAZivYMuUIqOrpPYkN4=",
+        "rev": "ccce0c589213bc646016c7f6ebfc0e5ca77a2ca7",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/comin/archive/4cc0f6a9764a0ac73ec248d1475a1372c19b4773.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/comin/archive/ccce0c589213bc646016c7f6ebfc0e5ca77a2ca7.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -238,11 +238,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795325944,
-        "narHash": "sha256-dOPB2dprqzQTkfE8dUpFAD93oeOqT/yQzUXs52yGjJk=",
-        "rev": "cf726ddc129f140991c2011a02d336933d0c4c4c",
+        "lastModified": 1795366757,
+        "narHash": "sha256-Tp4Kh4R7ID1f2mMCDlb2PiFQ/DZZsnXB2u2juWN+TT4=",
+        "rev": "3b8140d21fa0a70b1b38c2ed29853dfe686234a6",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/home-manager/archive/cf726ddc129f140991c2011a02d336933d0c4c4c.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/home-manager/archive/3b8140d21fa0a70b1b38c2ed29853dfe686234a6.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -351,11 +351,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794739050,
-        "narHash": "sha256-PCGNIyAydZcdUXCxEXTjrS1+wWS+k9E+ENqBkUK2Mpg=",
-        "rev": "9bd074026d6db75b59aae8cd6071b5f2fe27a36c",
+        "lastModified": 1795345257,
+        "narHash": "sha256-p1dA8lUFQTLJfDI2gaTZQ+CcMKw3nxvyHNbwpVMy2rY=",
+        "rev": "905f3e6f1e78165e79457c0bbe7ec4b885a5fce1",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/nix-index-database/archive/9bd074026d6db75b59aae8cd6071b5f2fe27a36c.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/github_mirror/nix-index-database/archive/905f3e6f1e78165e79457c0bbe7ec4b885a5fce1.tar.gz"
       },
       "original": {
         "type": "tarball",
