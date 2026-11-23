@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   base_domain_name,
   ...
 }:
