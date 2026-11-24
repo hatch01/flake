@@ -29,7 +29,6 @@
   anubis.services = [ "forgejo" ];
   forgejo.enable = true;
   nixCache.enable = true;
-  adguard.enable = true;
   fail2ban.enable = true;
   cockpit.enable = true;
   cockpit.machines = true;
