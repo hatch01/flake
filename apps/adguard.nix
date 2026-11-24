@@ -30,6 +30,9 @@ in
   };
 
   config = mkIf config.adguard.enable {
+    # Free port 53 from systemd-resolved stub listener so AdGuard can bind to port 53
+    services.resolved.settings.Resolve.DNSStubListener = lib.mkIf config.services.resolved.enable "no";
+
     users.users.adguardhome = {
       group = "nginx"; # needed to read the certificates
       isSystemUser = true;
