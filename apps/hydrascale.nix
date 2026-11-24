@@ -118,6 +118,9 @@ in
       inherit (cfg) settings;
     };
 
+    # Allow traffic from Hydrascale's host veth interfaces (filtered by Hydrascale's HYDRASCALE-OUT chain)
+    networking.firewall.trustedInterfaces = [ "vh*" ];
+
     # Hydrascale owns the tailnet connections on the host.
     services.tailscale.enable = lib.mkForce false;
   };
