@@ -80,7 +80,7 @@ in
           magic_dns = true;
           search_domains = [ config.headscale.domain ];
           nameservers.global = [
-            "1.1.1.1"
+            "https://dns.onyx.ovh"
           ];
         };
 
