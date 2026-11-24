@@ -14,9 +14,7 @@ in
   config = mkIf config.nix-related.enable {
     environment.systemPackages = with pkgs; [
       nix-forecast
-      nil
       nixfmt
-      alejandra
     ];
 
     programs.nh = {
