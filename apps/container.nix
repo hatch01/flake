@@ -49,8 +49,7 @@ in
         # Configure DNS servers for containers to fix DNS resolution
         daemon.settings = {
           dns = [
-            "9.9.9.9"
-            "149.112.112.112"
+            "1.1.1.1"
           ];
         };
       };
