@@ -79,9 +79,10 @@ in
           base_domain = "onyx.lan";
           magic_dns = true;
           search_domains = [ config.headscale.domain ];
-          nameservers.global = [
-            "https://dns.onyx.ovh"
-          ];
+          override_local_dns = false;
+          # nameservers.global = [
+          #   "https://dns.onyx.ovh"
+          # ];
         };
 
         policy.path =
