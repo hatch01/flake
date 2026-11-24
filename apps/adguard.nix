@@ -30,6 +30,9 @@ in
   };
 
   config = mkIf config.adguard.enable {
+    # Free port 53 from systemd-resolved stub listener so AdGuard can bind to port 53
+    services.resolved.settings.Resolve.DNSStubListener = lib.mkIf config.services.resolved.enable "no";
+
     users.users.adguardhome = {
       group = "nginx"; # needed to read the certificates
       isSystemUser = true;
@@ -42,13 +45,15 @@ in
       settings = {
         http.address = "127.0.0.1:3000";
         dns = {
+          bind_hosts = [ "0.0.0.0" ];
+          port = 53;
           upstream_dns = [
             "9.9.9.9" # dns.quad9.net
             "149.112.112.112" # dns.quad9.net
           ];
           anonymize_client_ip = true;
           enable_dnssec = true;
-          serve_plain_dns = false;
+          serve_plain_dns = true;
         };
         tls = {
           enabled = true;
@@ -109,5 +114,9 @@ in
       };
     };
     networking.firewall.allowedTCPPorts = [ 853 ];
+    networking.firewall.extraInputRules = ''
+      iifname "enp1s0" udp dport 53 drop
+      iifname "enp1s0" tcp dport 53 drop
+    '';
   };
 }

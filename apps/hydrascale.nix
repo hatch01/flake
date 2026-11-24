@@ -20,7 +20,9 @@ let
   publishedPorts = [
     "tcp/22"
   ]
-  ++ optional config.cockpit.enable "tcp/${toString config.cockpit.port}";
+  ++ optional config.cockpit.enable "tcp/${toString config.cockpit.port}"
+  ++ optional config.adguard.enable "udp/53"
+  ++ optional config.adguard.enable "tcp/53";
 
   # Ports of the host that the onyx namespace may reach on the host itself.
   # When Headscale runs on this host, tailscaled inside the namespace reaches
@@ -115,6 +117,9 @@ in
       enable = true;
       inherit (cfg) settings;
     };
+
+    # Allow traffic from Hydrascale's host veth interfaces (filtered by Hydrascale's HYDRASCALE-OUT chain)
+    networking.firewall.trustedInterfaces = [ "vh*" ];
 
     # Hydrascale owns the tailnet connections on the host.
     services.tailscale.enable = lib.mkForce false;
