@@ -37,6 +37,8 @@ in
     beszel.agent.enable = mkDefault true;
     comin.enable = mkDefault true;
 
+    environment.persistence."/persistent".enable = mkDefault false;
+
     nix = {
       # package = pkgs.lix;
       extraOptions = ''
