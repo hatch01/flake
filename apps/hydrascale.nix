@@ -20,7 +20,9 @@ let
   publishedPorts = [
     "tcp/22"
   ]
-  ++ optional config.cockpit.enable "tcp/${toString config.cockpit.port}";
+  ++ optional config.cockpit.enable "tcp/${toString config.cockpit.port}"
+  ++ optional config.adguard.enable "udp/53"
+  ++ optional config.adguard.enable "tcp/53";
 
   # Ports of the host that the onyx namespace may reach on the host itself.
   # When Headscale runs on this host, tailscaled inside the namespace reaches

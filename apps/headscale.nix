@@ -79,10 +79,7 @@ in
           base_domain = "onyx.lan";
           magic_dns = true;
           search_domains = [ config.headscale.domain ];
-          override_local_dns = false;
-          # nameservers.global = [
-          #   "https://dns.onyx.ovh"
-          # ];
+          nameservers.global = lib.optional (config.headscale.hostIP != null) config.headscale.hostIP;
         };
 
         policy.path =
@@ -97,6 +94,7 @@ in
           pkgs.writers.writeJSON "policy.json" {
             acls = [
               # mkRule source destination ports
+              (mkRule [ "*" ] [ cyclamen ] [ 53 ]) # allow all tailnet nodes to query adguard dns on cyclamen
               (mkRule [ tulipe lavande lotus jonquille ] [ cyclamen jonquille lilas polytech ] [ 22 ]) # allow remote ssh on servers
               (mkRule [ tulipe lavande lotus ] [ lilas ] [ 80 443 config.cockpit.port ]) # allow access to pikvm (80,443) and cockpit admin panel
               (mkRule [ cyclamen ] [ lilas ] [ 443 ]) # pikvm monitoring
