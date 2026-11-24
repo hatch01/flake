@@ -134,7 +134,7 @@
     };
   };
   networking.hosts = {
-    "109.26.63.39" = [ "dns.onyx.ovh" ];
+    "77.42.31.199" = [ "dns.onyx.ovh" ];
   };
 
   # Configure console keymap
