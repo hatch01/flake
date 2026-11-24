@@ -83,15 +83,14 @@ in
       enable = true;
       environmentFile = config.age.secrets."smtpPasswordEnv".path;
 
-      # convert to yaml code stollen in nixpkgs repo
       configFile = pkgs.callPackage (
         {
           runCommand,
-          remarshal_0_17,
+          remarshal,
         }:
         runCommand "gatus.yaml"
           {
-            nativeBuildInputs = [ remarshal_0_17 ];
+            nativeBuildInputs = [ remarshal ];
             value = builtins.toJSON {
               web.port = config.gatus.port;
               storage = {
@@ -325,8 +324,8 @@ in
             preferLocalBuild = true;
           }
           ''
-            json2yaml "$valuePath" "$out"
-              echo "
+            remarshal --from json --to yaml-1.1 "$valuePath" "$out"
+            echo "
             alerting:
               discord:
                 webhook-url: \"\$WEBHOOK_URL\"

@@ -1,12 +1,12 @@
 {
-  common = [ ];
-  stable = [
+  common = [
     {
-      branch = "hydrascale-stable";
+      branch = "hydrascale";
       name = "head hydrascale";
       pr = 569707;
     }
   ];
+  stable = [ ];
   unstable = [
     {
       name = "sforzando";
@@ -36,11 +36,6 @@
       branch = "mautrix-refactor-easy-patch";
       name = "unify mautrix bridges";
       pr = 581772;
-    }
-    {
-      branch = "hydrascale";
-      name = "head hydrascale";
-      pr = 569707;
     }
   ];
 }

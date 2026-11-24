@@ -4,7 +4,6 @@
   pkgs,
   base_domain_name,
   mkSecrets,
-  stable,
   ...
 }:
 let
@@ -121,11 +120,7 @@ in
         secrets.mailer.PASSWD = config.age.secrets."smtpPassword".path;
         stateDir = "/storage/forgejo";
       };
-    }
-    # `services.forgejo-runner' only exists on unstable nixpkgs, so keep the
-    # key out entirely on stable systems to avoid an "option does not exist"
-    # evaluation error (mkIf alone cannot hide nonexistent options).
-    // lib.optionalAttrs (!stable) {
+
       forgejo-runner.instances.onyx = {
         enable = true;
         settings = {

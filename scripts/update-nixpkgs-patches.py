@@ -17,7 +17,7 @@ NIXPKGS_PATCHED_URL = "git+ssh://forgejo@forge.onyx.ovh:443/eymeric/nixpkgs-patc
 NIXPKGS_PATCHED_URL_GITHUB_MIRROR = "git@github.com:hatch01/nixpkgs-patched.git"
 NIXPKGS_FORGE_REPO = "git+ssh://forgejo@forge.onyx.ovh:443/github_mirror/nixpkgs.git"
 WORK_DIR = "/tmp/nixpkgs-patched-update"
-NIXPKGS_STABLE_VERSION = "nixos-26.05"
+NIXPKGS_STABLE_VERSION = "nixos-26.11-small"
 NIXPKGS_REPO = "NixOS/nixpkgs"
 
 os.environ["GIT_AUTHOR_NAME"] = "NixPkgs Patcher"
