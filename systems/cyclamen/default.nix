@@ -26,6 +26,7 @@
   fail2ban.enable = true;
   lasuite-meet.enable = true;
   incus.enable = true;
+  adguard.enable = true;
 
   cockpit.enable = true;
   cockpit.domain = "cyclamen:9090";
