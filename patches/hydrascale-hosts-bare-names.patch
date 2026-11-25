@@ -1,0 +1,141 @@
+From e49a50ae84c4767636edd1bb629435d192e099ce Mon Sep 17 00:00:00 2001
+From: opencode <opencode@localhost>
+Date: Wed, 25 Nov 2026 14:21:07 +0100
+Subject: [PATCH] hostaccess: write bare hostnames, aliases and MagicDNS FQDNs
+ to hosts file
+
+---
+ internal/hostaccess/peers.go      | 37 ++++++++++++++++++++++--------
+ internal/hostaccess/peers_test.go | 38 ++++++++++++++++++++++++++++++-
+ 2 files changed, 64 insertions(+), 11 deletions(-)
+
+diff --git a/internal/hostaccess/peers.go b/internal/hostaccess/peers.go
+index 73ffd70..df9e90d 100644
+--- a/internal/hostaccess/peers.go
++++ b/internal/hostaccess/peers.go
+@@ -23,9 +23,13 @@ type Peer struct {
+ 	// `a.b.<alias>.ts.internal` from it, therefore a nested MagicDNS name keeps its shape.
+ 	// AliasName is empty when the status holds no MagicDNS name for the peer.
+ 	AliasName string
+-	IPv4      string
+-	IPv6      string
+-	Online    bool
++	// DNSName holds the full MagicDNS name of the peer, without the trailing dot that
++	// `tailscale status --json` reports. It is written to the hosts file as an unprefixed
++	// alias so that the host resolves the same name as the namespace resolver.
++	DNSName string
++	IPv4    string
++	IPv6    string
++	Online  bool
+ }
+ 
+ // Service holds one Tailscale service of a tailnet.
+@@ -88,6 +92,7 @@ func ParsePeers(tailnetID string, status *daemon.TailscaleStatus, vethGW, vethHo
+ 		peer := Peer{
+ 			Hostname:  hostname,
+ 			AliasName: aliasNameOf(node.DNSName, status.MagicDNSSuffix),
++			DNSName:   strings.ToLower(strings.TrimSuffix(node.DNSName, ".")),
+ 			Online:    node.Online,
+ 		}
+ 		for _, ip := range node.TailscaleIPs {
+@@ -162,15 +167,27 @@ func BuildDNSNames(tailnetID string, peers []Peer) map[string]string {
+ }
+ 
+ func BuildDNSRecords(tailnetID string, peers []Peer) (v4 map[string]string, v6 map[string]string) {
+-	v4 = make(map[string]string, len(peers))
+-	v6 = make(map[string]string, len(peers))
++	v4 = make(map[string]string, len(peers)*4)
++	v6 = make(map[string]string, len(peers)*2)
+ 	for _, p := range peers {
+-		name := tailnetID + "-" + p.Hostname
+-		if p.IPv4 != "" {
+-			v4[name] = p.IPv4
++		names := []string{p.Hostname}
++		if p.AliasName != "" && p.AliasName != p.Hostname {
++			names = append(names, p.AliasName)
+ 		}
+-		if p.IPv6 != "" {
+-			v6[name] = p.IPv6
++		if p.DNSName != "" && p.DNSName != p.Hostname && p.DNSName != p.AliasName {
++			names = append(names, p.DNSName)
++		}
++		for _, n := range names {
++			prefixed := tailnetID + "-" + n
++			if p.IPv4 != "" {
++				v4[prefixed] = p.IPv4
++				if _, ok := v4[n]; !ok {
++					v4[n] = p.IPv4
++				}
++			}
++			if p.IPv6 != "" {
++				v6[prefixed] = p.IPv6
++			}
+ 		}
+ 	}
+ 	return v4, v6
+diff --git a/internal/hostaccess/peers_test.go b/internal/hostaccess/peers_test.go
+index 50501cc..be30fd0 100644
+--- a/internal/hostaccess/peers_test.go
++++ b/internal/hostaccess/peers_test.go
+@@ -143,6 +143,27 @@ func TestParsePeers_PeerWithNoIPs_Excluded(t *testing.T) {
+ 	}
+ }
+ 
++func TestParsePeers_SetsDNSName(t *testing.T) {
++	status := makeStatus("example.ts.net", map[string]daemon.StatusNode{
++		"abc123": {
++			HostName:     "Alpha",
++			DNSName:      "Alpha.Example.ts.net.",
++			TailscaleIPs: []string{"100.64.0.1"},
++		},
++	})
++	result := ParsePeers("net", status, "", "", "", "ns-net")
++	if len(result.Peers) != 1 {
++		t.Fatalf("len(Peers) = %d, want 1", len(result.Peers))
++	}
++	peer := result.Peers[0]
++	if peer.DNSName != "alpha.example.ts.net" {
++		t.Errorf("DNSName = %q, want %q", peer.DNSName, "alpha.example.ts.net")
++	}
++	if peer.AliasName != "alpha" {
++		t.Errorf("AliasName = %q, want %q", peer.AliasName, "alpha")
++	}
++}
++
+ func TestParsePeers_InvalidIPSkipped(t *testing.T) {
+ 	status := makeStatus("", map[string]daemon.StatusNode{
+ 		"bad": {HostName: "Bad", TailscaleIPs: []string{"not-an-ip", "100.64.0.3"}},
+@@ -201,7 +222,7 @@ func TestBuildDNSNames(t *testing.T) {
+ 
+ func TestBuildDNSRecords(t *testing.T) {
+ 	peers := []Peer{
+-		{Hostname: "alpha", IPv4: "100.64.0.1", IPv6: "fd7a::1"},
++		{Hostname: "alpha", AliasName: "alias-alpha", DNSName: "alias-alpha.example.ts.net", IPv4: "100.64.0.1", IPv6: "fd7a::1"},
+ 		{Hostname: "beta", IPv4: "100.64.0.2"},
+ 		{Hostname: "gamma", IPv6: "fd7a::3"},
+ 	}
+@@ -214,6 +235,21 @@ func TestBuildDNSRecords(t *testing.T) {
+ 	if v4["net-beta"] != "100.64.0.2" {
+ 		t.Errorf("v4[net-beta] = %q, want %q", v4["net-beta"], "100.64.0.2")
+ 	}
++	if v4["alpha"] != "100.64.0.1" {
++		t.Errorf("v4[alpha] = %q, want %q", v4["alpha"], "100.64.0.1")
++	}
++	if v4["alias-alpha"] != "100.64.0.1" {
++		t.Errorf("v4[alias-alpha] = %q, want %q", v4["alias-alpha"], "100.64.0.1")
++	}
++	if v4["net-alias-alpha"] != "100.64.0.1" {
++		t.Errorf("v4[net-alias-alpha] = %q, want %q", v4["net-alias-alpha"], "100.64.0.1")
++	}
++	if v4["alias-alpha.example.ts.net"] != "100.64.0.1" {
++		t.Errorf("v4[alias-alpha.example.ts.net] = %q, want %q", v4["alias-alpha.example.ts.net"], "100.64.0.1")
++	}
++	if v4["net-alias-alpha.example.ts.net"] != "100.64.0.1" {
++		t.Errorf("v4[net-alias-alpha.example.ts.net] = %q, want %q", v4["net-alias-alpha.example.ts.net"], "100.64.0.1")
++	}
+ 	if _, ok := v4["net-gamma"]; ok {
+ 		t.Error("gamma has no IPv4, should not appear in v4 map")
+ 	}
+-- 
+2.56.1
+

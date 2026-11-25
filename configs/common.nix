@@ -193,6 +193,16 @@ in
               ];
             })
           );
+          # Hydrascale writes only tailnet-prefixed names to /etc/hosts (e.g.
+          # `onyx-jonquille`), so host-side `ping jonquille` cannot resolve.
+          # Restore the downstream bare-hostname patch that was applied for
+          # 1.8.0/1.8.1 but dropped in 1.8.2, and extend it to write full
+          # MagicDNS names such as `jonquille.onyx.lan` as well.
+          hydrascale = prev.hydrascale.overrideAttrs (old: {
+            patches = (old.patches or [ ]) ++ [
+              ../patches/hydrascale-hosts-bare-names.patch
+            ];
+          });
         })
       ];
     };
