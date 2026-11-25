@@ -31,14 +31,14 @@ in
       default = {
         tulipe = "100.64.0.1";
         cyclamen = "100.64.0.8";
-        lavande = "100.64.0.3";
+        lavande = "100.64.0.2";
         jonquille = "100.64.0.4";
         lilas = "100.64.0.5";
         homeassistant = "100.64.0.6";
         pimprenelles = "100.64.0.7";
         polytech = "100.64.0.13";
         papa = "100.64.0.11";
-        lotus = "100.64.0.10";
+        lotus = "100.64.0.9";
         alexandre = "100.64.0.12";
         alexandre_laptop = "100.64.0.15";
       };
