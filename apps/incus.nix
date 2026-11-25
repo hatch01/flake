@@ -91,7 +91,7 @@ in
       };
       preseed = {
         config = {
-          "core.https_address" = "[::]:${toString config.incus.port}";
+          "core.https_address" = "127.0.0.1:${toString config.incus.port}";
           "oidc.issuer" = "https://${config.authelia.domain}";
           "oidc.client.id" = "incus";
           "oidc.audience" = "https://${config.incus.domain}";

@@ -370,6 +370,7 @@ in
                     grant_types = [
                       "refresh_token"
                       "authorization_code"
+                      "urn:ietf:params:oauth:grant-type:device_code"
                     ];
                     access_token_signed_response_alg = "RS256";
                     userinfo_signed_response_alg = "none";

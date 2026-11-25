@@ -6,7 +6,6 @@
   stateVersion,
   inputs,
   mkSecrets,
-  stable,
   hostNames,
   ...
 }:
@@ -190,17 +189,6 @@ in
                 (prev.fetchpatch {
                   url = "https://github.com/aristocratos/btop/compare/v1.4.8...hatch01:btop:sort-diskio-stable.patch";
                   hash = "sha256-bzAoDKvG9S9llZJocQkRder3HkjZTFnPl467qVdtWno=";
-                })
-              ];
-            })
-          );
-          mautrix-signal = (
-            prev.mautrix-signal.overrideAttrs (old: {
-              patches = (old.patches or [ ]) ++ [
-                (prev.fetchpatch {
-                  # signalmeow/attachments: send uploadLength when requesting upload form
-                  url = "https://github.com/mautrix/signal/pull/703.patch";
-                  hash = "sha256-xz9POxxL4zUfKpx9AEZFDwhKxRbQFHp3mdB3y7bONqY=";
                 })
               ];
             })
@@ -392,26 +380,14 @@ in
       ${username}.isNormalUser = true; # setting the user to normal user even if for server, the user would be completly empty
     };
 
-    services.journald =
-      if !stable then
-        {
-          settings.Journal = {
-            SystemMaxUse = "10G";
-            SystemKeepFree = "2G";
-            SystemMaxFileSize = "64M";
-            MaxRetentionSec = "14day";
-            Compress = true;
-          };
-        }
-      else
-        {
-          extraConfig = ''
-            SystemMaxUse=10G
-            SystemKeepFree=2G
-            SystemMaxFileSize=64M
-            MaxRetentionSec=14day
-            Compress=yes
-          '';
-        };
+    services.journald = {
+      settings.Journal = {
+        SystemMaxUse = "10G";
+        SystemKeepFree = "2G";
+        SystemMaxFileSize = "64M";
+        MaxRetentionSec = "14day";
+        Compress = true;
+      };
+    };
   };
 }
