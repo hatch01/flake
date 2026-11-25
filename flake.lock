@@ -508,11 +508,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795558964,
-        "narHash": "sha256-dZxdIQGOqto7rMSnJ/dBR6ixyncZhb7l155CuCJ38ho=",
-        "rev": "173400c7e8bd550fd94b9d8f00ed8f2336b5f6a2",
+        "lastModified": 1795636842,
+        "narHash": "sha256-6NYP1SWKjw7qsNioSbzFTWpGyfV9FBuj6QguJbxUeGI=",
+        "rev": "785ea56122fe2b023c190c36a703b59be771b700",
         "type": "tarball",
-        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixos-pikvm/archive/173400c7e8bd550fd94b9d8f00ed8f2336b5f6a2.tar.gz"
+        "url": "https://forge.onyx.ovh/api/v1/repos/eymeric/nixos-pikvm/archive/785ea56122fe2b023c190c36a703b59be771b700.tar.gz"
       },
       "original": {
         "type": "tarball",
