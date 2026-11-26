@@ -241,7 +241,11 @@ in
                 })
                 (mkGatusCheck {
                   name = "Grafana nichihachi";
-                  url = "https://grafana.nichihachi.net";
+                  url = "https://grafana.nichihachi.net/api/health";
+                  conditions = [
+                    "[BODY].database == ok"
+                    "[STATUS] == 200"
+                  ];
                   group = "nichihachi";
                 })
                 (mkGatusCheck {
@@ -289,15 +293,6 @@ in
                   name = "Alex immich";
                   url = "https://photos.kongoseki.fr/api/server/ping";
                   conditions = [ "[BODY].res == pong" ];
-                  group = "alex";
-                })
-                (mkGatusCheck {
-                  name = "Alex grafana";
-                  url = "https://grafana.kongoseki.fr/api/health";
-                  conditions = [
-                    "[BODY].database == ok"
-                    "[STATUS] == 200"
-                  ];
                   group = "alex";
                 })
                 (mkGatusCheck {
