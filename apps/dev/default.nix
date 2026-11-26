@@ -33,7 +33,7 @@ in
         scrcpy
       ]
       ++ optionals config.dev.enable [
-        insomnia
+        bruno
         minikube
         httpy-cli
         jq
