@@ -46,7 +46,6 @@
   home_automation.enable = true;
   nginx.enable = true;
   nginx.acme.enable = true;
-  nginx.lineageos.enable = true;
 
   librespeed.enable = true;
   music-assistant.enable = true;
