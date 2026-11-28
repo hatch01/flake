@@ -21,8 +21,7 @@ in
       config.age.secrets.matrix_shared_secret.file
     ];
 
-    services.mautrix.bridges.whatsapp = {
-      type = "whatsapp";
+    services.mautrix-whatsapp = {
       enable = true;
       registerToSynapse = true;
       environmentFiles = [ config.age.secrets.matrix_shared_secret.path ];

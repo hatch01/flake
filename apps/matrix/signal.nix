@@ -21,8 +21,7 @@ in
       config.age.secrets.matrix_shared_secret.file
     ];
 
-    services.mautrix.bridges.signal = {
-      type = "signal";
+    services.mautrix-signal = {
       enable = true;
       registerToSynapse = true;
       environmentFiles = [ config.age.secrets.matrix_shared_secret.path ];

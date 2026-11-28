@@ -21,8 +21,7 @@ in
       config.age.secrets.matrix_shared_secret.file
     ];
 
-    services.mautrix.bridges.discord = {
-      type = "discord";
+    services.mautrix-discord = {
       enable = true;
       registerToSynapse = true;
       environmentFiles = [ config.age.secrets.matrix_shared_secret.path ];

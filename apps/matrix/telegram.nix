@@ -25,8 +25,7 @@ in
       config.age.secrets.telegram_credentials.file
     ];
 
-    services.mautrix.bridges.telegram = {
-      type = "telegram";
+    services.mautrix-telegram = {
       enable = true;
       registerToSynapse = true;
       environmentFiles = [

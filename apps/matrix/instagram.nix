@@ -21,8 +21,7 @@ in
       config.age.secrets.matrix_shared_secret.file
     ];
 
-    services.mautrix.bridges.meta-instagram = {
-      type = "instagram";
+    services.mautrix-meta.instances.instagram = {
       enable = true;
       registerToSynapse = true;
       environmentFiles = [ config.age.secrets.matrix_shared_secret.path ];
