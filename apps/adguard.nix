@@ -51,6 +51,13 @@ in
             "9.9.9.9" # dns.quad9.net
             "149.112.112.112" # dns.quad9.net
           ];
+          ratelimit_whitelist = [
+            "100.64.0.0/10"
+            "fd7a:115c:a1e0::/48"
+            "127.0.0.0/8"
+            "::1/128"
+          ];
+          use_private_ptr_resolvers = false;
           anonymize_client_ip = true;
           enable_dnssec = true;
           serve_plain_dns = true;
