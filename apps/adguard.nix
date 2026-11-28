@@ -52,11 +52,13 @@ in
             "149.112.112.112" # dns.quad9.net
           ];
           ratelimit_whitelist = [
-            "100.64.0.0/10"
-            "fd7a:115c:a1e0::/48"
-            "127.0.0.0/8"
-            "::1/128"
-          ];
+            "127.0.0.1"
+            "::1"
+          ]
+          ++ lib.attrValues config.headscale.hosts
+          ++ map (
+            ip: "fd7a:115c:a1e0::${lib.toLower (lib.toHexString (lib.toInt (lib.last (lib.splitString "." ip))))}"
+          ) (lib.attrValues config.headscale.hosts);
           use_private_ptr_resolvers = false;
           anonymize_client_ip = true;
           enable_dnssec = true;
