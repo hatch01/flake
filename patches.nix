@@ -37,9 +37,5 @@
       name = "unify mautrix bridges";
       pr = 581772;
     }
-    {
-      name = "python3Packages.gql: skip broken tests";
-      pr = 592292;
-    }
   ];
 }
